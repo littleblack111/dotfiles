@@ -23,4 +23,4 @@ Text/Code editor: `neovim`\
 Status Bar: `Polybar`\
 Launcher: `rofi`\
 Notifications: `Dunstify`\
-File Manager: `Thunar`\
+File Manager: `Thunar` 
