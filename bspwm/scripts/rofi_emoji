@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Import Current Theme
+DIR="$HOME/.config/rofi"
+RASI="$DIR/emoji.rasi"
+
+# Run
+rofi \
+    -show emoji \
+	-theme ${RASI}

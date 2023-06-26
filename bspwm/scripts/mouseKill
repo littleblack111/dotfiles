@@ -1,0 +1,4 @@
+#!/bin/bash
+
+notify-send "Kill $(xprop |awk '/WM_CLASS/{print $4}')?"
+xkill

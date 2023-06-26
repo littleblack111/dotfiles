@@ -1,0 +1,2 @@
+#!/bin/bash
+bspc wm -d > ~/.config/bspwm/state
