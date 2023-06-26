@@ -9,7 +9,11 @@ fi
 #    rsyncc=true
 #fi
 if ! command -v bspc; then
-    printf "[!] bspc: command not found\n this program is for bspwm config, please install bspwm\n"
+    printf "[!] bspc: command not found\nthis program is for bspwm config, please install bspwm\n"
+    exit 127
+fi
+if ! command -v picom; then
+    printf "[!] picom: command not found\nthis program is for picom, please install picom\n"
     exit 127
 fi
 
@@ -49,22 +53,28 @@ fi
 
 printf "[*] Cloning gh repo into /tmp/dots.tmp\n"
 if [ $ghc = true ]; then
-    gh repo clone littleblack111/dotfiles /tmp/dots.tmp -- --recurse-submodules || ec=$?; printf "An error had occured during gh repo clone\n"; exit $ec
+    gh repo clone littleblack111/dotfiles /tmp/dots.tmp -- --recurse-submodules || ec=$?; printf "An error had occured during gh repo clone dotfiles\n"; exit $ec
+    gh repo clone littleblack111/picom-fdev-ft-labs-merge /tmp/picom.tmp || ec=$?; printf "An error had occured during gh repo clone picom\n"; exit $ec
 else
     git clone https://github.com/littleblack111/dotfiles.git /tmp/dots.tmp --recurse-submodules || ec=$?; printf "An error had occured during git clone\n"; exit $ec
+    git clone https://github.com/littleblack111/picom-fdev-ft-labs-merge.git /tmp/picom.tmp || ec=$?; printf "An error had occured during git clone picom\n"; exit $ec
 fi
 
-printf "[*] Copying configs from /tmp/dots.tmp to $HOME/.config/\n"
+printf "[*] Installing configs from /tmp/dots.tmp to $HOME/.config/\n"
 # this will override.
 #if [ $rsyncc = true ]; then
 #    rsync -avxHAXP --exclude '.git*' /tmp/dots.tmp/* ~/.config
 #fi
 cp -vri /tmp/dots.tmp/* $HOME/.config/ || ec=$?; printf "An error had occured during installation(copy)\n"; exit $ec
-printf "[*] Deleting temporary files...\n" 
-rm -vrf /tmp/dots.tmp || ec=$?; printf "An error had occured during deletion\n"; exit $ec
+printf "[*] Build & Installing picom\n"
+cd /tmp/picom.tmp && git submodule update --init --recursive && meson setup --buildtype=release . build && ninja -C build || ec=$?; printf "An error had occured during Build/Install of picom"; exit $ec
+printf "[*] Deleting temporary files\n"
+rm -vrf /tmp/dots.tmp /tmp/picom.tmp || ec=$?; printf "An error had occured during deletion\n"; exit $ec
 printf "[!] Successfully installed configs\n"
 printf "[*] Applying config, restarting bspWM\n"
 bspc wm -r  || ec=$?; printf "An error had occured during application\n"; exit $ec
+printf "[*] Applying picom, restarting picom\n"
+killall picom && picom &
 printf "[!] Successfully installed and applied dots\n"
 
 printf "All done. Exiting...\n"

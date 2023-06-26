@@ -5,6 +5,7 @@
 ## Dependencies
 ##### Required
 bspwm
+picom
 git/gh cli
 
 ## Install
