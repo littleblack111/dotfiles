@@ -16,11 +16,11 @@ copy the files into your config
 
 #### specs
 Terminal Emu: `Alacritty`\
-Session Manager: `sddm`
-Windows manager: `bspwm`
-Compositor: `udev's picom & FT-labs picom merged`(https://github.com/littleblack111/picom-fdev-ft-labs-merge)
-Text/Code editor: `neovim`
-Status Bar: `Polybar`
-Launcher: `rofi`
-Notifications: `Dunstify`
-File Manager: `Thunar`
+Session Manager: `sddm`\
+Windows manager: `bspwm`\
+Compositor: `udev's picom & FT-labs picom merged`(https://github.com/littleblack111/picom-fdev-ft-labs-merge)\
+Text/Code editor: `neovim`\
+Status Bar: `Polybar`\
+Launcher: `rofi`\
+Notifications: `Dunstify`\
+File Manager: `Thunar`\
