@@ -109,11 +109,11 @@ cp -vr /tmp/dots.tmp/* $HOME/.config/ #|| ec=$?; printf "[!] An error had occure
 #    printf "[!] An error had occured during installation(copy)\n"; exit 1
 #    exit 1
 #fi
-cp -vr /tmp/dots.tmp/.zshrc $HOME || ec=$?; printf "An error had occured during installation(copy .zshrc)\n"; exit $ec
-cp -vr /tmp/dots.tmp/.zshenv $HOME || ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
-cp -vr /tmp/dots.tmp/.p10k $HOME || ec=$?; printf "An error had occured during installation(copy .p10k)\n"; exit $ec
-cp -vr /tmp/dots.tmp/.oh_my_zsh $HOME || ec=$?; printf "An error had occured during installation(copy .omz)\n"; exit $ec
-cp -vr /tmp/dots.tmp/scripts $HOME || ec=$?; printf "An error had occured during installation(copy scripts)\n"; exit $ec
+cp -vr /tmp/dots.tmp/.zshrc $HOME #|| ec=$?; printf "An error had occured during installation(copy .zshrc)\n"; exit $ec
+cp -vr /tmp/dots.tmp/.zshenv $HOME #|| ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
+cp -vr /tmp/dots.tmp/.p10k $HOME #|| ec=$?; printf "An error had occured during installation(copy .p10k)\n"; exit $ec
+cp -vr /tmp/dots.tmp/.oh_my_zsh $HOME #|| ec=$?; printf "An error had occured during installation(copy .omz)\n"; exit $ec
+cp -vr /tmp/dots.tmp/scripts $HOME #|| ec=$?; printf "An error had occured during installation(copy scripts)\n"; exit $ec
 printf "[*] Installing stuff that require root privlliage(might prompt for sudo password)"
 sudo cp -vr /tmp/dots.tmp/usr /
 sudo cp -vr /tmp/dots.tmp/etc /
