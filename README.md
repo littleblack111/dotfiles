@@ -2,6 +2,13 @@
 
 // add image or gif or mp4 about it.
 
+## Dependencies
+##### Required
+bspwm
+git/gh cli
+##### Optional
+rsync
+
 ## Install
 #### Automated Script
 `curl -fsSL https://github.com/littleblack111/dotfiles/raw/main/install.sh | sh `

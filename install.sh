@@ -8,6 +8,11 @@ fi
 #if command -v rsync > /dev/null; then
 #    rsyncc=true
 #fi
+if ! command -v bspc; then
+    printf "[!] bspc: command not found\n this program is for bspwm config, please install bspwm\n"
+    exit 127
+fi
+
 if [ $ghc != true ]; then
     if ! command -v git > /dev/null; then
         printf "[*] git: command not found\n"
@@ -57,5 +62,8 @@ printf "[*] Copying configs from /tmp/dots.tmp to $HOME/.config/\n"
 cp -vri /tmp/dots.tmp/* $HOME/.config/ || ec=$?; printf "An error had occured during copy\n"; exit $ec
 printf "[*] Deleting temporary files...\n" 
 rm -vrf /tmp/dots.tmp || ec=$?; printf "An error had occured during deletion\n"; exit $ec
+printf "[!] Successfully installed configs\n"
+printf "[*] Applying config, restarting bspWM\n"
+bspc wm -r 
 
 exit 0
