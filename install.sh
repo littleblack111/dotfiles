@@ -20,6 +20,15 @@ if ! command -v sddm > /dev/null; then
     printf "[!] sddm: command not found\nthis program is for sddm, please install sddm\n"
     exit 127
 fi
+if ! command -v thefuck > /dev/null; then
+    printf "[!] thefuck: command not found\n"
+    if ! command -v pip > /dev/null; then
+        if ! command -v python3 > /dev/null; then
+            printf "[!] python3: command not found\n"
+        fi
+    fi
+    pip3 install thefuck
+fi
 
 if [ $ghc != true ]; then
     if ! command -v git > /dev/null; then
@@ -100,15 +109,16 @@ cp -vr /tmp/dots.tmp/* $HOME/.config/ #|| ec=$?; printf "[!] An error had occure
 #    printf "[!] An error had occured during installation(copy)\n"; exit 1
 #    exit 1
 #fi
-cp -vri /tmp/dots.tmp/.zshrc $HOME || ec=$?; printf "An error had occured during installation(copy .zshrc)\n"; exit $ec
-cp -vri /tmp/dots.tmp/.zshenv $HOME || ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
-cp -vri /tmp/dots.tmp/.p10k $HOME || ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
-cp -vri /tmp/dots.tmp/.oh_my_zsh $HOME || ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
+cp -vr /tmp/dots.tmp/.zshrc $HOME || ec=$?; printf "An error had occured during installation(copy .zshrc)\n"; exit $ec
+cp -vr /tmp/dots.tmp/.zshenv $HOME || ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
+cp -vr /tmp/dots.tmp/.p10k $HOME || ec=$?; printf "An error had occured during installation(copy .p10k)\n"; exit $ec
+cp -vr /tmp/dots.tmp/.oh_my_zsh $HOME || ec=$?; printf "An error had occured during installation(copy .omz)\n"; exit $ec
+cp -vr /tmp/dots.tmp/scripts $HOME || ec=$?; printf "An error had occured during installation(copy scripts)\n"; exit $ec
 printf "[*] Installing stuff that require root privlliage(might prompt for sudo password)"
 sudo cp -vr /tmp/dots.tmp/usr /
 sudo cp -vr /tmp/dots.tmp/etc /
 printf "[*] Build & Installing picom\n"
-cd /tmp/picom.tmp && git submodule update --init --recursive && meson setup --buildtype=release . build && ninja -C build || ec=$?; printf "An error had occured during Build/Install of picom"; exit $ec
+cd /tmp/picom.tmp && git submodule update --init --recursive && meson setup --buildtype=release . build && ninja -C build && cd - || ec=$?; printf "An error had occured during Build/Install of picom"; exit $ec
 printf "[*] Deleting temporary files\n"
 rm -vrf /tmp/dots.tmp /tmp/picom.tmp || ec=$?; printf "An error had occured during deletion\n"; exit $ec
 printf "[!] Successfully installed configs\n"
