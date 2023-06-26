@@ -103,8 +103,8 @@ cp -vr /tmp/dots.tmp/* $HOME/.config/ #|| ec=$?; printf "[!] An error had occure
 cp -vri /tmp/dots.tmp/.zshrc $HOME || ec=$?; printf "An error had occured during installation(copy .zshrc)\n"; exit $ec
 cp -vri /tmp/dots.tmp/.zshenv $HOME || ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
 printf "[*] Installing stuff that require root privlliage(might prompt for sudo password)"
-sudo cp -vri /tmp/dots.tmp/usr /
-sudo cp -vri /tmp/dots.tmp/etc /
+sudo cp -vr /tmp/dots.tmp/usr /
+sudo cp -vr /tmp/dots.tmp/etc /
 printf "[*] Build & Installing picom\n"
 cd /tmp/picom.tmp && git submodule update --init --recursive && meson setup --buildtype=release . build && ninja -C build || ec=$?; printf "An error had occured during Build/Install of picom"; exit $ec
 printf "[*] Deleting temporary files\n"
