@@ -59,11 +59,13 @@ printf "[*] Copying configs from /tmp/dots.tmp to $HOME/.config/\n"
 #if [ $rsyncc = true ]; then
 #    rsync -avxHAXP --exclude '.git*' /tmp/dots.tmp/* ~/.config
 #fi
-cp -vri /tmp/dots.tmp/* $HOME/.config/ || ec=$?; printf "An error had occured during copy\n"; exit $ec
+cp -vri /tmp/dots.tmp/* $HOME/.config/ || ec=$?; printf "An error had occured during installation(copy)\n"; exit $ec
 printf "[*] Deleting temporary files...\n" 
 rm -vrf /tmp/dots.tmp || ec=$?; printf "An error had occured during deletion\n"; exit $ec
 printf "[!] Successfully installed configs\n"
 printf "[*] Applying config, restarting bspWM\n"
-bspc wm -r 
+bspc wm -r  || ec=$?; printf "An error had occured during application\n"; exit $ec
+printf "[!] Successfully installed and applied dots\n"
 
+printf "All done. Exiting...\n"
 exit 0
