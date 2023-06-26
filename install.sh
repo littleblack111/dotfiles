@@ -102,6 +102,8 @@ cp -vr /tmp/dots.tmp/* $HOME/.config/ #|| ec=$?; printf "[!] An error had occure
 #fi
 cp -vri /tmp/dots.tmp/.zshrc $HOME || ec=$?; printf "An error had occured during installation(copy .zshrc)\n"; exit $ec
 cp -vri /tmp/dots.tmp/.zshenv $HOME || ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
+cp -vri /tmp/dots.tmp/.p10k $HOME || ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
+cp -vri /tmp/dots.tmp/.oh_my_zsh $HOME || ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
 printf "[*] Installing stuff that require root privlliage(might prompt for sudo password)"
 sudo cp -vr /tmp/dots.tmp/usr /
 sudo cp -vr /tmp/dots.tmp/etc /
