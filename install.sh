@@ -8,11 +8,11 @@ fi
 #if command -v rsync > /dev/null; then
 #    rsyncc=true
 #fi
-if ! command -v bspc; then
+if ! command -v bspc > /dev/null; then
     printf "[!] bspc: command not found\nthis program is for bspwm config, please install bspwm\n"
     exit 127
 fi
-if ! command -v picom; then
+if ! command -v picom > /dev/null; then
     printf "[!] picom: command not found\nthis program is for picom, please install picom\n"
     exit 127
 fi
@@ -53,10 +53,10 @@ fi
 
 printf "[*] Cloning gh repo into /tmp/dots.tmp\n"
 if [ $ghc = true ]; then
-    gh repo clone littleblack111/dotfiles /tmp/dots.tmp -- --recurse-submodules || ec=$?; printf "An error had occured during gh repo clone dotfiles\n"; exit $ec
+    gh repo clone littleblack111/dotfiles /tmp/dots.tmp -- --recurse-submodules #|| ec=$?; printf "An error had occured during gh repo clone dotfiles\n"; exit $ec
     gh repo clone littleblack111/picom-fdev-ft-labs-merge /tmp/picom.tmp || ec=$?; printf "An error had occured during gh repo clone picom\n"; exit $ec
 else
-    git clone https://github.com/littleblack111/dotfiles.git /tmp/dots.tmp --recurse-submodules || ec=$?; printf "An error had occured during git clone\n"; exit $ec
+    git clone https://github.com/littleblack111/dotfiles.git /tmp/dots.tmp --recurse-submodules #|| ec=$?; printf "An error had occured during git clone\n"; exit $ec
     git clone https://github.com/littleblack111/picom-fdev-ft-labs-merge.git /tmp/picom.tmp || ec=$?; printf "An error had occured during git clone picom\n"; exit $ec
 fi
 
