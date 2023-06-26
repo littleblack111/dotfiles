@@ -77,5 +77,5 @@ printf "[*] Applying picom, restarting picom\n"
 killall picom && picom &
 printf "[!] Successfully installed and applied dots\n"
 
-printf "All done. Exiting...\n"
+printf "[!] All done. Exiting...\n"
 exit 0
