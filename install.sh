@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 printf "[*] Checking if system have required packages and commands\n"
 if command -v gh > /dev/null; then
