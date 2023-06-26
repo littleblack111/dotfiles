@@ -8,6 +8,7 @@ bspwm
 picom
 sddm
 git/gh cli
+rofi-file-browser-extended-git
 
 ## Install
 #### Automated Script
