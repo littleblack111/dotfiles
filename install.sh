@@ -90,7 +90,12 @@ printf "[*] Installing configs from /tmp/dots.tmp to $HOME/.config/\n"
 #if [ $rsyncc = true ]; then
 #    rsync -avxHAXP --exclude '.git*' /tmp/dots.tmp/* ~/.config
 #fi
-cp -vri /tmp/dots.tmp/* $HOME/.config/ || ec=$?; printf "An error had occured during installation(copy)\n"; exit $ec
+cp -vri /tmp/dots.tmp/* $HOME/.config/ #|| ec=$?; printf "An error had occured during installation(copy)\n"; exit $ec
+if [ ! -e $HOME/.config/.ver ]; then
+    printf "[!] An error had occured during installation(copy)\n"; exit 1
+fi
+cp -vri /tmp/dots.tmp/.zshrc $HOME || ec=$?; printf "An error had occured during installation(copy .zshrc)\n"; exit $ec
+cp -vri /tmp/dots.tmp/.zshenv $HOME || ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
 printf "[*] Build & Installing picom\n"
 cd /tmp/picom.tmp && git submodule update --init --recursive && meson setup --buildtype=release . build && ninja -C build || ec=$?; printf "An error had occured during Build/Install of picom"; exit $ec
 printf "[*] Deleting temporary files\n"
