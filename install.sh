@@ -16,6 +16,10 @@ if ! command -v picom > /dev/null; then
     printf "[!] picom: command not found\nthis program is for picom, please install picom\n"
     exit 127
 fi
+if ! command -v sddm > /dev/null; then
+    printf "[!] sddm: command not found\nthis program is for sddm, please install sddm\n"
+    exit 127
+fi
 
 if [ $ghc != true ]; then
     if ! command -v git > /dev/null; then
@@ -93,16 +97,20 @@ printf "[*] Installing configs from /tmp/dots.tmp to $HOME/.config/\n"
 cp -vri /tmp/dots.tmp/* $HOME/.config/ #|| ec=$?; printf "An error had occured during installation(copy)\n"; exit $ec
 if [ ! -e $HOME/.config/.ver ]; then
     printf "[!] An error had occured during installation(copy)\n"; exit 1
+    exit 1
 fi
 cp -vri /tmp/dots.tmp/.zshrc $HOME || ec=$?; printf "An error had occured during installation(copy .zshrc)\n"; exit $ec
 cp -vri /tmp/dots.tmp/.zshenv $HOME || ec=$?; printf "An error had occured during installation(copy .zshenv)\n"; exit $ec
+printf "[*] Installing stuff that require root privlliage(might prompt for sudo password)"
+sudo cp -vri /tmp/dots.tmp/usr /
+sudo cp -vri /tmp/dots.tmp/etc /
 printf "[*] Build & Installing picom\n"
 cd /tmp/picom.tmp && git submodule update --init --recursive && meson setup --buildtype=release . build && ninja -C build || ec=$?; printf "An error had occured during Build/Install of picom"; exit $ec
 printf "[*] Deleting temporary files\n"
 rm -vrf /tmp/dots.tmp /tmp/picom.tmp || ec=$?; printf "An error had occured during deletion\n"; exit $ec
 printf "[!] Successfully installed configs\n"
 printf "[*] Applying config, restarting bspWM\n"
-bspc wm -r  || ec=$?; printf "An error had occured during application\n"; exit $ec
+bspc wm -r  || ec=$?; printf "[!] An error had occured during application\n"; exit $ec
 printf "[*] Applying picom, restarting picom\n"
 killall picom && picom &
 printf "[!] Successfully installed and applied dots\n"

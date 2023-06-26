@@ -6,6 +6,7 @@
 ##### Required
 bspwm
 picom
+sddm
 git/gh cli
 
 ## Install
