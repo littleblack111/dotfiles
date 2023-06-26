@@ -50,6 +50,15 @@ if [ $ghc != true ]; then
     fi
 fi
 
+if [ -e /tmp/dots.tmp ]; then
+    printf "[!] /tmp/dots.tmp exist, deleting\n"
+    rm -rf /tmp/dots.tmp
+fi
+if [ -e /tmp/picom.tmp ]; then
+    printf "[!] /tmp/picom.tmp exist, deleting\n"
+    rm -rf /tmp/picom.tmp
+fi
+
 
 printf "[*] Cloning gh repo into /tmp/dots.tmp\n"
 if [ $ghc = true ]; then
