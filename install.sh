@@ -63,10 +63,10 @@ fi
 printf "[*] Cloning gh repo into /tmp/dots.tmp\n"
 if [ $ghc = true ]; then
     gh repo clone littleblack111/dotfiles /tmp/dots.tmp -- --recurse-submodules #|| ec=$?; printf "An error had occured during gh repo clone dotfiles\n"; exit $ec
-    gh repo clone littleblack111/picom-fdev-ft-labs-merge /tmp/picom.tmp || ec=$?; printf "An error had occured during gh repo clone picom\n"; exit $ec
+    gh repo clone littleblack111/picom-fdev-ft-labs-merge /tmp/picom.tmp #|| ec=$?; printf "An error had occured during gh repo clone picom\n"; exit $ec
 else
     git clone https://github.com/littleblack111/dotfiles.git /tmp/dots.tmp --recurse-submodules #|| ec=$?; printf "An error had occured during git clone\n"; exit $ec
-    git clone https://github.com/littleblack111/picom-fdev-ft-labs-merge.git /tmp/picom.tmp || ec=$?; printf "An error had occured during git clone picom\n"; exit $ec
+    git clone https://github.com/littleblack111/picom-fdev-ft-labs-merge.git /tmp/picom.tmp #|| ec=$?; printf "An error had occured during git clone picom\n"; exit $ec
 fi
 
 printf "[*] Installing configs from /tmp/dots.tmp to $HOME/.config/\n"
