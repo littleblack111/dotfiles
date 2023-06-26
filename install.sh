@@ -121,7 +121,11 @@ printf "[*] Installing stuff that require root privlliage(might prompt for sudo 
 sudo cp -vr /tmp/dots.tmp/usr /
 sudo cp -vr /tmp/dots.tmp/etc /
 printf "[*] Build & Installing picom\n"
-cd /tmp/picom.tmp && git submodule update --init --recursive && meson setup --buildtype=release . build && ninja -C build && cd - || ec=$?; printf "[*] An error had occured during Build/Install of picom"; exit $ec
+if ! command -v meson > /dev/null; then
+    printf "[!] meson: command not found, install meson to install picom"
+elif command -v meson > /dev/null; then
+    cd /tmp/picom.tmp && git submodule update --init --recursive && meson setup --buildtype=release . build && ninja -C build && cd - || ec=$?; printf "[*] An error had occured during Build/Install of picom"; exit $ec
+fi
 printf "[*] Deleting temporary files\n"
 rm -vrf /tmp/dots.tmp /tmp/picom.tmp || ec=$?; printf "An error had occured during deletion\n"; exit $ec
 printf "[!] Successfully installed configs\n"
