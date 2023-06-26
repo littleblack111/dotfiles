@@ -18,7 +18,7 @@ copy the files into your config
 Terminal Emu: `Alacritty`\
 Session Manager: `sddm`\
 Windows manager: `bspwm`\
-Compositor: `udev's picom & FT-labs picom merged`(https://github.com/littleblack111/picom-fdev-ft-labs-merge)\
+Compositor: `udev's picom & FT-labs picom merged`(https://github.com/littleblack111/picom-fdev-ft-labs-merge) \
 Text/Code editor: `neovim`\
 Status Bar: `Polybar`\
 Launcher: `rofi`\
