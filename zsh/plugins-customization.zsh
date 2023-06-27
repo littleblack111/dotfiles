@@ -110,7 +110,7 @@ add-zsh-hook -Uz precmd rehash_precmd
 eval $(thefuck --alias)
 
 # autojump
-source /home/system/.autojump/etc/profile.d/autojump.sh
+source $HOME/.autojump/etc/profile.d/autojump.sh
 autoload -U compinit && compinit -u
 
 # homebrew
@@ -158,4 +158,4 @@ rehash_precmd() {
 #source $ZSH/custom/plugins/dirhistory/dirhistory.plugin.zsh
 
 # nix
-if [ -e /home/system/.nix-profile/etc/profile.d/nix.sh ]; then . /home/system/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

@@ -87,7 +87,7 @@ if [ $ghc = true ]; then
         printf "[!] dots did not clone Successfully"
         exit 1
     fi
-    gh repo clone littleblack111/picom-fdev-ft-labs-merge /tmp/picom.tmp #|| ec=$?; printf "An error had occured during gh repo clone picom\n"; exit $ec
+    gh repo clone littleblack111/picom /tmp/picom.tmp #|| ec=$?; printf "An error had occured during gh repo clone picom\n"; exit $ec
     if [ ! -e /tmp/picom.tmp ]; then
         printf "[!] picom did not clone Successfully"
         exit 1
@@ -98,7 +98,7 @@ else
         printf "[!] dots did not clone Successfully"
         exit 1
     fi
-    git clone https://github.com/littleblack111/picom-fdev-ft-labs-merge.git /tmp/picom.tmp #|| ec=$?; printf "An error had occured during git clone picom\n"; exit $ec
+    git clone https://github.com/littleblack111/picom.git /tmp/picom.tmp #|| ec=$?; printf "An error had occured during git clone picom\n"; exit $ec
     if [ ! -e /tmp/picom.tmp ]; then
         printf "[!] picom did not clone Successfully"
         exit 1
@@ -131,7 +131,7 @@ printf "[*] Build & Installing picom\n"
 if ! command -v meson > /dev/null; then
     printf "[!] meson: command not found, install meson to install picom"
 elif command -v meson > /dev/null; then
-    cd /tmp/picom.tmp && git submodule update --init --recursive && meson setup --buildtype=release . build && ninja -C build && cd - || ec=$?; printf "[*] An error had occured during Build/Install of picom"; exit $ec
+    cd /tmp/picom.tmp && git submodule update --init --recursive && meson setup --buildtype=release . build && ninja -C build install || sudo ninja -C build install && cd - || ec=$?; printf "[*] An error had occured during Build/Install of picom"; exit $ec
 fi
 printf "[*] Deleting temporary files\n"
 rm -vrf /tmp/dots.tmp /tmp/picom.tmp || ec=$?; printf "An error had occured during deletion\n"; exit $ec
