@@ -171,7 +171,8 @@ super + Escape
 
 # reload Polybar
 ctrl + super + Escape
-    bspbar && bspc config top_padding 46
+    #bspbar && bspc config top_padding 46
+    polybar-msg cmd restart && bspc config top_padding 46
 
 # Switch workspace
 ctrl + alt + {Left,Right}
