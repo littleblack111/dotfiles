@@ -487,6 +487,11 @@ alias license.short="sed -n '2p' /mnt/DATA/Code/license.txt"
 alias browsh='echo "export $(env | grep --color=never LANG=)" > $HOME/.cache/browsh.LANGcache && LANG=EN && browsh && $(cat $HOME/.cache/browsh.LANGcache) && rm $HOME/.cache/browsh.LANGcache'
 # metasploit framework
 alias msfconsole='msfd && /usr/bin/msfconsole || echo [*] msfd faild to start'
+# process related stuff
+alias processfind='ps -aux | grep -v grep | grep'
+alias processf='processfind'
+alias pf='processfind'
+
 
 # help
 alias help='tldr'
