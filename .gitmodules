@@ -1,3 +1,6 @@
 [submodule "nvim"]
 	path = nvim
 	url = https://github.com/littleblack111/nvim
+[submodule "zsh"]
+	path = zsh
+	url = https://github.com/littleblack111/zsh
