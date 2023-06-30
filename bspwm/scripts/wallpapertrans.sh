@@ -7,6 +7,17 @@ DISPLAY=:0
 WALLPAPERS="$HOME/Pictures/wallpapers/"
 #wallpappath=( `"find "$WALLPAPERS" | shuf -n 1"` )
 wallpappath=$(find "$WALLPAPERS" | shuf -n 1)
+echo "$wallpappath" > "$HOME/.cache/current.bg"
+
+# polybar bg theme
+# forground experiment is bad
+#if [[ $(bgthemecheck.sh) == "dark" ]]; then
+#    sed -i 's/^\*.bgcolor*$/\*.bgcolor: #C7242931/g' "$HOME"/.Xresources
+#elif [[ $(bgthemecheck.sh) == "light" ]]; then
+#    sed -i 's/^\*.bgcolor*$/\*.bgcolor: #C7FFFFFF/g' "$HOME"/.Xresources
+#else
+#    printf "An error had occured during apply theme to polybar"
+#fi
 
 DELAY=0.01
 QUALITY=0.3

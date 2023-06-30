@@ -67,3 +67,4 @@ text/html=brave-browser.desktop;
 x-scheme-handler/discord-537047684993777686=discord-537047684993777686.desktop
 x-scheme-handler/baiduyunguanjia=baidunetdisk.desktop
 text/x-lua=nvim.desktop
+text/plain=nvim.desktop

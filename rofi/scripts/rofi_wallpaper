@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+#CM_LAUNCHER=rofi
+DIR="$HOME/.config/rofi"
+RASI="$DIR/wallpaper.rasi"
+mesg="Please Select a Wallpaper"
+
+# Define the directory to list files from
+directory="$HOME/Pictures/wallpapers"
+
+# Use `ls` to list the files in the directory
+files=$(ls $directory)
+
+# Use rofi to display the list of files
+chosen=$(echo $files | tr " " "\n" | rofi -dmenu -theme ${RASI} -separator-style plain)
+
+# Check if a file was selected
+if [ -n "$chosen" ]; then
+    # Run a command with the selected file as an argument
+    feh $chosen
+fi
