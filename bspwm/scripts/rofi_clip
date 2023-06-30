@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-#CM_LAUNCHER=rofi
-DIR="$HOME/.config/rofi"
-RASI="$DIR/clipboard.rasi"
-mesg="Clipboard History"
-clipmenu -i -fn Terminus:size=15 -nb '#002b36' -nf '#839496' -sb '#073642' -sf '#93a1a1' -theme ${RASI} -mesg $mesg
