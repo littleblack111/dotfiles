@@ -35,3 +35,5 @@ Status Bar: `Polybar`\
 Launcher: `rofi`\
 Notifications: `Dunstify`\
 File Manager: `Thunar` 
+
+## WARNING, SOME CONFIGS ARE FROM ARCHCRAFT
