@@ -21,7 +21,7 @@ super + space + Return
     bspterm --pseudo
 
 super + alt + Delete
-    ~/.config/bspwm/rofi_powermenu
+    ~/.config/rofi/scripts/rofi_powermenu
 
 ##---------- Rofi Launcher & Menus ----------##
 

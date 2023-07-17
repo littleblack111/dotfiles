@@ -6,9 +6,12 @@
 
 ## Bspwm config directory
 BSPDIR="$HOME/.config/bspwm"
+ROFIDIR="$HOME/.config/rofi"
+POLYBARDIR="$HOME/.config/polybar"
+SCRIPTSDIR="$HOME/scripts"
 
 ## Export bspwm/bin dir to PATH
-export PATH="${PATH}:$BSPDIR/scripts"
+export PATH="${PATH}:$BSPDIR/scripts:$ROFIDIR/scripts:$POLYBARDIR/scripts:$SCRIPTSDIR"
 
 ## Run java applications without issues
 export _JAVA_AWT_WM_NONREPARENTING=1
@@ -140,8 +143,8 @@ bspc rule -a stalonetray state=floating manage=off
 
 # Kill if already running
 killall -9 xsettingsd xbindkeys sxhkd dunst ksuperkey xfce4-power-manager bspc runtransani.sh cleanfullscreen mpd-mpris landrop #rrunbgblur.sh  # launching with conditions .feh backgroundblur chat-server
-killall -15 reflector.sh idle.sh
-eww kill
+killall -15 idle.sh # reflector.sh
+#eww kill
 
 # Start bspwm scripts
 bspbar &
