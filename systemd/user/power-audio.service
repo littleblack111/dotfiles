@@ -1,0 +1,12 @@
+[Unit]
+Description=Startup & Shutdown audio
+After=graphical.target
+Requires=graphical.target
+
+[Service]
+ExecStart=/sbin/paplay /usr/local/share/sounds/win11startup.mp3
+ExecStop=/sbin/paplay /usr/local/share/sounds/win11shutdown.mp3
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
