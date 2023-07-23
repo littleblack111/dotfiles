@@ -242,7 +242,7 @@ yay -Ss > /tmp/yaySs &
 
 
 # startup sound
-$HOME/scripts/startupsound.sh &
+#$HOME/scripts/startupsound.sh & # exist in user systemd unit
 
 
 # discord
@@ -267,6 +267,9 @@ bspc config top_padding 46
 
 # remove startup lock
 if [ -f /tmp/lock/startup.lock ]; then
+    # auto startup apps
+    $HOME/scripts/startapp &
+    # clean-up
     sudo /sbin/rm -f /tmp/lock/startup.lock
 fi
 
