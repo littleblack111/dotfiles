@@ -262,7 +262,17 @@ bspc config top_padding 46
 # prevent restarting bspwm from doing that
 #bspc desktop -f ^1
 
-# landrop
+# connection with other computers(universal control)
+/usr/bin/ps ax | grep -v grep | grep barrier || barrier &
+
+# remove startup lock
+if [ -f /tmp/lock/startup.lock ]; then
+    sudo /sbin/rm -f /tmp/lock/startup.lock
+fi
+
+# sys tray wait(timeout)
 sleep 10
 /usr/bin/ps ax | grep -v grep | grep landrop > /dev/null || landrop &
 /usr/bin/ps ax | grep -v grep | grep blueman-applet || blueman-applet &
+
+

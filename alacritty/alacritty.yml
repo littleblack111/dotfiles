@@ -42,7 +42,7 @@ cursor:
       #shape: Block
       #blinking: On
 
-  unfocused_hollow: false
+  unfocused_hollow: true
 
 ## Live config reload
 live_config_reload: true

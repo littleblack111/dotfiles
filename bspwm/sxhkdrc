@@ -38,8 +38,8 @@ alt + F2
 #	{rofi_configs,rofi_music,nmd,rofi_asroot,rofi_screenshot,rofi_themes,rofi_clip,rofi_windows,rofi_powermenu}
 
 # Rofi Menus/Applets
-super + {c,m,n,r,s,v,w,x}
-	{rofi_configs,rofi_music,nmd,rofi_asroot,rofi_screenshot,rofi_clip,rofi_windows,rofi_powermenu}
+super + {c,m,n,r,s,v,w,x,b}
+	{rofi_configs,rofi_music,nmd,rofi_asroot,rofi_screenshot,rofi_clip,rofi_windows,rofi_powermenu,rofi_bluetooth}
 
 super + alt + b
     killall runtransani.sh; exec $HOME/scripts/runtransani.sh &
@@ -53,15 +53,15 @@ super + period
 
 # Launch Apps
 super + shift + {f,w,e,d}
-	{thunar && mv /home/system/.config/Thunar/uca.xml . && mv uca.xml /home/system/.config/Thunar/uca.xml,brave,code,discord}
+	{thunar && mv /home/system/.config/Thunar/uca.xml . && mv uca.xml /home/system/.config/Thunar/uca.xml,brave --restore-last-session,code,discord}
 
 # Terminal Apps
 ctrl + alt + {a,v,r,b}
-	alacritty --class 'alacritty-float,alacritty-float' -e {pulsemixer,nvim,ranger,sudo bpytop}
+	alacritty --class 'alacritty-float,alacritty-float' -e {pulsemixer,nvim,ranger,sudo btop}
 
 # task manager
 ctrl + shift + Escape
-    sudo bpytop
+    sudo btop
 
 ctrl + alt + Delete
     rofi_shutdown_menu
@@ -124,10 +124,12 @@ super + XF86PowerOff
     $HOME/.config/bspwm/scripts/rofi_powermenu
 
 alt + f
-    /usr/bin/ps ax | grep -v grep | grep autoclicker-left > /dev/null && killall autoclicker-left || exec autoclicker-left
+    $HOME/scripts/autoclicker-left.sh
+    # /usr/bin/ps ax | grep -v grep | grep autoclicker-left > /dev/null && killall autoclicker-left || exec autoclicker-left
 
 alt + g
-    /usr/bin/ps ax | grep -v grep | grep autoclicker-right > /dev/null && killall autoclicker-right || exec autoclicker-right
+    $HOME/scripts/autoclicker-right.sh
+    #/usr/bin/ps ax | grep -v grep | grep autoclicker-right > /dev/null && killall autoclicker-right || exec autoclicker-right
 
 ##---------- Bspwm ----------##
 
@@ -149,7 +151,7 @@ alt + F4
 
 # kill window
 ctrl + alt + Escape
-    /home/system/.config/bspwm/scripts/mouseKill
+    /home/system/scripts/mouseKill
 
 ctrl + super + alt + Escape
     xkill -id $(xprop -root _NET_ACTIVE_WINDOW | awk '{print $5}')
@@ -224,6 +226,7 @@ ctrl + @button3
 super + alt + {h,v,q}
 	bspc node -p {east,south,cancel}
 
+# toggle between horizontal and vertical
 ctrl + super + m
     bspc node @parent -R 90
 
