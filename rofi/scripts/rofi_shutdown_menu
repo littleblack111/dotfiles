@@ -37,6 +37,7 @@ confirm_run () {
 
 confirm_run &
 pid=$!
+#pid=$(cat /run/user/$(id -u)/rofi.pid)
 notify-send "Powering off system in 10 seconds"
 for (( i = 10; i > 0; --i )); do
     if ! ps -p $pid > /dev/null; then

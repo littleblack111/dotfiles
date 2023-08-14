@@ -1,7 +1,5 @@
 [Unit]
 Description=Startup & Shutdown audio
-After=graphical.target
-Requires=graphical.target
 
 [Service]
 Type=oneshot

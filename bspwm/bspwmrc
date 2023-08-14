@@ -94,12 +94,12 @@ for i in ${code[@]}; do
 ## 5 > office and docs (always open office/doc apps on workspace-5)
 declare -a office=(Gucharmap Atril Evince \
 libreoffice-writer libreoffice-calc libreoffice-impress \
-libreoffice-startcenter libreoffice Soffice *:libreofficedev *:soffice craft-nativefier-e0958b powerphrasingtool-nativefier-c8a789 Typora)
+libreoffice-startcenter libreoffice Soffice *:libreofficedev *:soffice craft-nativefier-e0958b powerphrasingtool-nativefier-c8a789 Typora obsidian)
 for i in ${office[@]}; do
    bspc rule -a $i desktop='^5' follow=on focus=on; done
 
 ## 6 > communication (always open communication apps on workspace-6)
-declare -a comm=(Thunderbird TelegramDesktop Hexchat discord Chat-gpt Blender blender Whatsapp-for-linux Chatbox)
+declare -a comm=(Thunderbird TelegramDesktop Hexchat discord VencordDesktop Chat-gpt Blender blender Whatsapp-for-linux Chatbox)
 for i in ${comm[@]}; do
    bspc rule -a $i desktop='^6' follow=on focus=on; done
 
@@ -120,7 +120,7 @@ bspc rule -a 'Xdm-app'='^9' follow=on focus=on
 bspc rule -a timeshift-gtk='^9' follow=on focus=on
 declare -a settings=(Lxappearance Lxtask Lxrandr Arandr \
 System-config-printer.py Pavucontrol Exo-helper-1 Protonvpn \
-Xfce4-power-manager-settings Mysql-workbench-bin Grub-customizer Nitrogen archlinux-tweak-tool.py Archlinux-tweak-tool.py pamac-manager helvum)
+Xfce4-power-manager-settings Mysql-workbench-bin Grub-customizer Nitrogen archlinux-tweak-tool.py Archlinux-tweak-tool.py pamac-manager helvum Vmware)
 for i in ${settings[@]}; do
    bspc rule -a $i desktop='^9' state=floating follow=on focus=on; done
 
@@ -208,7 +208,7 @@ numlockx
 # configured in as a service unit
 
 # start clipboard daemon
-exec clipmenud & # as a systemd service unit
+exec clipmenud &
 
 # youtube-dl extention daemon
 #exec youtube-dl-server --number-processes 1 & # dont really use it now so ya
@@ -245,8 +245,8 @@ yay -Ss > /tmp/yaySs &
 #$HOME/scripts/startupsound.sh & # exist in user systemd unit
 
 
-# discord
-/usr/bin/ps ax | grep -v grep | grep Discord > /dev/null || discord --start-minimized &
+# vencord
+/usr/bin/ps ax | grep -v grep | grep vencord > /dev/null || discord --start-minimized &
 
 # autoclicker
 # now in $HOME/scripts/bin/autoclicker
@@ -267,9 +267,15 @@ bspc config top_padding 46
 
 # remove startup lock
 if [ -f /tmp/lock/startup.lock ]; then
+    # startup sound
+    $HOME/scripts/startupsound.sh &
     # auto startup apps
     $HOME/scripts/startapp &
-    # clean-up
+    spid=$!
+    # go back first desktop(last)
+    wait $spid
+    bspc desktop -f "^1"
+    # clean-up (last)
     sudo /sbin/rm -f /tmp/lock/startup.lock
 fi
 

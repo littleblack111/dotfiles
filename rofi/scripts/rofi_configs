@@ -24,7 +24,7 @@ option_13="BSPWM"
 option_14="Polybar"
 option_15="BPWM-Scripts"
 option_16="Scripts"
-option_17="Neovim(nvim)"
+#option_17="Neovim(lvim)"
 
 # Rofi CMD
 rofi_cmd() {
@@ -38,27 +38,27 @@ rofi_cmd() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-	echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5\n$option_6\n$option_7\n$option_8\n$option_9\n$option_10\n$option_11\n$option_12\n$option_13\n$option_14\n$option_15\n$option_16\n$option_17" | rofi_cmd
+	echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5\n$option_6\n$option_7\n$option_8\n$option_9\n$option_10\n$option_11\n$option_12\n$option_13\n$option_14\n$option_15\n$option_16" | rofi_cmd
 }
 
 # Execute Command
 run_cmd() {
 	if [[ "$1" == '--opt1' ]]; then
-		alacritty --class 'alacritty-float,alacritty-float' --command nvim $HOME/.zshrc
+		alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.zshrc
     elif [[ "$1" == '--opt2' ]]; then
-        alacritty --class 'alacritty-float,alacritty-float' --command nvim $HOME/.zshenv
+        alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.zshenv
 	elif [[ "$1" == '--opt3' ]]; then
-		alacritty --class 'alacritty-float,alacritty-float' --command nvim $HOME/.config/bspwm/bspwmrc
+		alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/bspwm/bspwmrc
 	elif [[ "$1" == '--opt4' ]]; then
-        alacritty --class 'alacritty-float,alacritty-float' --command nvim $HOME/.config/bspwm/sxhkdrc
+        alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/bspwm/sxhkdrc
 	elif [[ "$1" == '--opt5' ]]; then
-        alacritty --class 'alacritty-float,alacritty-float' --command nvim $HOME/.config/polybar/config.ini
+        alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/polybar/config.ini
 	elif [[ "$1" == '--opt6' ]]; then
-        alacritty --class 'alacritty-float,alacritty-float' --command nvim $HOME/.config/polybar/modules.ini
+        alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/polybar/modules.ini
     elif [[ "$1" == '--opt7' ]]; then
-        alacritty --class 'alacritty-float,alacritty-float' --command nvim $HOME/.config/alacritty/alacritty.yml
+        alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/alacritty/alacritty.yml
     elif [[ "$1" == '--opt8' ]]; then
-        alacritty --class 'alacritty-float,alacritty-float' --command nvim $HOME/.config/picom.conf
+        alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/picom.conf
     elif [[ "$1" == '--opt10' ]]; then
         rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config
     elif [[ "$1" == '--opt11' ]]; then
@@ -74,7 +74,7 @@ run_cmd() {
     elif [[ "$1" == '--opt16' ]]; then
         rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/scripts
     elif [[ "$1" == '--opt17' ]]; then
-        rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config/nvim
+        rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config/lvim
 	fi
 }
 
@@ -126,6 +126,4 @@ case ${chosen} in
     $option_16)
         run_cmd --opt16
         ;;
-    $option_17)
-        run_cmd --opt17
 esac

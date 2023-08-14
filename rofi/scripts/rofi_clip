@@ -1,6 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
-#CM_LAUNCHER=rofi
+#export CM_LAUNCHER=rofi
+#export CM_DIR="$XDG_CONFIG_HOME"
 DIR="$HOME/.config/rofi"
 RASI="$DIR/clipboard.rasi"
 mesg="Clipboard History"

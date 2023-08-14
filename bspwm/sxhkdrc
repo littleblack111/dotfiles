@@ -53,11 +53,11 @@ super + period
 
 # Launch Apps
 super + shift + {f,w,e,d}
-	{thunar && mv /home/system/.config/Thunar/uca.xml . && mv uca.xml /home/system/.config/Thunar/uca.xml,brave --restore-last-session,code,discord}
+	{thunar && mv /home/system/.config/Thunar/uca.xml . && mv uca.xml /home/system/.config/Thunar/uca.xml,brave --restore-last-session,code,vencord}
 
 # Terminal Apps
 ctrl + alt + {a,v,r,b}
-	alacritty --class 'alacritty-float,alacritty-float' -e {pulsemixer,nvim,ranger,sudo btop}
+	alacritty --class 'alacritty-float,alacritty-float' -e {pulsemixer,lvim,ranger,sudo btop}
 
 # task manager
 ctrl + shift + Escape
