@@ -1,0 +1,15 @@
+bspc config initial_polarity second_child
+
+# Run the command specified as the first argument
+$1 & disown
+
+# Wait for the window to be created
+sleep 1
+
+# Get the ID of the most recently created window
+window_id=$(bspc query --windows --node focused | tail -n 1 | awk '{print $1}')
+
+# Set the state of the window to floating
+bspc window $window_id -t floating
+
+bspc config initial_polarity first_child

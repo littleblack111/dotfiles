@@ -1,0 +1,13 @@
+* {
+    --background:     rgba ( 46, 52, 64, 25% );
+    background:     rgba ( 0, 0, 0, 35% );
+    --background-alt: rgba ( 57, 64, 79, 25% );
+    background-alt: rgba ( 0, 0, 0, 15% );
+    foreground:     rgba ( 216, 222, 233, 100% );
+    --selected:       rgba ( 129, 161, 193, 10% );
+    selected:       rgba ( 0, 0, 0, 10% );
+    --active:         rgba ( 163, 190, 140, 10% );
+    active:         rgba ( 0, 0, 0, 10% );
+    --urgent:         rgba ( 191, 97, 106, 75% );
+    urgent:         rgba ( 0, 0, 0, 75% );
+}

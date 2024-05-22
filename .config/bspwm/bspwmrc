@@ -1,0 +1,307 @@
+#!/usr/bin/env bash
+
+## BSPWM config file for Arch
+
+## General ---------------------------------------------------#
+
+## Bspwm config directory
+BSPDIR="$HOME/.config/bspwm"
+ROFIDIR="$HOME/.config/rofi"
+POLYBARDIR="$HOME/.config/polybar"
+SCRIPTSDIR="$HOME/scripts"
+
+## Export bspwm/bin dir to PATH
+export PATH="${PATH}:$BSPDIR/scripts:$ROFIDIR/scripts:$POLYBARDIR/scripts:$SCRIPTSDIR"
+
+## Run java applications without issues
+export _JAVA_AWT_WM_NONREPARENTING=1
+#wmname LG3D
+## Current theme ---------------------------------------------#
+
+## Bspwm colors
+BSPWM_FBC='#81A1C1'
+BSPWM_NBC='#2E3440'
+BSPWM_ABC='#B48EAD'
+BSPWM_PFC='#A3BE8C'
+
+## Bspwm appearance
+BSPWM_BORDER='1'
+BSPWM_GAP='10'
+BSPWM_SRATIO='0.50'
+
+## Configurations --------------------------------------------#
+
+## Manager Workspaces
+workspaces() {
+	name=1
+	for monitor in `bspc query -M`; do
+		#bspc monitor ${monitor} -n "$name" -d '1' '2' '3' '4' '5' '6' '7' '8' '9' '10'
+		#bspc monitor ${monitor} -n "$name" -d 'A' 'B' 'C' 'D' 'E' 'F' 'G' 'H' 'I' 'J'
+		#bspc monitor ${monitor} -n "$name" -d 'I' 'II' 'III' 'IV' 'V' 'VI' 'VII' 'VIII' 'IIX' 'X'
+		bspc monitor ${monitor} -n "$name" -d '' '' '' '' '' '' '' '' '' '  '
+        let name++
+	done
+}
+workspaces
+
+## Apply bspwm configurations
+bspc config border_width "$BSPWM_BORDER"
+bspc config window_gap "$BSPWM_GAP"
+bspc config split_ratio "$BSPWM_SRATIO"
+
+bspc config focused_border_color "$BSPWM_FBC"
+bspc config normal_border_color "$BSPWM_NBC"
+bspc config active_border_color "$BSPWM_ABC"
+bspc config presel_feedback_color "$BSPWM_PFC"
+
+bspc config borderless_monocle true
+bspc config gapless_monocle true
+bspc config paddingless_monocle true
+bspc config single_monocle false
+bspc config focus_follows_pointer true
+bspc config presel_feedback true
+
+## Manage all the unmanaged windows remaining from a previous session.
+bspc wm --adopt-orphans
+
+## Window rules ----------------------------------------------#
+
+# remove all rules first
+bspc rule -r *:*
+
+# already have a top_padding(does the same) to avoid polybar overlap window
+#bspc rule -a polybar private
+
+## 1 > terminal (always open terminal on workspace-1)
+bspc rule -a Alacritty desktop='^1' follow=on focus=on
+bspc rule -a Xfce4-terminal desktop='^1' follow=on focus=on
+
+## 2 > web (always open web browser on workspace-2)
+bspc rule -a firefox desktop='^2' follow=on focus=on
+bspc rule -a chromium desktop='^2' follow=on focus=on
+bspc rule -a Brave-browser desktop='^2' follow=on focus=on
+bspc rule -a Thorium-browser desktop='^2' follow=on focus=on
+
+## 3 > files (always open file manager on workspace-3)
+declare -a files=(Pcmanfm Thunar qBittorrent Caja)
+for i in ${files[@]}; do
+   bspc rule -a $i desktop='^3' follow=on focus=on; done
+
+## 4 > code (always open editors on workspace-4)
+declare -a code=(Geany code-oss 'code - oss' 'Code - OSS' code Code install4j-burp-StartBurp burp-StartBurp unityhub Unity jetbrains-pycharm-ce)
+for i in ${code[@]}; do
+   bspc rule -a $i desktop='^4' follow=on focus=on; done
+
+## 5 > office and docs (always open office/doc apps on workspace-5)
+declare -a office=(Gucharmap Atril Evince libreoffice-writer libreoffice-calc libreoffice-impress libreoffice-startcenter libreoffice Soffice *:libreofficedev *:soffice craft-nativefier-e0958b powerphrasingtool-nativefier-c8a789 Typora obsidian figma-linux anytype)
+for i in ${office[@]}; do
+   bspc rule -a $i desktop='^5' follow=on focus=on; done
+
+## 6 > communication (always open communication apps on workspace-6)
+declare -a comm=(Thunderbird TelegramDesktop Hexchat discord vesktop beeper Beeper VencordDesktop Chat-gpt Blender blender Whatsapp-for-linux Chatbox)
+for i in ${comm[@]}; do
+   bspc rule -a $i desktop='^6' follow=on focus=on; done
+
+## 7 > media/video (always open media/video apps on workspace-7)
+declare -a media=(Audacity Music MPlayer Lxmusic Inkscape gimp-2.10 Gimp-2.10 Gimp obs zoom Zoom Pitivi kdenlive openshot vlc Spotify "Spotify Premium" cider Cider shotwell Shotwell)
+for i in ${media[@]}; do
+   bspc rule -a $i desktop='^7' state=tiled follow=on focus=on; done # floating
+
+## 8 > games (always open games on workspace-8)
+declare -a game=(Minecraft Minecraft:* badlion Badlion Launcher launcher War war "War Thunder (Vulkan, 64bit)" Minecraft* 1.19.3 Steam steam_proton csgo_linux64 "minecraft-launcher" "Minecraft Launcher" 'Minecraft* 1.19.3' Blueman-manager "Minecraft Launcher" lunarclient "Lunar Client":* retroarch)
+for i in ${game[@]}; do
+    bspc rule -a $i desktop='^8' state=floating follow=off focus=off; done
+
+## 9 > system (always open system apps on workspace-9)
+bspc rule -a 'Virt-manager' desktop='^9' follow=on focus=on
+bspc rule -a 'blueman-adapters' desktop='^9' follow=on focus=on
+bspc rule -a GParted desktop='^9' follow=on focus=on
+bspc rule -a 'Xdm-app'='^9' follow=on focus=on
+bspc rule -a timeshift-gtk='^9' follow=on focus=on
+bspc rule -a Timeshift-gtk='^9' follow=on focus=on
+bspc rule -a nextcloud='^9' follow=on focus=on
+bspc rule -a Nextcloud='^9' follow=on focus=on
+bspc rule -a gearlever='^9' follow=on focus=on
+bspc rule -a com.github.tchx84.Flatseal='^9' follow=on focus=on
+declare -a settings=(Lxappearance Lxtask Lxrandr Arandr System-config-printer.py Pavucontrol Exo-helper-1 Protonvpn Xfce4-power-manager-settings Mysql-workbench-bin Grub-customizer Nitrogen archlinux-tweak-tool.py Archlinux-tweak-tool.py pamac-manager helvum Vmware)
+for i in ${settings[@]}; do
+   bspc rule -a $i desktop='^9' state=floating follow=on focus=on; done
+
+## misc/ghost/random/placeholder (always open those apps/placeholders on workspace-10)
+declare -a misc=(maxautoclicker Maxautoclicker os_server Os_server)
+for i in ${misc[@]}; do
+    bspc rule -a $i desktop='^10' state=floating follow=off focus=false; done
+
+## Always Floating Apps
+declare -a floating=(alacritty-float Pcmanfm Onboard Yad zoom Xdm-app exe wechat WeChat sxiv Sxiv 'Firefox:Places' Viewnior feh Nm-connection-editor install4j-burp-StartBurp)
+for i in ${floating[@]}; do
+   bspc rule -a $i state=floating follow=on focus=on; done
+
+bspc rule -a Conky state=floating manage=off
+bspc rule -a stalonetray state=floating manage=off
+#bspc config pointer_action1 none
+
+## Autostart -------------------------------------------------#
+
+# Kill if already running
+killall -9 xsettingsd sxhkd dunst ksuperkey xfce4-power-manager bspc runtransani.sh cleanfullscreen #rrunbgblur.sh  # launching with conditions .feh backgroundblur chat-server mpd-mpris xbindkeys landdrop
+killall -15 idle.sh # reflector.sh
+#eww kill
+
+# Start bspwm scripts
+$HOME/scripts/polybar-temp-autofix.sh &
+bspbar &
+#bspcomp &
+# for better animation(make higher pri(nice))
+# need /etc/sudoers to `Defaults env_keep += "HOME"` be setted
+#sudo nice -n -20 bspcomp & # nah, i don t think it affects it lmao
+bspcomp &
+bspdunst &
+bspfloat &
+
+# Lauch xsettingsd daemon
+xsettingsd --config=$HOME/.config/xsettingsd &
+# xbindkeys & # no longer used, using sxhkdrc
+
+# auth daemon(kde)
+/usr/lib/polkit-kde-authentication-agent-1 &
+
+# kdeconnect
+/usr/lib/kdeconnectd &
+
+# Launcher xdm daemon
+#xdman -d &
+
+# polkit agent
+#if [[ ! `pidof xfce-polkit` ]]; then
+	#/usr/lib/xfce-polkit/xfce-polkit &
+#fi
+
+# Lauch keybindings daemon
+sxhkd -c "$BSPDIR"/sxhkdrc &
+
+# Enable Super Keys For Menu
+ksuperkey -e 'Super_L=Alt_L|F1' &
+ksuperkey -e 'Super_R=Alt_L|F1' &
+
+xrdb -merge ~/.Xresources
+
+# Enable power management
+xfce4-power-manager &
+
+# Fix cursor
+# xsetroot -cursor_name left_ptr
+
+# Restore wallpaper
+#exec $HOME/.feh &
+# ========= #
+# if i don't use .feh first, there will be a few second it's blanked out so I have to do a feh background first and then the wallblur one.
+# ========= #
+# better wallpaper manager wallblur
+exec $HOME/scripts/runtransani.sh & # https://github.com/nemanjan00/i3wm/raw/master/wallpaper.sh can replace after picom support blur(transition animation(blur))
+
+# Start mpd
+# exec mpd &
+# exec mpd-mpris &
+
+# start fcitx
+exec fcitx -d &
+
+# enable numlock
+numlockx &
+#sudo numlock
+#for tty in /dev/tty{1..6}; do
+#    /usr/bin/setleds -D +num < "$tty";
+#done
+# configured in as a service unit
+
+# start clipboard daemon
+exec clipmenud &
+
+# youtube-dl extention daemon
+#exec youtube-dl-server --number-processes 1 & # dont really use it now so ya
+
+# autostart script
+exec $HOME/scripts/autostart &
+
+# swallow
+#pgrep bspswallow || bspswallow & # tODO: FIX THE THING
+
+# clean full screen
+cleanfullscreen &
+
+# autolock
+#xautolock -time 30 -locker "betterlockscreen -l" & # don't really need/want that
+
+# so animation is not cached(idk why restarting picom make it not laggy)
+#xautolock -time 1 -locker "exec $HOME/scripts/resbspcomp.sh" &
+
+# kill not needed
+#killall java
+
+# idle stuff
+$HOME/scripts/idle.sh -d &
+# 1. autoupdate
+#exec $HOME/scripts/auto-update.sh & # replaced with systemd units # moved into idle.sh
+
+#update &
+yay -Sl > /tmp/yaySl &
+yay -Ss > /tmp/yaySs &
+
+
+# startup sound
+#$HOME/scripts/startupsound.sh & # exist in user systemd unit
+
+
+# vencord
+/usr/bin/ps ax | grep -v grep | grep vencord > /dev/null || discord --start-minimized &
+
+# beeper
+/usr/bin/ps ax | grep -v grep | grep beeper > /dev/null || $HOME/AppImages/gearlever_beeper_60246c.appimage &
+
+# nextcloud
+nextcloud --background &
+
+# wifi share
+# script -c "sudo -E openwifipass -s Jhome-Guest -k 12345677Jj" $HOME/scripts/logs/openwifipass.log &
+# exec $HOME/scripts/runsharewifi.sh &
+
+
+# autoclicker
+# now in $HOME/scripts/bin/autoclicker
+#/usr/bin/ps ax | grep -v grep | grep maxautoclicker > /dev/null || kdocker maxautoclicker &
+
+# polybar no overlap
+bspc config top_padding 46
+
+# secret chat-server
+#$HOME/scripts/bin/chat-server &
+
+# just incase auto start application move to other desktops
+# prevent restarting bspwm from doing that
+#bspc desktop -f ^1
+
+
+# remove startup lock
+if [ -f /var/lock/startup.lock ]; then
+    # startup sound
+    $HOME/scripts/startupsound.sh &
+    # auto startup apps
+    $HOME/scripts/startapp &
+    spid=$!
+    # go back first desktop(last)
+    wait $spid
+    bspc desktop -f "^1"
+    # clean-up (last)
+    sudo /sbin/rm -f /var/lock/startup.lock
+fi
+
+# sys tray wait(timeout)
+# sleep 10
+# connection with other computers(universal control)
+while ! systemctl is-active network.target; do
+  sleep 1
+done
+/usr/bin/ps ax | grep -v grep | grep barrier || barrier &
+/usr/bin/ps ax | grep -v grep | grep blueman-applet || blueman-applet &
+/usr/bin/ps ax | grep -v grep | grep nm-applet || nm-applet &

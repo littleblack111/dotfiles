@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# bspwm directory
+DIR="$HOME/.config"
+
+# fix padding
+#bspc config bottom_padding 0
+bspc config top_padding 46
+
+# launch polybar
+bash "$DIR"/polybar/polybar.sh

@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+#export CM_LAUNCHER=rofi
+#export CM_DIR="$XDG_CONFIG_HOME"
+DIR="$HOME/.config/rofi"
+RASI="$DIR/clipboard.rasi"
+mesg="Clipboard History"
+clipmenu -i -fn Terminus:size=15 -nb '#002b36' -nf '#839496' -sb '#073642' -sf '#93a1a1' -theme ${RASI} -mesg $mesg

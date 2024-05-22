@@ -1,0 +1,34 @@
+# Font configuration
+font:
+  # Normal (roman) font face
+  normal:
+    family: "JetBrains Mono"
+    style: Regular
+
+  # Bold font face
+  bold:
+    family: "JetBrains Mono"
+    style: Bold
+
+  # Italic font face
+  italic:
+    family: "JetBrains Mono"
+    style: Italic
+
+  # Bold italic font face
+  bold_italic:
+    family: "JetBrains Mono"
+    style: Bold Italic
+
+  # Point size
+  size: 10
+
+  # Offset
+  #offset:
+  #  x: 0
+  #  y: 0
+
+  # Glyph offset
+  #glyph_offset:
+  #  x: 0
+  #  y: 0

@@ -1,0 +1,268 @@
+## Keybindings config for ArchLinux's BSPWM
+
+##---------- Keybindings for bspwm ----------##
+
+# Terminal (alacritty)
+super + Return
+	bspterm
+
+# Terminal (floating)
+super + shift + Return
+	bspterm --float
+
+# Terminal (fullscreen)
+super + alt + Return
+	bspterm --full
+
+super + t
+    bspterm --full
+
+super + space + Return
+    bspterm --pseudo
+
+super + alt + Delete
+    ~/.config/rofi/scripts/rofi_powermenu
+
+##---------- Rofi Launcher & Menus ----------##
+
+# Rofi App Launcher
+alt + F1
+	rofi_launcher
+
+# Rofi Run
+alt + F2
+	rofi_runner
+
+# Rofi Menus/Applets
+#super + {c,m,n,r,s,t,v,w,x}
+#	{rofi_configs,rofi_music,nmd,rofi_asroot,rofi_screenshot,rofi_themes,rofi_clip,rofi_windows,rofi_powermenu}
+
+# Rofi Menus/Applets
+super + {c,m,n,r,s,v,w,x,b}
+	{rofi_configs,rofi_music,nmd,rofi_asroot,rofi_screenshot,rofi_clip,rofi_windows,rofi_powermenu,rofi_bluetooth}
+
+super + alt + b
+    killall runtransani.sh; exec $HOME/scripts/runtransani.sh &
+
+super + period
+    rofi_emoji
+
+
+
+##---------- Applications ----------##
+
+# Launch Apps
+super + shift + {f,w,e,d}
+	{thunar,thorium-browser --restore-last-session,code,discord} #&& mv /home/system/.config/Thunar/uca.xml . && mv uca.xml /home/system/.config/Thunar/uca.xml
+
+# Terminal Apps
+ctrl + alt + {a,v,r,b}
+	alacritty --class 'alacritty-float,alacritty-float' -e {pulsemixer,lvim,ranger,sudo nice -n -20 btop}
+
+# task manager
+ctrl + shift + Escape
+    sudo btop
+
+ctrl + alt + Delete
+    rofi_shutdown_menu
+
+# Color Picker
+super + p
+	bspcolorpicker
+
+# Music
+ctrl + alt + m
+	bspmusic
+
+# Lockscreen
+ctrl + alt + l
+    betterlockscreen --lock & betterlockscreen -u ~/Pictures/wallpapers    
+# eww
+super + a
+    launch_dashboard
+
+##---------- System Keys ----------##
+
+# Take a screenshot
+Print
+	bspscreenshot --now
+	
+# Take screenshot in 5 second
+alt + Print
+	bspscreenshot --in5
+
+# Take screenshot in 10 second
+shift + Print
+	bspscreenshot --in10
+
+# Take screenshot of active window
+ctrl + Print
+	bspscreenshot --win
+
+# Take screenshot of area
+#super + Print
+super + shift + s
+	bspscreenshot --area
+
+# Brighness control
+# XF86MonBrightness{Up,Down}
+# 	bspbrightness{ --inc, --dec}
+	
+# Speaker Volume control
+XF86Audio{RaiseVolume,LowerVolume}
+	bspvolume{ --inc, --dec}
+
+# Mic Volume control
+XF86Audio{Mute,MicMute}
+	bspvolume{ --toggle, --toggle-mic}
+	
+# Music control
+XF86Audio{Next,Prev,Play,Stop}
+	playerctl {next,previous,play-pause,stop}
+
+super + XF86PowerOff
+    $HOME/.config/rofi/scripts/rofi_shutdown
+
+XF86PowerOff
+    $HOME/.config/rofi/scripts/rofi_shutdown
+
+alt + f
+    $HOME/scripts/autoclicker-left.sh
+    # /usr/bin/ps ax | grep -v grep | grep autoclicker-left > /dev/null && killall autoclicker-left || exec autoclicker-left
+
+alt + g
+    $HOME/scripts/autoclicker-right.sh
+    #/usr/bin/ps ax | grep -v grep | grep autoclicker-right > /dev/null && killall autoclicker-right || exec autoclicker-right
+
+##---------- Bspwm ----------##
+
+# Hide/Unhide Window
+super + shift + h
+	bspwinmask
+
+super + d
+	bspwinmask
+
+
+# Close App
+super + {_,shift + }q
+	bspc node -{c,k}
+
+#alt + F4
+#    bspc node -{c,k}
+
+
+# kill window
+ctrl + alt + Escape
+    /home/system/scripts/mouseKill
+
+ctrl + super + alt + Escape
+    xkill -id $(xprop -root _NET_ACTIVE_WINDOW | awk '{print $5}')
+
+# Quit/Restart bspwm
+ctrl + shift + r
+	bspc wm -r
+
+ctrl + shift + q
+    [[ "$(echo -e "\n" | rofi -dmenu -p 'Confirmation' -mesg 'Quit BSPWM?' -theme $HOME/.config/bspwm/themes/default/rofi/confirm.rasi)" == "yes" ]] && bspc quit
+
+# restart picom
+# ctrl + shift + p
+#     killall picom; bspcomp
+
+# Reload Keybindings
+super + Escape
+	pkill -USR1 -x sxhkd && killall xbindkeys && xbindkeys
+
+# reload Polybar
+ctrl + super + Escape
+    bspbar && bspc config top_padding 46
+    #polybar-msg cmd restart && bspc config top_padding 46
+
+# Switch workspace
+ctrl + alt + {Left,Right}
+	bspc desktop -f {prev.local,next.local}
+
+# Switch workspace or Send focused Node to another workspace
+super + {_,shift + }{1-9}
+	bspc {desktop -f,node -d} '^{1-9}' '--follow'
+
+super + {_,shift + }0
+    bspc {desktop -f, node -d} '^10'
+
+# Send focused Node to workspace directionally
+super + ctrl + shift + {Left,Right}
+	bspc node -d {prev,next} '--follow'
+
+# Change focus of the Node or Swap Nodes
+super + {_,shift + }{Left,Down,Up,Right}
+	bspc node -{f,s} {west,south,north,east}
+
+# Move floating windows
+#super + alt + shift + {Left,Down,Up,Right}
+shift + alt + {Left,Down,Up,Right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# Expanding windows
+super + control + {Left,Right,Up,Down}
+	bspc node -z {left -20 0,right 20 0,top 0 -20,bottom 0 20}
+
+# Shrinking windows
+super + alt + {Left,Right,Up,Down}
+	bspc node -z {left 20 0,right -20 0,top 0 20,bottom 0 -20}
+
+# scroll
+super + {button4,button5}
+    bspc node -z {left -20 0 & bspc node -z right 20 0 & bspc node -z top 0 -20 & bspc node -z bottom 0 20,left 20 0 & bspc node -z right -20 0 & bspc node -z top 0 20 & bspc node -z buttom 0 -20}
+
+# "Drag to floating" tiled windows or move floating windows.
+ctrl + button3
+	~/.config/bspwm/scripts/drag-to-float
+ctrl + @button3
+	~/.config/bspwm/scripts/drag-to-float stop
+@button3
+	~/.config/bspwm/scripts/drag-to-float stop
+~button3
+	:
+
+# Split horizontal, vertical or cancel
+super + alt + {h,v,q}
+	bspc node -p {east,south,cancel}
+
+# toggle between horizontal and vertical
+ctrl + super + m
+    bspc node @parent -R 90
+
+# Preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# Toggle Layout (Tiled/Monocle)
+super + l
+	bspc desktop -l next
+
+# Toggle Fullscreen
+super + f
+    bspc node -t "~"fullscreen
+
+# Toggle beetwen floating & tiled
+super + space
+    bspc node -t "~"{floating,tiled}
+
+# Pseudo Tiled & tiled mode
+super + shift + space
+    bspc node -t "~"{pseudo_tiled,tiled}
+
+# Set the node flags
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+# Change focus to next window, including floating window
+alt + {_,shift + }Tab
+	bspc node -f {next.local,prev.local}
+
+# Switch to last opened workspace
+super + {Tab,grave}
+	bspc {node,desktop} -f last
+
+##---------- EOF ----------##

@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# Import Current Theme
+DIR="$HOME/.config/rofi"
+CNFR="$DIR/confirm.rasi"
+
+# Theme Elements
+prompt="`hostname` (`echo $DESKTOP_SESSION`)"
+mesg="Uptime : `uptime -p | sed -e 's/up //g'`"
+
+# Options
+no=''
+
+# Confirmation CMD
+confirm_cmd() {
+	rofi -dmenu \
+		-p 'Confirmation' \
+		-mesg 'Cancel?' \
+		-theme ${CNFR}
+}
+
+run_rofi() {
+    echo -e "$no" | confirm_cmd
+}
+
+# Confirm and execute
+confirm_run () {	
+	selected="$(run_rofi)"
+	if [[ "$selected" || "$selected" == "" ]]; then
+        exit
+    else
+        echo "Error had occured"
+        exit 1
+    fi
+}
+
+confirm_run &
+pid=$!
+#pid=$(cat /run/user/$(id -u)/rofi.pid)
+notify-send "Powering off system in 10 seconds"
+for (( i = 9; i >= 0; --i )); do
+    if ! ps -p $pid > /dev/null; then
+        notify-send "Canceled shutdown process."
+        exit 0
+    fi
+    notify-send "Powering off system in $i"
+    sleep 1
+done
+if ps -p $pid > /dev/null; then
+    poweroff
+fi

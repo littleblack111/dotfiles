@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Import Current Theme
+DIR="$HOME/.config/rofi"
+RASI="$DIR/filebrowser.rasi"
+
+# Run
+rofi \
+    -show file-browser-extended \
+	-theme ${RASI} \
+    "$@"
