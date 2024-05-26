@@ -305,3 +305,4 @@ done
 /usr/bin/ps ax | grep -v grep | grep barrier || barrier &
 /usr/bin/ps ax | grep -v grep | grep blueman-applet || blueman-applet &
 /usr/bin/ps ax | grep -v grep | grep nm-applet || nm-applet &
+/usr/bin/ps ax | grep -v grep | grep memento-bg || memento-bg <<< 1 &

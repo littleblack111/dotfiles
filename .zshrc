@@ -41,29 +41,43 @@ source $HOME/.config/zsh/prompt.zsh
 
 
 command_not_found_handler() {
-  local pkgs cmd="$@"
-  
-  pkgs=(${(f)"$(pkgfile -b -v -- "$cmd" 2>/dev/null)"})
-  if [[ -n "$pkgs" ]]; then
-    printf 'The application %s is not installed. It may be found in the following AUR packages:\n' "$cmd"
-    printf '  %s\n' $pkgs[@]
-    setopt shwordsplit
-    pkg_array=($pkgs[@])
-    pkgname="${${(@s:/:)pkg_array}[2]}"
-    printf 'Do you want to Install AUR package %s? (y/N) ' $pkgname
-    if read -q "choice? "; then
-      echo
-      echo "Executing command: yay -S $pkgname"
-      yay -S $pkgname --noconfirm
-      echo " "
-    else
-      echo " "
-    fi
-  else
+    local pkgs cmd="$@"
     printf '\033[0;31m\033[1m-> ERROR: Command not found: %s\n' "$cmd"
-  fi 1>&2
+    printf '\033[0m'
+    printf 'Checking for package.'
+    (
+        while true; do
+            ( sleep 0.1 && printf '.' )
+        done
+    ) &!
+    pkgs=(${(f)"$(pkgfile -b -v -- "$cmd" 2>/dev/null)"})
+    kill $!
+    echo
+    if [[ -n "$pkgs" ]]; then
+        printf 'The application %s is not installed. It may be found in the following AUR packages:\n' "$cmd"
+        printf '  %s\n' $pkgs[@]
+        setopt shwordsplit
+        pkg_array=($pkgs[@])
+        pkgname="${${(@s:/:)pkg_array}[2]}"
+        printf 'Do you want to Install AUR package %s? (y/N) ' $pkgname
+        if read -q "choice? "; then
+              echo
+              echo "Executing command: yay -S $pkgname"
+              yay -S $pkgname --noconfirm
+              echo " "
+              return
+            else
+              echo " "
+              return
+        fi
+    fi 1>&2
+    printf 'Thinking.'
+    ( sleep 0.1 && printf '.' ) &!
+    ( sleep 0.1 && printf '.' ) &!
+    ( sleep 0.1 && printf '.' ) &!
+    eval $(thefuck --enable-experimental-instant-mode $@)
 
-  return 127
+    return 127
 }
 
 # command not found 
@@ -138,5 +152,3 @@ precmd() {
 # function cd {
 #   cd $@ && echo $@ > $HOME/.cache/prev.dir
 # }
-
-
