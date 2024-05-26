@@ -154,7 +154,7 @@ bspbar &
 #bspcomp &
 # for better animation(make higher pri(nice))
 # need /etc/sudoers to `Defaults env_keep += "HOME"` be setted
-#sudo nice -n -20 bspcomp & # nah, i don t think it affects it lmao
+sudo nice -n -20 sudo -u $USER bspcomp & # nah, i don t think it affects it lmao
 bspcomp &
 bspdunst &
 bspfloat &
