@@ -56,7 +56,7 @@ run_cmd() {
 	elif [[ "$1" == '--opt6' ]]; then
     alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/polybar/modules.ini
   elif [[ "$1" == '--opt7' ]]; then
-    alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/alacritty/alacritty.yml
+    alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/alacritty/alacritty.toml
   elif [[ "$1" == '--opt8' ]]; then
     alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/picom.conf
   elif [[ "$1" == '--opt10' ]]; then
