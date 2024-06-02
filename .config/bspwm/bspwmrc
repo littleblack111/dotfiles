@@ -108,7 +108,7 @@ for i in ${media[@]}; do
    bspc rule -a $i desktop='^7' state=tiled follow=on focus=on; done # floating
 
 ## 8 > games (always open games on workspace-8)
-declare -a game=(Minecraft Minecraft:* badlion Badlion Launcher launcher War war "War Thunder (Vulkan, 64bit)" Minecraft* 1.19.3 Steam steam_proton csgo_linux64 "minecraft-launcher" "Minecraft Launcher" 'Minecraft* 1.19.3' Blueman-manager "Minecraft Launcher" lunarclient "Lunar Client":* retroarch)
+declare -a game=(Minecraft Minecraft:* badlion Badlion Launcher launcher War war "War Thunder (Vulkan, 64bit)" Minecraft* 1.19.3 Steam steam_proton csgo_linux64 "minecraft-launcher" "Minecraft Launcher" 'Minecraft* 1.19.3' Blueman-manager "Minecraft Launcher" lunarclient "Lunar Client":* retroarch "Minecraft Launcher")
 for i in ${game[@]}; do
     bspc rule -a $i desktop='^8' state=floating follow=off focus=off; done
 
@@ -123,7 +123,7 @@ bspc rule -a nextcloud='^9' follow=on focus=on
 bspc rule -a Nextcloud='^9' follow=on focus=on
 bspc rule -a gearlever='^9' follow=on focus=on
 bspc rule -a com.github.tchx84.Flatseal='^9' follow=on focus=on
-declare -a settings=(Lxappearance Lxtask Lxrandr Arandr System-config-printer.py Pavucontrol Exo-helper-1 Protonvpn Xfce4-power-manager-settings Mysql-workbench-bin Grub-customizer Nitrogen archlinux-tweak-tool.py Archlinux-tweak-tool.py pamac-manager helvum Vmware)
+declare -a settings=(Lxappearance Lxtask Lxrandr Arandr System-config-printer.py Pavucontrol Exo-helper-1 Protonvpn Xfce4-power-manager-settings Mysql-workbench-bin Grub-customizer Nitrogen archlinux-tweak-tool.py Archlinux-tweak-tool.py pamac-manager helvum Vmware "Btrfs Assistant" Bitwarden)
 for i in ${settings[@]}; do
    bspc rule -a $i desktop='^9' state=floating follow=on focus=on; done
 
@@ -303,6 +303,6 @@ while ! systemctl is-active network.target; do
   sleep 1
 done
 /usr/bin/ps ax | grep -v grep | grep barrier || barrier &
-/usr/bin/ps ax | grep -v grep | grep blueman-applet || blueman-applet &
-/usr/bin/ps ax | grep -v grep | grep nm-applet || nm-applet &
+# /usr/bin/ps ax | grep -v grep | grep blueman-applet || blueman-applet &
+# /usr/bin/ps ax | grep -v grep | grep nm-applet || nm-applet &
 /usr/bin/ps ax | grep -v grep | grep memento-bg || memento-bg <<< 1 &
