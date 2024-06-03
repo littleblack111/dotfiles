@@ -7,3 +7,6 @@
 [submodule "dot-config/lvim"]
 	path = dot-config/lvim
 	url = https://github.com/littleblack111/lvim-config.git
+[submodule "scripts"]
+	path = scripts
+	url = https://github.com/littleblack111/scripts.git
