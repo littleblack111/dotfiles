@@ -1,0 +1,9 @@
+[submodule "dot-config/zsh"]
+	path = dot-config/zsh
+	url = https://github.com/littleblack111/zsh.git
+[submodule "dot-config/nvim"]
+	path = dot-config/nvim
+	url = https://github.com/littleblack111/nvim.git
+[submodule "dot-config/lvim"]
+	path = dot-config/lvim
+	url = https://github.com/littleblack111/lvim-config.git
