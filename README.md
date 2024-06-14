@@ -9,7 +9,7 @@ picom
 sddm
 
 ### Arch Based system install package dependencies
-##### main repo
+##### pacman
 ```
 sudo pacman -S --needed $(cat package.list)
 ```
