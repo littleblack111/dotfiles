@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Arch Darwin Plymouth
+Description=Arch linux boot screen inspired by Darwin
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/arch-darwin/assets
+ScriptFile=/usr/share/plymouth/themes/arch-darwin/assets/arch-darwin.script

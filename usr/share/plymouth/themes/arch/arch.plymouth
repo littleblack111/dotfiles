@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=arch
+Description=default plymouth theme for arch
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/arch
+ScriptFile=/usr/share/plymouth/themes/arch/arch.script
