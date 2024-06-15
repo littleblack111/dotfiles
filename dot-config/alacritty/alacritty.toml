@@ -10,7 +10,7 @@ shape = "Block"
 
 [env]
 TERM = "alacritty"
-WINIT_X11_SCALE_FACTOR = "1.0"
+# WINIT_X11_SCALE_FACTOR = "1.0"
 
 [window]
 decorations = "full"

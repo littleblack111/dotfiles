@@ -10,7 +10,7 @@ configuration {
 	icon-theme: "Arc-Circle";
 /*	cache-dir: ;*/
 	steal-focus: false;
-/*	dpi: -1;*/
+	dpi: 1;
 
 	/*---------- Matching setting ----------*/
 	matching: "normal";

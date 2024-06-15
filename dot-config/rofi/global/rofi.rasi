@@ -8,6 +8,7 @@ configuration {
     matching: "fuzzy";
     scroll-method: 0;
     monitor: "primary";
+    dpi: 1;
 }
 
 * {

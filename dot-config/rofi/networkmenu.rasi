@@ -40,7 +40,7 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       500px;
+    width:                       1000px;
     height:                      475px;
     x-offset:                    0px;
     y-offset:                    0px;
