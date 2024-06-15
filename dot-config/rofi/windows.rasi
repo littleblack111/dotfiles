@@ -23,7 +23,7 @@ configuration {
     normal-background:           var(background);
     normal-foreground:           var(foreground);
     urgent-background:           var(urgent);
-    urgent-foreground:           var(background);
+    urgent-foreground:           var(foreground);
     active-background:           var(active);
     active-foreground:           var(background);
     selected-normal-background:  var(selected);
@@ -47,7 +47,7 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       600px;
+    width:                       1200px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -149,7 +149,7 @@ case-indicator {
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       8;
+    lines:                       16;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
