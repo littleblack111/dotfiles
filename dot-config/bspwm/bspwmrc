@@ -123,7 +123,7 @@ bspc rule -a nextcloud='^9' follow=on focus=on
 bspc rule -a Nextcloud='^9' follow=on focus=on
 bspc rule -a gearlever='^9' follow=on focus=on
 bspc rule -a com.github.tchx84.Flatseal='^9' follow=on focus=on
-declare -a settings=(Lxappearance Lxtask Lxrandr Arandr System-config-printer.py Pavucontrol Exo-helper-1 Protonvpn Xfce4-power-manager-settings Mysql-workbench-bin Grub-customizer Nitrogen archlinux-tweak-tool.py Archlinux-tweak-tool.py pamac-manager helvum Vmware "Btrfs Assistant" Bitwarden)
+declare -a settings=(Lxappearance Lxtask Lxrandr Arandr System-config-printer.py Pavucontrol Exo-helper-1 Protonvpn Xfce4-power-manager-settings Mysql-workbench-bin Grub-customizer Nitrogen archlinux-tweak-tool.py Archlinux-tweak-tool.py pamac-manager helvum Vmware "Btrfs Assistant" Bitwarden wootility-lekker)
 for i in ${settings[@]}; do
    bspc rule -a $i desktop='^9' state=floating follow=on focus=on; done
 
@@ -198,7 +198,7 @@ xfce4-power-manager &
 # if i don't use .feh first, there will be a few second it's blanked out so I have to do a feh background first and then the wallblur one.
 # ========= #
 # better wallpaper manager wallblur
-exec $HOME/scripts/runtransani.sh & # https://github.com/nemanjan00/i3wm/raw/master/wallpaper.sh can replace after picom support blur(transition animation(blur))
+exec $HOME/scripts/wallpapertrans.sh & # https://github.com/nemanjan00/i3wm/raw/master/wallpaper.sh can replace after picom support blur(transition animation(blur))
 
 # Start mpd
 # exec mpd &
@@ -257,7 +257,7 @@ yay -Ss > /tmp/yaySs &
 /usr/bin/ps ax | grep -v grep | grep vencord > /dev/null || discord --start-minimized &
 
 # beeper
-/usr/bin/ps ax | grep -v grep | grep beeper > /dev/null || $HOME/AppImages/gearlever_beeper_60246c.appimage &
+/usr/bin/ps ax | grep -v grep | grep beeper > /dev/null || beeper &
 
 # nextcloud
 nextcloud --background &
@@ -302,7 +302,7 @@ fi
 while ! systemctl is-active network.target; do
   sleep 1
 done
-/usr/bin/ps ax | grep -v grep | grep barrier || barrier &
+/usr/bin/ps ax | grep -v grep | grep input-leap || input-leap &
 # /usr/bin/ps ax | grep -v grep | grep blueman-applet || blueman-applet &
 # /usr/bin/ps ax | grep -v grep | grep nm-applet || nm-applet &
 /usr/bin/ps ax | grep -v grep | grep memento-bg || memento-bg <<< 1 &

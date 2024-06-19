@@ -269,6 +269,8 @@ French:fr:French (BEPO):bepo:
 French:fr:French (BEPO, Latin-9 only):bepo_latin9:
 French:fr:French (BEPO, AFNOR):bepo_afnor:
 French:fr:French (Dvorak):dvorak:
+French:fr:‑L):ergol:
+French:fr:‑L, ISO variant):ergol_iso:
 French:fr:French (Macintosh):mac:
 French:fr:French (US):us:
 French:fr:Breton (France):bre:
@@ -369,6 +371,8 @@ Hungarian:hu:Hungarian (QWERTY, 102-key, comma, no dead keys):102_qwerty_comma_n
 Hungarian:hu:Hungarian (QWERTY, 102-key, dot, dead keys):102_qwerty_dot_dead:
 Hungarian:hu:Hungarian (QWERTY, 102-key, dot, no dead keys):102_qwerty_dot_nodead:
 Hungarian:hu:Old Hungarian (for ligatures):oldhunlig:
+Hungarian:hu:Old Hungarian (Carpathian Highlands, S as Sh):oldhun_sk_sh:
+Hungarian:hu:Old Hungarian (Carpathian Highlands, S as Sz):oldhun_sk_sz:
 Hungarian:hu:Hungarian (US):us:
 Icelandic:is:
 Icelandic:is:Icelandic (Macintosh, legacy):mac_legacy:
