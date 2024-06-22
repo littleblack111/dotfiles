@@ -2,8 +2,8 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/system/.gtkrc-2.0.mine"
-gtk-theme-name="Adwaita"
-gtk-icon-theme-name="Adwaita"
+gtk-theme-name="Arc-Dark"
+gtk-icon-theme-name="BeautyLine"
 gtk-font-name="Cantarell 11"
 gtk-cursor-theme-name="LyraB-cursors"
 gtk-cursor-theme-size=24
