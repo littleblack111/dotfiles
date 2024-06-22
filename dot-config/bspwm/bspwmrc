@@ -80,6 +80,7 @@ bspc rule -a Xfce4-terminal desktop='^1' follow=on focus=on
 bspc rule -a firefox desktop='^2' follow=on focus=on
 bspc rule -a chromium desktop='^2' follow=on focus=on
 bspc rule -a Brave-browser desktop='^2' follow=on focus=on
+bspc rule -a Thorium-browser node=any#@2
 bspc rule -a Thorium-browser desktop='^2' follow=on focus=on
 
 ## 3 > files (always open file manager on workspace-3)
@@ -98,12 +99,12 @@ for i in ${office[@]}; do
    bspc rule -a $i desktop='^5' follow=on focus=on; done
 
 ## 6 > communication (always open communication apps on workspace-6)
-declare -a comm=(Thunderbird TelegramDesktop Hexchat discord vesktop beeper Beeper VencordDesktop Chat-gpt Blender blender Whatsapp-for-linux Chatbox)
+declare -a comm=(Thunderbird TelegramDesktop Hexchat discord vesktop beeper Beeper VencordDesktop Chat-gpt Whatsapp-for-linux Chatbox)
 for i in ${comm[@]}; do
    bspc rule -a $i desktop='^6' follow=on focus=on; done
 
 ## 7 > media/video (always open media/video apps on workspace-7)
-declare -a media=(Audacity Music MPlayer Lxmusic Inkscape gimp-2.10 Gimp-2.10 Gimp obs zoom Zoom Pitivi kdenlive openshot vlc Spotify "Spotify Premium" cider Cider shotwell Shotwell)
+declare -a media=(Audacity Music MPlayer Lxmusic Inkscape Gimp Blender blender obs zoom Zoom Pitivi kdenlive openshot vlc Spotify "Spotify Premium" cider Cider shotwell Shotwell)
 for i in ${media[@]}; do
    bspc rule -a $i desktop='^7' state=tiled follow=on focus=on; done # floating
 
@@ -133,7 +134,7 @@ for i in ${misc[@]}; do
     bspc rule -a $i desktop='^10' state=floating follow=off focus=false; done
 
 ## Always Floating Apps
-declare -a floating=(alacritty-float Pcmanfm Onboard Yad zoom Xdm-app exe wechat WeChat sxiv Sxiv 'Firefox:Places' Viewnior feh Nm-connection-editor install4j-burp-StartBurp)
+declare -a floating=(alacritty-float Pcmanfm Onboard Yad zoom Xdm-app exe wechat WeChat sxiv Sxiv 'Firefox:Places' Viewnior feh Nm-connection-editor install4j-burp-StartBurp Thorium-browser:crx_mdpkiolbdkhdjpekfbkbmhigcaggjagi Thorium-browser:crx_fmgjjmmmlfnkbppncabfkddbjimcfncm)
 for i in ${floating[@]}; do
    bspc rule -a $i state=floating follow=on focus=on; done
 
