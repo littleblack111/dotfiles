@@ -77,9 +77,14 @@ ctrl + alt + m
 # Lockscreen
 ctrl + alt + l
     betterlockscreen --lock & betterlockscreen -u ~/Pictures/wallpapers    
-# eww
-super + a
-    launch_dashboard
+
+# quick google chat launch
+super + shift + c
+    gtk-launch google-chat.desktop
+
+# quick gmail launch
+super + shift + g
+    gtk-launch google-gmail.desktop
 
 ##---------- System Keys ----------##
 
