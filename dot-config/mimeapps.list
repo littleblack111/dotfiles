@@ -166,3 +166,5 @@ application/xslt+xml=thorium-browser.desktop
 image/gif=sxiv.desktop
 image/webp=feh.desktop
 spyglass=spyglass-handler.desktop
+x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
+x-scheme-handler/fleet=jetbrains-fleet.desktop
