@@ -8,5 +8,6 @@
     <property name="power-button-action" type="uint" value="0"/>
     <property name="general-notification" type="bool" value="true"/>
     <property name="dpms-enabled" type="bool" value="true"/>
+    <property name="inactivity-on-ac" type="uint" value="14"/>
   </property>
 </channel>
