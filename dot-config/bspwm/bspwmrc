@@ -80,7 +80,6 @@ bspc rule -a Xfce4-terminal desktop='^1' follow=on focus=on
 bspc rule -a firefox desktop='^2' follow=on focus=on
 bspc rule -a chromium desktop='^2' follow=on focus=on
 bspc rule -a Brave-browser desktop='^2' follow=on focus=on
-bspc rule -a Thorium-browser node=any#@2
 bspc rule -a Thorium-browser desktop='^2' follow=on focus=on
 
 ## 3 > files (always open file manager on workspace-3)
