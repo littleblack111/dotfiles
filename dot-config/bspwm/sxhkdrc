@@ -52,8 +52,8 @@ super + period
 ##---------- Applications ----------##
 
 # Launch Apps
-super + shift + {f,w,e,d}
-	{thunar,thorium-browser --restore-last-session,code,discord} #&& mv /home/system/.config/Thunar/uca.xml . && mv uca.xml /home/system/.config/Thunar/uca.xml
+super + shift + {f,w,e,d,b}
+	{thunar,thorium-browser --restore-last-session,code,discord,beeper} #&& mv /home/system/.config/Thunar/uca.xml . && mv uca.xml /home/system/.config/Thunar/uca.xml
 
 # Terminal Apps
 ctrl + alt + {a,v,r,b}
