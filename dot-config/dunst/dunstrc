@@ -2,7 +2,7 @@
 monitor = 0
 follow = mouse
 width = 300
-height = 80
+height = 100
 origin = top-right
 offset = 10x58
 corner_radius = 0
