@@ -61,6 +61,8 @@ bspc config single_monocle false
 bspc config focus_follows_pointer true
 bspc config presel_feedback true
 
+# bspc config ignore_ewmh_focus true
+
 ## Manage all the unmanaged windows remaining from a previous session.
 bspc wm --adopt-orphans
 
@@ -167,7 +169,7 @@ xsettingsd --config=$HOME/.config/xsettingsd &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # kdeconnect
-/usr/lib/kdeconnectd &
+/usr/bin/kdeconnectd &
 
 # Launcher xdm daemon
 #xdman -d &
@@ -187,7 +189,7 @@ ksuperkey -e 'Super_R=Alt_L|F1' &
 xrdb -merge ~/.Xresources
 
 # Enable power management
-xfce4-power-manager &
+/usr/bin/xfce4-power-manager &
 
 # Fix cursor
 # xsetroot -cursor_name left_ptr
@@ -221,14 +223,11 @@ exec clipmenud &
 # youtube-dl extention daemon
 #exec youtube-dl-server --number-processes 1 & # dont really use it now so ya
 
-# autostart script
-exec $HOME/scripts/autostart &
-
 # swallow
 #pgrep bspswallow || bspswallow & # tODO: FIX THE THING
 
 # clean full screen
-cleanfullscreen &
+/usr/bin/ps ax | grep -v grep | grep cleanfullscreen > /dev/null || cleanfullscreen &
 
 # autolock
 #xautolock -time 30 -locker "betterlockscreen -l" & # don't really need/want that
@@ -252,15 +251,8 @@ yay -Ss > /tmp/yaySs &
 # startup sound
 #$HOME/scripts/startupsound.sh & # exist in user systemd unit
 
-
-# vencord
-/usr/bin/ps ax | grep -v grep | grep vencord > /dev/null || discord --start-minimized &
-
-# beeper
-/usr/bin/ps ax | grep -v grep | grep beeper > /dev/null || beeper &
-
-# nextcloud
-nextcloud --background &
+# apparmor(aa) noitfication for denials
+/usr/bin/ps ax | grep -v grep | grep aa-notify > /dev/null || aa-notify -p -s 1 -w 60 -f /var/log/audit/audit.log &
 
 # wifi share
 # script -c "sudo -E openwifipass -s Jhome-Guest -k 12345677Jj" $HOME/scripts/logs/openwifipass.log &
@@ -272,7 +264,7 @@ nextcloud --background &
 #/usr/bin/ps ax | grep -v grep | grep maxautoclicker > /dev/null || kdocker maxautoclicker &
 
 # polybar no overlap
-bspc config top_padding 46
+bspc config top_padding 50
 
 # secret chat-server
 #$HOME/scripts/bin/chat-server &
@@ -284,6 +276,8 @@ bspc config top_padding 46
 
 # remove startup lock
 if [ -f /var/lock/startup.lock ]; then
+    # autostart script
+    exec $HOME/scripts/autostart &
     # startup sound
     $HOME/scripts/startupsound.sh &
     # auto startup apps
@@ -303,6 +297,15 @@ while ! systemctl is-active network.target; do
   sleep 1
 done
 /usr/bin/ps ax | grep -v grep | grep input-leap || input-leap &
+
+# nextcloud
+/usr/bin/ps ax | grep -v grep | grep nextcloud > /dev/null || nextcloud --background &
+
+# vencord
+/usr/bin/ps ax | grep -v grep | grep vencord > /dev/null || discord --start-minimized &
+
+# beeper
+/usr/bin/ps ax | grep -v grep | grep beeper > /dev/null || beeper &
 # /usr/bin/ps ax | grep -v grep | grep blueman-applet || blueman-applet &
 # /usr/bin/ps ax | grep -v grep | grep nm-applet || nm-applet &
-/usr/bin/ps ax | grep -v grep | grep memento-bg || memento-bg <<< 1 &
+# /usr/bin/ps ax | grep -v grep | grep memento-bg || memento-bg <<< 1 &
