@@ -186,7 +186,7 @@ sxhkd -c "$BSPDIR"/sxhkdrc &
 ksuperkey -e 'Super_L=Alt_L|F1' &
 ksuperkey -e 'Super_R=Alt_L|F1' &
 
-xrdb -merge ~/.Xresources
+xrdb -merge "$XDG_CONFIG_HOME/X11/xresources"
 
 # Enable power management
 /usr/bin/xfce4-power-manager &
