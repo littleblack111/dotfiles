@@ -1,2 +1,4 @@
 **/cache/
 *.log
+cache/
+logs/
