@@ -7,7 +7,8 @@ GRUB_HIDDEN_TIMEOUT="3"
 GRUB_HIDDEN_TIMEOUT_QUIET="false"
 GRUB_RECORDFAIL_TIMEOUT="$GRUB_TIMEOUT"
 GRUB_DISTRIBUTOR="Arch"
-GRUB_CMDLINE_LINUX_DEFAULT="apparmor=1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf intel_iommu=on iommu=pt nvidia_drm.modeset=1 nvidia-drm.modeset=1 nvidia_drm.fbdev=1 resume=UUID=4e62484c-422f-422a-b0ac-15cd6c02b337 loglevel=3 udev.log-priority=3 udev.log_level=3 vt.global_cursor_default=0 root=/dev/mapper/arch-root cryptdevice=UUID=bc526687-9deb-4078-abd1-55692022e073:luks_lvm resume=/dev/mapper/arch-swap splash" # vfio-pci.ids=10de:1c03,10de:10f1 cryptdevice=UUID=bc526687-9deb-4078-abd1-55692022e073:luks_lvm
+GRUB_CMDLINE_LINUX_DEFAULT="apparmor=1 lsm=landlock,lockdown,yama,integrity,selinux,apparmor,bpf intel_iommu=on iommu=pt nvidia_drm.modeset=1 nvidia-drm.modeset=1 nvidia_drm.fbdev=1 loglevel=3 udev.log-priority=3 udev.log_level=3 vt.global_cursor_default=0 rd.luks.uuid=bc526687-9deb-4078-abd1-55692022e073 rd.luks.options=bc526687-9deb-4078-abd1-55692022e073=tpm2-device=auto root=/dev/mapper/arch-root rootflags=subvol=@ resume=/dev/mapper/arch-swap splash # vfio-pci.ids=10de:1c03,10de:10f1 rd.luks.key=bc526687-9deb-4078-abd1-55692022e073=/secure/key.bin fsck.repair=yes"
+#GRUB_CMDLINE_LINUX_DEFAULT="apparmor=1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf intel_iommu=on iommu=pt nvidia_drm.modeset=1 nvidia-drm.modeset=1 nvidia_drm.fbdev=1 resume=UUID=4e62484c-422f-422a-b0ac-15cd6c02b337 loglevel=3 udev.log-priority=3 udev.log_level=3 vt.global_cursor_default=0 root=/dev/mapper/arch-root resume=/dev/mapper/arch-swap splash # vfio-pci.ids=10de:1c03,10de:10f1 cryptdevice=UUID=bc526687-9deb-4078-abd1-55692022e073:luks_lvm"
 # GRUB_CMDLINE_LINUX_DEFAULT="apparmor=1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf intel_iommu=on iommu=pt resume=UUID=4e62484c-422f-422a-b0ac-15cd6c02b337 loglevel=3 udev.log-priority=3 udev.log_level=3 vt.global_cursor_default=0 splash" # vfio-pci.ids=10de:1c03,10de:10f1
 #doesn't work
 GRUB_CMDLINE_LINUX=""
@@ -23,7 +24,7 @@ GRUB_SAVEDEFAULT="true"
 GRUB_PRELOAD_MODULES="part_gpt part_msdos"
 
 # Uncomment to enable booting from LUKS encrypted devices
-GRUB_ENABLE_CRYPTODISK="y"
+#GRUB_ENABLE_CRYPTODISK="y"
 
 # countdown hidden or menu
 GRUB_TIMEOUT_STYLE="menu"
@@ -32,7 +33,7 @@ GRUB_TIMEOUT_STYLE="menu"
 GRUB_TERMINAL_INPUT="console"
 
 # Uncomment to disable graphical terminal
-#GRUB_TERMINAL_OUTPUT="console" #### DO NOT UNCOMMENT THIS THIS MAKE THEME ETC ALL NO WORK
+#GRUB_TERMINAL_OUTPUT="console #### DO NOT UNCOMMENT THIS THIS MAKE THEME ETC ALL NO WORK"
 
 # The resolution used on graphical terminal
 # note that you can use only modes which your graphic card supports via VBE
