@@ -186,7 +186,7 @@ sxhkd -c "$BSPDIR"/sxhkdrc &
 ksuperkey -e 'Super_L=Alt_L|F1' &
 ksuperkey -e 'Super_R=Alt_L|F1' &
 
-xrdb -merge "$XDG_CONFIG_HOME/X11/xresources"
+xrdb -merge ~/.Xresources
 
 # Enable power management
 /usr/bin/xfce4-power-manager &
@@ -264,7 +264,7 @@ yay -Ss > /tmp/yaySs &
 #/usr/bin/ps ax | grep -v grep | grep maxautoclicker > /dev/null || kdocker maxautoclicker &
 
 # polybar no overlap
-bspc config top_padding 50
+bspc config top_padding 80
 
 # secret chat-server
 #$HOME/scripts/bin/chat-server &
