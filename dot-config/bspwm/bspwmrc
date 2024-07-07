@@ -25,7 +25,7 @@ BSPWM_ABC='#B48EAD'
 BSPWM_PFC='#A3BE8C'
 
 ## Bspwm appearance
-BSPWM_BORDER='2'
+BSPWM_BORDER='3'
 BSPWM_GAP='10'
 BSPWM_SRATIO='0.50'
 
@@ -62,27 +62,28 @@ bspc config focus_follows_pointer true
 bspc config presel_feedback true
 
 # bspc config ignore_ewmh_focus true
+bspc rule -a '*:*:Picture-in-Picture' state=floating
+bspc rule -a '*:*:画中画' state=floating
 
 ## Manage all the unmanaged windows remaining from a previous session.
 bspc wm --adopt-orphans
 
 ## Window rules ----------------------------------------------#
 
-# remove all rules first
+# reset rules
 bspc rule -r *:*
 
 # already have a top_padding(does the same) to avoid polybar overlap window
-#bspc rule -a polybar private
+bspc rule -a polybar private
 
 ## 1 > terminal (always open terminal on workspace-1)
 bspc rule -a Alacritty desktop='^1' follow=on focus=on
 bspc rule -a Xfce4-terminal desktop='^1' follow=on focus=on
 
 ## 2 > web (always open web browser on workspace-2)
-bspc rule -a firefox desktop='^2' follow=on focus=on
-bspc rule -a chromium desktop='^2' follow=on focus=on
-bspc rule -a Brave-browser desktop='^2' follow=on focus=on
-bspc rule -a Thorium-browser desktop='^2' follow=on focus=on
+declare -a web=(Thorium-browser Brave-browser chromium firefox)
+for i in ${web[@]}; do
+   bspc rule -a $i desktop='^2' follow=on focus=on; done
 
 ## 3 > files (always open file manager on workspace-3)
 declare -a files=(Pcmanfm Thunar qBittorrent Caja)
@@ -95,7 +96,7 @@ for i in ${code[@]}; do
    bspc rule -a $i desktop='^4' follow=on focus=on; done
 
 ## 5 > office and docs (always open office/doc apps on workspace-5)
-declare -a office=(Gucharmap Atril Evince libreoffice-writer libreoffice-calc libreoffice-impress libreoffice-startcenter libreoffice Soffice *:libreofficedev *:soffice craft-nativefier-e0958b powerphrasingtool-nativefier-c8a789 Typora obsidian figma-linux anytype)
+declare -a office=(Gucharmap Atril Evince libreoffice-writer libreoffice-calc libreoffice-impress libreoffice-startcenter libreoffice Soffice *:libreofficedev *:soffice Typora obsidian figma-linux anytype)
 for i in ${office[@]}; do
    bspc rule -a $i desktop='^5' follow=on focus=on; done
 
@@ -110,7 +111,7 @@ for i in ${media[@]}; do
    bspc rule -a $i desktop='^7' state=tiled follow=on focus=on; done # floating
 
 ## 8 > games (always open games on workspace-8)
-declare -a game=(Minecraft Minecraft:* badlion Badlion Launcher launcher War war "War Thunder (Vulkan, 64bit)" Minecraft* 1.19.3 Steam steam_proton csgo_linux64 "minecraft-launcher" "Minecraft Launcher" 'Minecraft* 1.19.3' Blueman-manager "Minecraft Launcher" lunarclient "Lunar Client":* retroarch "Minecraft Launcher")
+declare -a game=(Minecraft *:Minecraft badlion Badlion Launcher launcher War war "War Thunder (Vulkan, 64bit)" Steam steam_proton csgo_linux64 "minecraft-launcher" "Minecraft Launcher" Blueman-manager "Minecraft Launcher" lunarclient *:"Lunar Client" retroarch "Minecraft Launcher")
 for i in ${game[@]}; do
     bspc rule -a $i desktop='^8' state=floating follow=off focus=off; done
 
@@ -138,6 +139,10 @@ for i in ${misc[@]}; do
 declare -a floating=(alacritty-float Pcmanfm Onboard Yad zoom Xdm-app exe wechat WeChat sxiv Sxiv 'Firefox:Places' Viewnior feh Nm-connection-editor install4j-burp-StartBurp Thorium-browser:crx_mdpkiolbdkhdjpekfbkbmhigcaggjagi Thorium-browser:crx_fmgjjmmmlfnkbppncabfkddbjimcfncm)
 for i in ${floating[@]}; do
    bspc rule -a $i state=floating follow=on focus=on; done
+
+## special rules
+bspc rule -a Thorium-browser:crx_mdpkiolbdkhdjpekfbkbmhigcaggjagi desktop='' follow=on focus=on
+bspc rule -a Thorium-browser:crx_fmgjjmmmlfnkbppncabfkddbjimcfncm desktop='' follow=on focus=on
 
 bspc rule -a Conky state=floating manage=off
 bspc rule -a stalonetray state=floating manage=off
@@ -302,10 +307,10 @@ done
 /usr/bin/ps ax | grep -v grep | grep nextcloud > /dev/null || nextcloud --background &
 
 # vencord
-/usr/bin/ps ax | grep -v grep | grep vencord > /dev/null || discord --start-minimized &
+/usr/bin/ps ax | grep -v grep | grep discord > /dev/null || discord --start-minimized &
 
 # beeper
-/usr/bin/ps ax | grep -v grep | grep beeper > /dev/null || beeper &
+/usr/bin/ps ax | grep -v grep | grep beeper > /dev/null || beeper --hidden&
 # /usr/bin/ps ax | grep -v grep | grep blueman-applet || blueman-applet &
 # /usr/bin/ps ax | grep -v grep | grep nm-applet || nm-applet &
 # /usr/bin/ps ax | grep -v grep | grep memento-bg || memento-bg <<< 1 &
