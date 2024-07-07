@@ -59,14 +59,14 @@ textbox-prompt-colon {
     padding:                     10px 12px;
     border-radius:               0px;
     background-color:            @active;
-    text-color:                  @background;
+    text-color:                  @foreground;
 }
 prompt {
     enabled:                     true;
     padding:                     10px;
     border-radius:               0px;
     background-color:            @selected;
-    text-color:                  @background;
+    text-color:                  @foreground;
 }
 
 /*****----- Message -----*****/
@@ -133,15 +133,15 @@ element normal.urgent,
 element alternate.urgent,
 element selected.active {
     background-color:            var(urgent);
-    text-color:                  var(background);
+    text-color:                  var(foreground);
 }
 element normal.active,
 element alternate.active,
 element selected.urgent {
     background-color:            var(active);
-    text-color:                  var(background);
+    text-color:                  var(foreground);
 }
 element selected.normal {
     background-color:            var(selected);
-    text-color:                  var(background);
+    text-color:                  var(foreground);
 }
