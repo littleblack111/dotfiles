@@ -71,11 +71,11 @@ command_not_found_handler() {
               return
         fi
     fi 1>&2
-    printf 'Thinking.'
-    ( sleep 0.1 && printf '.' ) &!
-    ( sleep 0.1 && printf '.' ) &!
-    ( sleep 0.1 && printf '.' ) &!
-    eval $(thefuck --enable-experimental-instant-mode $@)
+    # printf 'Thinking.'
+    # ( sleep 0.1 && printf '.' ) &!
+    # ( sleep 0.1 && printf '.' ) &!
+    # ( sleep 0.1 && printf '.' ) &!
+    # eval $(thefuck --enable-experimental-instant-mode $@)
 
     return 127
 }
