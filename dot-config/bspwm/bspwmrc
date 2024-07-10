@@ -62,8 +62,8 @@ bspc config focus_follows_pointer true
 bspc config presel_feedback true
 
 # bspc config ignore_ewmh_focus true
-bspc rule -a '*:*:Picture-in-Picture' state=floating
-bspc rule -a '*:*:画中画' state=floating
+bspc rule -a '*:*:Picture-in-Picture' state=floating focus=off
+bspc rule -a '*:*:画中画' state=floating focus=off
 
 ## Manage all the unmanaged windows remaining from a previous session.
 bspc wm --adopt-orphans
@@ -111,7 +111,7 @@ for i in ${media[@]}; do
    bspc rule -a $i desktop='^7' state=tiled follow=on focus=on; done # floating
 
 ## 8 > games (always open games on workspace-8)
-declare -a game=(Minecraft *:Minecraft badlion Badlion Launcher launcher War war "War Thunder (Vulkan, 64bit)" Steam steam_proton csgo_linux64 "minecraft-launcher" "Minecraft Launcher" Blueman-manager "Minecraft Launcher" lunarclient *:"Lunar Client" retroarch "Minecraft Launcher")
+declare -a game=(Minecraft *:Minecraft badlion Badlion Launcher launcher War war "War Thunder (Vulkan, 64bit)" Steam steam_proton csgo_linux64 minecraft-launcher:"Minecraft Launcher" Blueman-manager "Minecraft Launcher" lunarclient *:"Lunar Client" retroarch "Minecraft Launcher")
 for i in ${game[@]}; do
     bspc rule -a $i desktop='^8' state=floating follow=off focus=off; done
 
@@ -136,13 +136,19 @@ for i in ${misc[@]}; do
     bspc rule -a $i desktop='^10' state=floating follow=off focus=false; done
 
 ## Always Floating Apps
-declare -a floating=(alacritty-float Pcmanfm Onboard Yad zoom Xdm-app exe wechat WeChat sxiv Sxiv 'Firefox:Places' Viewnior feh Nm-connection-editor install4j-burp-StartBurp Thorium-browser:crx_mdpkiolbdkhdjpekfbkbmhigcaggjagi Thorium-browser:crx_fmgjjmmmlfnkbppncabfkddbjimcfncm)
+declare -a floating=(alacritty-float Pcmanfm Onboard Yad zoom Xdm-app exe wechat WeChat sxiv Sxiv 'Firefox:Places' Viewnior feh Nm-connection-editor install4j-burp-StartBurp Thorium-browser:app.shortwave.com Thorium-browser:crx_lnachpgegbbmnnlgpokibfjlmppeciah) # Thorium-browser:crx_mdpkiolbdkhdjpekfbkbmhigcaggjagi
 for i in ${floating[@]}; do
    bspc rule -a $i state=floating follow=on focus=on; done
 
+## Always sticky apps
+declare -a sticky=(Thorium-browser:app.shortwave.com Thorium-browser:crx_lnachpgegbbmnnlgpokibfjlmppeciah) # Thorium-browser:crx_mdpkiolbdkhdjpekfbkbmhigcaggjagi
+for i in ${sticky[@]}; do
+   bspc rule -a $i sticky=on; done
+
 ## special rules
-bspc rule -a Thorium-browser:crx_mdpkiolbdkhdjpekfbkbmhigcaggjagi desktop='' follow=on focus=on
-bspc rule -a Thorium-browser:crx_fmgjjmmmlfnkbppncabfkddbjimcfncm desktop='' follow=on focus=on
+# bspc rule -a Thorium-browser:crx_mdpkiolbdkhdjpekfbkbmhigcaggjagi desktop='' follow=on focus=on
+# bspc rule -a Thorium-browser:crx_lnachpgegbbmnnlgpokibfjlmppeciah desktop='' follow=on focus=on
+
 
 bspc rule -a Conky state=floating manage=off
 bspc rule -a stalonetray state=floating manage=off

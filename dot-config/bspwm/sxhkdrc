@@ -79,12 +79,12 @@ ctrl + alt + l
     betterlockscreen --lock & betterlockscreen -u ~/Pictures/wallpapers    
 
 # quick google chat launch
-super + shift + c
-    gtk-launch google-chat.desktop
+# super + shift + c
+    # gtk-launch google-chat.desktop
 
 # quick gmail launch
 super + shift + g
-    gtk-launch google-gmail.desktop
+    gtk-launch shortwave.desktop
 
 ##---------- System Keys ----------##
 
