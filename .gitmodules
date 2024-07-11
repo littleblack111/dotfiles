@@ -13,3 +13,6 @@
 [submodule "dot-oh-my-zsh"]
 	path = dot-oh-my-zsh
 	url = https://github.com/littleblack111/ohmyzsh.git
+[submodule "dot-config/spicetify"]
+	path = dot-config/spicetify
+	url = https://github.com/littleblack111/spicetify.git
