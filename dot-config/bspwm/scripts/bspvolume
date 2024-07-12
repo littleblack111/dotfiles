@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-## Script to manage speaker volume on Archcraft.
-
 # Icons
 iDIR='/usr/share/archcraft/icons/dunst'
 notify_cmd='dunstify -u low -h string:x-dunst-stack-tag:obvolume'
@@ -16,11 +14,11 @@ get_icon() {
 	current="$(get_volume)"
 	if [[ "$current" -eq "0" ]]; then
 		icon="$iDIR/volume-mute.png"
-	elif [[ ("$current" -ge "0") && ("$current" -le "30") ]]; then
+	elif [[ ("$current" -ge "0") && ("$current" -le "40") ]]; then
 		icon="$iDIR/volume-low.png"
-	elif [[ ("$current" -ge "30") && ("$current" -le "60") ]]; then
+	elif [[ ("$current" -ge "40") && ("$current" -le "60") ]]; then
 		icon="$iDIR/volume-mid.png"
-	elif [[ ("$current" -ge "60") && ("$current" -le "100") ]]; then
+	elif [[ ("$current" -ge "60") ]]; then
 		icon="$iDIR/volume-high.png"
 	fi
 }
@@ -33,13 +31,13 @@ notify_user() {
 # Increase Volume
 inc_volume() {
 	[[ `pulsemixer --get-mute` == 1 ]] && pulsemixer --unmute
-	pulsemixer --max-volume 100 --change-volume +5 & get_icon && notify_user
+	pulsemixer --change-volume +5 & get_icon && notify_user
 }
 
 # Decrease Volume
 dec_volume() {
 	[[ `pulsemixer --get-mute` == 1 ]] && pulsemixer --unmute
-	pulsemixer --max-volume 100 --change-volume -5 & get_icon && notify_user
+	pulsemixer --change-volume -5 & get_icon && notify_user
 }
 
 # Toggle Mute

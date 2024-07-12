@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+function play() {
+    playerctl -p spotify play
+}
+
+function pause() {
+    playerctl -p spotify pause
+}
+
+function play_pause() {
+    playerctl -p spotify play-pause
+}
+
+function smart_pp() {
+    if [[ $(playerctl status -p spotify) == "Playing" ]]; then
+        pause
+    else
+        playerctl play-pause
+    fi
+}
+
+smart_pp
