@@ -157,7 +157,7 @@ bspc rule -a stalonetray state=floating manage=off
 ## Autostart -------------------------------------------------#
 
 # Kill if already running
-killall -9 xsettingsd sxhkd dunst ksuperkey xfce4-power-manager bspc runtransani.sh cleanfullscreen #rrunbgblur.sh  # launching with conditions .feh backgroundblur chat-server mpd-mpris xbindkeys landdrop
+killall -9 xsettingsd sxhkd dunst ksuperkey xfce4-power-manager bspc runtransani.sh cleanfullscreen audio-autoAdjust.sh #rrunbgblur.sh  # launching with conditions .feh backgroundblur chat-server mpd-mpris xbindkeys landdrop
 killall -15 idle.sh # reflector.sh
 #eww kill
 
@@ -251,6 +251,10 @@ exec clipmenud &
 
 # idle stuff
 $HOME/scripts/idle.sh -d &
+
+# audio auto adjust
+$HOME/scripts/audio-autoAdjust.sh -d &
+
 # 1. autoupdate
 #exec $HOME/scripts/auto-update.sh & # replaced with systemd units # moved into idle.sh
 
