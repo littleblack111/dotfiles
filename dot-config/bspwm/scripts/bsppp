@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+status=$(playerctl status -p spotify)
+
+if [[ $status == "Paused" ]] || [[ $status == "Playing" ]]; then
+    vol=$(playerctl metadata -p spotify -f "{{volume*100}}" | awk '{print int($1)}')
+    if [[ $status == "Paused" ]]; then
+        playerctl volume -p spotify 0
+        playerctl play -p spotify
+        for ((i=1; i<=$vol; i++)); do
+            playerctl volume -p spotify $(echo "$i/100" | bc -l)
+        done
+        exit 0
+    elif [[ $status == "Playing" ]]; then
+        for ((i=$vol; i>=0; i--)); do
+            playerctl volume -p spotify $(echo "$i/100" | bc -l)
+        done
+        playerctl pause -p spotify
+        playerctl volume -p spotify 0.$vol
+        exit 0
+    fi
+    exit 0
+fi
+

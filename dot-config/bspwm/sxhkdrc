@@ -123,7 +123,7 @@ XF86Audio{Mute,MicMute}
 	
 # Music control
 XF86Audio{Next,Prev,Play,Stop}
-	playerctl -p spotify {next,previous,play-pause,stop}
+    {playerctl -p spotify next, playerctl -p spotifyprevious,bsppp,playerctl -p spotify stop}
 
 super + XF86PowerOff
     $HOME/.config/rofi/scripts/rofi_shutdown
