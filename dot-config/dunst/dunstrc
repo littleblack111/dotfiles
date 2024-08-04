@@ -2,24 +2,24 @@
 monitor = 0
 follow = mouse
 width = (300,500)
-height = 500
+height = (500,1000)
 origin = top-right
 offset = 10x54
-corner_radius = 0
+corner_radius = 16
 scale = 0
 notification_limit = 0
 progress_bar = true
 progress_bar_height = 80
-progress_bar_frame_width = 4
-progress_bar_min_width = 300
+progress_bar_frame_width = 2
+progress_bar_min_width = 3
 progress_bar_max_width = 500
 indicate_hidden = yes
-transparency = 50
+transparency = 20
 separator_height = 2
 padding = 15
 horizontal_padding = 15
 text_icon_padding = 0
-frame_width = 4
+frame_width = 1
 gap_size = 0
 separator_color = frame
 sort = yes
@@ -27,7 +27,7 @@ idle_threshold = 120
 font = JetBrains Mono 10
 line_height = 2
 markup = full
-format = %s\n%b
+format = <span size="125%">%s</span>\n%b
 alignment = left
 vertical_alignment = center
 show_age_threshold = 60
@@ -37,11 +37,12 @@ stack_duplicates = true
 hide_duplicate_count = false
 show_indicators = yes
 enable_recursive_icon_lookup = true
+icon_theme = Arc-Dark
 icon_position = left
 min_icon_size = 24
-max_icon_size = 48
+max_icon_size = 64
 sticky_history = yes
-history_length = 20
+history_length = -1
 browser = /usr/bin/xdg-open
 always_run_script = true
 mouse_left_click = do_action, close_current
@@ -52,22 +53,29 @@ class = Dunst
 
 [urgency_low]
 timeout = 3
-background = "#1E2128"
+background = "#1E212880"
 foreground = "#ABB2BF"
 frame_color = "#292d37"
 
 [urgency_normal]
 timeout = 5
-background = "#1E2128"
+background = "#1E212880"
 foreground = "#ABB2BF"
 frame_color = "#292d37"
 
 [urgency_critical]
 timeout = 0
-background = "#1E2128"
+background = "#1E212880"
 foreground = "#E06B74"
 frame_color = "#E06B74"
 
 [play_sound]
 summary = "*"
 script = "/home/system/scripts/dunst-alert.sh"
+
+[skip-display]
+appname=spotify
+skip_display=true
+
+[stack-volumes]
+summary = *Volume*
