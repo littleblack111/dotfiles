@@ -25,7 +25,7 @@ configuration {
     urgent-background:           var(urgent);
     urgent-foreground:           var(foreground);
     active-background:           var(active);
-    active-foreground:           var(background);
+    active-foreground:           var(foreground);
     selected-normal-background:  var(selected);
     selected-normal-foreground: var(foreground);
     selected-urgent-background:  var(active);
@@ -35,9 +35,9 @@ configuration {
     alternate-normal-background: var(background);
     alternate-normal-foreground: var(foreground);
     alternate-urgent-background: var(urgent);
-    alternate-urgent-foreground: var(background);
+    alternate-urgent-foreground: var(foreground);
     alternate-active-background: var(active);
-    alternate-active-foreground: var(background);
+    alternate-active-foreground: var(foreground);
 }
 
 /*****----- Main Window -----*****/
