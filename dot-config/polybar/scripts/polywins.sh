@@ -12,12 +12,12 @@ inactive_bg=
 inactive_underline=
 
 separator="·"
-show="window_class" # options: window_title, window_class, window_classname
+show="window_title" # options: window_title, window_class, window_classname
 forbidden_classes="Polybar Conky Gmrun"
-empty_desktop_message="Desktop"
+empty_desktop_message=""
 
 char_limit=20
-max_windows=15
+max_windows=3
 char_case="normal" # normal, upper, lower
 add_spaces="true"
 resize_increment=16
