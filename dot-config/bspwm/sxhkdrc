@@ -221,14 +221,14 @@ super + {button4,button5}
     bspc node -z {left -20 0 & bspc node -z right 20 0 & bspc node -z top 0 -20 & bspc node -z bottom 0 20,left 20 0 & bspc node -z right -20 0 & bspc node -z top 0 20 & bspc node -z buttom 0 -20}
 
 # "Drag to floating" tiled windows or move floating windows.
-ctrl + button3
-	~/.config/bspwm/scripts/drag-to-float
-ctrl + @button3
-	~/.config/bspwm/scripts/drag-to-float stop
-@button3
-	~/.config/bspwm/scripts/drag-to-float stop
-~button3
-	:
+# ctrl + button3
+	# ~/.config/bspwm/scripts/drag-to-float
+# ctrl + @button3
+	# ~/.config/bspwm/scripts/drag-to-float stop
+# @button3
+	# ~/.config/bspwm/scripts/drag-to-float stop
+# ~button3
+	# :
 
 # Split horizontal, vertical or cancel
 super + alt + {h,v,q}
