@@ -74,7 +74,7 @@ summary = "*"
 script = "/home/system/scripts/dunst-alert.sh"
 
 [skip-display]
-appname=spotify
+appname=Spotify
 skip_display=true
 
 [stack-volumes]
