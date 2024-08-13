@@ -62,8 +62,7 @@ bspc config focus_follows_pointer true
 bspc config presel_feedback true
 
 # bspc config ignore_ewmh_focus true
-bspc rule -a '*:*:Picture-in-Picture' state=floating sticky=on focus=off
-bspc rule -a '*:*:画中画' state=floating sticky=on focus=off
+bspc rule -a '*:*:Picture in picture' state=floating sticky=on focus=off
 
 ## Manage all the unmanaged windows remaining from a previous session.
 bspc wm --adopt-orphans

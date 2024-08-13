@@ -165,7 +165,7 @@ ctrl + super + alt + Escape
     xkill -id $(xprop -root _NET_ACTIVE_WINDOW | awk '{print $5}')
 
 # Quit/Restart bspwm
-ctrl + shift + r
+ctrl + super + shift + r
 	bspc wm -r
 
 ctrl + shift + q
