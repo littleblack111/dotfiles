@@ -110,7 +110,7 @@ for i in ${media[@]}; do
    bspc rule -a $i desktop='^7' state=tiled follow=on focus=on; done # floating
 
 ## 8 > games (always open games on workspace-8)
-declare -a game=(Minecraft *:Minecraft badlion Badlion Launcher launcher War war "War Thunder (Vulkan, 64bit)" Steam steam_proton csgo_linux64 minecraft-launcher:"Minecraft Launcher" Blueman-manager "Minecraft Launcher" lunarclient *:"Lunar Client" retroarch "Minecraft Launcher")
+declare -a game=(Minecraft *:Minecraft badlion Badlion Launcher launcher War war "War Thunder (Vulkan, 64bit)" Steam steam_proton csgo_linux64 minecraft-launcher:"Minecraft Launcher" Blueman-manager "Minecraft Launcher" lunarclient *:"Lunar Client" retroarch "Minecraft Launcher" "An Anime Game Launcher" "Lutris" "genshinimpact.exe")
 for i in ${game[@]}; do
     bspc rule -a $i desktop='^8' state=floating follow=off focus=off; done
 
@@ -238,6 +238,9 @@ exec clipmenud &
 
 # clean full screen
 /usr/bin/ps ax | grep -v grep | grep cleanfullscreen > /dev/null || cleanfullscreen &
+
+# bitwarden
+/usr/bin/ps ax | grep -v grep | grep bitwarden > /dev/null || bitwarden-desktop &
 
 # autolock
 #xautolock -time 30 -locker "betterlockscreen -l" & # don't really need/want that
