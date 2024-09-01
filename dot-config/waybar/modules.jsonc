@@ -1,0 +1,194 @@
+{
+    // Modules configuration
+    "clock": {
+        "format": " {:%H:%M}",
+        "tooltip": "true",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": " {:%d/%m}",
+        "on-click-right": "swaync-client -t -sw"
+    },
+
+
+    "hyprland/workspaces": {
+        "active-only": false,
+        "all-outputs": true,
+        "disable-scroll": false,
+        "on-scroll-up": "hyprctl dispatch workspace -1",
+        "on-scroll-down": "hyprctl dispatch workspace +1",
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
+            "7": "",
+            "8": "",
+            "9": "",
+            "urgent": "",
+            // "active": "",
+            "default": " ",
+            "sort-by-number": true
+        },
+        // "format-icons": {
+            // "default": "",
+            // "active": " ",
+        // },
+
+        "persistent-workspaces": {
+            "*": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+        }
+    },
+    "mpris": {
+        "format": "{player_icon} {dynamic}",
+        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "dynamic-order": ["title", "position", "length"],
+        "player-icons": {
+            "default": "▶",
+            "mpv": "🎵"
+        },
+        "status-icons": {
+            "paused": "⏸"
+        },
+        "interval": 1,
+    },
+    "group/musicworkspace": {
+        "orientation": "horizontal",
+        "modules": ["hyprland/workspaces", "mpris"],
+        "drawer": {}
+    },
+
+    "memory": {
+        "format": "󰍛 {}%",
+        "format-alt": "󰍛 {used}/{total} GiB",
+        "tooltip-format": "swap: {swapPercentage}%",
+        "interval": 1
+    },
+
+    "cpu": {
+        "format": " {usage}%",
+        "format-alt": " {avg_frequency} GHz",
+        "interval": 1
+    },
+
+    "network": {
+        "format-wifi": "󰤨   {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "format-ethernet": " {ifname}: Aesthetic",
+        "format-linked": " {ifname} (No IP)",
+        "format-disconnected": "󰤭",
+        "format-alt": " {ifname}: {ipaddr}/{cidr}",
+        "tooltip-format": "Strength: {signalStrength}%",
+        // "on-click-right": "nm-connection-editor",
+        "on-click-right": "nmd",
+        "interval": 1
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 5
+    },
+    "custom/launcher": {
+        "format": "󰣇",
+        // "on-click": "bash $HOME/.config/rofi/launcher.sh",
+        //    "on-click": "wofi --show drun -I -a -n -W 500 -H 376 -s ~/.config/wofi/themes/gruvbox.css",
+        // "on-click-right": "bash $HOME/.config/rofi/run.sh"  
+        //    "on-click-right": "wofi --show run -I -a -n -W 500 -H 376 -s ~/.config/wofi/themes/gruvbox.css"  
+    },
+    // "hyprland/window": {
+
+    // },
+    "custom/gpu": {
+        "format": " {}%",
+        "format-alt": " {}°C",
+        "exec-if": "nvidia-smi",
+        "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
+        "exec-alt": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
+        "interval": 3
+    },
+    "temperature": {
+        "format": " {}°C",
+        "critical-threshold": 80,
+    },
+//     "cava": {
+// //        "cava_config": "$XDG_CONFIG_HOME/cava/cava.conf",
+//         "framerate": 30,
+//         "autosens": 1,
+//         "sensitivity": 100,
+//         "bars": 14,
+//         "lower_cutoff_freq": 50,
+//         "higher_cutoff_freq": 10000,
+//         "method": "pulse",
+//         "source": "auto",
+//         "stereo": true,
+//         "reverse": false,
+//         "bar_delimiter": 0,
+//         "monstercat": false,
+//         "waves": false,
+//         "noise_reduction": 0.77,
+//         "input_delay": 2,
+//         "format-icons" : ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
+//         "actions": {
+//                    "on-click-right": "mode"
+//                    }
+//     },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+    "group/misc": {
+        "orientation": "horizontal",
+        "modules": ["clock", "custom/notification", "tray"],
+        "drawer": {}
+    },
+        "custom/quit": {
+        "format": "󰗼",
+        "tooltip": false,
+        "on-double-click": "hyprctl dispatch exit"
+    },
+    "custom/lock": {
+        "format": "󰍁",
+        "tooltip": false,
+        "on-double-click": "hyprlock"
+    },
+    "custom/reboot": {
+        "format": "󰜉",
+        "tooltip": false,
+        "on-double-click": "reboot"
+    },
+    "custom/shutdown": {
+        "format": "",
+        "tooltip": false,
+        "on-double-click": "shutdown now"
+    },
+    "group/power": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "not-shutdown",
+        },
+        "modules": [
+            "custom/shutdown",
+            "custom/quit",
+            "custom/lock",
+            "custom/reboot",
+        ]
+    },
+}

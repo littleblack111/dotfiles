@@ -1,0 +1,124 @@
+@import url("./colors.css");
+
+
+* {
+    border: none;
+    font-family: Iosevka, FontAwesome, Noto Sans CJK, Jetbrains Nerd Font, sans-serif;
+    font-size: 16px;
+    min-height: 0;
+    margin-bottom: 0;
+    color: @ACCENT
+}
+
+.module {
+    background: @BACKGROUND;
+    border-radius: 8px;
+    margin: 4px;
+    padding: 4px 4px 4px 4px;
+    border: 2px solid @ACCENT;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
+window#waybar {
+    font-family: Iosevka, FontAwesome, Noto Sans CJK, "JetBrains Mono NerdFont";
+    background-color: transparent;
+    font-size: 0.8rem;
+}
+
+window#waybar.empty #window,#modules-center {
+    background-color: transparent;
+    border: none;
+}
+
+tooltip {
+    background-color: @BACKGROUND;
+    color: @ACCENT;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 0.8rem;
+}
+
+/* @keyframes glowing {
+    0% {
+        background-position: 0 0
+    }
+
+    50% {
+        background-position: 400% 0
+    }
+
+    to {
+        background-position: 0 0
+    }
+} */
+
+
+/* .modules-center {
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.8));
+    background-size: 400%;
+    border-radius: 8px;
+    animation: glowing 20s linear infinite;
+} */
+
+
+#custom-launcher {
+    color: @BLUE;
+    border-radius: 10px;
+    padding: 0px 16px 0px 16px;
+    padding-left: 12px;
+    font-size: 28px;
+    /* font-size: 2.5rem; */
+}
+
+/* #custom-gmail.unread { */
+/*     color: @WHITE; */
+/* } */
+/* #custom-gmail.inaccurate { */
+/*     color: @YELLOW; */
+/* } */
+/* #custom-gmail.error { */
+/*     color: @RED; */
+/* } */
+
+#workspaces {
+    background-color: @BACKGROUND;
+    border-radius: 10px;
+}
+
+#workspaces button {
+    opacity: 0.8;
+    border-radius: 12px; 
+    background-color: @YELLOW;
+    margin-top: 4px;
+    margin-bottom: 2px;
+    margin-left: 1px;
+    margin-right: 1px;
+    transition: all 0.2s;
+}
+
+#workspaces button.empty {
+    background-color: @FOREGROUND;
+    opacity: 0.4;
+    border-radius: 12px;
+}
+
+#workspaces button.active {
+    background-color: @ACCENT;
+    margin-left: 1px;
+    margin-right: 1px;
+    padding-left: 14px;
+    padding-right: 14px;
+    opacity: 1;
+}
+
+
+#workspaces button.urgent {
+    background-color: @RED;
+    border-radius: 16px 16px 16px 16px; 
+    opacity: 1;
+}
+
+#temperature.critical {
+    color: @RED;
+}
