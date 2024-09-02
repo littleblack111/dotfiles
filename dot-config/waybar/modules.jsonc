@@ -42,14 +42,15 @@
         }
     },
     "mpris": {
-        "format": "{player_icon} {dynamic}",
+        "format": "{status_icon} {dynamic}",
         "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "tooltip-format": "{title} by {artist} - {album} {position}/{length}",
         "dynamic-order": ["title", "position", "length"],
-        "player-icons": {
-            "default": "▶",
-            "mpv": "🎵"
-        },
+        // "player-icons": {
+            // "default": "▶",
+        // },
         "status-icons": {
+            "playing": "▶",
             "paused": "⏸"
         },
         "interval": 1,
@@ -161,21 +162,25 @@
         "custom/quit": {
         "format": "󰗼",
         "tooltip": false,
+        "on-click": "notify-send 'Hyprland' 'Click again to Exit'",
         "on-double-click": "hyprctl dispatch exit"
     },
     "custom/lock": {
         "format": "󰍁",
         "tooltip": false,
+        "on-click": "notify-send 'Hyprland' 'Click again to Lock'",
         "on-double-click": "hyprlock"
     },
     "custom/reboot": {
         "format": "󰜉",
         "tooltip": false,
+        "on-click": "notify-send 'Hyprland' 'Click again to Reboot'",
         "on-double-click": "reboot"
     },
     "custom/shutdown": {
         "format": "",
         "tooltip": false,
+        "on-click": "notify-send 'Hyprland' 'Click again to Shutdown'",
         "on-double-click": "shutdown now"
     },
     "group/power": {
