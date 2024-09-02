@@ -28,5 +28,6 @@ config.keys = {
 -- }
 
 config.window_close_confirmation = 'NeverPrompt'
+config.enable_kitty_keyboard = true
 
 return config
