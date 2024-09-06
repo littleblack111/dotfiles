@@ -1,11 +1,12 @@
 {
     // Modules configuration
     "clock": {
-        "format": " {:%H:%M}",
+        "format": " {:%I:%M:%S}",
         "tooltip": "true",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": " {:%d/%m}",
-        "on-click-right": "swaync-client -t -sw"
+        "format-alt": " {:%A %d/%m}",
+        "on-click-right": "swaync-client -t -sw",
+        "interval": 1
     },
 
 
@@ -97,20 +98,52 @@
         // "on-click-right": "bash $HOME/.config/rofi/run.sh"  
         //    "on-click-right": "wofi --show run -I -a -n -W 500 -H 376 -s ~/.config/wofi/themes/gruvbox.css"  
     },
-    // "hyprland/window": {
-
-    // },
+    "hyprland/window": {
+        // "on-click": "hyprctl dispatch focuswindow 'title:{title}'",
+    },
     "custom/gpu": {
         "format": " {}%",
         "format-alt": " {}°C",
         "exec-if": "nvidia-smi",
         "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
         "exec-alt": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
+        // "return-type": "json",
+        "tooltip": false,
         "interval": 3
     },
     "temperature": {
         "format": " {}°C",
+        "tooltip": false,
         "critical-threshold": 80,
+        "interval": 1
+    },
+    // "custom/indicator": {
+    //     "format": "{}",
+    //     "exec": "$HOME/scripts/hyprindicator subscribe",
+    //     "return-type": "json",
+    // },
+    "privacy": {
+        "icon-spacing": 4,
+        "icon-size": 24,
+        "transition-duration": 250,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-out",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            }
+        ],
+        "interval": 1
     },
 //     "cava": {
 // //        "cava_config": "$XDG_CONFIG_HOME/cava/cava.conf",
@@ -134,6 +167,10 @@
 //                    "on-click-right": "mode"
 //                    }
 //     },
+    // "group/small-utils": {
+    //     "modules": ["custom/notification", "custom/wf-recorder", "custom/dummy-mic", "custom/dummy-cam", "custom/disable-sound"],
+    //     "click-to-reveal": true,
+    // },
     "custom/notification": {
         "tooltip": false,
         "format": "{icon}",
@@ -154,9 +191,18 @@
         "on-click-right": "swaync-client -d -sw",
         "escape": true
     },
+  //   "custom/wf-recorder": {
+		// "format": "{}",
+		// "interval": "once",
+		// // "exec": "if pgrep wf-recorder >/dev/null; then echo ''; else echo ''; fi",
+		// "tooltip": "false",
+		// "on-click": "exec $HOME/scripts/wf-record",
+		// "on-click-right": "exec $HOME/scripts/wf-record -s",
+		// "signal": 8
+  //   },
     "group/misc": {
         "orientation": "horizontal",
-        "modules": ["clock", "custom/notification", "tray"],
+        "modules": ["clock", "group/small-utils", "tray"],
         "drawer": {}
     },
         "custom/quit": {

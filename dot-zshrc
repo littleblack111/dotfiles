@@ -152,3 +152,4 @@ precmd() {
 # function cd {
 #   cd $@ && echo $@ > $HOME/.cache/prev.dir
 # }
+#

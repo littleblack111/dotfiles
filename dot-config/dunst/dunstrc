@@ -52,13 +52,13 @@ title = Dunst
 class = Dunst
 
 [urgency_low]
-timeout = 3
+timeout = 1
 background = "#1E212880"
 foreground = "#ABB2BF"
 frame_color = "#292d37"
 
 [urgency_normal]
-timeout = 5
+timeout = 3
 background = "#1E212880"
 foreground = "#ABB2BF"
 frame_color = "#292d37"

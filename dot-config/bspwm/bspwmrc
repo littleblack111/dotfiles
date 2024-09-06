@@ -95,7 +95,7 @@ for i in ${code[@]}; do
    bspc rule -a $i desktop='^4' follow=on focus=on; done
 
 ## 5 > office and docs (always open office/doc apps on workspace-5)
-declare -a office=(Gucharmap Atril Evince libreoffice-writer libreoffice-calc libreoffice-impress libreoffice-startcenter libreoffice Soffice *:libreofficedev *:soffice Typora obsidian figma-linux anytype)
+declare -a office=(Gucharmap Atril Evince libreoffice-writer libreoffice-calc libreoffice-impress libreoffice-startcenter libreoffice Soffice *:libreofficedev *:soffice Typora obsidian figma-linux anytype craft-nativefier-e0958b)
 for i in ${office[@]}; do
    bspc rule -a $i desktop='^5' follow=on focus=on; done
 
@@ -311,7 +311,7 @@ fi
 # sleep 10
 # connection with other computers(universal control)
 while ! systemctl is-active network.target; do
-  sleep 1
+  wait
 done
 /usr/bin/ps ax | grep -v grep | grep input-leap || input-leap &
 

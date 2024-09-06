@@ -122,3 +122,47 @@ tooltip {
 #temperature.critical {
     color: @RED;
 }
+
+.no {
+    background-color: transparent;
+    border: none;
+}
+
+/* .mic, .cam { */
+/*     color: @YELLOW; */
+/* } */
+
+#custom-indicator {
+    color: @YELLOW;
+}
+
+#custom-shutdown {
+    color: @RED;
+}
+
+#custom-quit {
+    color: @YELLOW;
+}
+
+#custom-lock {
+    color: @YELLOW;
+}
+
+#custom-reboot {
+    color: @RED;
+}
+
+#privacy {
+    background-color: @BACKGROUND;
+    border-radius: 0px 8px 8px 0px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+#privacy > *, #privacy-item > * {
+    color: @YELLOW;
+}
+
+#custom-wf-recorder {
+    padding-left: 12px;
+}
