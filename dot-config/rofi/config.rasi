@@ -1,6 +1,6 @@
 configuration {
 	/*---------- General setting ----------*/
-	modi: "drun,run,filebrowser,window,emoji,calc";
+	modi: "drun,run,filebrowser,window,emoji";
 	case-sensitive: false;
 	cycle: true;
 	filter: "";

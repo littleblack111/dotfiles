@@ -26,7 +26,7 @@ window#waybar {
     font-size: 0.8rem;
 }
 
-window#waybar.empty #window,#modules-center {
+window#waybar.empty {
     background-color: transparent;
     border: none;
 }
