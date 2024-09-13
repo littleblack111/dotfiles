@@ -1,7 +1,7 @@
 Net/ThemeName "Arc-Dark"
 #Net/IconThemeName "Arc-Circle"
 Net/IconThemeName "BeautyLine"
-Gtk/CursorThemeName "LyraB"
+Gtk/CursorThemeName "Bibata-Rainbow-Modern"
 Net/EnableEventSounds "0"
 Net/EnableInputFeedbackSounds "0"
 Xft/DPI "-1"
