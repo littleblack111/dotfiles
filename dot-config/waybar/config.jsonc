@@ -9,7 +9,7 @@
     "margin-left": 25,
     "margin-right": 25,
     "modules-left": ["custom/launcher", "group/musicworkspace", "privacy"],
-    "modules-center": ["hyprland/window", "cava"],
+    "modules-center": ["hyprland/window"],
     "modules-right": ["cpu", "memory", "custom/gpu", "temperature", "network", "group/misc", "custom/wf-recorder", "group/power"],
     // "reload_style_on_change": true,
 }
