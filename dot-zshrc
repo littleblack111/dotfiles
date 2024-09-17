@@ -25,7 +25,7 @@ source $HOME/.config/zsh/plugins-customization.zsh
 source $HOME/.config/zsh/aliases.zsh
 
 # utilitys
-source $HOME/.config/zsh/utility.zsh
+source $HOME/.config/zsh/func.zsh
 
 # options
 source $HOME/.config/zsh/options.zsh

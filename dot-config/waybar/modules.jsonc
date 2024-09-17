@@ -76,11 +76,12 @@
     },
 
     "network": {
-        "format-wifi": "󰤨   {bandwidthDownBytes}  {bandwidthUpBytes}",
-        "format-ethernet": " {ifname}: Aesthetic",
+        "format-wifi": "{icon}   {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "format-ethernet": " {ifname}: Ethernet",
         "format-linked": " {ifname} (No IP)",
         "format-disconnected": "󰤭",
         "format-alt": " {ifname}: {ipaddr}/{cidr}",
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
         "tooltip-format": "Strength: {signalStrength}%",
         // "on-click-right": "nm-connection-editor",
         "on-click-right": "nmd",
