@@ -1,0 +1,12 @@
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Generating GRUB config to let grub-btrfs detect new snapshots...
+Depends = grub
+When = PostTransaction
+Exec = /bin/bash -c "/usr/share/libalpm/scripts/grub-mkconfig 2>&1 | /home/system/scripts/oneline"

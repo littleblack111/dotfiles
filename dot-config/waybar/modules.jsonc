@@ -107,7 +107,7 @@
         "separate-outputs": true
     },
     "custom/gpu": {
-        "format": " {}%",
+        "format": "󱓞 {}%",
         "format-alt": " {}°C",
         "exec-if": "nvidia-smi",
         "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
