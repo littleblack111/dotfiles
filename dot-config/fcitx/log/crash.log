@@ -1,0 +1,18 @@
+=========================
+FCITX 4.2.9.9 -- Get Signal No.: 11
+Date: try "date -d @1726143072" if you are using GNU date ***
+ProcessID: 337971
+fcitx(+0x196c) [0x55af011c096c]
+/usr/lib/libc.so.6(+0x3d1d0) [0x7c8f1174d1d0]
+/usr/lib/fcitx/fcitx-pinyin.so(+0x6bab) [0x7c8f0d71cbab]
+/usr/lib/libfcitx-core.so.0(FcitxInstanceDoInputCallback+0x101) [0x7c8f1193c9f1]
+/usr/lib/libfcitx-core.so.0(+0x1428f) [0x7c8f1193f28f]
+/usr/lib/fcitx/fcitx-ipcportal.so(+0x366d) [0x7c8f0df5566d]
+/usr/lib/libdbus-1.so.3(dbus_connection_dispatch+0x4e3) [0x7c8f1164b663]
+/usr/lib/fcitx/fcitx-dbus.so(+0x33a9) [0x7c8f119a13a9]
+/usr/lib/libfcitx-core.so.0(+0x158fe) [0x7c8f119408fe]
+/usr/lib/libfcitx-core.so.0(FcitxInstanceRun+0x5f) [0x7c8f1194134f]
+fcitx(+0x11fa) [0x55af011c01fa]
+/usr/lib/libc.so.6(+0x25e08) [0x7c8f11735e08]
+/usr/lib/libc.so.6(__libc_start_main+0x8c) [0x7c8f11735ecc]
+fcitx(+0x12b5) [0x55af011c02b5]
