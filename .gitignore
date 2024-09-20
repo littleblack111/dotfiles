@@ -2,3 +2,5 @@
 *.log
 cache/
 logs/
+colors.*
+*wallust*
