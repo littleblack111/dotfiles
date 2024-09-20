@@ -15,7 +15,7 @@
     border-radius: 8px;
     margin: 4px;
     padding: 4px 4px 4px 4px;
-    border: 2px solid @ACCENT;
+    border: 2px solid @color9;
     padding-right: 16px;
     padding-left: 16px;
 }
@@ -89,7 +89,7 @@ tooltip {
 #workspaces button {
     opacity: 0.8;
     border-radius: 12px; 
-    background-color: @YELLOW;
+    background-color: @color5;
     margin-top: 4px;
     margin-bottom: 2px;
     margin-left: 1px;
@@ -104,7 +104,7 @@ tooltip {
 }
 
 #workspaces button.active {
-    background-color: @ACCENT;
+    background-color: @color3;
     margin-left: 1px;
     margin-right: 1px;
     padding-left: 14px;
@@ -114,7 +114,8 @@ tooltip {
 
 
 #workspaces button.urgent {
-    background-color: @RED;
+    /* background-color: @RED; */
+    background-color: #FF0000;
     border-radius: 16px 16px 16px 16px; 
     opacity: 1;
 }

@@ -1,14 +1,9 @@
 * {
-    --background:     rgba ( 46, 52, 64, 25% );
-    background:     rgba ( 0, 0, 0, 25% );
-    --background-alt: rgba ( 57, 64, 79, 25% );
-    background-alt: rgba ( 0, 0, 0, 15% );
-    foreground:     rgba ( 216, 222, 233, 100% );
-    urgent-foreground:     rgba ( 216, 222, 233, 100% );
-    --selected:       rgba ( 129, 161, 193, 10% );
-    selected:       rgba ( 0, 0, 0, 40% );
-    --active:         rgba ( 163, 190, 140, 10% );
-    active:         rgba ( 0, 0, 0, 10% );
-    --urgent:         rgba ( 191, 97, 106, 75% );
-    urgent:         rgba ( 0, 0, 0, 75% );
+    background:     	#06070E25;
+    background-alt: 	#1AB03C25;
+    foreground:     	#E1EFFE;
+    selected:       	#9BA0FC40;
+    active:         	#00297F10;
+    urgent:         	#9E8DFF75;
+    Prompt:		#06070E;
 }
