@@ -19,5 +19,11 @@ waybar.target = "~/.config/waybar/colors.css"
 xresourcs.template = "Xresources"
 xresourcs.target = "~/.Xcolors"
 
+spotify.template = "spotify"
+spotify.target = "~/.config/spicetify/Themes/wal/color.ini"
+
+kdeglobal.template = "kdeglobals"
+kdeglobal.target = "~/.config/kdeglobals"
+
 # alacritty.template = "alacritty.toml"
 # alacritty.target = "~/.config/alacritty/colorschemes/wallust.toml"

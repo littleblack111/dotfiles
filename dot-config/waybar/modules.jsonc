@@ -196,15 +196,15 @@
         "on-click-right": "swaync-client -d -sw",
         "escape": true
     },
-  //   "custom/wf-recorder": {
-		// "format": "{}",
-		// "interval": "once",
-		// // "exec": "if pgrep wf-recorder >/dev/null; then echo ''; else echo ''; fi",
-		// "tooltip": "false",
-		// "on-click": "exec $HOME/scripts/wf-record",
-		// "on-click-right": "exec $HOME/scripts/wf-record -s",
-		// "signal": 8
-  //   },
+    "custom/wf-recorder": {
+		"format": "{}",
+		"interval": "once",
+		"exec": "if pgrep wf-recorder >/dev/null; then echo ''; else echo ''; fi",
+		"tooltip": "false",
+		"on-click": "exec $HOME/scripts/wf-record",
+		"on-click-right": "exec $HOME/scripts/wf-record -s",
+		"signal": 8
+    },
     "group/misc": {
         "orientation": "horizontal",
         "modules": ["clock", "group/small-utils", "tray"],

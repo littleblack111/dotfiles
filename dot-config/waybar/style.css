@@ -1,4 +1,5 @@
 @import url("./colors.css");
+@import url("./colors-nongen.css");
 
 
 * {
@@ -7,7 +8,8 @@
     font-size: 16px;
     min-height: 0;
     margin-bottom: 0;
-    color: @ACCENT
+    /* color: @ACCENT */
+    color: @FOREGROUND;
 }
 
 .module {
@@ -63,7 +65,7 @@ tooltip {
 
 
 #custom-launcher {
-    color: @BLUE;
+    color: @color14;
     border-radius: 10px;
     padding: 0px 16px 0px 16px;
     padding-left: 12px;
@@ -89,7 +91,7 @@ tooltip {
 #workspaces button {
     opacity: 0.8;
     border-radius: 12px; 
-    background-color: @color5;
+    background-color: @color3;
     margin-top: 4px;
     margin-bottom: 2px;
     margin-left: 1px;
@@ -104,7 +106,7 @@ tooltip {
 }
 
 #workspaces button.active {
-    background-color: @color3;
+    background-color: @color1;
     margin-left: 1px;
     margin-right: 1px;
     padding-left: 14px;
