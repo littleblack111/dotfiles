@@ -1,0 +1,18 @@
+@define-color text-color {{foreground}};
+@define-color text-color-disabled {{background}};
+@define-color cc-bg rgba({{background | rgb}}, 0.1);
+@define-color noti-bg rgba({{background | rgb}}, 0.1);
+@define-color noti-bg-opaque rgba({{background | rgb}}, 0.2);
+@define-color noti-bg-darker rgba({{background | rgb}}, 0.2);
+@define-color bg-selected {{background}};
+@define-color cursor {{cursor}};
+@define-color noti-bg-hover rgba({{color12 | rgb}}, 0.3);
+@define-color noti-bg-hover-opaque rgba({{color12 | rgb}}, 0.4);
+@define-color noti-bg-hover-focus rgba({{color12 | rgb}}, 0.3);
+@define-color noti-close-bg rgba({{background | rgb}}, 0.1);
+@define-color noti-close-bg-hover rgba({{background | rgb}}, 0.2);
+@define-color bg-selected rgba({{background | rgb}}, 0.1);
+/* @define-color button-background {{color5}}; */
+@define-color button-active {{color3}};
+@define-color noti-border-color {{color9}};
+/* @define-color urgent {{color15}}; */

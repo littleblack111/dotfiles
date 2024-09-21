@@ -1,0 +1,9 @@
+* {
+    background:     	{{background}}25;
+    background-alt: 	{{color3}}25;
+    foreground:     	{{foreground}};
+    selected:       	{{color5}}40;
+    active:         	{{color9}}10;
+    urgent:         	{{color12}}75;
+    Prompt:		{{background}};
+}

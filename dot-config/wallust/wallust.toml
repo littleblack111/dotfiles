@@ -1,0 +1,23 @@
+backend = "full"
+palette = "dark"
+color_space = "lchmixed"
+check_contrast = true
+
+[templates]
+hypr.template = "hypr.conf"
+hypr.target = "~/.config/hypr/colors.conf"
+
+rofi.template = "rofi.rasi"
+rofi.target = "~/.config/rofi/shared/colors.rasi"
+
+swaync.template = "swaync.css"
+swaync.target = "~/.config/swaync/colors.css"
+
+waybar.template = "waybar.css"
+waybar.target = "~/.config/waybar/colors.css"
+
+xresourcs.template = "Xresources"
+xresourcs.target = "~/.Xcolors"
+
+# alacritty.template = "alacritty.toml"
+# alacritty.target = "~/.config/alacritty/colorschemes/wallust.toml"
