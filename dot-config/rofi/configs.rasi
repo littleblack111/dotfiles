@@ -44,7 +44,7 @@ window {
     margin:                      0px;
     padding:                     0px;
     border:                      1px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     cursor:                      "default";
     /* Backgroud Colors */
@@ -79,7 +79,7 @@ inputbar {
     margin:                      0px;
     padding:                     0px 0px 8px 0px;
     border:                      0px 0px 1px 0px;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     background-color:            transparent;
     text-color:                  @foreground-colour;
@@ -150,7 +150,7 @@ listview {
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     background-color:            transparent;
     text-color:                  @foreground-colour;
@@ -159,7 +159,7 @@ listview {
 scrollbar {
     handle-width:                5px ;
     handle-color:                @handle-colour;
-    border-radius:               0px;
+    border-radius:               16px;
     background-color:            @alternate-background;
 }
 
@@ -170,7 +170,7 @@ element {
     margin:                      0px;
     padding:                     6px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     background-color:            transparent;
     text-color:                  @foreground-colour;
@@ -236,7 +236,7 @@ mode-switcher{
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     background-color:            transparent;
     text-color:                  @foreground-colour;
@@ -244,7 +244,7 @@ mode-switcher{
 button {
     padding:                     8px 12px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     background-color:            @alternate-background;
     text-color:                  inherit;
@@ -261,7 +261,7 @@ message {
     margin:                      0px;
     padding:                     8px 12px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     background-color:            @alternate-background;
     text-color:                  @foreground-colour;
@@ -281,7 +281,7 @@ textbox {
 error-message {
     padding:                     20px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     background-color:            @background-colour;
     text-color:                  @foreground-colour;

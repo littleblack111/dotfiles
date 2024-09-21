@@ -23,7 +23,7 @@ window {
     margin:                      0px;
     padding:                     0px;
     border:                      1px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @selected;
     cursor:                      "default";
     background-color:            @background;
@@ -45,7 +45,7 @@ inputbar {
     spacing:                     10px;
     padding:                     0px;
     border:                      0px;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @selected;
     background-color:            transparent;
     text-color:                  @foreground;
@@ -57,14 +57,14 @@ textbox-prompt-colon {
     expand:                      false;
     str:                         "";
     padding:                     10px 14px;
-    border-radius:               0px;
+    border-radius:               16px;
     background-color:            @active;
     text-color:                  @background;
 }
 prompt {
     enabled:                     true;
     padding:                     10px;
-    border-radius:               0px;
+    border-radius:               16px;
     background-color:            @selected;
     text-color:                  @background;
 }
@@ -75,7 +75,7 @@ message {
     margin:                      0px;
     padding:                     10px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @selected;
     background-color:            @background-alt;
     text-color:                  @foreground;
@@ -106,7 +106,7 @@ element {
     enabled:                     true;
     padding:                     22px 10px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @selected;
     background-color:            transparent;
     text-color:                  @foreground;
@@ -124,7 +124,7 @@ element-text {
 element normal.normal,
 element alternate.normal {
     border:                      1px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @selected;
     background-color:            var(background);
     text-color:                  var(foreground);

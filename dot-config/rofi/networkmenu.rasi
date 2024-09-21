@@ -41,7 +41,7 @@ window {
     anchor:                      center;
     fullscreen:                  false;
     width:                       1000px;
-    height:                      950px;
+    height:                      750px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -50,7 +50,7 @@ window {
     margin:                      0px;
     padding:                     0px;
     border:                      1px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     cursor:                      "default";
     /* Backgroud Colors */
@@ -85,7 +85,7 @@ inputbar {
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     background-color:            transparent;
     text-color:                  @foreground-colour;
@@ -95,7 +95,7 @@ inputbar {
 prompt {
     enabled:                     true;
     padding:                     8px 12px;
-    border-radius:               0px;
+    border-radius:               16px;
     background-color:            @selected;
     --text-color:                  @background;
     text-color:                  @foreground-colour;
@@ -103,7 +103,7 @@ prompt {
 textbox-prompt-colon {
     enabled:                     true;
     padding:                     8px 11.5px;
-    border-radius:               0px;
+    border-radius:               16px;
     expand:                      false;
     str:                         "直";
     background-color:            @active;
@@ -114,7 +114,7 @@ entry {
     enabled:                     true;
     padding:                     8px 12px;
     border:                      0px 0px 1px 0px;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @selected;
     background-color:            @background-alt;
     text-color:                  inherit;
@@ -164,7 +164,7 @@ listview {
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     background-color:            transparent;
     text-color:                  @foreground-colour;
@@ -173,7 +173,7 @@ listview {
 scrollbar {
     handle-width:                5px ;
     handle-color:                @handle-colour;
-    border-radius:               0px;
+    border-radius:               16px;
     background-color:            @alternate-background;
 }
 
@@ -184,7 +184,7 @@ element {
     margin:                      0px;
     padding:                     8px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     background-color:            transparent;
     text-color:                  @foreground-colour;
@@ -250,7 +250,7 @@ mode-switcher{
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               16px;
     border-color:                @border-colour;
     background-color:            transparent;
     text-color:                  @foreground-colour;
