@@ -4,10 +4,14 @@
 
 ## Dependencies
 ##### Required
-bspwm
-picom
-sddm
+Hyprland
+waybar
+swaync
+hypridle
+hyprlock
 
+
+# THE FOLLOWING SECTION DOES NOT WORK YET
 ### Arch Based system install package dependencies
 ##### pacman
 ```
@@ -27,7 +31,7 @@ the script is at https://www.lunarvim.org/docs/installation
 ###### Full package list of system can be find of /pacman*
 
 ## Install
-#### Automated Script
+#### Automated Script (currently does not work yet)
 `curl -fsSL https://github.com/littleblack111/dotfiles/raw/main/install.sh | zsh`
 
 #### Manual Install
@@ -45,12 +49,9 @@ install system files
 #### specs
 Terminal Emu: `Alacritty`\
 Session Manager: `sddm`\
-Windows manager: `bspwm`\
-Compositor: `udev's picom & FT-labs picom merged`(https://github.com/littleblack111/picom-fdev-ft-labs-merge) \
-Text/Code editor: `lunarvim`\
-Status Bar: `Polybar`\
+Windows manager/Compositor: `Hyprland`\
+Text/Code editor: `lunarvim/vscode`\
+Status Bar: `waybar`\
 Launcher: `rofi`\
-Notifications: `Dunstify`\
+Notifications: `swaync`\
 File Manager: `Thunar` 
-
-## WARNING, SOME CONFIGS ARE FROM ARCHCRAFT
