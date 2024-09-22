@@ -1,6 +1,7 @@
 # A general arch linux rice
 
-![Screenshot_2023-06-26-17-50-58_1920x1080](https://github.com/littleblack111/dotfiles/assets/97672521/72b8bbf4-6658-407f-8225-d47d3e290d2a)
+#### DEMO
+https://v.redd.it/yquu7egrndqd1
 
 ## Dependencies
 ##### Required
