@@ -1,0 +1,12 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = hyprland
+Target = hyprland-git
+
+[Action]
+Description = Hyprland: updating hyprpm
+When = PostTransaction
+Exec = /usr/bin/sudo -u system /usr/bin/hyprpm update
+NeedsTargets
