@@ -6,6 +6,6 @@ RASI="$DIR/filebrowser.rasi"
 
 # Run
 rofi \
-    -show file-browser-extended \
+    -show filebrowser \
 	-theme ${RASI} \
     "$@"

@@ -1,6 +1,6 @@
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "file-browser-extended";
+	modi:                       "filebrowser";
     show-icons:                 true;
     display-filebrowser-extended:        " Files";
 	window-format:              "{c} · {t}";

@@ -51,8 +51,8 @@
             // "default": "▶",
         // },
         "status-icons": {
-            "playing": "▶",
-            "paused": "⏸"
+            "playing": "⏸",
+            "paused": "▶"
         },
         "interval": 1,
     },
@@ -172,10 +172,12 @@
 //                    "on-click-right": "mode"
 //                    }
 //     },
-    // "group/small-utils": {
-    //     "modules": ["custom/notification", "custom/wf-recorder", "custom/dummy-mic", "custom/dummy-cam", "custom/disable-sound"],
-    //     "click-to-reveal": true,
-    // },
+    "group/small-utils": {
+        "modules": ["custom/gpu-screen-recorder", "custom/toggle-mic", "custom/toggle-cam", "custom/disable-sound", "tray"],
+        // "click-to-reveal": true,
+        "orientation": "horizontal",
+        "drawer": {}
+    },
     "custom/notification": {
         "tooltip": false,
         "format": "{icon}",
@@ -201,13 +203,38 @@
 		"interval": "once",
 		"exec": "if pgrep wf-recorder >/dev/null; then echo ''; else echo ''; fi",
 		"tooltip": "false",
-		"on-click": "exec $HOME/scripts/wf-record",
-		"on-click-right": "exec $HOME/scripts/wf-record -s",
-		"signal": 8
+		"on-click": "$HOME/scripts/wf-record",
+		"on-click-right": "$HOME/scripts/wf-record -s",
+		"signal": 3
+    },
+    "custom/toggle-mic": {
+        "format": "{}",
+        "interval": "once",
+        "exec": "pactl get-source-mute @DEFAULT_SOURCE@ | grep 'Mute: yes' >/dev/null && echo '' || echo ''",
+        "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle && pkill -RTMIN+4 waybar",
+        "tooltip": "false",
+        "signal": 4
+    },
+    "custom/toggle-cam": {
+        "format": "{}",
+        "interval": "once",
+        "exec": "modprobe uvcvideo && echo '󰄀' || echo '󰗟'", 
+        "on-click": "pkexec modprobe -r uvcvideo || zenity --password | sudo -S modprobe uvcvideo; pkill -RTMIN+4 waybar",
+        "tooltip": "false",
+        "signal": 4
+    },
+    "custom/gpu-screen-recorder": {
+        "format": "{}",
+        "interval": "once",
+        "exec": "$HOME/scripts/rec.sh status",
+        "tooltip": "false",
+        "on-click": "$HOME/scripts/rec.sh recorder",
+        "on-click-right": "$HOME/scripts/rec.sh pause",
+        "signal": 3
     },
     "group/misc": {
         "orientation": "horizontal",
-        "modules": ["clock", "group/small-utils", "tray"],
+        "modules": ["clock", "group/small-utils"],
         "drawer": {}
     },
         "custom/quit": {

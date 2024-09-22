@@ -1,7 +1,7 @@
 backend = "full"
 palette = "dark"
 color_space = "lchmixed"
-check_contrast = true
+# check_contrast = true
 
 [templates]
 hypr.template = "hypr.conf"
@@ -24,6 +24,11 @@ spotify.target = "~/.config/spicetify/Themes/wal/color.ini"
 
 kdeglobal.template = "kdeglobals"
 kdeglobal.target = "~/.config/kdeglobals"
+
+kvantum.template = "kvantum.kvconfig"
+# kvantum.target = "~/.config/Kvantum/wallust/wallust.kvconfig"
+kvantum.target = "~/.config/Kvantum/KvArcDark#/KvArcDark#.kvconfig"
+
 
 # alacritty.template = "alacritty.toml"
 # alacritty.target = "~/.config/alacritty/colorschemes/wallust.toml"
