@@ -2,7 +2,7 @@
     // Modules configuration
     "clock": {
         "format": " {:%I:%M:%S}",
-        "tooltip": "true",
+        "tooltip": true,
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": " {:%A %d/%m}",
         "on-click-right": "swaync-client -t -sw",
@@ -212,7 +212,7 @@
 		"format": "{}",
 		"interval": "once",
 		"exec": "if pgrep wf-recorder >/dev/null; then echo ''; else echo ''; fi",
-		"tooltip": "false",
+		"tooltip": false,
 		"on-click": "$HOME/scripts/wf-record",
 		"on-click-right": "$HOME/scripts/wf-record -s",
 		"signal": 3
@@ -222,7 +222,7 @@
         "interval": "once",
         "exec": "pactl get-source-mute @DEFAULT_SOURCE@ | grep 'Mute: yes' >/dev/null && echo '' || echo ''",
         "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle && pkill -RTMIN+4 waybar",
-        "tooltip": "false",
+        "tooltip": false,
         "signal": 4
     },
     "custom/toggle-cam": {
@@ -230,14 +230,14 @@
         "interval": "once",
         "exec": "modprobe uvcvideo && echo '󰄀' || echo '󰗟'", 
         "on-click": "pkexec modprobe -r uvcvideo || zenity --password | sudo -S modprobe uvcvideo; pkill -RTMIN+4 waybar",
-        "tooltip": "false",
+        "tooltip": false,
         "signal": 4
     },
     "custom/gpu-screen-recorder": {
         "format": "{}",
         "interval": "once",
         "exec": "$HOME/scripts/rec.sh status",
-        "tooltip": "false",
+        "tooltip": false,
         "on-click": "$HOME/scripts/rec.sh recorder",
         "on-click-right": "$HOME/scripts/rec.sh pause",
         "signal": 3
@@ -257,7 +257,7 @@
         "format": "󰍁",
         "tooltip": false,
         "on-click": "notify-send 'Hyprland' 'Click again to Lock'",
-        "on-double-click": "hyprlock"
+        "on-double-click": "loginctl lock-session"
     },
     "custom/reboot": {
         "format": "󰜉",
