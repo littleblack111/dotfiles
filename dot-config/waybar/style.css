@@ -28,7 +28,7 @@ window#waybar {
     font-size: 0.8rem;
 }
 
-window#waybar.empty {
+window#waybar.empty #window {
     background-color: transparent;
     border: none;
 }
@@ -169,3 +169,4 @@ tooltip {
 #custom-wf-recorder {
     padding-left: 12px;
 }
+
