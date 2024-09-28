@@ -1,4 +1,3 @@
-
 /*****----- Configuration -----*****/
 configuration {
 	modi:                       "window,emoji";
