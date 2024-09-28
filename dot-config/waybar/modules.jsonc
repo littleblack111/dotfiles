@@ -16,6 +16,7 @@
         "disable-scroll": false,
         "on-scroll-up": "hyprctl dispatch workspace -1",
         "on-scroll-down": "hyprctl dispatch workspace +1",
+        "on-click-middle": "hyprctl dispatch overview:toggle",
         "format": "{icon}",
         "on-click": "activate",
         "format-icons": {
@@ -109,11 +110,11 @@
     "custom/gpu": {
         "format": "󱓞 {}%",
         "format-alt": " {}°C",
-        "exec-if": "nvidia-smi",
+        // "exec-if": "nvidia-smi",
         "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
         "exec-alt": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
         // "return-type": "json",
-        "tooltip": false,
+        // "tooltip": false,
         "interval": 3
     },
     "temperature": {
@@ -121,6 +122,15 @@
         "tooltip": false,
         "critical-threshold": 80,
         "interval": 1
+    },
+    "custom/warp-vpn": {
+        "format": "{}",
+        "interval": "once",
+        "tooltip": false,
+        "exec": "$HOME/scripts/warp-vpn.sh status",
+        // "on-click": "warp-cli status | grep -q 'Connected' && $HOME/scripts/warp-vpn.sh connect || $HOME/scripts/warp-vpn.sh disconnect",
+        "on-click": "$HOME/scripts/warp-vpn.sh toggle",
+        "signal": 4
     },
     // "custom/indicator": {
     //     "format": "{}",
@@ -173,7 +183,7 @@
 //                    }
 //     },
     "group/small-utils": {
-        "modules": ["custom/gpu-screen-recorder", "custom/toggle-mic", "custom/toggle-cam", "custom/disable-sound", "tray"],
+        "modules": ["custom/gpu-screen-recorder", "custom/toggle-mic", "custom/toggle-cam", "custom/warp-vpn", "custom/disable-sound", "tray"],
         // "click-to-reveal": true,
         "orientation": "horizontal",
         "drawer": {}
