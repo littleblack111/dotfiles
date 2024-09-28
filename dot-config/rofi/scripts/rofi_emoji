@@ -7,5 +7,4 @@ RASI="$DIR/emoji.rasi"
 # Run
 rofi \
     -show emoji \
-    -kb-custom-1 Ctrl+c \
 	-theme ${RASI}
