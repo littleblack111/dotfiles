@@ -74,25 +74,25 @@ submenu_delay=250
 tooltip_blur_radius=0
 
 [GeneralColors]
-window.color=#484140
-base.color=#484140
-alt.base.color=#A49893
-button.color=#9F8C36
-light.color=#958983
-mid.light.color=#958983
-dark.color=#4C4544
-mid.color=#4D4746
-highlight.color=#9F8C36
-inactive.highlight.color=#9F8C36
-text.color=#DCCAC1
-window.text.color=#DCCAC1
-button.text.color=#DCCAC1
-disabled.text.color=#9A8D87
-tooltip.text.color=#DCCAC1
-highlight.text.color=#DCCAC1
-link.color=#644431
-link.visited.color=#644431
-progress.indicator.text.color=#DCCAC1
+window.color=#3F3939
+base.color=#3F3939
+alt.base.color=#9D9998
+button.color=#CC820B
+light.color=#8E8A88
+mid.light.color=#8E8A88
+dark.color=#433D3D
+mid.color=#453F3F
+highlight.color=#CC820B
+inactive.highlight.color=#CC820B
+text.color=#D0CBC8
+window.text.color=#D0CBC8
+button.text.color=#D0CBC8
+disabled.text.color=#928E8C
+tooltip.text.color=#D0CBC8
+highlight.text.color=#D0CBC8
+link.color=#401B03
+link.visited.color=#401B03
+progress.indicator.text.color=#D0CBC8
 
 [Hacks]
 transparent_ktitle_label=true
@@ -128,10 +128,10 @@ frame.right=3
 interior=true
 interior.element=button
 indicator.size=9
-text.normal.color=#DCCAC1
-text.focus.color=#DCCAC1
-text.press.color=#DCCAC1
-text.toggle.color=#DCCAC1
+text.normal.color=#D0CBC8
+text.focus.color=#D0CBC8
+text.press.color=#D0CBC8
+text.toggle.color=#D0CBC8
 text.shadow=0
 text.margin=1
 text.iconspacing=4
@@ -185,8 +185,8 @@ text.normal.color=#ffffffc8
 inherits=PanelButtonCommand
 frame=false
 interior=false
-text.normal.color=#DCCAC1
-text.focus.color=#DCCAC1
+text.normal.color=#D0CBC8
+text.focus.color=#D0CBC8
 text.bold=true
 
 [IndicatorSpinBox]
@@ -196,21 +196,21 @@ interior=true
 frame.left=1
 indicator.element=spin
 indicator.size=10
-text.normal.color=#DCCAC1
+text.normal.color=#D0CBC8
 
 [RadioButton]
 inherits=PanelButtonCommand
 frame=false
 interior.element=radio
-text.normal.color=#DCCAC1
-text.focus.color=#DCCAC1
+text.normal.color=#D0CBC8
+text.focus.color=#D0CBC8
 
 [CheckBox]
 inherits=PanelButtonCommand
 frame=false
 interior.element=checkbox
-text.normal.color=#DCCAC1
-text.focus.color=#DCCAC1
+text.normal.color=#D0CBC8
+text.focus.color=#D0CBC8
 
 [Focus]
 inherits=PanelButtonCommand
@@ -250,9 +250,9 @@ indicator.size=9
 
 [ToolboxTab]
 inherits=PanelButtonCommand
-text.normal.color=#DCCAC1
-text.press.color=#DCCAC1
-text.focus.color=#DCCAC1
+text.normal.color=#D0CBC8
+text.press.color=#D0CBC8
+text.focus.color=#D0CBC8
 
 [Tab]
 inherits=PanelButtonCommand
@@ -267,10 +267,10 @@ frame.top=4
 frame.bottom=4
 frame.left=4
 frame.right=4
-text.normal.color=#DCCAC1
-text.focus.color=#DCCAC1
+text.normal.color=#D0CBC8
+text.focus.color=#D0CBC8
 text.press.color={color15}
-text.toggle.color=#DCCAC1
+text.toggle.color=#D0CBC8
 frame.expansion=0
 
 [TabFrame]
@@ -473,7 +473,7 @@ frame.left=1
 frame.right=1
 frame.element=menu
 interior.element=menu
-text.normal.color=#DCCAC1
+text.normal.color=#D0CBC8
 text.shadow=false
 frame.expansion=0
 
