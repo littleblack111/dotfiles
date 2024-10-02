@@ -81,7 +81,7 @@ message {
     text-color:                  @foreground;
 }
 textbox {
-    background-color:            inherit;
+    background-color:            transparent;
     text-color:                  inherit;
     vertical-align:              0.5;
     horizontal-align:            0.5;
@@ -130,15 +130,15 @@ element normal.urgent,
 element alternate.urgent,
 element selected.active {
     background-color:            var(urgent);
-    text-color:                  var(background);
+    text-color:                  var(foreground);
 }
 element normal.active,
 element alternate.active,
 element selected.urgent {
     background-color:            var(active);
-    text-color:                  var(background);
+    text-color:                  var(foreground);
 }
 element selected.normal {
     background-color:            var(selected);
-    text-color:                  var(background);
+    text-color:                  var(foreground);
 }
