@@ -68,7 +68,7 @@ tooltip {
     color: @color14;
     border-radius: 10px;
     padding: 0px 16px 0px 16px;
-    padding-left: 12px;
+    padding-left: 11px;
     font-size: 28px;
     /* font-size: 2.5rem; */
 }
@@ -97,6 +97,7 @@ tooltip {
     margin-left: 1px;
     margin-right: 1px;
     transition: all 0.2s;
+    transition-timing-function: linear;
 }
 
 #workspaces button.empty {
@@ -167,6 +168,9 @@ tooltip {
 }
 
 #custom-warp-vpn {
-    padding-left: 12px;
+    padding-left: 11px;
 }
 
+#custom-toggle-cam {
+    padding-left: 11px;
+}
