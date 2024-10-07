@@ -111,6 +111,7 @@
     "custom/gpu": {
         "format": "󱓞 {}%",
         "format-alt": " {}°C",
+        "tooltip": false,
         // "exec-if": "nvidia-smi",
         "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
         "exec-alt": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
@@ -248,7 +249,7 @@
         "modules": ["clock", "group/small-utils"],
         "drawer": {}
     },
-        "custom/quit": {
+    "custom/quit": {
         "format": "󰗼",
         "tooltip": false,
         "on-click": "notify-send 'Hyprland' 'Click again to Exit'",
