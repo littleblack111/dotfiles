@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+DIR="$HOME/.config/rofi"
+RASI="$DIR/clipboard.rasi"
+rofi -modi clipboard:"$DIR/scripts/cliphist-rofi-img" -show clipboard -theme ${RASI}
