@@ -64,7 +64,6 @@ appstream-qt
 appstream-qt5
 apr
 apr-util
-aquamarine
 aquamarine-git
 arc-gtk-theme
 arc-icon-theme
@@ -79,7 +78,6 @@ archcraft-backgrounds-minimal
 archcraft-backgrounds-nature
 archcraft-config-music
 archcraft-dunst-icons
-archcraft-fonts
 archcraft-music
 archlinux-appstream-data
 archlinux-artwork
@@ -158,6 +156,8 @@ bees
 benchmark
 bettercap
 betterlockscreen
+bibata-cursor-theme-bin
+bibata-extra-cursor-theme
 bibata-rainbow-cursor-theme
 biber
 binder_linux-dkms
@@ -271,6 +271,7 @@ cmark
 cmatrix
 cogl
 cointop
+colloid-icon-theme-git
 colord
 colord-gtk-common
 colord-gtk4
@@ -461,8 +462,10 @@ firefox
 firejail
 firetools
 fish
+fisher
 five-or-more
 flac
+flashrom
 flatpak
 flatpak-kcm
 flex
@@ -493,6 +496,8 @@ fuse3
 futuresql
 fuzzel
 fvs
+fwupd
+fwupd-efi
 fzf
 gamemode
 gamescope
@@ -1051,7 +1056,6 @@ illogical-impulse-ags-debug
 illogical-impulse-audio
 illogical-impulse-backlight
 illogical-impulse-basic
-illogical-impulse-bibata-modern-classic-bin
 illogical-impulse-fonts-themes
 illogical-impulse-gnome
 illogical-impulse-gtk
@@ -1073,6 +1077,7 @@ inotify-tools
 input-leap-inputcapture
 input-leap-inputcapture-headless
 intel-gmmlib
+intel-hybrid-codec-driver-git
 intel-media-driver
 intel-oneapi-common
 intel-oneapi-compiler-dpcpp-cpp-runtime-libs
@@ -1631,6 +1636,7 @@ libavutil-52-debug
 libayatana-appindicator
 libayatana-indicator
 libb2
+libb64
 libblockdev
 libblockdev-crypto
 libblockdev-fs
@@ -1655,6 +1661,7 @@ libcanberra
 libcap
 libcap-ng
 libcava
+libcbor
 libcdio
 libcdio-paranoia
 libcdr
@@ -1665,6 +1672,7 @@ libclapper
 libclapper-gtk
 libcloudproviders
 libcmis
+libcmrt
 libcolord
 libcomps
 libconfig
@@ -1786,6 +1794,7 @@ libisl
 libisoburn
 libisofs
 libixion
+libjcat
 libjpeg-turbo
 libjpeg6-turbo
 libjuice
@@ -1855,6 +1864,7 @@ libmtp
 libmusicbrainz5
 libmwaw
 libmysofa
+libnatpmp
 libnautilus-extension
 libnbd
 libndp
@@ -2189,6 +2199,7 @@ milou
 mimalloc
 mimetreeparser
 minecraft-launcher
+miniupnpc
 minizip
 minizip-ng
 minuet
@@ -2293,7 +2304,7 @@ ocean-sound-theme
 ocl-icd
 ocs-url
 okular
-ollama
+ollama-cuda
 onetbb
 oniguruma
 oomox-qt5-styleplugin-git
@@ -2380,6 +2391,7 @@ parted
 partimage
 partitionmanager
 paru
+passim
 passt
 patch
 patchelf
@@ -2619,7 +2631,7 @@ pyalpm
 pybind11
 pycharm-professional
 pyenv
-pyprland
+pyprland-git
 pyside6
 pystring
 python
@@ -2732,6 +2744,7 @@ python-httpx
 python-httpx-sse
 python-hyperframe
 python-hyperlink
+python-hypothesis
 python-idna
 python-imagesize
 python-importlib-metadata
@@ -2829,6 +2842,7 @@ python-pyasn1-modules
 python-pycparser
 python-pycryptodome
 python-pycryptodomex
+python-pycups
 python-pycurl
 python-pydantic
 python-pydantic-core
@@ -2956,7 +2970,7 @@ qalculate-gtk
 qbittorrent
 qca-qt5
 qca-qt6
-qcoro-qt6
+qcoro
 qemu-audio-alsa
 qemu-audio-dbus
 qemu-audio-jack
@@ -3142,6 +3156,7 @@ re2
 readline
 recastnavigation
 recode
+redact-bin
 redland
 redshift
 refind
@@ -3231,6 +3246,7 @@ seahorse
 seatd
 sed
 semver
+sequoia-sqv
 serd
 serf
 shaderc
@@ -3293,6 +3309,7 @@ spicetify-cli-debug
 spirv-tools
 spotify
 spotify-adblock
+spotify-launcher
 sqlite
 squashfs-tools
 sratom
@@ -3333,6 +3350,7 @@ syshud
 syslinux
 syspower
 sysprof
+system-config-printer
 systemd
 systemd-libs
 systemd-resolvconf
@@ -3405,6 +3423,7 @@ tpm-tools
 tpm-tools-debug
 tpm2-tools
 tpm2-tss
+transmission-gtk
 trash-cli
 tree
 tree-sitter
@@ -3637,6 +3656,7 @@ xcur2png
 xdg-dbus-proxy
 xdg-desktop-portal
 xdg-desktop-portal-gnome
+xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland-git
 xdg-desktop-portal-hyprland-git-debug
 xdg-desktop-portal-wlr

@@ -20,6 +20,8 @@ badlion-client-debug
 bar-gmail
 beautyline
 beeper-latest-bin
+bibata-cursor-theme-bin
+bibata-extra-cursor-theme
 bibata-rainbow-cursor-theme
 binder_linux-dkms
 blobdrop-git
@@ -36,6 +38,7 @@ chaotic-mirrorlist
 clion
 cloudflare-warp-bin
 cloudflare-warp-bin-debug
+colloid-icon-theme-git
 colormake
 cursor-bin
 dangerzone-bin
@@ -102,7 +105,6 @@ illogical-impulse-ags-debug
 illogical-impulse-audio
 illogical-impulse-backlight
 illogical-impulse-basic
-illogical-impulse-bibata-modern-classic-bin
 illogical-impulse-fonts-themes
 illogical-impulse-gnome
 illogical-impulse-gtk
@@ -115,6 +117,7 @@ illogical-impulse-screencapture
 illogical-impulse-widgets
 input-leap-inputcapture
 input-leap-inputcapture-headless
+intel-hybrid-codec-driver-git
 jetbrains-fleet
 jetbrains-toolbox
 keynav-git
@@ -127,6 +130,7 @@ libavutil-52
 libavutil-52-debug
 libcava
 libcgroup
+libcmrt
 libgbinder
 libglibutil
 libkcddb5
@@ -178,7 +182,7 @@ powershell-bin
 powershell-bin-debug
 protonup-qt
 pycharm-professional
-pyprland
+pyprland-git
 python-anthropic
 python-asgi-lifespan
 python-atomiclong-debug
@@ -215,6 +219,7 @@ qt5-serialbus
 qt5-webglplugin
 qt5-webview
 rainbow
+redact-bin
 reshade-shaders-git
 rest
 ripdrag-git
