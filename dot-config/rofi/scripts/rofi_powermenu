@@ -12,21 +12,21 @@ mesg="Uptime : `uptime -p | sed -e 's/up //g'`"
 # Options
 layout=`cat ${RASI} | grep 'USE_ICON' | cut -d'=' -f2`
 if [[ "$layout" == 'NO' ]]; then
-	option_1=" Lock"
-	option_2=" Logout"
-	option_3=" Suspend"
-	option_4=" Hibernate"
-    option_5="🔳Hybrid-sleep"
-	option_6=" Reboot"
-	option_7=" Shutdown"
+	option_1="󰍁 Lock"
+	option_2="󰗼 Logout"
+	option_3="󰤄 Suspend"
+	option_4="󰤆 Hibernate"
+    option_5="🔳 Hybrid-sleep"
+	option_6="󰜉 Reboot"
+	option_7="⏻ Shutdown"
 else
-	option_1=""
-	option_2=""
-	option_3=""
-	option_4=""
+	option_1="󰍁"
+	option_2="󰗼"
+	option_3="󰤄"
+	option_4="󰤆"
     option_5="🔳"
-	option_6=""
-	option_7=""
+	option_6="󰜉"
+	option_7="⏻"
 fi
 cnflayout=`cat ${CNFR} | grep 'USE_ICON' | cut -d'=' -f2`
 if [[ "$cnflayout" == 'NO' ]]; then

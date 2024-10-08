@@ -1,17 +1,12 @@
 #!/usr/bin/env bash
 
-## Author  : Aditya Shakya
-## Mail    : adi1090x@gmail.com
-## Github  : @adi1090x
-## Twitter : @adi1090x
-
 dir="$HOME/.config/rofi/styles"
 rofi_command="rofi -theme $dir/five.rasi"
 
 uptime=$(uptime -p | sed -e 's/up //g')
 
 # Options
-shutdown=""
+shutdown="⏻"
 reboot=""
 lock=""
 suspend=""
