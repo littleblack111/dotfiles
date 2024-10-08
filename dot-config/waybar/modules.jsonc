@@ -255,6 +255,12 @@
         "on-click": "notify-send 'Hyprland' 'Click again to Exit'",
         "on-double-click": "hyprctl dispatch exit"
     },
+    "custom/suspend": {
+        "format": "󰤄",
+        "tooltip": false,
+        "on-click": "notify-send 'Hyprland' 'Click again to Suspend'",
+        "on-double-click": "systemctl suspend"
+    },
     "custom/lock": {
         "format": "󰍁",
         "tooltip": false,
@@ -282,6 +288,7 @@
         "modules": [
             "custom/shutdown",
             "custom/quit",
+            "custom/suspend",
             "custom/lock",
             "custom/reboot",
         ]
