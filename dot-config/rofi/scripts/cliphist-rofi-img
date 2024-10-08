@@ -19,7 +19,9 @@ match(\$0, /^([0-9]+)\s(\[\[\s)?binary.*(jpg|jpeg|png|bmp)/, grp) {
 1
 EOF
 # echo $(cat "$tmp_dir/cliphist")
-# get last 10 lines and merge them
+# format: <id>\t<100 char preview> remove the ID
+
+
 
 # cat "$tmp_dir/cliphist"
-cliphist list | gawk "$prog" &
+cliphist list | head -n 100 | gawk "$prog" &
