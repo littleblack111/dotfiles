@@ -142,13 +142,10 @@ tooltip {
 
 #custom-shutdown {
     color: @RED;
+    padding-left: 17px;
 }
 
-#custom-quit {
-    color: @YELLOW;
-}
-
-#custom-lock {
+#custom-quit, #custom-lock, #custom-suspend, #custom-reboot {
     color: @YELLOW;
 }
 
