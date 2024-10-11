@@ -15,7 +15,6 @@ act
 adobe-source-code-pro-fonts
 adobe-source-han-sans-cn-fonts
 adobe-source-han-serif-cn-fonts
-adw-gtk3-git
 adwaita-cursors
 adwaita-icon-theme
 adwaita-icon-theme-legacy
@@ -49,7 +48,6 @@ ananicy-cpp
 ananicy-rules-git
 angelfish
 antiword
-anyrun-git
 anyrun-git-debug
 anytype-bin
 aom
@@ -113,6 +111,7 @@ augeas
 aura
 autoconf
 autoconf-archive
+autologin
 automake
 autorandr
 avahi
@@ -135,7 +134,6 @@ aws-c-sdkutils
 aws-checksums
 aws-crt-cpp
 aws-sdk-cpp
-axel
 ayatana-ido
 babl
 badlion-client
@@ -171,14 +169,12 @@ blender
 blinken
 blobdrop-git
 blosc
-blueberry
 bluedevil
 blueman
 blueprint-compiler
 bluez
 bluez-libs
 bluez-qt
-bluez-tools
 bluez-utils
 bmon
 bolt
@@ -196,7 +192,6 @@ breeze-icons
 breeze-plymouth
 breezy
 bridge-utils
-brightnessctl
 brillo
 brltty
 brotli
@@ -311,7 +306,6 @@ d-spy
 dangerzone-bin
 darling-bin
 dart
-dart-sass
 dav1d
 davinci-resolve
 db5.3
@@ -431,7 +425,6 @@ fakeroot
 falkon
 fastfetch
 fastjar
-fcft
 fcitx5
 fcitx5-chewing
 fcitx5-chinese-addons
@@ -476,7 +469,6 @@ fmt
 fnm
 folks
 fontconfig
-foot
 four-in-a-row
 fping
 frameworkintegration
@@ -494,7 +486,6 @@ fuse-common
 fuse2
 fuse3
 futuresql
-fuzzel
 fvs
 fwupd
 fwupd-efi
@@ -656,6 +647,9 @@ graphene
 graphicsmagick
 graphite
 graphviz
+greetd
+greetd-agreety
+greetd-wlgreet
 grep
 grilo
 grilo-plugins
@@ -1023,6 +1017,7 @@ hypridle-git-debug
 hyprland-git
 hyprland-git-debug
 hyprland-hidpi-xprop-git-debug
+hyprland-protocols-git
 hyprlang-git
 hyprlang-git-debug
 hyprlock-git
@@ -1033,6 +1028,7 @@ hyprpicker-git
 hyprpicker-git-debug
 hyprprop-git
 hyprshade
+hyprsunset-git
 hyprutils-git
 hyprutils-git-debug
 hyprwayland-scanner-git
@@ -1051,21 +1047,6 @@ ifuse
 ihaskell
 iio-sensor-proxy
 ijs
-illogical-impulse-ags
-illogical-impulse-ags-debug
-illogical-impulse-audio
-illogical-impulse-backlight
-illogical-impulse-basic
-illogical-impulse-fonts-themes
-illogical-impulse-gnome
-illogical-impulse-gtk
-illogical-impulse-microtex-git
-illogical-impulse-microtex-git-debug
-illogical-impulse-oneui4-icons-git
-illogical-impulse-pymyc-aur
-illogical-impulse-python
-illogical-impulse-screencapture
-illogical-impulse-widgets
 imagemagick
 imath
 imlib2
@@ -1644,6 +1625,7 @@ libblockdev-loop
 libblockdev-mdraid
 libblockdev-nvme
 libblockdev-part
+libblockdev-smart
 libblockdev-swap
 libbluray
 libbpf
@@ -2775,7 +2757,6 @@ python-keyutils
 python-kiwisolver
 python-lark-parser
 python-ldap3
-python-libsass
 python-libsass-debug
 python-license-expression
 python-lockfile
@@ -2787,7 +2768,6 @@ python-markdown
 python-markdown-it-py
 python-markupsafe
 python-material-color-utilities
-python-materialyoucolor-git
 python-materialyoucolor-git-debug
 python-matplotlib
 python-matplotlib-inline
@@ -2868,8 +2848,6 @@ python-pytest-asyncio
 python-pytest-cov
 python-python-multipart
 python-pytz
-python-pywal
-python-pywayland
 python-pyxdg
 python-pyzmq
 python-qtpy
@@ -2897,7 +2875,6 @@ python-setproctitle
 python-setuptools
 python-setuptools-git
 python-setuptools-rust
-python-setuptools-scm
 python-shellingham
 python-six
 python-smartypants
@@ -3332,8 +3309,8 @@ svgpart
 svp-bin
 svt-av1
 svt-hevc
-swappy
 sway
+sway-nvidia
 swaync
 sweeper
 swell-foop
@@ -3458,7 +3435,6 @@ ttf-envycoder-nerd
 ttf-fantasque-nerd
 ttf-firacode-nerd
 ttf-font-awesome
-ttf-gabarito-git
 ttf-go-nerd
 ttf-gohu-nerd
 ttf-hack
@@ -3482,7 +3458,6 @@ ttf-liberation-mono-nerd
 ttf-lilex-nerd
 ttf-martian-mono-nerd
 ttf-material-design-icons-git
-ttf-material-symbols-variable-git
 ttf-meslo-nerd
 ttf-monofur-nerd
 ttf-monoid-nerd
@@ -3495,15 +3470,12 @@ ttf-nerd-fonts-symbols-mono
 ttf-noto-nerd
 ttf-profont-nerd
 ttf-proggyclean-nerd
-ttf-readex-pro
 ttf-recursive-nerd
 ttf-roboto
 ttf-roboto-mono
 ttf-roboto-mono-nerd
-ttf-rubik-vf
 ttf-sharetech-mono-nerd
 ttf-sourcecodepro-nerd
-ttf-space-mono-nerd
 ttf-terminus-nerd
 ttf-tinos-nerd
 ttf-ubuntu-mono-nerd
@@ -3512,7 +3484,6 @@ ttf-victor-mono-nerd
 ttf-zed-mono-nerd
 tumbler
 twolame
-typescript
 typora
 typora-debug
 tzdata
@@ -3621,6 +3592,7 @@ wlrctl
 wlroots
 wlroots-hidpi-xprop-git
 wlroots0.17
+wlsunset
 wmctrl
 woff2
 wofi
@@ -3662,7 +3634,6 @@ xdg-desktop-portal-hyprland-git-debug
 xdg-desktop-portal-wlr
 xdg-ninja
 xdg-user-dirs
-xdg-user-dirs-gtk
 xdg-utils
 xdotool
 xerces-c
@@ -3738,11 +3709,11 @@ xvidcore
 xwaylandvideobridge
 xxhash
 xz
-yad
 yajl
 yakuake
 yaml-cpp
 yara
+yarn
 yasm
 yay
 yay-debug

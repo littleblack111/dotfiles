@@ -1,0 +1,105 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+# Pipes ╰─ ╭─
+# Powerline symbols                                     
+# Wedges 🭧🭒 🭣🭧🭓
+# Random noise 🬖🬥🬔🬗
+
+# format = """
+# $cmd_duration$username$hostname $directory $git_branch
+# $character
+# """
+format = """
+╭─$os[](fg:white bg:black)$username[@](fg:yellow bg:black)$hostname[](fg:black) $directory$git_branch$git_state$git_status$fill$all─╮
+╰─$character
+"""
+
+right_format = """─╯"""
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character]                            # The name of the module we are configuring is "character"
+success_symbol = "[\\$](bold fg:green)"
+error_symbol = "[\\$](bold fg:red)"
+
+[os]
+disabled = false
+format = "[]($style)[ $symbol ](bold bg:white fg:black)"
+
+[os.symbols]
+Arch = ""
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
+
+[git_branch]
+symbol = "󰘬 "
+truncation_length = 12
+truncation_symbol = ""
+
+[git_commit]
+commit_hash_length = 4
+tag_symbol = " "
+
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+cherry_pick = "[🍒 PICKING](bold red)"
+
+[git_status]
+conflicted = " 🏳 "
+ahead = " 🏎💨 "
+behind = " 😰 "
+diverged = " 😵 "
+untracked = " 🤷 ‍"
+stashed = " 📦 "
+modified = " 📝 "
+staged = '[++\($count\)](green)'
+renamed = " ✍️ "
+deleted = " 🗑 "
+
+[hostname]
+ssh_only = false
+disabled = false
+style = "bg:black fg:yellow"
+format = "[$hostname]($style)"
+
+[line_break]
+disabled = false
+
+[memory_usage]
+disabled = true
+threshold = -1
+symbol = " "
+style = "bold dimmed green"
+
+[time]
+disabled = true
+format = '🕙[\[ $time \]]($style) '
+time_format = "%T"
+
+[username]
+disabled = false
+show_always = true
+style_user = "bold bg:black fg:yellow"
+style_root = "bold bg:black fg:red"
+format = '[$user]($style)'
+
+[directory]
+home_symbol = " "
+read_only = "  "
+truncation_length = 0
+truncate_to_repo = false
+# style = "bold fg:cyan bg:white"
+
+# truncation_symbol = "••/"
+[directory.substitutions]
+"Desktop" = "  "
+"Documents" = "  "
+"Downloads" = " 󰉍 "
+"Music" = " 󰎈 "
+"Pictures" = " 󰉏 "
+"Videos" = "  "
+
+[cmd_duration]
+min_time = 0
+format = '[](bold fg:yellow)[ $duration](bold bg:yellow fg:black)[](bold fg:yellow)'

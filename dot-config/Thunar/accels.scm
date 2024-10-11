@@ -108,7 +108,6 @@
 ; (gtk_accel_path "<Actions>/ThunarStandardView/duplicate" "")
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/c4263fd857020f222a59a40ceaa8e0fc" "")
 ; (gtk_accel_path "<Actions>/ThunarActionManager/trash-delete-2" "KP_Delete")
-(gtk_accel_path "<Actions>/ThunarActions/uca-action-1581593230771688-1" "F4")
 ; (gtk_accel_path "<Actions>/ThunarStandardView/create-folder" "<Primary><Shift>n")
 ; (gtk_accel_path "<Actions>/ThunarWindow/open-home" "<Alt>Home")
 ; (gtk_accel_path "<Actions>/ThunarWindow/show-hidden" "<Primary>h")
