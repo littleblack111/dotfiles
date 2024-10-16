@@ -4,6 +4,17 @@
         "format": " {:%I:%M:%S}",
         "tooltip": true,
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "format": {
+                  "days":       "<span color='#FFF'><b>{}</b></span>",
+                  "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                  "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                  "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+                  }
+        },
         "format-alt": " {:%A %d/%m}",
         "on-click-right": "swaync-client -t -sw",
         "interval": 1
