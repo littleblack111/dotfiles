@@ -18,6 +18,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH:~/.local/bin:~/.local/cargo/bin:$HOME
 #path=(~/bin $path)
 
 # plugin & customization
+
 source $HOME/.config/zsh/plugins-customization.zsh
 
 # alias

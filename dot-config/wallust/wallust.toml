@@ -29,6 +29,9 @@ kvantum.template = "kvantum.kvconfig"
 # kvantum.target = "~/.config/Kvantum/wallust/wallust.kvconfig"
 kvantum.target = "~/.config/Kvantum/KvArcDark#/KvArcDark#.kvconfig"
 
+pywal.template = "pywal.json"
+pywal.target = "~/.cache/wal/colors.json"
+
 
 # alacritty.template = "alacritty.toml"
 # alacritty.target = "~/.config/alacritty/colorschemes/wallust.toml"

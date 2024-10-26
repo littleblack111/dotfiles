@@ -56,3 +56,9 @@ Status Bar: `waybar`\
 Launcher: `rofi`\
 Notifications: `swaync`\
 File Manager: `Thunar` 
+
+#### Notes for system configs:
+- `howdy` is used for sudo
+    - install the `python-dlib-cuda(-git)` package for cuda support(faster) and enable `use_cnn`
+        - check by `python -c "import dlib; print(dlib.DLIB_USE_CUDA)"`
+- use `fcitx5` instead of `fcitx` for better support, `fcitx` is deprecated

@@ -21,7 +21,5 @@ EOF
 # echo $(cat "$tmp_dir/cliphist")
 # format: <id>\t<100 char preview> remove the ID
 
-
-
 # cat "$tmp_dir/cliphist"
 cliphist list | head -n 100 | gawk "$prog" &
