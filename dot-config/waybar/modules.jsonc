@@ -71,7 +71,6 @@
     "group/musicworkspace": {
         "orientation": "horizontal",
         "modules": ["hyprland/workspaces", "mpris"],
-        "drawer": {}
     },
 
     "memory": {

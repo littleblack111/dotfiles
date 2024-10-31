@@ -8,7 +8,7 @@
     "margin-bottom": 0,
     "margin-left": 25,
     "margin-right": 25,
-    "modules-left": ["custom/launcher", "group/musicworkspace", "privacy"],
+    "modules-left": ["group/musicworkspace", "privacy"],
     "modules-center": ["hyprland/window"],
     "modules-right": ["cpu", "memory", "custom/gpu", "temperature", "network", "group/misc", "group/power"],
     "reload_style_on_change": true,

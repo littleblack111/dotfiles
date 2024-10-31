@@ -13,13 +13,29 @@
 }
 
 .module {
-    background: @BACKGROUND;
-    border-radius: 8px;
+    background-color: @color3;
     margin: 4px;
     padding: 4px 4px 4px 4px;
-    border: 2px solid @color9;
+    /* border: 2px solid @color9; */
     padding-right: 16px;
     padding-left: 16px;
+    border-radius: 18px;
+}
+
+.modules-right {
+    background-color: @BACKGROUND;
+    border-radius: 8px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+#cpu, #memory, #custom-gpu, #temperature, #network, #misc, #power {
+    background-color: @color4;
+}
+
+#window {
+    border-radius: 8px;
+    background-color: @color4;
 }
 
 window#waybar {
@@ -41,28 +57,6 @@ tooltip {
     font-size: 0.8rem;
 }
 
-/* @keyframes glowing {
-    0% {
-        background-position: 0 0
-    }
-
-    50% {
-        background-position: 400% 0
-    }
-
-    to {
-        background-position: 0 0
-    }
-} */
-
-
-/* .modules-center {
-    background: linear-gradient(45deg, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.8));
-    background-size: 400%;
-    border-radius: 8px;
-    animation: glowing 20s linear infinite;
-} */
-
 
 #custom-launcher {
     color: @color14;
@@ -73,37 +67,29 @@ tooltip {
     /* font-size: 2.5rem; */
 }
 
-/* #custom-gmail.unread { */
-/*     color: @WHITE; */
+/* #workspaces { */
+/*     border-radius: 10px; */
 /* } */
-/* #custom-gmail.inaccurate { */
-/*     color: @YELLOW; */
-/* } */
-/* #custom-gmail.error { */
-/*     color: @RED; */
-/* } */
-
-#workspaces {
+.modules-left {
     background-color: @BACKGROUND;
     border-radius: 10px;
 }
 
+#workspaces {
+    background-color: transparent;
+    margin-right: -8px;
+}
+
 #workspaces button {
+    background-color: @color4;
     opacity: 0.8;
     border-radius: 12px; 
-    background-color: @color3;
     margin-top: 4px;
     margin-bottom: 2px;
     margin-left: 1px;
     margin-right: 1px;
     transition: all 0.2s;
     transition-timing-function: linear;
-}
-
-#workspaces button.empty {
-    background-color: @FOREGROUND;
-    opacity: 0.4;
-    border-radius: 12px;
 }
 
 #workspaces button.active {
@@ -113,6 +99,12 @@ tooltip {
     padding-left: 14px;
     padding-right: 14px;
     opacity: 1;
+}
+
+#workspaces button.empty {
+    background-color: @FOREGROUND;
+    opacity: 0.4;
+    border-radius: 12px;
 }
 
 
@@ -131,10 +123,6 @@ tooltip {
     background-color: transparent;
     border: none;
 }
-
-/* .mic, .cam { */
-/*     color: @YELLOW; */
-/* } */
 
 #custom-indicator {
     color: @YELLOW;
@@ -170,4 +158,16 @@ tooltip {
 
 #custom-toggle-cam {
     padding-left: 11px;
+}
+
+#mpris {
+    margin-left: 6px;
+    border-radius: 10px;
+    background-color: @color4;
+    padding-right: 6px;
+}
+
+#misc, #power {
+    border-radius: 32px;
+    margin: 2px;
 }
