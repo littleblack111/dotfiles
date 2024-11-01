@@ -29,6 +29,23 @@
     padding-right: 6px;
 }
 
+.modules-left {
+    background-color: @BACKGROUND;
+    border-radius: 10px;
+}
+
+#mpris {
+    margin-left: 6px;
+    border-radius: 10px;
+    background-color: @color4;
+    padding-right: 6px;
+}
+
+#misc, #power {
+    border-radius: 32px;
+    margin: 2px;
+}
+
 #cpu, #memory, #custom-gpu, #temperature, #network, #misc, #power {
     background-color: @color4;
 }
@@ -57,23 +74,9 @@ tooltip {
     font-size: 0.8rem;
 }
 
-
-#custom-launcher {
-    color: @color14;
-    border-radius: 10px;
-    padding: 0px 16px 0px 16px;
-    padding-left: 11px;
-    font-size: 28px;
-    /* font-size: 2.5rem; */
-}
-
 /* #workspaces { */
 /*     border-radius: 10px; */
 /* } */
-.modules-left {
-    background-color: @BACKGROUND;
-    border-radius: 10px;
-}
 
 #workspaces {
     background-color: transparent;
@@ -113,6 +116,15 @@ tooltip {
     background-color: #FF0000;
     border-radius: 16px 16px 16px 16px; 
     opacity: 1;
+}
+
+#custom-launcher {
+    color: @color14;
+    border-radius: 10px;
+    padding: 0px 16px 0px 16px;
+    padding-left: 11px;
+    font-size: 28px;
+    /* font-size: 2.5rem; */
 }
 
 #temperature.critical {
@@ -158,16 +170,4 @@ tooltip {
 
 #custom-toggle-cam {
     padding-left: 11px;
-}
-
-#mpris {
-    margin-left: 6px;
-    border-radius: 10px;
-    background-color: @color4;
-    padding-right: 6px;
-}
-
-#misc, #power {
-    border-radius: 32px;
-    margin: 2px;
 }
