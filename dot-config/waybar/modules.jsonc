@@ -9,24 +9,22 @@
             "weeks-pos"     : "right",
             "on-scroll"     : 1,
             "format": {
-                  "days":       "<span color='#FFF'><b>{}</b></span>",
-                  "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-                  "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-                  "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
-                  }
+                "days":       "<span color='#FFF'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
         },
         "format-alt": " {:%A %d/%m}",
         "on-click-right": "swaync-client -t -sw",
         "interval": 1
     },
-
-
     "hyprland/workspaces": {
         "active-only": false,
         "all-outputs": true,
         "disable-scroll": false,
-        "on-scroll-up": "hyprctl dispatch workspace -1",
-        "on-scroll-down": "hyprctl dispatch workspace +1",
+        "on-scroll-up": "if [[ $(hyprctl activeworkspace -j | jq '.id') == 1 ]]; then hyprctl dispatch workspace 10; else hyprctl dispatch workspace -1; fi",
+        "on-scroll-down": "if [[ $(hyprctl activeworkspace -j | jq '.id') == 10 ]]; then hyprctl dispatch workspace 1; else hyprctl dispatch workspace +1; fi",
         "on-click-middle": "hyprctl dispatch overview:toggle",
         "format": "{icon}",
         "on-click": "activate",
@@ -152,7 +150,7 @@
     // },
     "privacy": {
         "icon-spacing": 4,
-        "icon-size": 24,
+        "icon-size": 18,
         "transition-duration": 250,
         "modules": [
             {
@@ -256,6 +254,10 @@
         "signal": 3
     },
     "group/misc": {
+        "orientation": "horizontal",
+        "modules": ["group/misc-wrapper", "privacy"],
+    },
+    "group/misc-wrapper": {
         "orientation": "horizontal",
         "modules": ["clock", "group/small-utils"],
         "drawer": {}
