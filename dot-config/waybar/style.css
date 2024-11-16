@@ -160,6 +160,11 @@ tooltip {
 /*     margin-bottom: 12px; */
 /* } */
 
+#privacy {
+    padding-left: 4px;
+    padding-right: 8px;
+}
+
 #privacy > *, #privacy-item > * {
     color: @YELLOW;
 }
