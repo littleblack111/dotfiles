@@ -145,7 +145,11 @@ tooltip {
     padding-left: 17px;
 }
 
-#custom-quit, #custom-lock, #custom-suspend, #custom-reboot {
+#custom-dpms {
+    padding-right: 22px;
+}
+
+#custom-quit, #custom-lock, #custom-suspend, #custom-reboot, #custom-dpms {
     color: @YELLOW;
 }
 
