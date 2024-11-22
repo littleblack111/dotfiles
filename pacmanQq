@@ -76,9 +76,11 @@ archcraft-backgrounds-minimal
 archcraft-backgrounds-nature
 archcraft-config-music
 archcraft-dunst-icons
+archcraft-icons-beautyline
 archcraft-music
 archlinux-appstream-data
 archlinux-artwork
+archlinux-contrib
 archlinux-keyring
 archlinux-wallpaper
 archlinuxcn-keyring
@@ -87,7 +89,12 @@ aria2
 arianna
 aribb24
 ark
+arm-none-eabi-binutils
+arm-none-eabi-gcc
+arm-none-eabi-newlib
 artikulate
+asar
+ascii-image-converter
 asciidoc
 aspell
 aspnet-runtime
@@ -97,6 +104,7 @@ asymptote
 at-spi2-core
 atkmm
 atomicparsley
+atop
 attica
 attica5
 attr
@@ -146,6 +154,7 @@ base
 base-devel
 bash
 bat
+bats
 bc
 beautyline
 beep
@@ -240,6 +249,7 @@ cervisia
 cfitsio
 chaotic-keyring
 chaotic-mirrorlist
+chatgpt-desktop-bin
 check
 check-docs
 cheese
@@ -252,7 +262,6 @@ cjson
 clang
 clapper
 clinfo
-clion
 cliphist
 clipmenu
 clipnotify
@@ -266,6 +275,7 @@ clutter-gtk
 cmake
 cmark
 cmatrix
+code-translucent
 cogl
 cointop
 colloid-icon-theme-git
@@ -304,9 +314,9 @@ cups-pdf
 cups-pk-helper
 curl
 cursor-bin
-cython
 d-spy
 dangerzone-bin
+darkman
 darling-bin
 dart
 dav1d
@@ -315,6 +325,7 @@ db5.3
 dbus
 dbus-broker
 dbus-broker-units
+dbus-c++
 dbus-glib
 dconf
 dconf-editor
@@ -376,6 +387,7 @@ duperemove
 dvisvgm
 dynisland-git
 e2fsprogs
+easy-rsa
 easyeffects
 easytag
 ebook-tools
@@ -442,6 +454,7 @@ fcitx5-pinyin-sougou
 fcitx5-qt
 fcitx5-rime
 fcitx5-skin-fluentdark-git
+fcitx5-skin-ori-git
 feh
 ffcall
 ffmpeg
@@ -492,7 +505,6 @@ fuse-common
 fuse2
 fuse3
 futuresql
-fvs
 fwupd
 fwupd-efi
 fzf
@@ -535,6 +547,7 @@ gi-docgen
 giflib
 girara
 git
+git-fixup-git
 git-lfs
 gitg
 github-cli
@@ -639,11 +652,13 @@ gparted
 gperftools
 gpgme
 gpm
+gpsd
 gpt4all-chat-debug
 gptfdisk
 gpu-screen-recorder-git
 gpu-screen-recorder-gtk-git
 gradience
+gradle
 granatier
 granite
 grantlee
@@ -679,7 +694,6 @@ gst-editing-services
 gst-libav
 gst-plugin-gtk
 gst-plugin-gtk4
-gst-plugin-openh264
 gst-plugin-pipewire
 gst-plugin-va
 gst-plugins-bad
@@ -708,11 +722,13 @@ gtksourceview3
 gtksourceview4
 gtksourceview5
 gtksourceviewmm
+gtkspell3
 gts
 gtuber
 guestfs-tools
 gufw
 guile
+gulp
 gum
 gumbo-parser
 gunicorn
@@ -720,6 +736,8 @@ gupnp
 gupnp-av
 gupnp-dlna
 gupnp-igd
+guvcview
+guvcview-common
 gvfs
 gvfs-afc
 gvfs-dnssd
@@ -990,6 +1008,7 @@ haskell-zlib
 hdf5
 hdparm
 help2man
+helvum
 hicolor-icon-theme
 hidapi
 highway
@@ -1024,6 +1043,7 @@ hyprland-git
 hyprland-git-debug
 hyprland-hidpi-xprop-git-debug
 hyprland-protocols-git
+hyprland-qtutils-git
 hyprlang-git
 hyprlang-git-debug
 hyprlock-git
@@ -1032,9 +1052,12 @@ hyprnotify
 hyprpaper
 hyprpicker-git
 hyprpicker-git-debug
+hyprpolkitagent-git
 hyprprop-git
 hyprshade
 hyprsunset-git
+hyprswitch
+hyprsysteminfo-git
 hyprutils-git
 hyprutils-git-debug
 hyprwayland-scanner-git
@@ -1047,6 +1070,8 @@ iana-etc
 icoextract
 icon-naming-utils
 icu
+icu69
+icu74
 id3lib
 iftop
 ifuse
@@ -1083,20 +1108,27 @@ iso-codes
 isoimagewriter
 itinerary
 itstool
+iucode-tool
 iw
 jansson
 jasper
 java-environment-common
+java-rhino
 java-runtime-common
 jbig2dec
 jbigkit
 jdk-openjdk
+jdk11-openjdk
+jdk17-openjdk
+jdk21-openjdk
+jdk8-openjdk
 jemalloc
-jetbrains-fleet
 jetbrains-toolbox
 jfsutils
 jp2a
 jq
+jre8-openjdk
+jre8-openjdk-headless
 js115
 js128
 json-c
@@ -1331,6 +1363,7 @@ kpackage5
 kparts
 kparts5
 kpat
+kpatch-git
 kpeople
 kpimtextedit
 kpipewire
@@ -1387,6 +1420,7 @@ ktrip
 ktuberling
 kturtle
 kubrick
+kunifiedpush
 kunitconversion
 kunitconversion5
 kuserfeedback
@@ -1682,6 +1716,7 @@ libdc1394
 libdca
 libde265
 libdecor
+libdeep_filter_ladspa-bin
 libdeflate
 libdex
 libdisplay-info
@@ -1998,7 +2033,7 @@ libutf8proc
 libuv
 libva
 libva-intel-driver
-libva-nvidia-driver
+libva-nvidia-driver-git
 libva-utils
 libvdpau
 libvdpau-va-gl
@@ -2103,6 +2138,7 @@ localsearch
 log4cplus
 logrotate
 lokalize
+longoverdue
 loupe
 love
 lowdown
@@ -2146,6 +2182,7 @@ mailcommon
 mailimporter
 maim
 make
+mallard-ducktype
 man-db
 mangohud
 marble
@@ -2199,6 +2236,7 @@ mkinitcpio-firmware
 mlt
 mobile-broadband-provider-info
 mod_dnssd
+modem-manager-gui
 modemmanager
 modemmanager-qt
 mold
@@ -2234,6 +2272,7 @@ ncdu
 ncmpcpp
 ncurses
 ndctl
+needrestart
 neochat
 neon
 neovim
@@ -2247,6 +2286,7 @@ nettle
 network-manager-applet
 networkmanager
 networkmanager-dmenu-git
+networkmanager-openvpn
 networkmanager-qt
 nextcloud-client
 nftables
@@ -2261,11 +2301,12 @@ nlohmann-json
 nm-connection-editor
 nmap
 node-gyp
-nodejs
+nodejs-lts-iron
 nodejs-mapscii
 nodejs-nativefier
 nodejs-nopt
 normcap
+notion-app-electron
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
@@ -2326,6 +2367,7 @@ openssl-1.1
 opensubdiv
 openucx
 openvdb
+openvpn
 openxr
 opus
 opusfile
@@ -2350,6 +2392,7 @@ otf-monaspace-nerd
 otf-opendyslexic-nerd
 otf-overpass-nerd
 ouch
+overdue
 owlink-git
 oxygen
 oxygen-sounds
@@ -2378,6 +2421,7 @@ parted
 partimage
 partitionmanager
 paru
+pass
 passim
 passt
 patch
@@ -2465,8 +2509,10 @@ perl-lwp-protocol-https
 perl-mailtools
 perl-math-round
 perl-mime-charset
+perl-module-find
 perl-module-implementation
 perl-module-runtime
+perl-module-scandeps
 perl-mozilla-ca
 perl-mro-compat
 perl-namespace-autoclean
@@ -2483,15 +2529,18 @@ perl-params-validationcompiler
 perl-parse-recdescent
 perl-path-tiny
 perl-perlio-utf8-strict
+perl-proc-processtable
 perl-regexp-common
 perl-rename
 perl-role-tiny
 perl-sort-key
+perl-sort-naturally
 perl-specio
 perl-sub-exporter
 perl-sub-exporter-progressive
 perl-sub-identify
 perl-sub-install
+perl-term-readkey
 perl-test-fatal
 perl-text-bibtex
 perl-text-csv
@@ -2521,6 +2570,7 @@ phonon-qt5-gstreamer
 phonon-qt6
 phonon-qt6-vlc
 php
+php-gd
 phyOS-keyring
 phyOS-system-scripts
 phyOS-systemd-services
@@ -2542,6 +2592,7 @@ pipewire-v4l2
 pipewire-zeroconf
 pixman
 pixz
+pkcs11-helper
 pkgconf
 pkgfile
 plasma-activities
@@ -2578,6 +2629,7 @@ polkit-kde-agent
 polkit-qt5
 polkit-qt6
 polybar
+polypane
 poppler
 poppler-data
 poppler-glib
@@ -2594,6 +2646,7 @@ powershell-bin-debug
 powertop
 poxml
 ppp
+pps-tools
 prettyping
 print-manager
 prison
@@ -2602,6 +2655,7 @@ profile-sync-daemon
 progress
 protobuf
 protobuf-c
+proton-vpn-gtk-app
 protonup-qt
 prrte
 psmisc
@@ -2616,7 +2670,6 @@ purpose
 purpose5
 pyalpm
 pybind11
-pycharm-professional
 pyenv
 pyprland-git
 pyside6
@@ -2645,7 +2698,9 @@ python-autocommand
 python-automat
 python-babel
 python-backoff
+python-bcrypt
 python-beautifulsoup4
+python-black
 python-blessed
 python-blinker
 python-boolean.py
@@ -2664,6 +2719,7 @@ python-charset-normalizer
 python-cleo
 python-click
 python-clickgen1
+python-cobs
 python-cohere
 python-colorama
 python-comm
@@ -2707,7 +2763,9 @@ python-filelock
 python-flask
 python-fonttools
 python-frozenlist
+python-fvs
 python-gbinder
+python-gnupg
 python-gobject
 python-google-api-core
 python-google-api-python-client
@@ -2744,6 +2802,7 @@ python-instructor
 python-ipykernel
 python-itsdangerous
 python-jaraco.classes
+python-jaraco.collections
 python-jaraco.context
 python-jaraco.functools
 python-jaraco.text
@@ -2752,6 +2811,7 @@ python-jeepney
 python-jinja
 python-jiter
 python-jmespath
+python-jsonpickle
 python-jsonschema
 python-jsonschema-specifications
 python-jupyter-client
@@ -2784,6 +2844,7 @@ python-moddb
 python-more-itertools
 python-msgpack
 python-multidict
+python-mypy_extensions
 python-nest-asyncio
 python-nose
 python-notify2
@@ -2816,6 +2877,10 @@ python-poetry-plugin-export
 python-pooch
 python-prompt_toolkit
 python-protobuf
+python-proton-core
+python-proton-keyring-linux
+python-proton-vpn-api-core
+python-proton-vpn-network-manager
 python-psutil
 python-ptyprocess
 python-publicsuffix2
@@ -2824,6 +2889,7 @@ python-puremagic
 python-pyaml
 python-pyasn1
 python-pyasn1-modules
+python-pycodestyle
 python-pycparser
 python-pycryptodome
 python-pycryptodomex
@@ -2838,6 +2904,7 @@ python-pygdbmi
 python-pygments
 python-pyjwt
 python-pylsqpack
+python-pynacl
 python-pyopenssl
 python-pyparsing
 python-pypdf
@@ -2851,8 +2918,11 @@ python-pytesseract
 python-pytest
 python-pytest-asyncio
 python-pytest-cov
+python-pytest-examples
 python-python-multipart
 python-pytz
+python-pywal
+python-pywalfox
 python-pyxdg
 python-pyzmq
 python-qtpy
@@ -2862,6 +2932,7 @@ python-regex
 python-reportlab
 python-requests
 python-requests-file
+python-requests-futures
 python-requests-oauthlib
 python-requests-toolbelt
 python-respx
@@ -2870,6 +2941,7 @@ python-rpds-py
 python-rsa
 python-ruamel-yaml
 python-ruamel.yaml.clib
+python-ruff
 python-s3transfer
 python-scipy
 python-secretstorage
@@ -2880,6 +2952,7 @@ python-setproctitle
 python-setuptools
 python-setuptools-git
 python-setuptools-rust
+python-setuptools-scm
 python-shellingham
 python-six
 python-smartypants
@@ -3200,6 +3273,7 @@ ruby-stdlib
 ruby-test-unit
 ruby-typeprof
 rubygems
+ruff
 run-parts
 runc
 rust-bindgen
@@ -3298,6 +3372,7 @@ spotify
 spotify-adblock
 spotify-launcher
 sqlite
+sqlmap
 squashfs-tools
 sratom
 srt
@@ -3310,6 +3385,7 @@ step
 stow
 strace
 stress
+studioone6
 subversion
 sudo
 suitesparse
@@ -3499,6 +3575,7 @@ typora-debug
 tzdata
 uchardet
 udev-block-notify
+udftools
 udiskie
 udisks2
 ufw
@@ -3569,10 +3646,10 @@ vulkan-validation-layers
 w3m
 wacomtablet
 wallust-git
-warp-terminal
 watt-toolkit-bin
 wavpack
-waybar
+waybackurls
+waybar-git
 waycheck
 waydroid
 wayland
@@ -3584,7 +3661,6 @@ webkit2gtk-4.1
 webkitgtk-6.0
 webp-pixbuf-loader
 webrtc-audio-processing-1
-webstorm
 wev-git
 wezterm-git
 wf-recorder
@@ -3600,6 +3676,7 @@ wl-clipboard
 wl-clipboard-history-git
 wlogout
 wlogout-debug
+wlr-randr
 wlrctl
 wlroots
 wlroots-hidpi-xprop-git
@@ -3613,6 +3690,7 @@ wootility-appimage
 wootomation-appimage
 wpa_supplicant
 wpebackend-fdo
+wpgtk-git
 wqy-bitmapfont
 wqy-microhei
 wqy-microhei-lite
@@ -3642,9 +3720,10 @@ xdg-desktop-portal-gnome
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland-git
 xdg-desktop-portal-hyprland-git-debug
-xdg-desktop-portal-kde
+xdg-desktop-portal-luminous
 xdg-desktop-portal-wlr
 xdg-ninja
+xdg-terminal-exec-git
 xdg-user-dirs
 xdg-user-dirs-gtk
 xdg-utils
@@ -3719,6 +3798,7 @@ xsel
 xsettingsd
 xtrans
 xvidcore
+xwayland-run
 xwaylandvideobridge
 xxhash
 xz
@@ -3732,6 +3812,7 @@ yay
 yay-debug
 ydotool
 yelp
+yelp-tools
 yelp-xsl
 youtube-dl
 yt-dlp
@@ -3756,6 +3837,7 @@ zip
 zita-convolver
 zix
 zlib
+zlib-ng
 zoom
 zoxide
 zram-generator
