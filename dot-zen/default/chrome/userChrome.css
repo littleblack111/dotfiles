@@ -63,8 +63,8 @@
     }
   }
 }
-window, #main-window, #toolbar-menubar, #TabsToolbar, #PersonalToolbar, #navigator-toolbox,#sidebar-box{
-background-color: rgba(41,47,52,0.2) !important;
+window, #toolbar-menubar, #PersonalToolbar, #navigator-toolbox,#sidebar-box{
+background-color: rgba(41,47,52,0.5) !important;
 -moz-appearance: none !important;
 background-image: none !important;
 
