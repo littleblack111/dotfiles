@@ -2,18 +2,18 @@
   background-color:rgba(0,0,0,0) !important;
 }
 #main-window{
-background-color: rgba(41,47,52,0.2) !important;
--moz-appearance: none !important;
-background-image: none !important;
---zen-main-browser-background: transparent !important;
+    background-color: rgba(41,47,52,0.2) !important;
+    -moz-appearance: none !important;
+    background-image: none !important;
+    --zen-main-browser-background: rgba(0,0,0,0) !important;
 }
 #urlbar-input{
- background:transparent !important;
+    background:transparent !important;
 }
 #urlbar{
-  background:transparent !important;
-  backdrop-filter: blur(15px) !important;
-  background-color:rgb(0,0,0,0.4) !important;
+    background:transparent !important;
+    backdrop-filter: blur(15px) !important;
+    background-color:rgb(0,0,0,0) !important;
 }
 #urlbar-background{
    background-color:rgba(40,40,40,0.1) !important;
@@ -33,33 +33,99 @@ background-image: none !important;
 }
 
 /* Integrated URL bar & webview */
-    #browser {
-      &:has(#navigator-toolbox[zen-expanded="true"]) {
-        &:not(:has(.zen-split-view-splitter)) {
-          --urlbar-min-width: 28px !important;
-  
-          #nav-bar {
-            --zen-toolbar-height: 36px;
-  
-            background-color: rgba(0, 0, 0, 0.2) !important; /* URL Bar transparency */
-            border-radius: 10px 10px 0px 0px !important;
-            padding-left: 6px !important;
-            margin-right: 6px !important;
-            margin-top: 6px !important;
-            margin-left: 1px;
-          }
-  
-          .browserContainer {
-            border-radius: 0px 0px 10px 10px !important;
-            
-          &:not([urlbar-exceeds-toolbar-bounds]) {
-              backdrop-filter: blur(10px) saturate(1.5);
-            }  
-          }
-          
-          .browserSidebarContainer {
-            background-color: rgba(0, 0, 0, 0.12) !important; /* Browser Container transparency */
-          } 
-        }
+#browser {
+  &:has(#navigator-toolbox[zen-expanded="true"]) {
+    &:not(:has(.zen-split-view-splitter)) {
+      --urlbar-min-width: 28px !important;
+
+      #nav-bar {
+        --zen-toolbar-height: 36px;
+
+        background-color: rgba(0, 0, 0, 0.2) !important; /* URL Bar transparency */
+        border-radius: 10px 10px 0px 0px !important;
+        padding-left: 6px !important;
+        margin-right: 6px !important;
+        margin-top: 6px !important;
+        margin-left: 1px;
       }
+
+      .browserContainer {
+        border-radius: 0px 0px 10px 10px !important;
+        
+      &:not([urlbar-exceeds-toolbar-bounds]) {
+          backdrop-filter: blur(10px) saturate(1.5);
+        }  
+      }
+      
+      .browserSidebarContainer {
+        background-color: rgba(0, 0, 0, 0.12) !important; /* Browser Container transparency */
+      } 
     }
+  }
+}
+window, #main-window, #toolbar-menubar, #TabsToolbar, #PersonalToolbar, #navigator-toolbox,#sidebar-box{
+background-color: rgba(41,47,52,0.2) !important;
+-moz-appearance: none !important;
+background-image: none !important;
+
+}
+
+.tab-background[selected="true"] {
+
+background: rgba(33,37,41,0.3) !important;
+-moz-appearance: none !important;
+background-image: none !important;
+
+} 
+
+.tab-background[selected=""]{
+  background:rgba(0,0,0,0.4) !important;
+  border:1px rgba(0,0,0,1) solid !important;
+  border-radius: 6px !important;;
+}
+
+.tab-background{
+  background:rgba(0,0,0,0) !important;
+  border:1px rgba(0,0,0,0.2) solid !important;
+/*  box-shadow: 0 0 0 1px rgba(255,255,255,0.2); /* Outer border */*/
+  border-radius: 6px !important;
+}
+
+.tabbrowser-tab:not([selected]):hover .tab-background {
+
+background: rgba(100, 100, 100, 0.3) !important;
+
+}
+
+.tab-close-button {
+
+/* Add your styles here */
+
+display: none !important;
+
+}
+
+/* Add styles for the close-icon class */
+
+.close-icon {
+
+/* Add your styles here */
+
+}
+
+.titlebar-buttonbox-container{
+
+display:none !important;
+
+}
+
+.titlebar-spacer{
+
+display:none !important;
+
+}
+
+#zen-appcontent-navbar-container {
+    blur: none;
+    backdrop-filter: none !important;
+}

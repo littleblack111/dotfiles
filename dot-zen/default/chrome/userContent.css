@@ -5,3 +5,11 @@
 body, html {
     background-color: var(--bg-color) !important;
 }
+
+html#main-window > body {
+    background: transparent !important;
+}
+
+#zen-main-app-wrapper {
+    background: color-mix(in oklab, var(--zen-main-browser-background) 90%) !important;
+}
