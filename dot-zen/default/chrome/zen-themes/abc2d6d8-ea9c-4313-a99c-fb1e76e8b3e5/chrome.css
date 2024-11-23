@@ -1,0 +1,9 @@
+
+      @-moz-document url-prefix("chrome:") {
+        
+& #tabbrowser-tabbox #tabbrowser-tabpanels .browserSidebarContainer {
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5) !important;
+}
+
+      }
+    

@@ -1,0 +1,10 @@
+
+      @-moz-document url-prefix("chrome:") {
+        
+#statuspanel {
+ display: none !important;
+
+}
+
+      }
+    
