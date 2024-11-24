@@ -1,8 +1,45 @@
 * {
     border-radius: 2px;
-    --bg-color: rgba(0,0,0,0.5) !important;
-    --background: rgba(0,0,0,0.5) !important;
-    --background-color: rgba(0,0,0,0.5) !important;
+    --bg: rgba(0,0,0,0.3) !important;
+    --bg-color: rgba(0,0,0,0.3) !important;
+    --background: rgba(0,0,0,0.3) !important;
+    --background-color: rgba(0,0,0,0.3) !important;
+    --primary-background: rgba(0,0,0,0.3) !important;
+    /* background-color: transparent !important; */
+}
+
+@-moz-document url-prefix("https://www.google.com") {
+    .sfbg {
+        background-color: transparent !important;
+    }
+    #appbar, .appbar {
+        background-color: transparent !important;
+    }
+    #search *, .dURPMd * {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+    .KcXNxb, .dG2XIf {
+        background-color: transparent !important;
+    }
+}
+
+@-moz-document url-prefix("https://docs.google.com/forms") {
+    * {
+        --bg-color: rgba(0,0,0,0) !important;
+    }
+}
+
+@-moz-document url-prefix("https://github.com") {
+    #partial-discussion-header {
+        background: transparent !important;
+    }
+    .comment {
+        background: transparent !important;
+    }
+    .color-bg-default, .color-fg-default, .bgColor-default, .color-bg-inset, .bgColor-inset, .discussion-timeline-actions {
+        background-color: transparent !important;
+    }
 }
 
 body, html {
