@@ -15,12 +15,17 @@
     #appbar, .appbar {
         background-color: transparent !important;
     }
-    #search *, .dURPMd * {
+    #search * > :not(.MjjYud *), .dURPMd * > :not(.MjjYud *) {
         background: transparent !important;
         background-color: transparent !important;
     }
     .KcXNxb, .dG2XIf {
         background-color: transparent !important;
+    }
+    .MjjYud > div > div, .MjjYud > div {
+        background: var(--bg-color) !important;
+        background-color: var(--bg-color) !important;
+        border-radius: 8px !important;
     }
 }
 
@@ -35,10 +40,14 @@
         background: transparent !important;
     }
     .comment {
+        background: var(--bg-color) !important;
+    }
+    .discussion-timeline-actions {
         background: transparent !important;
     }
-    .color-bg-default, .color-fg-default, .bgColor-default, .color-bg-inset, .bgColor-inset, .discussion-timeline-actions {
-        background-color: transparent !important;
+    .color-bg-default, .color-fg-default, .bgColor-default, .color-bg-inset, .bgColor-inset {
+        background-color: var(--bg-color) !important;
+        backdrop-filter: blur(16px) !important;
     }
 }
 
