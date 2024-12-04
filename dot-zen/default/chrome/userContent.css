@@ -5,7 +5,11 @@
     --background: rgba(0,0,0,0.3) !important;
     --background-color: rgba(0,0,0,0.3) !important;
     --primary-background: rgba(0,0,0,0.3) !important;
+    --bgColor-inset: rgba(0,0,0,0.3) !important;
     /* background-color: transparent !important; */
+    /* p, span, h1, h2, h3, h4, strong, a { */
+    /*     background-color: transparent !important; */
+    /* } */
 }
 
 @-moz-document url-prefix("https://www.google.com") {
@@ -35,6 +39,24 @@
     }
 }
 
+@-moz-document url-prefix("https://docs.google.com/presentation") {
+    #docs-editor, #docs-editor-container {
+        background: var(--bg-color) !important;
+    }
+    .workspace-container {
+        background: transparent !important;
+    }
+    .filmstrip {
+        background: transparent !important;
+    }
+}
+
+@-moz-document url-prefix("https://docs.google.com/document") {
+    #docs-editor, #docs-editor-container, .kix-appview-editor {
+        background: var(--bg-color) !important;
+    }
+}
+
 @-moz-document url-prefix("https://github.com") {
     #partial-discussion-header {
         background: transparent !important;
@@ -48,6 +70,28 @@
     .color-bg-default, .color-fg-default, .bgColor-default, .color-bg-inset, .bgColor-inset {
         background-color: var(--bg-color) !important;
         backdrop-filter: blur(16px) !important;
+    }
+    .feed-background {
+        background-color: var(--bg-color) !important;
+    }
+}
+
+@-moz-document url-prefix("https://vsa.managebac.com") {
+    .content-block {
+        background: var(--bg-color) !important;
+    }
+    #menu *:not(.f-menu-submenu, .f-menu-submenu-link) {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+    #menu {
+        background: var(--bg-color) !important;
+    }
+    .f-menu-submenu, .f-menu-submenu-link {
+        background: var(--bg-color) !important;
+    }
+    .fusion-card-item {
+        background: var(--bg-color) !important;
     }
 }
 
