@@ -1,0 +1,21 @@
+#!/bin/bash
+
+DIR="$HOME/.config/rofi"
+RASI="$DIR/sgpt.rasi"
+
+INPUT=$(rofi -dmenu -p "" -theme ${RASI})
+if [[ -z $INPUT ]]; then
+    exit 1
+fi
+
+zenity --progress --text="Waiting for an answer" --pulsate &
+
+if [[ $? -eq 1 ]]; then
+    exit 1
+fi
+
+PID=$!
+
+ANSWER=$(sgpt "$INPUT" --role general)
+kill $PID
+zenity --info --text="$ANSWER"

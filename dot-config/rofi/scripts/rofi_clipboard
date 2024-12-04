@@ -3,4 +3,4 @@
 DIR="$HOME/.config/rofi"
 RASI="$DIR/clipboard.rasi"
 # rofi -modi clipboard:"$DIR/scripts/cliphist-rofi-img" -show clipboard -theme ${RASI}
-cliphist --image "\x00icon\x1f" list | rofi -dmenu -show-icons -theme ${RASI} | cliphist decode | wl-copy
+cliphist --image "\x00icon\x1f" list | rofi -dmenu -i -show-icons -theme ${RASI} | cliphist decode | wl-copy
