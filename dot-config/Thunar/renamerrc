@@ -1,5 +1,5 @@
 [Configuration]
-LastActiveMode=THUNAR_RENAMER_MODE_NAME
+LastActiveMode=THUNAR_RENAMER_MODE_EXTENSION
 LastActiveRenamer=ThunarSbrReplaceRenamer
 
 [ThunarSbrNumberRenamer]
@@ -10,7 +10,7 @@ Start=1
 
 [ThunarSbrReplaceRenamer]
 CaseSensitive=FALSE
-Replacement=pywal
-Pattern=colors
+Replacement=zst
+Pattern=zip
 Regexp=FALSE
 

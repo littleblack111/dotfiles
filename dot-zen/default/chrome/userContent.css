@@ -74,6 +74,10 @@
     .feed-background {
         background-color: var(--bg-color) !important;
     }
+    .TimelineItem::before {
+        background-color: transparent !important;
+        display: none !important;
+    }
 }
 
 @-moz-document url-prefix("https://vsa.managebac.com") {

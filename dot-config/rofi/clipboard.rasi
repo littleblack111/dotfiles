@@ -1,4 +1,3 @@
-
 /*****----- Configuration -----*****/
 configuration {
 	modi:                       "clipboard";
@@ -224,7 +223,7 @@ element alternate.active {
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        24px;
+    size:                        32px;
     cursor:                      inherit;
 }
 element-text {

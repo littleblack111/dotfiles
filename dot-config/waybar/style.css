@@ -66,12 +66,12 @@ window#waybar.empty #window {
     border: none;
 }
 
-tooltip {
+tooltip * {
     background-color: @BACKGROUND;
     color: @ACCENT;
     border-radius: 4px;
-    padding: 4px;
-    font-size: 0.8rem;
+    /* padding: 4px; */
+    /* font-size: 0.8rem; */
 }
 
 /* #workspaces { */
