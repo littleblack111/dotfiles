@@ -34,47 +34,46 @@
 
 /* Integrated URL bar & webview */
 #browser {
-  &:has(#navigator-toolbox[zen-expanded="true"]) {
+&:has(#navigator-toolbox[zen-expanded="true"]) {
     &:not(:has(.zen-split-view-splitter)) {
-      --urlbar-min-width: 28px !important;
+        --urlbar-min-width: 28px !important;
 
-      #nav-bar {
-        --zen-toolbar-height: 36px;
+        #nav-bar {
+          --zen-toolbar-height: 36px;
 
-        background-color: rgba(0, 0, 0, 0.2) !important; /* URL Bar transparency */
-        border-radius: 10px 10px 0px 0px !important;
-        padding-left: 6px !important;
-        margin-right: 6px !important;
-        margin-top: 6px !important;
-        margin-left: 1px;
+          background-color: var(--lwt-accent-color) !important; /* URL Bar color changing rgba(0, 0, 0, 0.2) */
+          border-radius: 10px 10px 0px 0px !important;
+          padding-left: 6px !important;
+          margin-right: 6px !important;
+          margin-top: 6px !important;
+          margin-left: 1px;
+        }
+
+        .browserContainer {
+          border-radius: 0px 0px 10px 10px !important;
+
+          &:not([urlbar-exceeds-toolbar-bounds]) {
+            backdrop-filter: blur(10px) saturate(1.5);
+          }  
+        }
+
+        .browserSidebarContainer {
+          background-color: rgba(0, 0, 0, 0.12) !important; /* Browser Container transparency */
+        } 
       }
-
-      .browserContainer {
-        border-radius: 0px 0px 10px 10px !important;
-        
-      &:not([urlbar-exceeds-toolbar-bounds]) {
-          backdrop-filter: blur(10px) saturate(1.5);
-        }  
-      }
-      
-      .browserSidebarContainer {
-        background-color: rgba(0, 0, 0, 0.12) !important; /* Browser Container transparency */
-      } 
     }
-  }
 }
 window, #toolbar-menubar, #PersonalToolbar, #navigator-toolbox, #sidebar-box{
-background-color: rgba(41,47,52,0.5) !important;
--moz-appearance: none !important;
-background-image: none !important;
+    background-color: rgba(41,47,52,0.5) !important;
+    -moz-appearance: none !important;
+    background-image: none !important;
 
 }
 
 .tab-background[selected="true"] {
-
-background: rgba(33,37,41,0.3) !important;
--moz-appearance: none !important;
-background-image: none !important;
+    background: rgba(33,37,41,0.3) !important;
+    -moz-appearance: none !important;
+    background-image: none !important;
 
 } 
 
@@ -92,9 +91,7 @@ background-image: none !important;
 }
 
 .tabbrowser-tab:not([selected]):hover .tab-background {
-
-background: rgba(100, 100, 100, 0.3) !important;
-
+    background: rgba(100, 100, 100, 0.3) !important;
 }
 
 .tab-close-button {
@@ -128,38 +125,6 @@ display:none !important;
 #zen-appcontent-navbar-container {
     blur: none;
     backdrop-filter: none !important;
-}
-
-/* Integrated URL bar & webview */
-#browser {
-&:has(#navigator-toolbox[zen-expanded="true"]) {
-  &:not(:has(.zen-split-view-splitter)) {
-    --urlbar-min-width: 28px !important;
-
-    #nav-bar {
-      --zen-toolbar-height: 36px;
-
-      background-color: var(--lwt-accent-color) !important; /* URL Bar color changing rgba(0, 0, 0, 0.2) */
-      border-radius: 10px 10px 0px 0px !important;
-      padding-left: 6px !important;
-      margin-right: 6px !important;
-      margin-top: 6px !important;
-      margin-left: 1px;
-    }
-
-    .browserContainer {
-      border-radius: 0px 0px 10px 10px !important;
-
-      &:not([urlbar-exceeds-toolbar-bounds]) {
-        backdrop-filter: blur(10px) saturate(1.5);
-      }  
-    }
-
-    .browserSidebarContainer {
-      background-color: rgba(0, 0, 0, 0.12) !important; /* Browser Container transparency */
-    } 
-  }
-}
 }
 
 
