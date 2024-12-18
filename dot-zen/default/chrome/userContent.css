@@ -55,6 +55,9 @@
     #docs-editor, #docs-editor-container, .kix-appview-editor {
         background: var(--bg-color) !important;
     }
+    .kix-page-paginated, .kix-canvas-tile-content {
+        border-radius: 8px;
+    }
 }
 
 @-moz-document url-prefix("https://github.com") {

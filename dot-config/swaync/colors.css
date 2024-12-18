@@ -1,18 +1,18 @@
-@define-color text-color #F1F3EF;
-@define-color text-color-disabled #191A16;
-@define-color cc-bg rgba(25,26,22, 0.1);
-@define-color noti-bg rgba(25,26,22, 0.1);
-@define-color noti-bg-opaque rgba(25,26,22, 0.2);
-@define-color noti-bg-darker rgba(25,26,22, 0.2);
-@define-color bg-selected #191A16;
-@define-color cursor #F1F3EF;
-@define-color noti-bg-hover rgba(54,60,72, 0.3);
-@define-color noti-bg-hover-opaque rgba(54,60,72, 0.4);
-@define-color noti-bg-hover-focus rgba(54,60,72, 0.3);
-@define-color noti-close-bg rgba(25,26,22, 0.1);
-@define-color noti-close-bg-hover rgba(25,26,22, 0.2);
-@define-color bg-selected rgba(25,26,22, 0.1);
-/* @define-color button-background #B2B6A7; */
-@define-color button-active #2B301E;
-@define-color noti-border-color #24210C;
-/* @define-color urgent #E3E5E0; */
+@define-color text-color #D6E5D6;
+@define-color text-color-disabled #1C2122;
+@define-color cc-bg rgba(28,33,34, 0.1);
+@define-color noti-bg rgba(28,33,34, 0.1);
+@define-color noti-bg-opaque rgba(28,33,34, 0.2);
+@define-color noti-bg-darker rgba(28,33,34, 0.2);
+@define-color bg-selected #1C2122;
+@define-color cursor #D6E5D6;
+@define-color noti-bg-hover rgba(45,70,35, 0.3);
+@define-color noti-bg-hover-opaque rgba(45,70,35, 0.4);
+@define-color noti-bg-hover-focus rgba(45,70,35, 0.3);
+@define-color noti-close-bg rgba(28,33,34, 0.1);
+@define-color noti-close-bg-hover rgba(28,33,34, 0.2);
+@define-color bg-selected rgba(28,33,34, 0.1);
+/* @define-color button-background #673D49; */
+@define-color button-active #014736;
+@define-color noti-border-color #063A24;
+/* @define-color urgent #BBD2BC; */
