@@ -64,6 +64,7 @@
             "playing": "⏸",
             "paused": "▶"
         },
+        "dynamic-len": 50,
         "interval": 1,
     },
     "group/musicworkspace": {
