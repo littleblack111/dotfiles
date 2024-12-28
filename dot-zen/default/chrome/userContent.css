@@ -110,6 +110,10 @@ html#main-window > body {
     background: transparent !important;
 }
 
+.page-content {
+    background: transparent !important;
+}
+
 #zen-main-app-wrapper {
     background: color-mix(in oklab, var(--zen-main-browser-background) 90%) !important;
 }
