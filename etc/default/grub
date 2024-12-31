@@ -2,12 +2,12 @@
 
 GRUB_DEFAULT="saved"
 # GRUB_DEFAULT=false
-GRUB_TIMEOUT="3"
-GRUB_HIDDEN_TIMEOUT="3"
+GRUB_TIMEOUT="0"
+GRUB_HIDDEN_TIMEOUT="0"
 GRUB_HIDDEN_TIMEOUT_QUIET="false"
 GRUB_RECORDFAIL_TIMEOUT="$GRUB_TIMEOUT"
 GRUB_DISTRIBUTOR="Arch"
-GRUB_CMDLINE_LINUX_DEFAULT="apparmor=1 lsm=landlock,lockdown,yama,integrity,selinux,apparmor,bpf intel_iommu=on iommu=pt nvidia_drm.modeset=1 nvidia-drm.modeset=1 nvidia_drm.fbdev=1 loglevel=3 udev.log-priority=3 udev.log_level=3 vt.global_cursor_default=0 rd.luks.uuid=bc526687-9deb-4078-abd1-55692022e073 rd.luks.options=bc526687-9deb-4078-abd1-55692022e073=tpm2-device=auto root=/dev/mapper/arch-root rootflags=subvol=@ resume=/dev/mapper/arch-swap splash # vfio-pci.ids=10de:1c03,10de:10f1 rd.luks.key=bc526687-9deb-4078-abd1-55692022e073=/secure/key.bin fsck.repair=yes"
+GRUB_CMDLINE_LINUX_DEFAULT="apparmor=1 lsm=landlock,lockdown,yama,integrity,apparmor,selinux,bpf intel_iommu=on iommu=pt ibt=off nvidia-drm.modeset=1 nvidia_drm.fbdev=1 NVreg_PreserveVideoMemoryAllocations=1 systemd.show_status=auto loglevel=3 udev.log-priority=3 udev.log_level=3 vt.global_cursor_default=0 rd.luks.uuid=bc526687-9deb-4078-abd1-55692022e073 rd.luks.options=bc526687-9deb-4078-abd1-55692022e073=tpm2-device=auto root=/dev/mapper/arch-root rootflags=subvol=@ resume=/dev/mapper/arch-swap quiet loglevel=3 splash"
 #GRUB_CMDLINE_LINUX_DEFAULT="apparmor=1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf intel_iommu=on iommu=pt nvidia_drm.modeset=1 nvidia-drm.modeset=1 nvidia_drm.fbdev=1 resume=UUID=4e62484c-422f-422a-b0ac-15cd6c02b337 loglevel=3 udev.log-priority=3 udev.log_level=3 vt.global_cursor_default=0 root=/dev/mapper/arch-root resume=/dev/mapper/arch-swap splash # vfio-pci.ids=10de:1c03,10de:10f1 cryptdevice=UUID=bc526687-9deb-4078-abd1-55692022e073:luks_lvm"
 # GRUB_CMDLINE_LINUX_DEFAULT="apparmor=1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf intel_iommu=on iommu=pt resume=UUID=4e62484c-422f-422a-b0ac-15cd6c02b337 loglevel=3 udev.log-priority=3 udev.log_level=3 vt.global_cursor_default=0 splash" # vfio-pci.ids=10de:1c03,10de:10f1
 #doesn't work
@@ -62,17 +62,18 @@ GRUB_DISABLE_OS_PROBER="false"
 #GRUB_BACKGROUND="/usr/share/grub/background.png"
 #GRUB_THEME="/boot/grub/themes/CyberRe/theme.txt"
 #GRUB_THEME="/boot/grub/themes/starfield/theme.txt"
+#GRUB_THEME="/boot/grub/themes/archcraft/theme.txt"
 GRUB_THEME="/boot/grub/themes/archcraft/theme.txt"
 
 # Uncomment to get a beep at GRUB start
-#GRUB_INIT_TUNE="480 440 1"
+GRUB_INIT_TUNE="480 440 1"
 
 # Uncomment to ensure that the root filesystem is mounted read-only so that
 # systemd-fsck can run the check automatically. We use 'fsck' by default, which
 # needs 'rw' as boot parameter, to avoid delay in boot-time. 'fsck' needs to be
 # removed from 'mkinitcpio.conf' to make 'systemd-fsck' work.
 # See also Arch-Wiki: https://wiki.archlinux.org/index.php/Fsck#Boot_time_checking
-#GRUB_ROOT_FS_RO="true"
+GRUB_ROOT_FS_RO="true"
 
 #GRUB_DISABLE_LINUX_RECOVERY="true"
 

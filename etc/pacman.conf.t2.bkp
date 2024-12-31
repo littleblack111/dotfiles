@@ -7,7 +7,6 @@
 # GENERAL OPTIONS
 #
 [options]
-IgnorePkg = 
 # The following paths are commented out with their default values listed.
 # If you wish to use different paths, uncomment and update the paths.
 #RootDir     = /
@@ -37,7 +36,6 @@ Color
 CheckSpace
 VerbosePkgLists
 ParallelDownloads = 128
-DownloadUser = alpm
 ILoveCandy
 
 # By default, pacman accepts packages signed by keys that its local keyring
@@ -94,9 +92,6 @@ Include = /etc/pacman.d/mirrorlist
 [multilib]
 Include = /etc/pacman.d/mirrorlist
 
-# [chaotic-aur]
-# Include = /etc/pacman.d/chaotic-mirrorlist
-
 #[archlinuxcn]
 #Server = https://repo.archlinuxcn.org/$arch
 
@@ -105,9 +100,9 @@ Include = /etc/pacman.d/mirrorlist
 #[custom]
 #SigLevel = Optional TrustAll
 #Server = file:///home/custompkgs
-[archcraft]
-SigLevel = Optional TrustAll
-Include = /etc/pacman.d/archcraft-mirrorlist
+#[archcraft]
+#SigLevel = Optional TrustAll
+#Include = /etc/pacman.d/archcraft-mirrorlist
 
 [blackarch]
 Include = /etc/pacman.d/blackarch-mirrorlist

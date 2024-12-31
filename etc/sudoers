@@ -115,6 +115,8 @@ system	ALL=(ALL:ALL) NOPASSWD: /sbin/tee
 system	ALL=(ALL:ALL) NOPASSWD: /sbin/rm
 system	ALL=(ALL:ALL) NOPASSWD: /sbin/mkdir
 system  ALL=(ALL:ALL) NOPASSWD: /usr/bin/nice,/usr/bin/renice
+system  ALL=(ALL:ALL) NOPASSWD: /usr/bin/missioncenter
+# system  ALL=(ALL:ALL) NOPASSWD: /usr/bin/psd-overlay-helper
 
 ## Uncomment to allow members of group wheel to execute any command
 %wheel ALL=(ALL:ALL) ALL
@@ -125,6 +127,7 @@ system  ALL=(ALL:ALL) NOPASSWD: /usr/bin/nice,/usr/bin/renice
 %wheel	ALL=(ALL:ALL) NOPASSWD: /sbin/rm
 %wheel	ALL=(ALL:ALL) NOPASSWD: /sbin/mkdir
 %wheel  ALL=(ALL:ALL) NOPASSWD: /usr/bin/nice,/usr/bin/renice
+# %wheel  ALL=(ALL:ALL) NOPASSWD: /usr/bin/psd-overlay-helper
 
 ## Same thing without a password
 # %wheel ALL=(ALL:ALL) NOPASSWD: ALL

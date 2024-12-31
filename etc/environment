@@ -3,12 +3,13 @@
 #
 # Syntax: simple "KEY=VAL" pairs on separate lines
 #
-BROWSER=thorium-browser
+BROWSER=zen-browser
 EDITOR=lvim
-TERM=alacritty
-QT_QPA_PLATFORMTHEME=qt5ct
+TERM=ghostty
+QT_QPA_PLATFORMTHEME=qt5ct:qt6ct
+# QT_STYLE_OVERRIDE=qt6ct
 QT_AUTO_SCREEN_SCALE_FACTOR=1 # no need, doesnt affect TOO BIG or scaled back
 QT_ENABLE_HIGHDPI_SCALE=1 # no need, doesnt affect TOO BIG or scaled back
-GDK_SCALE=2 # DO NOT DISABLE THIS, it doesnt affect TOO BIG but it affects scaled back
+# GDK_SCALE=2 # DO NOT DISABLE THIS, it doesnt affect TOO BIG but it affects scaled back
 # QT_SCALE_FACTOR=2 # DISABLE THIS, it affects TOO BIG and fixed it and deosn't affect scaled
-GDK_DPI_SCALE=0.5
+# GDK_DPI_SCALE=0.5
