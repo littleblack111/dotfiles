@@ -64,12 +64,12 @@
             "playing": "⏸",
             "paused": "▶"
         },
-        "dynamic-len": 50,
+        "dynamic-len": 75,
         "interval": 1,
     },
     "group/musicworkspace": {
         "orientation": "horizontal",
-        "modules": ["hyprland/workspaces", "mpris"],
+        "modules": ["hyprland/workspaces", "custom/minimized-counter", "mpris"],
     },
 
     "memory": {
@@ -102,13 +102,19 @@
         "icon-size": 16,
         "spacing": 5
     },
-    "custom/launcher": {
-        "format": "󰣇",
-        // "on-click": "bash $HOME/.config/rofi/launcher.sh",
-        //    "on-click": "wofi --show drun -I -a -n -W 500 -H 376 -s ~/.config/wofi/themes/gruvbox.css",
-        // "on-click-right": "bash $HOME/.config/rofi/run.sh"  
-        //    "on-click-right": "wofi --show run -I -a -n -W 500 -H 376 -s ~/.config/wofi/themes/gruvbox.css"  
-        "on-click": "pkill rofi || $HOME/.config/rofi/scripts/rofi_launcher",
+    // "custom/launcher": {
+    //     "format": "󰣇",
+    //     // "on-click": "bash $HOME/.config/rofi/launcher.sh",
+    //     //    "on-click": "wofi --show drun -I -a -n -W 500 -H 376 -s ~/.config/wofi/themes/gruvbox.css",
+    //     // "on-click-right": "bash $HOME/.config/rofi/run.sh"  
+    //     //    "on-click-right": "wofi --show run -I -a -n -W 500 -H 376 -s ~/.config/wofi/themes/gruvbox.css"  
+    //     "on-click": "pkill rofi || $HOME/.config/rofi/scripts/rofi_launcher",
+    // },
+    "custom/minimized-counter": {
+        "format": "{}",
+        "exec": "hyprctl workspaces -j | jq '.[] | select(.name == \"special:minimized\") | .windows'",
+        "interval": "once",
+        "signal": 5,
     },
     "hyprland/window": {
         // "on-click": "hyprctl dispatch focuswindow 'title:{title}'",
