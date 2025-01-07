@@ -12,19 +12,18 @@ option_1="ZSH profile(zshrc)"
 option_2="ZSH environment(zshenv)"
 option_3="Hyprland (hyprland.conf)"
 option_4="Hyprland keybind(binds.conf)"
-option_5="Polybar config"
-option_6="Polybar module"
-option_7="Alacritty main config"
-option_8="Picom config"
-option_9="Directorys"
+option_5="Hyprland Window Rules(rules.conf)"
+option_6="Waybar Modules"
+option_7="Waybar Style"
+option_8="Ghostty config"
+option_9="Lunarvim config"
 option_10=".config"
 option_11=".local"
 option_12="ZSH"
 option_13="Hyprland"
-option_14="Polybar"
-option_15="BPWM-Scripts"
+option_14="Waybar"
+option_15="SwayNC"
 option_16="Scripts"
-#option_17="Neovim(lvim)"
 
 # Rofi CMD
 rofi_cmd() {
@@ -43,39 +42,39 @@ run_rofi() {
 
 # Execute Command
 run_cmd() {
-	if [[ "$1" == '--opt1' ]]; then
-		alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.zshrc
-  elif [[ "$1" == '--opt2' ]]; then
-    alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.zshenv
-	elif [[ "$1" == '--opt3' ]]; then
-		alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/hypr/hyprland.conf
-	elif [[ "$1" == '--opt4' ]]; then
-    alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/hypr/binds.conf
-	elif [[ "$1" == '--opt5' ]]; then
-    alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/polybar/config.ini
-	elif [[ "$1" == '--opt6' ]]; then
-    alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/polybar/modules.ini
-  elif [[ "$1" == '--opt7' ]]; then
-    alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/alacritty/alacritty.toml
-  elif [[ "$1" == '--opt8' ]]; then
-    alacritty --class 'alacritty-float,alacritty-float' --command lvim $HOME/.config/picom.conf
-  elif [[ "$1" == '--opt10' ]]; then
-    rofi -show filebrowser -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config
-  elif [[ "$1" == '--opt11' ]]; then
-    rofi -show filebrowser -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.local/share
-  elif [[ "$1" == '--opt12' ]]; then
-    rofi -show filebrowser -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config/zsh
-  elif [[ "$1" == '--opt13' ]]; then
-    rofi -show filebrowser -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config/bspwm
-  elif [[ "$1" == '--opt14' ]]; then
-    rofi -show filebrowser -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config/polybar
-  elif [[ "$1" == '--opt15' ]]; then
-    rofi -show filebrowser -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config/bspwm/scripts
-  elif [[ "$1" == '--opt16' ]]; then
-    rofi -show filebrowser -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/scripts
-  elif [[ "$1" == '--opt17' ]]; then
-    rofi -show filebrowser -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config/lvim
-	fi
+    if [[ "$1" == '--opt1' ]]; then
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] ghostty -e lvim $HOME/.zshrc"
+    elif [[ "$1" == '--opt2' ]]; then
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] ghostty -e lvim $HOME/.zshenv"
+    elif [[ "$1" == '--opt3' ]]; then
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] ghostty -e lvim $HOME/.config/hypr/hyprland.conf"
+    elif [[ "$1" == '--opt4' ]]; then
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] ghostty -e lvim $HOME/.config/hypr/binds.conf"
+    elif [[ "$1" == '--opt5' ]]; then
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] ghostty -e lvim $HOME/.config/waybar/rules.conf"
+    elif [[ "$1" == '--opt6' ]]; then
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] ghostty -e lvim $HOME/.config/waybar/modules.jsonc"
+    elif [[ "$1" == '--opt7' ]]; then
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] ghostty -e lvim $HOME/.config/waybar/style.css"
+    elif [[ "$1" == '--opt8' ]]; then
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] ghostty -e lvim $HOME/.config/ghostty/config"
+    elif [[ "$1" == '--opt9' ]]; then
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] ghostty -e lvim $HOME/.config/lvim/config.lua"
+    elif [[ "$1" == '--opt10' ]]; then
+        rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config
+    elif [[ "$1" == '--opt11' ]]; then
+        rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.local/share
+    elif [[ "$1" == '--opt12' ]]; then
+        rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config/zsh
+    elif [[ "$1" == '--opt13' ]]; then
+        rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config/hypr
+    elif [[ "$1" == '--opt14' ]]; then
+        rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config/waybar
+    elif [[ "$1" == '--opt15' ]]; then
+        rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config/swaync
+    elif [[ "$1" == '--opt16' ]]; then
+        rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/scripts
+    fi
 }
 
 # Actions
