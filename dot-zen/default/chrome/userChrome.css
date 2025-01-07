@@ -147,22 +147,6 @@ display:none !important;
   overflow: hidden;
 }
 
-#nav-bar:has(#reload-button[displaystop="true"]) {
-  #urlbar {
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0; 
-      z-index: -1; 
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      background: linear-gradient(90deg, #ff6b6b66, #4ecdc466, #ff6b6b66);
-      background-size: 200% 100%;
-      background-clip: border-box;
-      animation: urlbar-loading-gradient 1s linear infinite;
-    }
-  }
-}
-
 @keyframes urlbar-loading-gradient {
   0% { background-position: 0% 0%; }
   100% { background-position: 200% 0%; }
