@@ -80,8 +80,18 @@
     },
 
     "cpu": {
-        "format": " {usage}%",
-        "format-alt": " {avg_frequency} GHz",
+        "format": "{icon} {usage}%",
+        "format-alt": "{icon} {avg_frequency} GHz",
+        "format-icons": [
+            "<span></span>",
+            "<span></span>",
+            "<span></span>",
+            "<span></span>",
+            "<span color='#ffffa5'></span>",
+            "<span color='#ffffa5'></span>",
+            "<span color='#ff9977'></span>",
+            "<span color='#dd532e'></span>"
+        ],
         "interval": 1
     },
 
@@ -113,6 +123,7 @@
     "custom/minimized-counter": {
         "format": "{}",
         "exec": "hyprctl workspaces -j | jq '.[] | select(.name == \"special:minimized\") | .windows'",
+        "on-click": "hyprctl dispatch togglespecialworkspace minimized",
         "interval": "once",
         "signal": 5,
     },
@@ -139,7 +150,7 @@
     "temperature": {
         "format": " {}°C",
         "tooltip": false,
-        "critical-threshold": 80,
+        "critical-threshold": 70,
         "interval": 1
     },
     "custom/warp-vpn": {
