@@ -41,7 +41,7 @@ source $HOME/.config/zsh/prompt.zsh
 
 command_not_found_handler() {
     local pkgs cmd="$@"
-    printf '\033[0;31m\033[1m-> ERROR: Command not found: %s\n' "$cmd"
+    printf '\033[0;31m\033[1m==> ERROR: Command not found:\033[0m %s\n' "$cmd"
     printf '\033[0m'
     printf 'Checking for package.'
     (
@@ -94,7 +94,7 @@ command_not_found_handler() {
 
 precmd() {
     if [[ "$?" != 0 && "$?" != 127 && "$?" != 2 ]]; then
-        printf "\033[0;31m\033[1m-> ERROR: Command Faild to run.\n\n"
+        printf "\033[0;31m\033[1m==> ERROR: Command Faild to run.\n\n"
         #printf 'Do you want to fuck? (y/N) '
         #if read -q "choice? "; then
         #    fuck $@
@@ -102,7 +102,7 @@ precmd() {
     #else
     #    printf "\n"
     fi
-    printf "\n"
+    # printf "\n"
 }
 
 # Export environment variables.
