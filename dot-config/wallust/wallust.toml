@@ -32,9 +32,11 @@ kvantum.target = "~/.config/Kvantum/KvArcDark#/KvArcDark#.kvconfig"
 pywal.template = "pywal.json"
 pywal.target = "~/.cache/wal/colors.json"
 
-xdpl.template = "xdpl.conf"
-xdpl.target = "~/.config/xdg-desktop-portal-luminous/config.toml"
+# xdpl.template = "xdpl.conf"
+# xdpl.target = "~/.config/xdg-desktop-portal-luminous/config.toml"
 
+ghostty.template = "ghostty.conf"
+ghostty.target = "~/.config/ghostty/colors.conf"
 
 
 # alacritty.template = "alacritty.toml"
