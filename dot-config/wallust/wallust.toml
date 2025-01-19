@@ -19,8 +19,10 @@ waybar.target = "~/.config/waybar/colors.css"
 xresourcs.template = "Xresources"
 xresourcs.target = "~/.Xcolors"
 
-spotify.template = "spotify"
-spotify.target = "~/.config/spicetify/Themes/wal/color.ini"
+# spotify.template = "spotify"
+# spotify.target = "~/.config/spicetify/Themes/wal/color.ini"
+# spicetify.template = "spicetify.ini"
+# spicetify.target = "~/.config/spicetify/Themes/wallust/color.ini"
 
 kdeglobal.template = "kdeglobals"
 kdeglobal.target = "~/.config/kdeglobals"
@@ -38,6 +40,8 @@ pywal.target = "~/.cache/wal/colors.json"
 ghostty.template = "ghostty.conf"
 ghostty.target = "~/.config/ghostty/colors.conf"
 
+discord.template = "discord.css"
+discord.target = "~/.config/Vencord/themes/wallust.css"
 
 # alacritty.template = "alacritty.toml"
 # alacritty.target = "~/.config/alacritty/colorschemes/wallust.toml"
