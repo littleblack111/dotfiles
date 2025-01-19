@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Import Current Theme
+DIR="$HOME/.config/rofi"
+RASI="$DIR/calc.rasi"
+
+# Run
+rofi \
+    -show calc \
+    -modi calc \
+	-theme ${RASI}
