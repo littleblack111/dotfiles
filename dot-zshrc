@@ -148,9 +148,3 @@ precmd() {
 #   cd $@ && echo $@ > $HOME/.cache/prev.dir
 # }
 #
-
-## [Completion]
-## Completion scripts setup. Remove the following line to uninstall
-[[ -f /home/system/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/system/.config/.dart-cli-completion/zsh-config.zsh || true
-## [/Completion]
-
