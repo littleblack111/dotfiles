@@ -7,14 +7,18 @@ window-inherit-working-directory = true
 window-decoration = none
 window-colorspace = display-p3
 
+cursor-style = bar
+#cursor-opacity = 0.6 # for block
+
+shell-integration-features = true
+
 resize-overlay = never
 confirm-close-surface = false
 #gtk-titlebar = false
 term = ghostty
 clipboard-paste-protection = false
+gtk-adwaita = false
 gtk-single-instance = true
-
-#minimum-contrast = 2
 
 config-file = binds.conf
 config-file = colors.conf
