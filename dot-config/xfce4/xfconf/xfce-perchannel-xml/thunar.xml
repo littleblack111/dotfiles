@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <channel name="thunar" version="1.0">
   <property name="last-view" type="string" value="ThunarIconView"/>
@@ -13,7 +13,7 @@
   <property name="last-sort-order" type="string" value="GTK_SORT_DESCENDING"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
   <property name="last-details-view-visible-columns" type="string" value="THUNAR_COLUMN_DATE_MODIFIED,THUNAR_COLUMN_NAME,THUNAR_COLUMN_SIZE,THUNAR_COLUMN_TYPE"/>
-  <property name="last-details-view-column-widths" type="string" value="50,50,133,50,50,1780,50,50,454,50,50,81,50,262"/>
+  <property name="last-details-view-column-widths" type="string" value="50,50,133,50,50,92,50,50,1802,50,50,81,50,262"/>
   <property name="misc-status-bar-active-info" type="uint" value="31"/>
   <property name="misc-text-beside-icons" type="bool" value="false"/>
   <property name="misc-folders-first" type="bool" value="false"/>
