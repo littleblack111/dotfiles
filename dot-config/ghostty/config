@@ -4,7 +4,7 @@ class = ghostty
 window-padding-x = 0
 window-padding-y = 0
 window-inherit-working-directory = true
-window-decoration = none
+window-decoration = server
 window-colorspace = display-p3
 
 cursor-style = bar
