@@ -8,3 +8,4 @@ dot-config/swaync/colors.css
 dot-config/rofi/shared/colors.rasi
 dot-config/hypr/colors.conf
 dot-config/Kvantum/KvArcDark#/KvArcDark#.kvconfig
+dot-config/fcitx/dbus
