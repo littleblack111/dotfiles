@@ -1,0 +1,368 @@
+diff --git a/.gitmodules b/.gitmodules
+index 638f8ba9..c1f681d0 100644
+--- a/.gitmodules
++++ b/.gitmodules
+@@ -1,6 +1,6 @@
+ [submodule "subprojects/hyprland-protocols"]
+ 	path = subprojects/hyprland-protocols
+-	url = https://github.com/hyprwm/hyprland-protocols
++	url = https://github.com/littleblack111/hyprland-protocols
+ [submodule "subprojects/udis86"]
+ 	path = subprojects/udis86
+ 	url = https://github.com/canihavesomecoffee/udis86
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9c286831..732c594e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -369,6 +369,8 @@ protocolnew("staging/xdg-dialog" "xdg-dialog-v1" false)
+ protocolnew("staging/single-pixel-buffer" "single-pixel-buffer-v1" false)
+ protocolnew("staging/security-context" "security-context-v1" false)
+ 
++protocolnew("subprojects/hyprland-protocols/protocols" "hyprland-input-capture-v1"
++            true)
+ protocolwayland()
+ 
+ # tools
+diff --git a/hyprpm/src/core/PluginManager.cpp b/hyprpm/src/core/PluginManager.cpp
+index 80d0a402..d61f846e 100644
+--- a/hyprpm/src/core/PluginManager.cpp
++++ b/hyprpm/src/core/PluginManager.cpp
+@@ -463,7 +463,7 @@ bool CPluginManager::updateHeaders(bool force) {
+         return false;
+     }
+ 
+-    progress.printMessageAbove(statusString("!", Colors::YELLOW, "Cloning https://github.com/hyprwm/Hyprland, this might take a moment."));
++    progress.printMessageAbove(statusString("!", Colors::YELLOW, "Cloning https://github.com/3l0w/Hyprland, this might take a moment."));
+ 
+     const bool bShallow = (HLVER.branch == "main") && !m_bNoShallow;
+ 
+@@ -474,12 +474,12 @@ bool CPluginManager::updateHeaders(bool force) {
+     if (m_bVerbose && bShallow)
+         progress.printMessageAbove(verboseString("will shallow since: {}", SHALLOW_DATE));
+ 
+-    std::string ret = execAndGet(std::format("cd {} && git clone --recursive https://github.com/hyprwm/Hyprland hyprland-{}{}", getTempRoot(), USERNAME,
++    std::string ret = execAndGet(std::format("cd {} && git clone --recursive https://github.com/3l0w/Hyprland hyprland-{}{}", getTempRoot(), USERNAME,
+                                              (bShallow ? " --shallow-since='" + SHALLOW_DATE + "'" : "")));
+ 
+     if (!std::filesystem::exists(WORKINGDIR)) {
+         progress.printMessageAbove(failureString("Clone failed. Retrying without shallow."));
+-        ret = execAndGet(std::format("cd {} && git clone --recursive https://github.com/hyprwm/hyprland hyprland-{}", getTempRoot(), USERNAME));
++        ret = execAndGet(std::format("cd {} && git clone --recursive https://github.com/3l0w/hyprland hyprland-{}", getTempRoot(), USERNAME));
+     }
+ 
+     if (!std::filesystem::exists(WORKINGDIR + "/.git")) {
+diff --git a/protocols/meson.build b/protocols/meson.build
+index aa20940d..e7be10cf 100644
+--- a/protocols/meson.build
++++ b/protocols/meson.build
+@@ -41,6 +41,7 @@ protocols = [
+ 	hyprland_protocol_dir / 'protocols/hyprland-ctm-control-v1.xml',
+ 	hyprland_protocol_dir / 'protocols/hyprland-surface-v1.xml',
+ 	hyprland_protocol_dir / 'protocols/hyprland-lock-notify-v1.xml',
++	hyprland_protocol_dir / 'protocols/hyprland-input-capture-v1.xml',
+ 	wayland_protocol_dir / 'staging/tearing-control/tearing-control-v1.xml',
+ 	wayland_protocol_dir / 'staging/fractional-scale/fractional-scale-v1.xml',
+ 	wayland_protocol_dir / 'unstable/xdg-output/xdg-output-unstable-v1.xml',
+diff --git a/src/managers/KeybindManager.cpp b/src/managers/KeybindManager.cpp
+index 247550ae..7f40a604 100644
+--- a/src/managers/KeybindManager.cpp
++++ b/src/managers/KeybindManager.cpp
+@@ -6,6 +6,7 @@
+ #include "../protocols/GlobalShortcuts.hpp"
+ #include "../protocols/core/DataDevice.hpp"
+ #include "../render/decorations/CHyprGroupBarDecoration.hpp"
++#include "../devices/IKeyboard.hpp"
+ #include "KeybindManager.hpp"
+ #include "PointerManager.hpp"
+ #include "Compositor.hpp"
+@@ -14,6 +15,7 @@
+ #include "debug/Log.hpp"
+ #include "helpers/varlist/VarList.hpp"
+ #include "../helpers/signal/Signal.hpp"
++#include "protocols/InputCapture.hpp"
+ #include "../managers/HookSystemManager.hpp"
+ #include "../managers/input/InputManager.hpp"
+ #include "../managers/LayoutManager.hpp"
+@@ -140,6 +142,7 @@ CKeybindManager::CKeybindManager() {
+     m_mDispatchers["event"]                          = event;
+     m_mDispatchers["global"]                         = global;
+     m_mDispatchers["setprop"]                        = setProp;
++    m_mDispatchers["releaseinputcapture"]            = releaseInputCapture;
+ 
+     m_tScrollTimer.reset();
+ 
+@@ -763,6 +766,14 @@ SDispatchResult CKeybindManager::handleKeybinds(const uint32_t modmask, const SP
+ 
+             m_iPassPressed = (int)pressed;
+ 
++            // We only process the releaseinputcapture dispatcher when input capture is active
++            if (PROTO::inputCapture->isCaptured()) {
++                if (k->handler == "releaseinputcapture")
++                    res = DISPATCHER->second(k->arg);
++                else
++                    break;
++            }
++
+             // if the dispatchers says to pass event then we will
+             if (k->handler == "mouse")
+                 res = DISPATCHER->second((pressed ? "1" : "0") + k->arg);
+@@ -3170,3 +3181,7 @@ SDispatchResult CKeybindManager::setProp(std::string args) {
+ 
+     return {};
+ }
++SDispatchResult CKeybindManager::releaseInputCapture(std::string args) {
++    PROTO::inputCapture->forceRelease();
++    return {};
++}
+diff --git a/src/managers/KeybindManager.hpp b/src/managers/KeybindManager.hpp
+index 1848ca78..0d92c6d1 100644
+--- a/src/managers/KeybindManager.hpp
++++ b/src/managers/KeybindManager.hpp
+@@ -221,6 +221,7 @@ class CKeybindManager {
+     static SDispatchResult global(std::string);
+     static SDispatchResult event(std::string);
+     static SDispatchResult setProp(std::string);
++    static SDispatchResult releaseInputCapture(std::string);
+ 
+     friend class CCompositor;
+     friend class CInputManager;
+diff --git a/src/managers/PointerManager.cpp b/src/managers/PointerManager.cpp
+index 48ef5e16..ba242bbe 100644
+--- a/src/managers/PointerManager.cpp
++++ b/src/managers/PointerManager.cpp
+@@ -14,6 +14,7 @@
+ #include "../render/Renderer.hpp"
+ #include "../render/OpenGL.hpp"
+ #include "SeatManager.hpp"
++#include "protocols/InputCapture.hpp"
+ #include <cstring>
+ #include <gbm.h>
+ #include <cairo/cairo.h>
+@@ -753,6 +754,13 @@ void CPointerManager::move(const Vector2D& deltaLogical) {
+     const auto oldPos = pointerPos;
+     auto       newPos = oldPos + Vector2D{std::isnan(deltaLogical.x) ? 0.0 : deltaLogical.x, std::isnan(deltaLogical.y) ? 0.0 : deltaLogical.y};
+ 
++
++    if (!g_pInputManager->isLocked())
++        PROTO::inputCapture->sendMotion(newPos, deltaLogical);
++
++    if (PROTO::inputCapture->isCaptured())
++        return;
++
+     warpTo(newPos);
+ }
+ 
+@@ -924,14 +932,7 @@ void CPointerManager::attachPointer(SP<IPointer> pointer) {
+     });
+ 
+     listener->frame = pointer->pointerEvents.frame.registerListener([] (std::any e) {
+-        bool shouldSkip = false;
+-        if (!g_pSeatManager->mouse.expired() && g_pInputManager->isLocked()) {
+-            auto PMONITOR = g_pCompositor->m_pLastMonitor.get();
+-            shouldSkip = PMONITOR && PMONITOR->shouldSkipScheduleFrameOnMouseEvent();
+-        }
+-        g_pSeatManager->isPointerFrameSkipped = shouldSkip;
+-        if (!g_pSeatManager->isPointerFrameSkipped)
+-            g_pSeatManager->sendPointerFrame();
++        g_pInputManager->onMouseFrame();
+     });
+ 
+     listener->swipeBegin = pointer->pointerEvents.swipeBegin.registerListener([] (std::any e) {
+diff --git a/src/managers/ProtocolManager.cpp b/src/managers/ProtocolManager.cpp
+index d3270fe2..d20f7c7d 100644
+--- a/src/managers/ProtocolManager.cpp
++++ b/src/managers/ProtocolManager.cpp
+@@ -48,6 +48,7 @@
+ #include "../protocols/SinglePixel.hpp"
+ #include "../protocols/SecurityContext.hpp"
+ #include "../protocols/CTMControl.hpp"
++#include "../protocols/InputCapture.hpp"
+ #include "../protocols/HyprlandSurface.hpp"
+ 
+ #include "../protocols/core/Seat.hpp"
+@@ -168,6 +169,7 @@ CProtocolManager::CProtocolManager() {
+     PROTO::singlePixel         = makeUnique<CSinglePixelProtocol>(&wp_single_pixel_buffer_manager_v1_interface, 1, "SinglePixel");
+     PROTO::securityContext     = makeUnique<CSecurityContextProtocol>(&wp_security_context_manager_v1_interface, 1, "SecurityContext");
+     PROTO::ctm                 = makeUnique<CHyprlandCTMControlProtocol>(&hyprland_ctm_control_manager_v1_interface, 1, "CTMControl");
++    PROTO::inputCapture        = makeUnique<CInputCaptureProtocol>(&hyprland_input_capture_manager_v1_interface, 1, "InputCapture");    
+     PROTO::hyprlandSurface     = makeUnique<CHyprlandSurfaceProtocol>(&hyprland_surface_manager_v1_interface, 2, "HyprlandSurface");
+ 
+     if (*PENABLEXXCM) {
+@@ -248,6 +250,7 @@ CProtocolManager::~CProtocolManager() {
+     PROTO::singlePixel.reset();
+     PROTO::securityContext.reset();
+     PROTO::ctm.reset();
++    PROTO::inputCapture.reset();
+     PROTO::hyprlandSurface.reset();
+ 
+     PROTO::lease.reset();
+diff --git a/src/managers/SeatManager.cpp b/src/managers/SeatManager.cpp
+index 6d2b906f..a22edef8 100644
+--- a/src/managers/SeatManager.cpp
++++ b/src/managers/SeatManager.cpp
+@@ -4,6 +4,7 @@
+ #include "../protocols/DataDeviceWlr.hpp"
+ #include "../protocols/PrimarySelection.hpp"
+ #include "../protocols/core/Compositor.hpp"
++#include "../protocols/InputCapture.hpp"
+ #include "../Compositor.hpp"
+ #include "../devices/IKeyboard.hpp"
+ #include "../desktop/LayerSurface.hpp"
+@@ -100,6 +101,7 @@ void CSeatManager::updateActiveKeyboardData() {
+     if (keyboard)
+         PROTO::seat->updateRepeatInfo(keyboard->repeatRate, keyboard->repeatDelay);
+     PROTO::seat->updateKeymap();
++    PROTO::inputCapture->updateKeymap();
+ }
+ 
+ void CSeatManager::setKeyboardFocus(SP<CWLSurfaceResource> surf) {
+diff --git a/src/managers/input/InputManager.cpp b/src/managers/input/InputManager.cpp
+index 3d8c6de8..e6f3cd33 100644
+--- a/src/managers/input/InputManager.cpp
++++ b/src/managers/input/InputManager.cpp
+@@ -20,6 +20,7 @@
+ #include "../../protocols/core/DataDevice.hpp"
+ #include "../../protocols/core/Compositor.hpp"
+ #include "../../protocols/XDGShell.hpp"
++#include "../../protocols/InputCapture.hpp"
+ 
+ #include "../../devices/Mouse.hpp"
+ #include "../../devices/VirtualPointer.hpp"
+@@ -104,6 +105,9 @@ void CInputManager::onMouseMoved(IPointer::SMotionEvent e) {
+ 
+     g_pPointerManager->move(DELTA);
+ 
++    if (PROTO::inputCapture->isCaptured())
++        return;
++
+     mouseMoveUnified(e.timeMs, false, e.mouse);
+ 
+     m_tmrLastCursorMovement.reset();
+@@ -550,6 +554,11 @@ void CInputManager::onMouseButton(IPointer::SButtonEvent e) {
+     if (e.mouse)
+         recheckMouseWarpOnMouseInput();
+ 
++    PROTO::inputCapture->sendButton(e.button, (hyprlandInputCaptureManagerV1ButtonState)e.state);
++
++    if (PROTO::inputCapture->isCaptured())
++        return;
++
+     m_tmrLastCursorMovement.reset();
+ 
+     if (e.state == WL_POINTER_BUTTON_STATE_PRESSED) {
+@@ -787,7 +796,13 @@ void CInputManager::onMouseWheel(IPointer::SAxisEvent e) {
+     if (e.mouse)
+         recheckMouseWarpOnMouseInput();
+ 
+-    bool passEvent = g_pKeybindManager->onAxisEvent(e);
++    PROTO::inputCapture->sendAxis((hyprlandInputCaptureManagerV1Axis)e.axis, e.delta);
++    if (e.source == 0)
++        PROTO::inputCapture->sendAxisValue120((hyprlandInputCaptureManagerV1Axis)e.axis, e.delta);
++    else if (e.delta == 0)
++        PROTO::inputCapture->sendAxisStop((hyprlandInputCaptureManagerV1Axis)e.axis);
++
++    bool passEvent = !PROTO::inputCapture->isCaptured() && g_pKeybindManager->onAxisEvent(e);
+ 
+     if (!passEvent)
+         return;
+@@ -867,6 +882,22 @@ void CInputManager::onMouseWheel(IPointer::SAxisEvent e) {
+     g_pSeatManager->sendPointerAxis(e.timeMs, e.axis, delta, deltaDiscrete, value120, e.source, WL_POINTER_AXIS_RELATIVE_DIRECTION_IDENTICAL);
+ }
+ 
++void CInputManager::onMouseFrame() {
++    PROTO::inputCapture->sendFrame();
++
++    if (PROTO::inputCapture->isCaptured())
++        return;
++
++    bool shouldSkip = false;
++    if (!g_pSeatManager->mouse.expired() && g_pInputManager->isLocked()) {
++        auto PMONITOR = g_pCompositor->m_pLastMonitor.get();
++        shouldSkip    = PMONITOR && PMONITOR->shouldSkipScheduleFrameOnMouseEvent();
++    }
++    g_pSeatManager->isPointerFrameSkipped = shouldSkip;
++    if (!g_pSeatManager->isPointerFrameSkipped)
++        g_pSeatManager->sendPointerFrame();
++}
++
+ Vector2D CInputManager::getMouseCoordsInternal() {
+     return g_pPointerManager->position();
+ }
+@@ -1326,10 +1357,12 @@ void CInputManager::onKeyboardKey(std::any event, SP<IKeyboard> pKeyboard) {
+     const auto EMAP = std::unordered_map<std::string, std::any>{{"keyboard", pKeyboard}, {"event", event}};
+     EMIT_HOOK_EVENT_CANCELLABLE("keyPress", EMAP);
+ 
+-    bool passEvent = DISALLOWACTION || g_pKeybindManager->onKeyEvent(event, pKeyboard);
++    bool passEvent = (DISALLOWACTION || g_pKeybindManager->onKeyEvent(event, pKeyboard)) && !PROTO::inputCapture->isCaptured();
+ 
+     auto e = std::any_cast<IKeyboard::SKeyEvent>(event);
+ 
++    PROTO::inputCapture->sendKey(e.keycode, (hyprlandInputCaptureManagerV1KeyState)e.state);
++
+     if (passEvent) {
+         const auto IME = m_sIMERelay.m_pIME.lock();
+ 
+@@ -1356,6 +1389,11 @@ void CInputManager::onKeyboardMod(SP<IKeyboard> pKeyboard) {
+     auto       MODS = pKeyboard->modifiersState;
+     MODS.depressed  = ALLMODS;
+ 
++    PROTO::inputCapture->sendModifiers(MODS.depressed,MODS.latched, MODS.locked, MODS.group);
++
++    if (PROTO::inputCapture->isCaptured())
++        return;
++
+     const auto IME = m_sIMERelay.m_pIME.lock();
+ 
+     if (IME && IME->hasGrab() && !DISALLOWACTION) {
+diff --git a/src/managers/input/InputManager.hpp b/src/managers/input/InputManager.hpp
+index 3afb1b88..390ce6a4 100644
+--- a/src/managers/input/InputManager.hpp
++++ b/src/managers/input/InputManager.hpp
+@@ -89,6 +89,7 @@ class CInputManager {
+     void               onMouseWarp(IPointer::SMotionAbsoluteEvent);
+     void               onMouseButton(IPointer::SButtonEvent);
+     void               onMouseWheel(IPointer::SAxisEvent);
++    void               onMouseFrame();
+     void               onKeyboardKey(std::any, SP<IKeyboard>);
+     void               onKeyboardMod(SP<IKeyboard>);
+ 
+diff --git a/src/protocols/core/Output.cpp b/src/protocols/core/Output.cpp
+index 77f0661e..4d46c362 100644
+--- a/src/protocols/core/Output.cpp
++++ b/src/protocols/core/Output.cpp
+@@ -74,10 +74,9 @@ void CWLOutputResource::updateState() {
+     if (resource->version() >= 2)
+         resource->sendScale(std::ceil(monitor->scale));
+ 
+-    resource->sendMode((wl_output_mode)(WL_OUTPUT_MODE_CURRENT), monitor->vecPixelSize.x, monitor->vecPixelSize.y, monitor->refreshRate * 1000.0);
+-
+-    resource->sendGeometry(0, 0, monitor->output->physicalSize.x, monitor->output->physicalSize.y, (wl_output_subpixel)monitor->output->subpixel, monitor->output->make.c_str(),
++    resource->sendGeometry(monitor->vecPosition.x, monitor->vecPosition.y, monitor->output->physicalSize.x, monitor->output->physicalSize.y, (wl_output_subpixel)monitor->output->subpixel, monitor->output->make.c_str(),
+                            monitor->output->model.c_str(), monitor->transform);
++    resource->sendMode((wl_output_mode)(WL_OUTPUT_MODE_CURRENT), monitor->vecPixelSize.x, monitor->vecPixelSize.y, monitor->refreshRate * 1000.0);
+ 
+     if (resource->version() >= 2)
+         resource->sendDone();
+diff --git a/src/render/Renderer.cpp b/src/render/Renderer.cpp
+index 42445728..75e429e2 100644
+--- a/src/render/Renderer.cpp
++++ b/src/render/Renderer.cpp
+@@ -22,6 +22,7 @@
+ #include "../protocols/core/Compositor.hpp"
+ #include "../protocols/DRMSyncobj.hpp"
+ #include "../protocols/LinuxDMABUF.hpp"
++#include "../protocols/InputCapture.hpp"
+ #include "../helpers/sync/SyncTimeline.hpp"
+ #include "../hyprerror/HyprError.hpp"
+ #include "../debug/HyprDebugOverlay.hpp"
+@@ -1988,7 +1989,9 @@ void CHyprRenderer::ensureCursorRenderingMode() {
+     if (*PCURSORTIMEOUT > 0)
+         m_sCursorHiddenConditions.hiddenOnTimeout = *PCURSORTIMEOUT < g_pInputManager->m_tmrLastCursorMovement.getSeconds();
+ 
+-    const bool HIDE = m_sCursorHiddenConditions.hiddenOnTimeout || m_sCursorHiddenConditions.hiddenOnTouch || m_sCursorHiddenConditions.hiddenOnKeyboard;
++
++    const bool HIDE = m_sCursorHiddenConditions.hiddenOnTimeout || m_sCursorHiddenConditions.hiddenOnTouch || m_sCursorHiddenConditions.hiddenOnKeyboard ||
++            PROTO::inputCapture->isCaptured();
+ 
+     if (HIDE == m_bCursorHidden)
+         return;

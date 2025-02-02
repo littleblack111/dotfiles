@@ -1,0 +1,5 @@
+# required by dev-libs/libayatana-appindicator-0.5.93::gentoo
+# required by media-sound/spotify-1.2.52::gentoo
+# required by media-sound/spotify-adblock-1.0.3::guru
+# required by spotify-adblock (argument)
+>=dev-libs/libdbusmenu-16.04.0-r2 gtk3

@@ -1,0 +1,3843 @@
+From 5656f5ff293ea5ce3178d64482b2f3b80b732f0f Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Wed, 25 Sep 2024 18:06:16 +0200
+Subject: [PATCH 01/17] WIP: input capture
+
+---
+ .gitmodules                    |   3 +-
+ CMakeLists.txt                 |   4 +
+ hyprland.portal                |   2 +-
+ meson.build                    |   3 +
+ protocols/meson.build          |   1 +
+ src/core/PortalManager.cpp     |  31 +-
+ src/core/PortalManager.hpp     |  14 +-
+ src/main.cpp                   |   2 +-
+ src/meson.build                |   1 +
+ src/portals/InputCapture.cpp   | 596 +++++++++++++++++++++++++++++++++
+ src/portals/InputCapture.hpp   |  96 ++++++
+ src/shared/Eis.cpp             | 287 ++++++++++++++++
+ src/shared/Eis.hpp             |  49 +++
+ 14 files changed, 1077 insertions(+), 14 deletions(-)
+ create mode 100644 src/portals/InputCapture.cpp
+ create mode 100644 src/portals/InputCapture.hpp
+ create mode 100644 src/shared/Eis.cpp
+ create mode 100644 src/shared/Eis.hpp
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 871ca3c..3d21329 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -62,6 +62,8 @@ pkg_check_modules(
+   libpipewire-0.3>=1.1.82
+   libspa-0.2
+   libdrm
++  libeis-1.0
++  dbus-1
+   gbm
+   hyprlang>=0.2.0
+   hyprutils>=0.2.6
+@@ -130,6 +132,8 @@ protocolnew("${HYPRLAND_PROTOCOLS}/protocols" "hyprland-global-shortcuts-v1"
+             true)
+ protocolnew("${HYPRLAND_PROTOCOLS}/protocols" "hyprland-toplevel-export-v1"
+             true)
++protocolnew("${HYPRLAND_PROTOCOLS}/protocols" "hyprland-input-capture-v1"
++            true)
+ protocolnew("stable/linux-dmabuf" "linux-dmabuf-v1" false)
+ 
+ # Installation
+diff --git a/hyprland.portal b/hyprland.portal
+index d3e2cbe..cbaafa8 100644
+--- a/hyprland.portal
++++ b/hyprland.portal
+@@ -1,4 +1,4 @@
+ [portal]
+ DBusName=org.freedesktop.impl.portal.desktop.hyprland
+-Interfaces=org.freedesktop.impl.portal.Screenshot;org.freedesktop.impl.portal.ScreenCast;org.freedesktop.impl.portal.GlobalShortcuts;
++Interfaces=org.freedesktop.impl.portal.Screenshot;org.freedesktop.impl.portal.ScreenCast;org.freedesktop.impl.portal.GlobalShortcuts;org.freedesktop.impl.portal.InputCapture;
+ UseIn=wlroots;Hyprland;sway;Wayfire;river;
+diff --git a/meson.build b/meson.build
+index bcae2b2..c2a2675 100644
+--- a/meson.build
++++ b/meson.build
+@@ -61,6 +61,9 @@ install_data(
+ 	'hyprland.portal',
+ 	install_dir: join_paths(get_option('datadir'), 'xdg-desktop-portal', 'portals'),
+ )
++version = run_command('cat', files('VERSION'), check: true).stdout().strip()
++
++add_project_arguments(f'-DXDPH_VERSION="@version@"', language : 'cpp')
+ 
+ inc = include_directories('.', 'protocols')
+ 
+diff --git a/protocols/meson.build b/protocols/meson.build
+index f10d4c8..d7805d1 100644
+--- a/protocols/meson.build
++++ b/protocols/meson.build
+@@ -22,6 +22,7 @@ client_protocols = [
+ 	'wlr-foreign-toplevel-management-unstable-v1.xml',
+ 	hl_protocol_dir / 'protocols/hyprland-toplevel-export-v1.xml',
+ 	hl_protocol_dir / 'protocols/hyprland-global-shortcuts-v1.xml',
++	hl_protocol_dir / 'protocols/hyprland-input-capture-v1.xml',
+ 	wl_protocol_dir / 'stable/linux-dmabuf/linux-dmabuf-v1.xml',
+ ]
+ 
+diff --git a/src/core/PortalManager.cpp b/src/core/PortalManager.cpp
+index 9111870..a6d8589 100644
+--- a/src/core/PortalManager.cpp
++++ b/src/core/PortalManager.cpp
+@@ -1,7 +1,10 @@
+ #include "PortalManager.hpp"
+ #include "../helpers/Log.hpp"
+ #include "../helpers/MiscFunctions.hpp"
++#include "wayland.hpp"
+ 
++#include <hyprutils/memory/SharedPtr.hpp>
++#include <memory>
+ #include <pipewire/pipewire.h>
+ #include <poll.h>
+ #include <sys/mman.h>
+@@ -9,6 +12,7 @@
+ #include <unistd.h>
+ 
+ #include <thread>
++#include <vector>
+ 
+ SOutput::SOutput(SP<CCWlOutput> output_) : output(output_) {
+     output->setName([this](CCWlOutput* o, const char* name_) {
+@@ -19,13 +23,19 @@ SOutput::SOutput(SP<CCWlOutput> output_) : output(output_) {
+ 
+         Debug::log(LOG, "Found output name {}", name);
+     });
+-    output->setMode([this](CCWlOutput* r, uint32_t flags, int32_t width, int32_t height, int32_t refresh) { //
+-        refreshRate = refresh;
+-    });
+-    output->setGeometry([this](CCWlOutput* r, int32_t x, int32_t y, int32_t physical_width, int32_t physical_height, int32_t subpixel, const char* make, const char* model,
+-                               int32_t transform_) { //
+-        transform = (wl_output_transform)transform_;
++    output->setMode([this](CCWlOutput* r, uint32_t flags, int32_t width, int32_t height, int32_t refresh) {
++        refreshRate  = refresh;
++        this->width  = width;
++        this->height = height;
+     });
++    output->setGeometry(
++        [this](CCWlOutput* r, int32_t x, int32_t y, int32_t physical_width, int32_t physical_height, int32_t subpixel, const char* make, const char* model, int32_t transform_) {
++            transform = (wl_output_transform)transform_;
++            this->x   = x;
++            this->y   = y;
++        });
++    output->setScale([this](CCWlOutput* r, uint32_t factor) { this->scale = factor; });
++    output->setDone([](CCWlOutput* r) { g_pPortalManager->m_sPortals.inputCapture->zonesChanged(); });
+ }
+ 
+ CPortalManager::CPortalManager() {
+@@ -63,7 +73,9 @@ void CPortalManager::onGlobal(uint32_t name, const char* interface, uint32_t ver
+         m_sPortals.globalShortcuts = std::make_unique<CGlobalShortcutsPortal>(makeShared<CCHyprlandGlobalShortcutsManagerV1>(
+             (wl_proxy*)wl_registry_bind((wl_registry*)m_sWaylandConnection.registry->resource(), name, &hyprland_global_shortcuts_manager_v1_interface, version)));
+     }
+-
++    if (INTERFACE == hyprland_input_capture_manager_v1_interface.name)
++        m_sPortals.inputCapture = std::make_unique<CInputCapturePortal>(makeShared<CCHyprlandInputCaptureManagerV1>(
++            (wl_proxy*)wl_registry_bind((wl_registry*)m_sWaylandConnection.registry->resource(), name, &hyprland_input_capture_manager_v1_interface, version)));
+     else if (INTERFACE == hyprland_toplevel_export_manager_v1_interface.name) {
+         m_sWaylandConnection.hyprlandToplevelMgr = makeShared<CCHyprlandToplevelExportManagerV1>(
+             (wl_proxy*)wl_registry_bind((wl_registry*)m_sWaylandConnection.registry->resource(), name, &hyprland_toplevel_export_manager_v1_interface, version));
+@@ -417,6 +429,7 @@ void CPortalManager::startEventLoop() {
+     m_sPortals.screencopy.reset();
+     m_sPortals.screenshot.reset();
+     m_sHelpers.toplevel.reset();
++    m_sPortals.inputCapture.reset();
+ 
+     m_pConnection.reset();
+     pw_loop_destroy(m_sPipewire.loop);
+@@ -438,6 +451,10 @@ SOutput* CPortalManager::getOutputFromName(const std::string& name) {
+     return nullptr;
+ }
+ 
++std::vector<std::unique_ptr<SOutput>> const& CPortalManager::getAllOutputs() {
++    return m_vOutputs;
++}
++
+ static char* gbm_find_render_node(drmDevice* device) {
+     drmDevice* devices[64];
+     char*      render_node = NULL;
+diff --git a/src/core/PortalManager.hpp b/src/core/PortalManager.hpp
+index e0f2f03..6ca241d 100644
+--- a/src/core/PortalManager.hpp
++++ b/src/core/PortalManager.hpp
+@@ -1,13 +1,16 @@
+ #pragma once
+ 
++#include <cstdint>
+ #include <memory>
+ #include <sdbus-c++/sdbus-c++.h>
++
+ #include <hyprlang.hpp>
+ 
+ #include "wayland.hpp"
+ #include "../portals/Screencopy.hpp"
+ #include "../portals/Screenshot.hpp"
+ #include "../portals/GlobalShortcuts.hpp"
++#include "../portals/InputCapture.hpp"
+ #include "../helpers/Timer.hpp"
+ #include "../shared/ToplevelManager.hpp"
+ #include <gbm.h>
+@@ -33,6 +36,9 @@ struct SOutput {
+     uint32_t            id          = 0;
+     float               refreshRate = 60.0;
+     wl_output_transform transform   = WL_OUTPUT_TRANSFORM_NORMAL;
++    uint32_t            width, height;
++    int32_t             x, y;
++    int32_t             scale;
+ };
+ 
+ struct SDMABUFModifier {
+@@ -44,13 +50,14 @@ class CPortalManager {
+   public:
+     CPortalManager();
+ 
+-    void                init();
++    void                                         init();
+ 
+     void                onGlobal(uint32_t name, const char* interface, uint32_t version);
+     void                onGlobalRemoved(uint32_t name);
+ 
+-    sdbus::IConnection* getConnection();
+-    SOutput*            getOutputFromName(const std::string& name);
++    sdbus::IConnection*                          getConnection();
++    SOutput*                                     getOutputFromName(const std::string& name);
++    std::vector<std::unique_ptr<SOutput>> const& getAllOutputs();
+ 
+     struct {
+         pw_loop* loop = nullptr;
+@@ -60,6 +67,7 @@ class CPortalManager {
+         std::unique_ptr<CScreencopyPortal>      screencopy;
+         std::unique_ptr<CScreenshotPortal>      screenshot;
+         std::unique_ptr<CGlobalShortcutsPortal> globalShortcuts;
++        std::unique_ptr<CInputCapturePortal>    inputCapture;
+     } m_sPortals;
+ 
+     struct {
+diff --git a/src/main.cpp b/src/main.cpp
+index cdeb83d..e5c3ed3 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -42,4 +42,4 @@ int main(int argc, char** argv, char** envp) {
+     g_pPortalManager->init();
+ 
+     return 0;
+-}
+\ No newline at end of file
++}
+diff --git a/src/meson.build b/src/meson.build
+index b76a85f..2f8d1e6 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -9,6 +9,7 @@ executable('xdg-desktop-portal-hyprland',
+     dependency('hyprlang'),
+     dependency('hyprutils'),
+     dependency('libdrm'),
++    dependency('libeis-1.0'),
+     dependency('libpipewire-0.3'),
+     dependency('sdbus-c++'),
+     dependency('threads'),
+diff --git a/src/portals/InputCapture.cpp b/src/portals/InputCapture.cpp
+new file mode 100644
+index 0000000..8f9557f
+--- /dev/null
++++ b/src/portals/InputCapture.cpp
+@@ -0,0 +1,596 @@
++#include "InputCapture.hpp"
++
++#include "../core/PortalManager.hpp"
++#include "../helpers/Log.hpp"
++#include "hyprland-input-capture-v1.hpp"
++#include "shared/Session.hpp"
++#include "src/shared/Eis.hpp"
++#include <cstddef>
++#include <cstdint>
++#include <memory>
++#include <sdbus-c++/IConnection.h>
++#include <sdbus-c++/Types.h>
++#include <string>
++#include <sys/socket.h>
++#include <sys/un.h>
++#include <unordered_map>
++#include <wayland-util.h>
++
++CInputCapturePortal::CInputCapturePortal(SP<CCHyprlandInputCaptureManagerV1> mgr) {
++    Debug::log(LOG, "[input-capture] initializing input capture portal");
++    m_sState.manager = mgr;
++    sessionCounter   = 0;
++    lastZoneSet      = 0;
++
++    mgr->setAbsoluteMotion([this](CCHyprlandInputCaptureManagerV1* r, wl_fixed_t x, wl_fixed_t y, wl_fixed_t dx, wl_fixed_t dy) {
++        onAbsoluteMotion(wl_fixed_to_double(x), wl_fixed_to_double(y), wl_fixed_to_double(dx), wl_fixed_to_double(dy));
++    });
++
++    mgr->setKey([this](CCHyprlandInputCaptureManagerV1* r, uint32_t key, hyprlandInputCaptureManagerV1KeyState state) { onKey(key, state); });
++
++    mgr->setButton([this](CCHyprlandInputCaptureManagerV1* r, uint32_t button, hyprlandInputCaptureManagerV1ButtonState state) { onButton(button, state); });
++
++    mgr->setAxis([this](CCHyprlandInputCaptureManagerV1* r, hyprlandInputCaptureManagerV1Axis axis, double value) { onAxis(axis, value); });
++
++    mgr->setAxisValue120([this](CCHyprlandInputCaptureManagerV1* r, hyprlandInputCaptureManagerV1Axis axis, int32_t value120) { onAxis(axis, value120); });
++
++    mgr->setAxisStop([this](CCHyprlandInputCaptureManagerV1* r, hyprlandInputCaptureManagerV1Axis axis) { onAxisStop(axis); });
++
++    mgr->setFrame([this](CCHyprlandInputCaptureManagerV1* r) { onFrame(); });
++
++    m_pObject = sdbus::createObject(*g_pPortalManager->getConnection(), OBJECT_PATH);
++
++    m_pObject->registerMethod(INTERFACE_NAME, "CreateSession", "oossa{sv}", "ua{sv}", [&](sdbus::MethodCall c) { onCreateSession(c); });
++    m_pObject->registerMethod(INTERFACE_NAME, "GetZones", "oosa{sv}", "ua{sv}", [&](sdbus::MethodCall c) { onGetZones(c); });
++    m_pObject->registerMethod(INTERFACE_NAME, "SetPointerBarriers", "oosa{sv}aa{sv}u", "ua{sv}", [&](sdbus::MethodCall c) { onSetPointerBarriers(c); });
++    m_pObject->registerMethod(INTERFACE_NAME, "Enable", "osa{sv}", "ua{sv}", [&](sdbus::MethodCall c) { onEnable(c); });
++    m_pObject->registerMethod(INTERFACE_NAME, "Disable", "osa{sv}", "ua{sv}", [&](sdbus::MethodCall c) { onDisable(c); });
++    m_pObject->registerMethod(INTERFACE_NAME, "Release", "osa{sv}", "ua{sv}", [&](sdbus::MethodCall c) { onRelease(c); });
++    m_pObject->registerMethod(INTERFACE_NAME, "ConnectToEIS", "osa{sv}", "h", [&](sdbus::MethodCall c) { onConnectToEIS(c); });
++
++    m_pObject->registerProperty(INTERFACE_NAME, "SupportedCapabilities", "u", [](sdbus::PropertyGetReply& reply) { reply << (uint)(1 | 2); });
++    m_pObject->registerProperty(INTERFACE_NAME, "version", "u", [](sdbus::PropertyGetReply& reply) { reply << (uint)1; });
++
++    m_pObject->finishRegistration();
++
++    for (auto& o : g_pPortalManager->getAllOutputs()) {
++        Debug::log(LOG, "{} {}x{}", o->name, o->width, o->height);
++    }
++
++    Debug::log(LOG, "[input-capture] init successful");
++}
++
++void complete(sdbus::MethodCall& call) {
++    auto reply = call.createReply();
++    reply << (uint32_t)0;
++    reply << std::unordered_map<std::string, sdbus::Variant>{};
++    reply.send();
++}
++
++void CInputCapturePortal::onCreateSession(sdbus::MethodCall& call) {
++    Debug::log(LOG, "[input-capture] New session:");
++
++    sdbus::ObjectPath requestHandle, sessionHandle;
++
++    call >> requestHandle;
++    call >> sessionHandle;
++
++    std::string appID;
++    call >> appID;
++
++    std::string parentWindow;
++    call >> parentWindow;
++
++    std::unordered_map<std::string, sdbus::Variant> options;
++    call >> options;
++    uint32_t capabilities = options["capabilities"];
++
++    Debug::log(LOG, "[input-capture]  | {}", requestHandle.c_str());
++    Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
++    Debug::log(LOG, "[input-capture]  | appid: {}", appID);
++    Debug::log(LOG, "[input-capture]  | parent_window: {}", parentWindow);
++    Debug::log(LOG, "[input-capture]  | capabilities : {}", capabilities);
++
++    std::string sessionId = "input-capture-" + std::to_string(sessionCounter++);
++    Debug::log(LOG, "[input-capture]  | sessionId : {}", sessionId);
++
++    const std::shared_ptr<Session> session = std::make_shared<Session>();
++
++    session->appid         = appID;
++    session->requestHandle = requestHandle;
++    session->sessionHandle = sessionHandle;
++    session->sessionId     = sessionId;
++    session->capabilities  = capabilities;
++    session->activationId  = 0;
++    session->status        = CREATED;
++
++    session->session            = createDBusSession(sessionHandle);
++    session->session->onDestroy = [session, this]() {
++        if (session->status == ACTIVATED) {
++            disable(session->sessionHandle);
++        }
++        session->eis->stopServer();
++        Debug::log(LOG, "[input-capture] Session {} destroyed", session->sessionHandle.c_str());
++
++        session->session.release();
++    };
++
++    session->request            = createDBusRequest(requestHandle);
++    session->request->onDestroy = [session]() { session->request.release(); };
++
++    session->eis = std::make_unique<EmulatedInputServer>("eis-" + sessionId);
++
++    sessions.emplace(sessionHandle, session);
++
++    std::unordered_map<std::string, sdbus::Variant> results;
++    results["capabilities"] = (uint)3;
++    results["session_id"]   = sessionId;
++
++    auto reply = call.createReply();
++    reply << (uint32_t)0;
++    reply << results;
++    reply.send();
++}
++
++void CInputCapturePortal::onGetZones(sdbus::MethodCall& call) {
++    Debug::log(LOG, "[input-capture] New GetZones request:");
++
++    sdbus::ObjectPath requestHandle, sessionHandle;
++
++    call >> requestHandle;
++    call >> sessionHandle;
++
++    std::string appID;
++    call >> appID;
++
++    Debug::log(LOG, "[input-capture]  | {}", requestHandle.c_str());
++    Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
++    Debug::log(LOG, "[input-capture]  | appid: {}", appID);
++
++    if (!sessionValid(sessionHandle))
++        return;
++
++    std::vector<sdbus::Struct<uint32_t, uint32_t, int32_t, int32_t>> zones;
++    for (auto& o : g_pPortalManager->getAllOutputs()) {
++        zones.push_back(sdbus::Struct(o->width, o->height, o->x, o->y));
++    }
++
++    std::unordered_map<std::string, sdbus::Variant> results;
++    results["zones"]    = zones;
++    results["zone_set"] = ++lastZoneSet;
++
++    auto reply = call.createReply();
++    reply << (uint32_t)0;
++    reply << results;
++    reply.send();
++}
++
++void CInputCapturePortal::onSetPointerBarriers(sdbus::MethodCall& call) {
++    Debug::log(LOG, "[input-capture] New SetPointerBarriers request:");
++
++    sdbus::ObjectPath requestHandle, sessionHandle;
++
++    call >> requestHandle;
++    call >> sessionHandle;
++
++    std::string appID;
++    call >> appID;
++
++    Debug::log(LOG, "[input-capture]  | {}", requestHandle.c_str());
++    Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
++    Debug::log(LOG, "[input-capture]  | appid: {}", appID);
++
++    if (!sessionValid(sessionHandle))
++        return complete(call);
++
++    std::unordered_map<std::string, sdbus::Variant> options;
++    call >> options;
++
++    std::vector<std::unordered_map<std::string, sdbus::Variant>> barriers;
++    call >> barriers;
++
++    uint32_t zoneSet;
++    call >> zoneSet;
++    Debug::log(LOG, "[input-capture]  | zoneSet: {}", zoneSet);
++
++    if (zoneSet != lastZoneSet) {
++        Debug::log(WARN, "[input-capture] Invalid zone set discarding barriers");
++        complete(call); //TODO: We should return failed_barries
++        return;
++    }
++
++    sessions[sessionHandle]->barriers.clear();
++    for (const auto& b : barriers) {
++        uint                              id = b.at("barrier_id");
++        int                               x1, y1, x2, y2;
++
++        sdbus::Struct<int, int, int, int> p = b.at("position");
++        x1                                  = p.get<0>();
++        y1                                  = p.get<1>();
++        x2                                  = p.get<2>();
++        y2                                  = p.get<3>();
++
++        Debug::log(LOG, "[input-capture]  | barrier: {}, [{}, {}] [{}, {}]", id, x1, y1, x2, y2);
++        sessions[sessionHandle]->barriers[id] = {id, x1, y1, x2, y2};
++    }
++
++    std::vector<uint>                               failedBarriers;
++
++    std::unordered_map<std::string, sdbus::Variant> results;
++    results["failed_barriers"] = failedBarriers;
++
++    auto reply = call.createReply();
++    reply << (uint32_t)0;
++    reply << results;
++    reply.send();
++}
++
++void CInputCapturePortal::onDisable(sdbus::MethodCall& call) {
++    Debug::log(LOG, "[input-capture] New Disable request:");
++
++    sdbus::ObjectPath sessionHandle;
++    call >> sessionHandle;
++
++    std::string appID;
++    call >> appID;
++
++    Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
++    Debug::log(LOG, "[input-capture]  | appid: {}", appID);
++
++    if (!sessionValid(sessionHandle))
++        return complete(call);
++
++    disable(sessionHandle);
++
++    complete(call);
++}
++
++void CInputCapturePortal::onEnable(sdbus::MethodCall& call) {
++    Debug::log(LOG, "[input-capture] New Enable request:");
++
++    sdbus::ObjectPath sessionHandle;
++    call >> sessionHandle;
++
++    std::string appID;
++    call >> appID;
++
++    Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
++    Debug::log(LOG, "[input-capture]  | appid: {}", appID);
++
++    if (!sessionValid(sessionHandle))
++        return complete(call);
++
++    sessions[sessionHandle]->status = ENABLED;
++
++    complete(call);
++}
++
++void CInputCapturePortal::onRelease(sdbus::MethodCall& call) {
++    Debug::log(LOG, "[input-capture] New Release request:");
++
++    sdbus::ObjectPath sessionHandle;
++    call >> sessionHandle;
++
++    std::string appID;
++    call >> appID;
++
++    Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
++    Debug::log(LOG, "[input-capture]  | appid: {}", appID);
++
++    if (!sessionValid(sessionHandle))
++        return complete(call);
++
++    std::unordered_map<std::string, sdbus::Variant> options;
++    call >> options;
++    uint32_t activationId = options["activation_id"];
++    if (activationId != sessions[sessionHandle]->activationId) {
++        Debug::log(WARN, "[input-capture] Invalid activation id {} expected {}", activationId, sessions[sessionHandle]->activationId);
++        complete(call);
++        return;
++    }
++
++    deactivate(sessionHandle);
++
++    //TODO: maybe warp pointer
++
++    complete(call);
++}
++
++void CInputCapturePortal::onConnectToEIS(sdbus::MethodCall& call) {
++    Debug::log(LOG, "[input-capture] New ConnectToEIS request:");
++
++    sdbus::ObjectPath sessionHandle;
++    call >> sessionHandle;
++
++    std::string appID;
++    call >> appID;
++
++    std::unordered_map<std::string, sdbus::Variant> options;
++    call >> options;
++
++    Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
++    Debug::log(LOG, "[input-capture]  | appid: {}", appID);
++
++    if (!sessionValid(sessionHandle))
++        return complete(call);
++
++    int sockfd = sessions[sessionHandle]->eis->getFileDescriptor();
++
++    Debug::log(LOG, "[input-capture] Connected to the socket. File descriptor: {}", sockfd);
++    auto reply = call.createReply();
++    reply << (sdbus::UnixFd)sockfd;
++    reply.send();
++}
++
++bool CInputCapturePortal::sessionValid(sdbus::ObjectPath sessionHandle) {
++    if (!sessions.contains(sessionHandle)) {
++        Debug::log(WARN, "[input-capture] Unknown session handle: {}", sessionHandle.c_str());
++        return false;
++    }
++
++    return sessions[sessionHandle]->status != STOPPED;
++}
++
++bool get_line_intersection(double p0_x, double p0_y, double p1_x, double p1_y, double p2_x, double p2_y, double p3_x, double p3_y, double* i_x, double* i_y) {
++    float s1_x, s1_y, s2_x, s2_y;
++    s1_x = p1_x - p0_x;
++    s1_y = p1_y - p0_y;
++    s2_x = p3_x - p2_x;
++    s2_y = p3_y - p2_y;
++
++    float s, t;
++    s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / (-s2_x * s1_y + s1_x * s2_y);
++    t = (s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / (-s2_x * s1_y + s1_x * s2_y);
++
++    if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
++        // Collision detected
++        if (i_x != NULL)
++            *i_x = p0_x + (t * s1_x);
++        if (i_y != NULL)
++            *i_y = p0_y + (t * s1_y);
++        return 1;
++    }
++
++    return 0; // No collision
++}
++
++bool testCollision(Barrier barrier, double px, double py, double nx, double ny) {
++    return get_line_intersection(barrier.x1, barrier.y1, barrier.x2, barrier.y2, px, py, nx, ny, nullptr, nullptr);
++}
++
++uint32_t CInputCapturePortal::Session::isColliding(double px, double py, double nx, double ny) {
++    for (const auto& [key, value] : barriers) {
++        if (testCollision(value, px, py, nx, ny)) {
++            return key;
++        }
++    }
++
++    return 0;
++}
++
++void CInputCapturePortal::onAbsoluteMotion(double x, double y, double dx, double dy) {
++    for (const auto& [key, session] : sessions) {
++        int matched = session->isColliding(x, y, x - dx, y - dy);
++        if (matched != 0) {
++            activate(key, x, y, matched);
++        }
++        session->motion(dx, dy);
++    }
++}
++
++void CInputCapturePortal::onKey(uint32_t key, bool pressed) {
++    for (const auto& [_, value] : sessions) {
++        value->key(key, pressed);
++    }
++}
++
++void CInputCapturePortal::onButton(uint32_t button, bool pressed) {
++    for (const auto& [_, session] : sessions) {
++        session->button(button, pressed);
++    }
++}
++
++void CInputCapturePortal::onAxis(bool axis, double value) {
++    for (const auto& [_, session] : sessions) {
++        session->axis(axis, value);
++    }
++}
++
++void CInputCapturePortal::onAxisValue120(bool axis, int32_t value120) {
++    for (const auto& [_, session] : sessions) {
++        session->axisValue120(axis, value120);
++    }
++}
++
++void CInputCapturePortal::onAxisStop(bool axis) {
++    for (const auto& [_, session] : sessions) {
++        session->axisStop(axis);
++    }
++}
++
++void CInputCapturePortal::onFrame() {
++    for (const auto& [_, session] : sessions) {
++        session->frame();
++    }
++}
++
++void CInputCapturePortal::activate(sdbus::ObjectPath sessionHandle, double x, double y, uint32_t borderId) {
++    if (!sessionValid(sessionHandle))
++        return;
++
++    auto session = sessions[sessionHandle];
++    if (!session->activate(x, y, borderId))
++        return;
++
++    auto signal = m_pObject->createSignal(INTERFACE_NAME, "Activated");
++    signal << sessionHandle;
++
++    g_pPortalManager->m_sPortals.inputCapture->INTERFACE_NAME;
++
++    std::unordered_map<std::string, sdbus::Variant> results;
++    results["activation_id"]   = session->activationId;
++    results["cursor_position"] = sdbus::Struct<double, double>(x, y);
++    results["barrier_id"]      = borderId;
++    signal << results;
++
++    m_pObject->emitSignal(signal);
++}
++
++bool CInputCapturePortal::Session::activate(double x, double y, uint32_t borderId) {
++    if (status != ENABLED) {
++        return false;
++    }
++
++    activationId += 5;
++    status = ACTIVATED;
++    Debug::log(LOG, "[input-capture] Input captured for {} activationId: {}", sessionHandle.c_str(), activationId);
++    eis->startEmulating(activationId);
++    //TODO: capture the pointer
++
++    return true;
++}
++
++void CInputCapturePortal::deactivate(sdbus::ObjectPath sessionHandle) {
++    if (!sessionValid(sessionHandle))
++        return;
++
++    auto session = sessions[sessionHandle];
++    if (!session->deactivate())
++        return;
++
++    auto signal = m_pObject->createSignal(INTERFACE_NAME, "Deactivated");
++    signal << sessionHandle;
++    std::unordered_map<std::string, sdbus::Variant> options;
++    options["activation_id"] = session->activationId;
++    signal << options;
++
++    m_pObject->emitSignal(signal);
++
++    //TODO: release the pointer
++}
++
++bool CInputCapturePortal::Session::deactivate() {
++    if (status != ACTIVATED) {
++        return false;
++    }
++
++    Debug::log(LOG, "[input-capture] Input released for {}", sessionHandle.c_str());
++    eis->stopEmulating();
++
++    status = ENABLED;
++
++    return true;
++}
++
++void CInputCapturePortal::zonesChanged() {
++    if (sessions.empty())
++        return;
++
++    Debug::log(LOG, "[input-capture] Monitor layout has changed, notifing clients");
++
++    for (auto& [key, value] : sessions) {
++        if (!value->zoneChanged())
++            continue;
++
++        auto signal = m_pObject->createSignal(INTERFACE_NAME, "Deactivated");
++        signal << key;
++
++        std::unordered_map<std::string, sdbus::Variant> options;
++        signal << options;
++
++        m_pObject->emitSignal(signal);
++    }
++}
++
++bool CInputCapturePortal::Session::zoneChanged() {
++    //TODO: notify EIS
++    return true;
++}
++
++void CInputCapturePortal::disable(sdbus::ObjectPath sessionHandle) {
++    if (!sessionValid(sessionHandle))
++        return;
++
++    auto session = sessions[sessionHandle];
++    if (!session->disable())
++        return;
++
++    if (session->status == ACTIVATED)
++        deactivate(sessionHandle);
++
++    auto signal = m_pObject->createSignal(INTERFACE_NAME, "Disable");
++    signal << sessionHandle;
++
++    std::unordered_map<std::string, sdbus::Variant> options;
++    signal << options;
++
++    m_pObject->emitSignal(signal);
++}
++
++bool CInputCapturePortal::Session::disable() {
++    status = STOPPED;
++
++    Debug::log(LOG, "[input-capture] Session {} disabled", sessionHandle.c_str());
++    return true;
++}
++
++void CInputCapturePortal::Session::motion(double dx, double dy) {
++    if (status != ACTIVATED)
++        return;
++
++    eis->sendMotion(dx, dy);
++}
++
++void CInputCapturePortal::Session::key(uint32_t key, bool pressed) {
++    if (status != ACTIVATED)
++        return;
++
++    eis->sendKey(key, pressed);
++}
++
++void CInputCapturePortal::Session::button(uint32_t button, bool pressed) {
++    if (status != ACTIVATED)
++        return;
++
++    eis->sendButton(button, pressed);
++}
++
++void CInputCapturePortal::Session::axis(bool axis, double value) {
++    if (status != ACTIVATED)
++        return;
++
++    double x = 0;
++    double y = 0;
++
++    if (axis) {
++        x = value;
++    } else {
++        y = value;
++    }
++
++    eis->sendScrollDelta(x, y);
++}
++
++void CInputCapturePortal::Session::axisValue120(bool axis, int32_t value) {
++    if (status != ACTIVATED)
++        return;
++
++    int32_t x = 0;
++    int32_t y = 0;
++
++    if (axis) {
++        x = value;
++    } else {
++        y = value;
++    }
++
++    eis->sendScrollDiscrete(x, y);
++}
++
++void CInputCapturePortal::Session::axisStop(bool axis) {
++    eis->sendScrollStop(axis, !axis);
++}
++
++void CInputCapturePortal::Session::frame() {
++    eis->sendPointerFrame();
++}
+diff --git a/src/portals/InputCapture.hpp b/src/portals/InputCapture.hpp
+new file mode 100644
+index 0000000..0ab78d1
+--- /dev/null
++++ b/src/portals/InputCapture.hpp
+@@ -0,0 +1,96 @@
++#pragma once
++#include "hyprland-input-capture-v1.hpp"
++#include "shared/Eis.hpp"
++#include <cstdint>
++#include <sdbus-c++/Types.h>
++#include <sdbus-c++/sdbus-c++.h>
++#include <string>
++#include <unordered_map>
++#include <wayland-client-protocol.h>
++#include "../includes.hpp"
++#include "../shared/Session.hpp"
++
++typedef int        ClientStatus;
++const ClientStatus CREATED   = 0; //Is ready to be activated
++const ClientStatus ENABLED   = 1; //Is ready for receiving inputs
++const ClientStatus ACTIVATED = 2; //Currently receiving inputs
++const ClientStatus STOPPED   = 3; //Can no longer be activated
++
++struct Barrier {
++    uint id;
++    int  x1, y1, x2, y2;
++};
++
++class CInputCapturePortal {
++  public:
++    CInputCapturePortal(SP<CCHyprlandInputCaptureManagerV1> mgr);
++
++    void onCreateSession(sdbus::MethodCall& methodCall);
++    void onGetZones(sdbus::MethodCall& methodCall);
++    void onSetPointerBarriers(sdbus::MethodCall& methodCall);
++    void onEnable(sdbus::MethodCall& methodCall);
++    void onDisable(sdbus::MethodCall& methodCall);
++    void onRelease(sdbus::MethodCall& methodCall);
++    void onConnectToEIS(sdbus::MethodCall& methodCall);
++
++    void onAbsoluteMotion(double x, double y, double dx, double dy);
++    void onKey(uint32_t key, bool pressed);
++    void onButton(uint32_t button, bool pressed);
++    void onAxis(bool axis, double value);
++    void onAxisValue120(bool axis, int32_t value120);
++    void onAxisStop(bool axis);
++    void onFrame();
++
++    void zonesChanged();
++
++    struct Session {
++        std::string                           appid;
++        sdbus::ObjectPath                     requestHandle, sessionHandle;
++        std::string                           sessionId;
++        uint32_t                              capabilities;
++
++        std::unique_ptr<SDBusRequest>         request;
++        std::unique_ptr<SDBusSession>         session;
++        std::unique_ptr<EmulatedInputServer>  eis;
++
++        std::unordered_map<uint32_t, Barrier> barriers;
++        uint32_t                              activationId;
++        ClientStatus                          status;
++
++        //
++        bool     activate(double x, double y, uint32_t borderId);
++        bool     deactivate();
++        bool     disable();
++        bool     zoneChanged();
++
++        void     motion(double dx, double dy);
++        void     key(uint32_t key, bool pressed);
++        void     button(uint32_t button, bool pressed);
++        void     axis(bool axis, double value);
++        void     axisValue120(bool axis, int32_t value120);
++        void     axisStop(bool axis);
++        void     frame();
++
++        uint32_t isColliding(double px, double py, double nx, double ny);
++    };
++
++  private:
++    struct {
++        SP<CCHyprlandInputCaptureManagerV1> manager;
++    } m_sState;
++
++    std::unordered_map<std::string, const std::shared_ptr<Session>> sessions;
++    //
++    std::unique_ptr<sdbus::IObject> m_pObject;
++    uint                            sessionCounter;
++    uint                            lastZoneSet;
++
++    const std::string               INTERFACE_NAME = "org.freedesktop.impl.portal.InputCapture";
++    const std::string               OBJECT_PATH    = "/org/freedesktop/portal/desktop";
++
++    bool                            sessionValid(sdbus::ObjectPath sessionHandle);
++
++    void                            activate(sdbus::ObjectPath sessionHandle, double x, double y, uint32_t borderId);
++    void                            deactivate(sdbus::ObjectPath sessionHandle);
++    void                            disable(sdbus::ObjectPath sessionHandle);
++};
+diff --git a/src/shared/Eis.cpp b/src/shared/Eis.cpp
+new file mode 100644
+index 0000000..2bab58c
+--- /dev/null
++++ b/src/shared/Eis.cpp
+@@ -0,0 +1,287 @@
++#include "Eis.hpp"
++#include "core/PortalManager.hpp"
++#include "src/helpers/Log.hpp"
++#include <libeis.h>
++#include <string>
++#include <sys/poll.h>
++#include <thread>
++
++EmulatedInputServer::EmulatedInputServer(std::string socketName) {
++    Debug::log(LOG, "[EIS] init socket: {}", socketName);
++
++    const char* xdg = getenv("XDG_RUNTIME_DIR");
++    if (xdg)
++        socketPath = std::string(xdg) + "/" + socketName;
++
++    if (socketPath.empty()) {
++        Debug::log(ERR, "[EIS] Socket path is empty");
++        return;
++    }
++
++    client.handle   = NULL;
++    client.seat     = NULL;
++    client.pointer  = NULL;
++    client.keyboard = NULL;
++    eis             = eis_new(NULL);
++
++    if (eis_setup_backend_socket(eis, socketPath.c_str())) {
++        Debug::log(ERR, "[EIS] Cannot init eis socket on {}", socketPath);
++        return;
++    }
++    Debug::log(LOG, "[EIS] Listening on {}", socketPath);
++
++    stop = false;
++    std::thread thread(&EmulatedInputServer::listen, this);
++    thread.detach();
++}
++
++void EmulatedInputServer::listen() {
++    struct pollfd fds = {
++        .fd      = eis_get_fd(eis),
++        .events  = POLLIN,
++        .revents = 0,
++    };
++    int nevents;
++    //Pull foverer events
++    while (!stop && (nevents = poll(&fds, 1, 1000)) > -1) {
++        eis_dispatch(eis);
++
++        //Pull every availaible events
++        while (true) {
++            eis_event* e = eis_get_event(eis);
++
++            if (!e) {
++                eis_event_unref(e);
++                break;
++            }
++
++            int rc = onEvent(e);
++            eis_event_unref(e);
++            if (rc != 0)
++                break;
++        }
++    }
++}
++
++int EmulatedInputServer::onEvent(eis_event* e) {
++    eis_client* client;
++    eis_seat*   seat;
++    eis_device* device;
++
++    switch (eis_event_get_type(e)) {
++        case EIS_EVENT_CLIENT_CONNECT:
++            client = eis_event_get_client(e);
++            Debug::log(LOG, "[EIS] {} client connected: {}", eis_client_is_sender(client) ? "sender" : "receiver", eis_client_get_name(client));
++
++            if (eis_client_is_sender(client)) {
++                Debug::log(WARN, "[EIS] Unexpected sender client {} connected to input capture session", eis_client_get_name(client));
++                eis_client_disconnect(client);
++                return 0;
++            }
++
++            if (this->client.handle != nullptr) {
++                Debug::log(WARN, "[EIS] Unexpected additional client {} connected to input capture session", eis_client_get_name(client));
++                eis_client_disconnect(client);
++                return 0;
++            }
++
++            this->client.handle = client;
++
++            eis_client_connect(client);
++            Debug::log(LOG, "[EIS] creating new default seat");
++            seat = eis_client_new_seat(client, "default");
++
++            eis_seat_configure_capability(seat, EIS_DEVICE_CAP_POINTER);
++            eis_seat_configure_capability(seat, EIS_DEVICE_CAP_BUTTON);
++            eis_seat_configure_capability(seat, EIS_DEVICE_CAP_SCROLL);
++            eis_seat_configure_capability(seat, EIS_DEVICE_CAP_KEYBOARD);
++            eis_seat_add(seat);
++            this->client.seat = seat;
++            break;
++        case EIS_EVENT_CLIENT_DISCONNECT:
++            client = eis_event_get_client(e);
++            Debug::log(LOG, "[EIS] {} disconnected", eis_client_get_name(client));
++            eis_client_disconnect(client);
++
++            eis_seat_unref(this->client.seat);
++            clearPointer();
++            clearKeyboard();
++            this->client.handle = NULL;
++            break;
++        case EIS_EVENT_SEAT_BIND:
++            Debug::log(LOG, "[EIS] Binding seats...");
++
++            if (eis_event_seat_has_capability(e, EIS_DEVICE_CAP_POINTER) && eis_event_seat_has_capability(e, EIS_DEVICE_CAP_BUTTON) &&
++                eis_event_seat_has_capability(e, EIS_DEVICE_CAP_SCROLL))
++                ensurePointer(e);
++            else
++                clearPointer();
++
++            if (eis_event_seat_has_capability(e, EIS_DEVICE_CAP_KEYBOARD))
++                ensureKeyboard(e);
++            else
++                clearKeyboard();
++            break;
++        case EIS_EVENT_DEVICE_CLOSED:
++            device = eis_event_get_device(e);
++            if (device == this->client.pointer) {
++                clearPointer();
++            } else if (device == this->client.keyboard) {
++                Debug::log(LOG, "[EIS] Clearing keyboard");
++                clearKeyboard();
++            } else {
++                Debug::log(WARN, "[EIS] Unknown device to close");
++            }
++            break;
++        case EIS_EVENT_FRAME: Debug::log(LOG, "[EIS] Got event EIS_EVENT_FRAME"); break;
++        case EIS_EVENT_DEVICE_START_EMULATING: Debug::log(LOG, "[EIS] Got event EIS_EVENT_DEVICE_START_EMULATING"); break;
++        case EIS_EVENT_DEVICE_STOP_EMULATING: Debug::log(LOG, "[EIS] Got event EIS_EVENT_DEVICE_STOP_EMULATING"); break;
++        case EIS_EVENT_POINTER_MOTION: Debug::log(LOG, "[EIS] Got event EIS_EVENT_POINTER_MOTION"); break;
++        case EIS_EVENT_POINTER_MOTION_ABSOLUTE: Debug::log(LOG, "[EIS] Got event EIS_EVENT_POINTER_MOTION_ABSOLUTE"); break;
++        case EIS_EVENT_BUTTON_BUTTON: Debug::log(LOG, "[EIS] Got event EIS_EVENT_BUTTON_BUTTON"); break;
++        case EIS_EVENT_SCROLL_DELTA: Debug::log(LOG, "[EIS] Got event EIS_EVENT_SCROLL_DELTA"); break;
++        case EIS_EVENT_SCROLL_STOP: Debug::log(LOG, "[EIS] Got event EIS_EVENT_SCROLL_STOP"); break;
++        case EIS_EVENT_SCROLL_CANCEL: Debug::log(LOG, "[EIS] Got event EIS_EVENT_SCROLL_CANCEL"); break;
++        case EIS_EVENT_SCROLL_DISCRETE: Debug::log(LOG, "[EIS] Got event EIS_EVENT_SCROLL_DISCRETE"); break;
++        case EIS_EVENT_KEYBOARD_KEY: Debug::log(LOG, "[EIS] Got event EIS_EVENT_KEYBOARD_KEY"); break;
++        case EIS_EVENT_TOUCH_DOWN: Debug::log(LOG, "[EIS] Got event EIS_EVENT_TOUCH_DOWN"); break;
++        case EIS_EVENT_TOUCH_UP: Debug::log(LOG, "[EIS] Got event EIS_EVENT_TOUCH_UP"); break;
++        case EIS_EVENT_TOUCH_MOTION: Debug::log(LOG, "[EIS] Got event EIS_EVENT_TOUCH_MOTION"); break;
++    }
++    return 0;
++}
++
++void EmulatedInputServer::ensurePointer(eis_event* event) {
++    if (client.pointer != nullptr)
++        return;
++
++    struct eis_device* pointer = eis_seat_new_device(client.seat);
++    eis_device_configure_name(pointer, "captured relative pointer");
++    eis_device_configure_capability(pointer, EIS_DEVICE_CAP_POINTER);
++    eis_device_configure_capability(pointer, EIS_DEVICE_CAP_BUTTON);
++    eis_device_configure_capability(pointer, EIS_DEVICE_CAP_SCROLL);
++
++    for (auto& o : g_pPortalManager->getAllOutputs()) {
++        struct eis_region* r = eis_device_new_region(pointer);
++
++        eis_region_set_offset(r, o->x, o->y);
++        eis_region_set_size(r, o->width, o->height);
++        eis_region_set_physical_scale(r, o->scale);
++        eis_region_add(r);
++        eis_region_unref(r);
++    }
++
++    eis_device_add(pointer);
++    eis_device_resume(pointer);
++
++    client.pointer = pointer;
++}
++
++void EmulatedInputServer::ensureKeyboard(eis_event* event) {
++    if (client.keyboard != nullptr)
++        return;
++
++    struct eis_device* keyboard = eis_seat_new_device(client.seat);
++    eis_device_configure_name(keyboard, "captured keyboard");
++    eis_device_configure_capability(keyboard, EIS_DEVICE_CAP_KEYBOARD);
++    // TODO: layout
++    eis_device_add(keyboard);
++    eis_device_resume(keyboard);
++
++    client.keyboard = keyboard;
++}
++
++//TODO: remove and re-add devices when monitors change (see: mutter/meta-input-capture-session.c:1107)
++
++void EmulatedInputServer::clearPointer() {
++    if (client.pointer == nullptr)
++        return;
++    Debug::log(LOG, "[EIS] Clearing pointer");
++
++    eis_device_remove(client.pointer);
++    eis_device_unref(client.pointer);
++    client.pointer = nullptr;
++}
++
++void EmulatedInputServer::clearKeyboard() {
++    if (client.keyboard == nullptr)
++        return;
++    Debug::log(LOG, "[EIS] Clearing keyboard");
++
++    eis_device_remove(client.keyboard);
++    eis_device_unref(client.keyboard);
++    client.keyboard = nullptr;
++}
++
++int EmulatedInputServer::getFileDescriptor() {
++    return eis_backend_fd_add_client(eis);
++}
++
++void EmulatedInputServer::startEmulating(int sequence) {
++    Debug::log(LOG, "[EIS] Start Emulating");
++
++    if (client.pointer != nullptr)
++        eis_device_start_emulating(client.pointer, sequence);
++
++    if (client.keyboard != nullptr)
++        eis_device_start_emulating(client.keyboard, sequence);
++}
++
++void EmulatedInputServer::stopEmulating() {
++    Debug::log(LOG, "[EIS] Stop Emulating");
++
++    if (client.pointer != nullptr)
++        eis_device_stop_emulating(client.pointer);
++
++    if (client.keyboard != nullptr)
++        eis_device_stop_emulating(client.keyboard);
++}
++
++void EmulatedInputServer::sendMotion(double x, double y) {
++    if (client.pointer == nullptr)
++        return;
++    eis_device_pointer_motion(client.pointer, x, y);
++}
++
++void EmulatedInputServer::sendKey(uint32_t key, bool pressed) {
++    if (client.keyboard == nullptr)
++        return;
++    uint64_t now = eis_now(eis);
++    eis_device_keyboard_key(client.keyboard, key, pressed);
++    eis_device_frame(client.keyboard, now);
++}
++
++void EmulatedInputServer::sendButton(uint32_t button, bool pressed) {
++    if (client.pointer == nullptr)
++        return;
++    eis_device_button_button(client.pointer, button, pressed);
++}
++
++void EmulatedInputServer::sendScrollDiscrete(int32_t x, int32_t y) {
++    if (client.pointer == nullptr)
++        return;
++    eis_device_scroll_discrete(client.pointer, x, y);
++}
++
++void EmulatedInputServer::sendScrollDelta(double x, double y) {
++    if (client.pointer == nullptr)
++        return;
++    eis_device_scroll_delta(client.pointer, x, y);
++}
++
++void EmulatedInputServer::sendScrollStop(bool x, bool y) {
++    if (client.pointer == nullptr)
++        return;
++    eis_device_scroll_stop(client.pointer, x, y);
++}
++
++void EmulatedInputServer::sendPointerFrame() {
++    if (client.pointer == nullptr)
++        return;
++    uint64_t now = eis_now(eis);
++    eis_device_frame(client.pointer, now);
++}
++
++void EmulatedInputServer::stopServer() {
++    stop = true;
++}
+diff --git a/src/shared/Eis.hpp b/src/shared/Eis.hpp
+new file mode 100644
+index 0000000..63b4e78
+--- /dev/null
++++ b/src/shared/Eis.hpp
+@@ -0,0 +1,49 @@
++#pragma once
++
++#include <libeis.h>
++#include <string>
++#include <sys/socket.h>
++
++struct EisClient {
++    struct eis_client* handle;
++    struct eis_seat*   seat;
++
++    struct eis_device* pointer;
++    struct eis_device* keyboard;
++};
++
++/*
++ * Responsible to creating a socket for input communication
++ */
++class EmulatedInputServer {
++  public:
++    EmulatedInputServer(std::string socketPath);
++    std::string socketPath;
++
++    void        startEmulating(int activationId);
++    void        stopEmulating();
++
++    void        sendMotion(double x, double y);
++    void        sendKey(uint32_t key, bool pressed);
++    void        sendButton(uint32_t button, bool pressed);
++    void        sendScrollDelta(double x, double y);
++    void        sendScrollDiscrete(int32_t x, int32_t y);
++    void        sendScrollStop(bool stopX, bool stopY);
++    void        sendPointerFrame();
++
++    int         getFileDescriptor();
++
++    void        stopServer();
++
++  private:
++    bool        stop;
++    struct eis* eis;
++    EisClient   client;
++
++    int         onEvent(eis_event* e);
++    void        listen();
++    void        ensurePointer(eis_event* event);
++    void        ensureKeyboard(eis_event* event);
++    void        clearPointer();
++    void        clearKeyboard();
++};
+
+From 10a8c5a0d1a6d9bbdbec4534d25025c0ce49e332 Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Thu, 26 Sep 2024 08:51:21 +0200
+Subject: [PATCH 02/17] input-capture: inhibit inputs
+
+---
+ src/portals/InputCapture.cpp | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/src/portals/InputCapture.cpp b/src/portals/InputCapture.cpp
+index 8f9557f..266e0ef 100644
+--- a/src/portals/InputCapture.cpp
++++ b/src/portals/InputCapture.cpp
+@@ -422,6 +422,8 @@ void CInputCapturePortal::activate(sdbus::ObjectPath sessionHandle, double x, do
+     if (!session->activate(x, y, borderId))
+         return;
+ 
++    m_sState.manager->sendCapture();
++
+     auto signal = m_pObject->createSignal(INTERFACE_NAME, "Activated");
+     signal << sessionHandle;
+ 
+@@ -445,7 +447,6 @@ bool CInputCapturePortal::Session::activate(double x, double y, uint32_t borderI
+     status = ACTIVATED;
+     Debug::log(LOG, "[input-capture] Input captured for {} activationId: {}", sessionHandle.c_str(), activationId);
+     eis->startEmulating(activationId);
+-    //TODO: capture the pointer
+ 
+     return true;
+ }
+@@ -458,6 +459,8 @@ void CInputCapturePortal::deactivate(sdbus::ObjectPath sessionHandle) {
+     if (!session->deactivate())
+         return;
+ 
++    m_sState.manager->sendRelease();
++
+     auto signal = m_pObject->createSignal(INTERFACE_NAME, "Deactivated");
+     signal << sessionHandle;
+     std::unordered_map<std::string, sdbus::Variant> options;
+@@ -465,8 +468,6 @@ void CInputCapturePortal::deactivate(sdbus::ObjectPath sessionHandle) {
+     signal << options;
+ 
+     m_pObject->emitSignal(signal);
+-
+-    //TODO: release the pointer
+ }
+ 
+ bool CInputCapturePortal::Session::deactivate() {
+
+From 936f1fe0b7de76b1966f5671401b2cc0b1dd5f2b Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Thu, 26 Sep 2024 11:58:04 +0200
+Subject: [PATCH 03/17] input-capture: code cleanup
+
+---
+ CMakeLists.txt               | 1 -
+ src/core/PortalManager.cpp   | 4 ----
+ src/core/PortalManager.hpp   | 2 --
+ src/portals/InputCapture.cpp | 5 +----
+ src/portals/InputCapture.hpp | 9 ++-------
+ src/shared/Eis.cpp           | 3 +--
+ src/shared/Eis.hpp           | 1 -
+ 7 files changed, 4 insertions(+), 21 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3d21329..6486c7e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -63,7 +63,6 @@ pkg_check_modules(
+   libspa-0.2
+   libdrm
+   libeis-1.0
+-  dbus-1
+   gbm
+   hyprlang>=0.2.0
+   hyprutils>=0.2.6
+diff --git a/src/core/PortalManager.cpp b/src/core/PortalManager.cpp
+index a6d8589..5eccfbb 100644
+--- a/src/core/PortalManager.cpp
++++ b/src/core/PortalManager.cpp
+@@ -1,10 +1,7 @@
+ #include "PortalManager.hpp"
+ #include "../helpers/Log.hpp"
+ #include "../helpers/MiscFunctions.hpp"
+-#include "wayland.hpp"
+ 
+-#include <hyprutils/memory/SharedPtr.hpp>
+-#include <memory>
+ #include <pipewire/pipewire.h>
+ #include <poll.h>
+ #include <sys/mman.h>
+@@ -12,7 +9,6 @@
+ #include <unistd.h>
+ 
+ #include <thread>
+-#include <vector>
+ 
+ SOutput::SOutput(SP<CCWlOutput> output_) : output(output_) {
+     output->setName([this](CCWlOutput* o, const char* name_) {
+diff --git a/src/core/PortalManager.hpp b/src/core/PortalManager.hpp
+index 6ca241d..a2c34e4 100644
+--- a/src/core/PortalManager.hpp
++++ b/src/core/PortalManager.hpp
+@@ -1,9 +1,7 @@
+ #pragma once
+ 
+-#include <cstdint>
+ #include <memory>
+ #include <sdbus-c++/sdbus-c++.h>
+-
+ #include <hyprlang.hpp>
+ 
+ #include "wayland.hpp"
+diff --git a/src/portals/InputCapture.cpp b/src/portals/InputCapture.cpp
+index 266e0ef..8dcd8ee 100644
+--- a/src/portals/InputCapture.cpp
++++ b/src/portals/InputCapture.cpp
+@@ -2,14 +2,11 @@
+ 
+ #include "../core/PortalManager.hpp"
+ #include "../helpers/Log.hpp"
++#include "../shared/Session.hpp"
+ #include "hyprland-input-capture-v1.hpp"
+-#include "shared/Session.hpp"
+-#include "src/shared/Eis.hpp"
+ #include <cstddef>
+ #include <cstdint>
+ #include <memory>
+-#include <sdbus-c++/IConnection.h>
+-#include <sdbus-c++/Types.h>
+ #include <string>
+ #include <sys/socket.h>
+ #include <sys/un.h>
+diff --git a/src/portals/InputCapture.hpp b/src/portals/InputCapture.hpp
+index 0ab78d1..5e7a880 100644
+--- a/src/portals/InputCapture.hpp
++++ b/src/portals/InputCapture.hpp
+@@ -1,14 +1,9 @@
+ #pragma once
+ #include "hyprland-input-capture-v1.hpp"
+-#include "shared/Eis.hpp"
+-#include <cstdint>
+-#include <sdbus-c++/Types.h>
+-#include <sdbus-c++/sdbus-c++.h>
+-#include <string>
+-#include <unordered_map>
+-#include <wayland-client-protocol.h>
++#include "../shared/Eis.hpp"
+ #include "../includes.hpp"
+ #include "../shared/Session.hpp"
++#include <sdbus-c++/Types.h>
+ 
+ typedef int        ClientStatus;
+ const ClientStatus CREATED   = 0; //Is ready to be activated
+diff --git a/src/shared/Eis.cpp b/src/shared/Eis.cpp
+index 2bab58c..b950de9 100644
+--- a/src/shared/Eis.cpp
++++ b/src/shared/Eis.cpp
+@@ -1,8 +1,7 @@
+ #include "Eis.hpp"
+-#include "core/PortalManager.hpp"
++#include "../core/PortalManager.hpp"
+ #include "src/helpers/Log.hpp"
+ #include <libeis.h>
+-#include <string>
+ #include <sys/poll.h>
+ #include <thread>
+ 
+diff --git a/src/shared/Eis.hpp b/src/shared/Eis.hpp
+index 63b4e78..9c35bbd 100644
+--- a/src/shared/Eis.hpp
++++ b/src/shared/Eis.hpp
+@@ -2,7 +2,6 @@
+ 
+ #include <libeis.h>
+ #include <string>
+-#include <sys/socket.h>
+ 
+ struct EisClient {
+     struct eis_client* handle;
+
+From cba0cba3af5fa19c69536bd093c0fd2b7918ae11 Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Mon, 30 Sep 2024 17:53:33 +0200
+Subject: [PATCH 04/17] input-capture: various fixes
+
+---
+ src/core/PortalManager.cpp     |  70 +++++++-------
+ src/core/PortalManager.hpp     |  26 ++++--
+ src/portals/InputCapture.cpp   | 108 ++++++++++------------
+ src/portals/InputCapture.hpp   |  43 ++++-----
+ src/shared/Eis.cpp             | 162 ++++++++++++++-------------------
+ src/shared/Eis.hpp             |  35 ++++---
+ 7 files changed, 212 insertions(+), 234 deletions(-)
+
+diff --git a/src/core/PortalManager.cpp b/src/core/PortalManager.cpp
+index 5eccfbb..365b97a 100644
+--- a/src/core/PortalManager.cpp
++++ b/src/core/PortalManager.cpp
+@@ -3,7 +3,6 @@
+ #include "../helpers/MiscFunctions.hpp"
+ 
+ #include <pipewire/pipewire.h>
+-#include <poll.h>
+ #include <sys/mman.h>
+ #include <fcntl.h>
+ #include <unistd.h>
+@@ -19,18 +18,18 @@ SOutput::SOutput(SP<CCWlOutput> output_) : output(output_) {
+ 
+         Debug::log(LOG, "Found output name {}", name);
+     });
+-    output->setMode([this](CCWlOutput* r, uint32_t flags, int32_t width, int32_t height, int32_t refresh) {
+-        refreshRate  = refresh;
+-        this->width  = width;
+-        this->height = height;
++    output->setMode([this](CCWlOutput* r, uint32_t flags, int32_t width_, int32_t height_, int32_t refresh) {
++        refreshRate = refresh;
++        width       = width_;
++        height      = height_;
+     });
+     output->setGeometry(
+-        [this](CCWlOutput* r, int32_t x, int32_t y, int32_t physical_width, int32_t physical_height, int32_t subpixel, const char* make, const char* model, int32_t transform_) {
++        [this](CCWlOutput* r, int32_t x_, int32_t y_, int32_t physical_width, int32_t physical_height, int32_t subpixel, const char* make, const char* model, int32_t transform_) {
+             transform = (wl_output_transform)transform_;
+-            this->x   = x;
+-            this->y   = y;
++            x         = x_;
++            y         = y_;
+         });
+-    output->setScale([this](CCWlOutput* r, uint32_t factor) { this->scale = factor; });
++    output->setScale([this](CCWlOutput* r, uint32_t factor_) { scale = factor_; });
+     output->setDone([](CCWlOutput* r) { g_pPortalManager->m_sPortals.inputCapture->zonesChanged(); });
+ }
+ 
+@@ -277,32 +276,21 @@ void CPortalManager::init() {
+ }
+ 
+ void CPortalManager::startEventLoop() {
++    addFdToEventLoop(m_pConnection->getEventLoopPollData().fd, POLLIN, nullptr);
++    addFdToEventLoop(wl_display_get_fd(m_sWaylandConnection.display), POLLIN, nullptr);
++    addFdToEventLoop(pw_loop_get_fd(m_sPipewire.loop), POLLIN, nullptr);
+ 
+-    pollfd pollfds[] = {
+-        {
+-            .fd     = m_pConnection->getEventLoopPollData().fd,
+-            .events = POLLIN,
+-        },
+-        {
+-            .fd     = wl_display_get_fd(m_sWaylandConnection.display),
+-            .events = POLLIN,
+-        },
+-        {
+-            .fd     = pw_loop_get_fd(m_sPipewire.loop),
+-            .events = POLLIN,
+-        },
+-    };
+-
+-    std::thread pollThr([this, &pollfds]() {
++    std::thread pollThr([this]() {
+         while (1) {
+-            int ret = poll(pollfds, 3, 5000 /* 5 seconds, reasonable. It's because we might need to terminate */);
++
++            int ret = poll(m_sEventLoopInternals.pollFds.data(), m_sEventLoopInternals.pollFds.size(), 5000 /* 5 seconds, reasonable. It's because we might need to terminate */);
+             if (ret < 0) {
+                 Debug::log(CRIT, "[core] Polling fds failed with {}", strerror(errno));
+                 g_pPortalManager->terminate();
+             }
+ 
+             for (size_t i = 0; i < 3; ++i) {
+-                if (pollfds[i].revents & POLLHUP) {
++                if (m_sEventLoopInternals.pollFds.data()->revents & POLLHUP) {
+                     Debug::log(CRIT, "[core] Disconnected from pollfd id {}", i);
+                     g_pPortalManager->terminate();
+                 }
+@@ -375,13 +363,13 @@ void CPortalManager::startEventLoop() {
+ 
+         m_mEventLock.lock();
+ 
+-        if (pollfds[0].revents & POLLIN /* dbus */) {
+-            while (m_pConnection->processPendingEvent()) {
++        if (m_sEventLoopInternals.pollFds[0].revents & POLLIN /* dbus */) {
++            while (m_pConnection->processPendingRequest()) {
+                 ;
+             }
+         }
+ 
+-        if (pollfds[1].revents & POLLIN /* wl */) {
++        if (m_sEventLoopInternals.pollFds[1].revents & POLLIN /* wl */) {
+             wl_display_flush(m_sWaylandConnection.display);
+             if (wl_display_prepare_read(m_sWaylandConnection.display) == 0) {
+                 wl_display_read_events(m_sWaylandConnection.display);
+@@ -391,12 +379,18 @@ void CPortalManager::startEventLoop() {
+             }
+         }
+ 
+-        if (pollfds[2].revents & POLLIN /* pw */) {
++        if (m_sEventLoopInternals.pollFds[2].revents & POLLIN /* pw */) {
+             while (pw_loop_iterate(m_sPipewire.loop, 0) != 0) {
+                 ;
+             }
+         }
+ 
++        for (pollfd p : m_sEventLoopInternals.pollFds) {
++            if (p.revents & POLLIN && m_sEventLoopInternals.pollCallbacks.contains(p.fd)) {
++                m_sEventLoopInternals.pollCallbacks[p.fd]();
++            }
++        }
++
+         std::vector<CTimer*> toRemove;
+         for (auto& t : m_sTimersThread.timers) {
+             if (t->passed()) {
+@@ -500,6 +494,20 @@ void CPortalManager::addTimer(const CTimer& timer) {
+     m_sTimersThread.loopSignal.notify_all();
+ }
+ 
++void CPortalManager::addFdToEventLoop(int fd, short events, std::function<void()> callback) {
++    m_sEventLoopInternals.pollFds.emplace_back(pollfd{.fd = fd, .events = POLLIN});
++
++    if (callback == nullptr)
++        return;
++
++    m_sEventLoopInternals.pollCallbacks[fd] = callback;
++}
++
++void CPortalManager::removeFdFromEventLoop(int fd) {
++    std::erase_if(m_sEventLoopInternals.pollFds, [fd](const pollfd& p) { return p.fd == fd; });
++    m_sEventLoopInternals.pollCallbacks.erase(fd);
++}
++
+ void CPortalManager::terminate() {
+     m_bTerminate = true;
+ 
+diff --git a/src/core/PortalManager.hpp b/src/core/PortalManager.hpp
+index a2c34e4..c10e121 100644
+--- a/src/core/PortalManager.hpp
++++ b/src/core/PortalManager.hpp
+@@ -12,6 +12,7 @@
+ #include "../helpers/Timer.hpp"
+ #include "../shared/ToplevelManager.hpp"
+ #include <gbm.h>
++#include <poll.h>
+ #include <xf86drm.h>
+ 
+ #include "hyprland-toplevel-export-v1.hpp"
+@@ -34,9 +35,11 @@ struct SOutput {
+     uint32_t            id          = 0;
+     float               refreshRate = 60.0;
+     wl_output_transform transform   = WL_OUTPUT_TRANSFORM_NORMAL;
+-    uint32_t            width, height;
+-    int32_t             x, y;
+-    int32_t             scale;
++    uint32_t            width       = 0;
++    uint32_t            height      = 0;
++    int32_t             x           = 0;
++    int32_t             y           = 0;
++    int32_t             scale       = 1;
+ };
+ 
+ struct SDMABUFModifier {
+@@ -50,8 +53,8 @@ class CPortalManager {
+ 
+     void                                         init();
+ 
+-    void                onGlobal(uint32_t name, const char* interface, uint32_t version);
+-    void                onGlobalRemoved(uint32_t name);
++    void                                         onGlobal(uint32_t name, const char* interface, uint32_t version);
++    void                                         onGlobalRemoved(uint32_t name);
+ 
+     sdbus::IConnection*                          getConnection();
+     SOutput*                                     getOutputFromName(const std::string& name);
+@@ -98,6 +101,9 @@ class CPortalManager {
+ 
+     gbm_device*                  createGBMDevice(drmDevice* dev);
+ 
++    void                         addFdToEventLoop(int fd, short events, std::function<void()> callback);
++    void                         removeFdFromEventLoop(int fd);
++
+     // terminate after the event loop has been created. Before we can exit()
+     void terminate();
+ 
+@@ -108,10 +114,12 @@ class CPortalManager {
+     pid_t m_iPID       = 0;
+ 
+     struct {
+-        std::condition_variable loopSignal;
+-        std::mutex              loopMutex;
+-        std::atomic<bool>       shouldProcess = false;
+-        std::mutex              loopRequestMutex;
++        std::condition_variable              loopSignal;
++        std::mutex                           loopMutex;
++        std::atomic<bool>                    shouldProcess = false;
++        std::mutex                           loopRequestMutex;
++        std::vector<pollfd>                  pollFds;
++        std::map<int, std::function<void()>> pollCallbacks;
+     } m_sEventLoopInternals;
+ 
+     struct {
+diff --git a/src/portals/InputCapture.cpp b/src/portals/InputCapture.cpp
+index 8dcd8ee..c3030b2 100644
+--- a/src/portals/InputCapture.cpp
++++ b/src/portals/InputCapture.cpp
+@@ -13,14 +13,11 @@
+ #include <unordered_map>
+ #include <wayland-util.h>
+ 
+-CInputCapturePortal::CInputCapturePortal(SP<CCHyprlandInputCaptureManagerV1> mgr) {
++CInputCapturePortal::CInputCapturePortal(SP<CCHyprlandInputCaptureManagerV1> mgr) : m_sState(mgr) {
+     Debug::log(LOG, "[input-capture] initializing input capture portal");
+-    m_sState.manager = mgr;
+-    sessionCounter   = 0;
+-    lastZoneSet      = 0;
+ 
+-    mgr->setAbsoluteMotion([this](CCHyprlandInputCaptureManagerV1* r, wl_fixed_t x, wl_fixed_t y, wl_fixed_t dx, wl_fixed_t dy) {
+-        onAbsoluteMotion(wl_fixed_to_double(x), wl_fixed_to_double(y), wl_fixed_to_double(dx), wl_fixed_to_double(dy));
++    mgr->setMotion([this](CCHyprlandInputCaptureManagerV1* r, wl_fixed_t x, wl_fixed_t y, wl_fixed_t dx, wl_fixed_t dy) {
++        onMotion(wl_fixed_to_double(x), wl_fixed_to_double(y), wl_fixed_to_double(dx), wl_fixed_to_double(dy));
+     });
+ 
+     mgr->setKey([this](CCHyprlandInputCaptureManagerV1* r, uint32_t key, hyprlandInputCaptureManagerV1KeyState state) { onKey(key, state); });
+@@ -46,13 +43,12 @@ CInputCapturePortal::CInputCapturePortal(SP<CCHyprlandInputCaptureManagerV1> mgr
+     m_pObject->registerMethod(INTERFACE_NAME, "ConnectToEIS", "osa{sv}", "h", [&](sdbus::MethodCall c) { onConnectToEIS(c); });
+ 
+     m_pObject->registerProperty(INTERFACE_NAME, "SupportedCapabilities", "u", [](sdbus::PropertyGetReply& reply) { reply << (uint)(1 | 2); });
+-    m_pObject->registerProperty(INTERFACE_NAME, "version", "u", [](sdbus::PropertyGetReply& reply) { reply << (uint)1; });
++    m_pObject->registerProperty(INTERFACE_NAME, "version", "u", [](sdbus::PropertyGetReply& reply) { reply << (uint32_t)1; });
+ 
+     m_pObject->finishRegistration();
+ 
+-    for (auto& o : g_pPortalManager->getAllOutputs()) {
++    for (auto& o : g_pPortalManager->getAllOutputs())
+         Debug::log(LOG, "{} {}x{}", o->name, o->width, o->height);
+-    }
+ 
+     Debug::log(LOG, "[input-capture] init successful");
+ }
+@@ -91,22 +87,20 @@ void CInputCapturePortal::onCreateSession(sdbus::MethodCall& call) {
+     std::string sessionId = "input-capture-" + std::to_string(sessionCounter++);
+     Debug::log(LOG, "[input-capture]  | sessionId : {}", sessionId);
+ 
+-    const std::shared_ptr<Session> session = std::make_shared<Session>();
++    const std::shared_ptr<SSession> session = std::make_shared<SSession>();
+ 
+     session->appid         = appID;
+     session->requestHandle = requestHandle;
+     session->sessionHandle = sessionHandle;
+     session->sessionId     = sessionId;
+     session->capabilities  = capabilities;
+-    session->activationId  = 0;
+-    session->status        = CREATED;
+ 
+     session->session            = createDBusSession(sessionHandle);
+     session->session->onDestroy = [session, this]() {
+-        if (session->status == ACTIVATED) {
+-            disable(session->sessionHandle);
+-        }
++        disable(session->sessionHandle);
++
+         session->eis->stopServer();
++        session->eis = nullptr;
+         Debug::log(LOG, "[input-capture] Session {} destroyed", session->sessionHandle.c_str());
+ 
+         session->session.release();
+@@ -351,64 +345,56 @@ bool get_line_intersection(double p0_x, double p0_y, double p1_x, double p1_y, d
+     return 0; // No collision
+ }
+ 
+-bool testCollision(Barrier barrier, double px, double py, double nx, double ny) {
++bool testCollision(SBarrier barrier, double px, double py, double nx, double ny) {
+     return get_line_intersection(barrier.x1, barrier.y1, barrier.x2, barrier.y2, px, py, nx, ny, nullptr, nullptr);
+ }
+ 
+-uint32_t CInputCapturePortal::Session::isColliding(double px, double py, double nx, double ny) {
+-    for (const auto& [key, value] : barriers) {
+-        if (testCollision(value, px, py, nx, ny)) {
++uint32_t CInputCapturePortal::SSession::isColliding(double px, double py, double nx, double ny) {
++    for (const auto& [key, value] : barriers)
++        if (testCollision(value, px, py, nx, ny))
+             return key;
+-        }
+-    }
+ 
+     return 0;
+ }
+ 
+-void CInputCapturePortal::onAbsoluteMotion(double x, double y, double dx, double dy) {
++void CInputCapturePortal::onMotion(double x, double y, double dx, double dy) {
+     for (const auto& [key, session] : sessions) {
+         int matched = session->isColliding(x, y, x - dx, y - dy);
+-        if (matched != 0) {
++        if (matched != 0)
+             activate(key, x, y, matched);
+-        }
++
+         session->motion(dx, dy);
+     }
+ }
+ 
+-void CInputCapturePortal::onKey(uint32_t key, bool pressed) {
+-    for (const auto& [_, value] : sessions) {
+-        value->key(key, pressed);
+-    }
++void CInputCapturePortal::onKey(uint32_t id, bool pressed) {
++    for (const auto& [key, value] : sessions)
++        value->key(id, pressed);
+ }
+ 
+ void CInputCapturePortal::onButton(uint32_t button, bool pressed) {
+-    for (const auto& [_, session] : sessions) {
++    for (const auto& [key, session] : sessions)
+         session->button(button, pressed);
+-    }
+ }
+ 
+ void CInputCapturePortal::onAxis(bool axis, double value) {
+-    for (const auto& [_, session] : sessions) {
++    for (const auto& [key, session] : sessions)
+         session->axis(axis, value);
+-    }
+ }
+ 
+ void CInputCapturePortal::onAxisValue120(bool axis, int32_t value120) {
+-    for (const auto& [_, session] : sessions) {
++    for (const auto& [key, session] : sessions)
+         session->axisValue120(axis, value120);
+-    }
+ }
+ 
+ void CInputCapturePortal::onAxisStop(bool axis) {
+-    for (const auto& [_, session] : sessions) {
++    for (const auto& [_, session] : sessions)
+         session->axisStop(axis);
+-    }
+ }
+ 
+ void CInputCapturePortal::onFrame() {
+-    for (const auto& [_, session] : sessions) {
++    for (const auto& [_, session] : sessions)
+         session->frame();
+-    }
+ }
+ 
+ void CInputCapturePortal::activate(sdbus::ObjectPath sessionHandle, double x, double y, uint32_t borderId) {
+@@ -435,7 +421,7 @@ void CInputCapturePortal::activate(sdbus::ObjectPath sessionHandle, double x, do
+     m_pObject->emitSignal(signal);
+ }
+ 
+-bool CInputCapturePortal::Session::activate(double x, double y, uint32_t borderId) {
++bool CInputCapturePortal::SSession::activate(double x, double y, uint32_t borderId) {
+     if (status != ENABLED) {
+         return false;
+     }
+@@ -467,10 +453,9 @@ void CInputCapturePortal::deactivate(sdbus::ObjectPath sessionHandle) {
+     m_pObject->emitSignal(signal);
+ }
+ 
+-bool CInputCapturePortal::Session::deactivate() {
+-    if (status != ACTIVATED) {
++bool CInputCapturePortal::SSession::deactivate() {
++    if (status != ACTIVATED)
+         return false;
+-    }
+ 
+     Debug::log(LOG, "[input-capture] Input released for {}", sessionHandle.c_str());
+     eis->stopEmulating();
+@@ -500,7 +485,7 @@ void CInputCapturePortal::zonesChanged() {
+     }
+ }
+ 
+-bool CInputCapturePortal::Session::zoneChanged() {
++bool CInputCapturePortal::SSession::zoneChanged() {
+     //TODO: notify EIS
+     return true;
+ }
+@@ -510,12 +495,13 @@ void CInputCapturePortal::disable(sdbus::ObjectPath sessionHandle) {
+         return;
+ 
+     auto session = sessions[sessionHandle];
+-    if (!session->disable())
+-        return;
+ 
+     if (session->status == ACTIVATED)
+         deactivate(sessionHandle);
+ 
++    if (!session->disable())
++        return;
++
+     auto signal = m_pObject->createSignal(INTERFACE_NAME, "Disable");
+     signal << sessionHandle;
+ 
+@@ -525,70 +511,74 @@ void CInputCapturePortal::disable(sdbus::ObjectPath sessionHandle) {
+     m_pObject->emitSignal(signal);
+ }
+ 
+-bool CInputCapturePortal::Session::disable() {
++bool CInputCapturePortal::SSession::disable() {
+     status = STOPPED;
+ 
+     Debug::log(LOG, "[input-capture] Session {} disabled", sessionHandle.c_str());
+     return true;
+ }
+ 
+-void CInputCapturePortal::Session::motion(double dx, double dy) {
++void CInputCapturePortal::SSession::motion(double dx, double dy) {
+     if (status != ACTIVATED)
+         return;
+ 
+     eis->sendMotion(dx, dy);
+ }
+ 
+-void CInputCapturePortal::Session::key(uint32_t key, bool pressed) {
++void CInputCapturePortal::SSession::key(uint32_t key, bool pressed) {
+     if (status != ACTIVATED)
+         return;
+ 
+     eis->sendKey(key, pressed);
+ }
+ 
+-void CInputCapturePortal::Session::button(uint32_t button, bool pressed) {
++void CInputCapturePortal::SSession::button(uint32_t button, bool pressed) {
+     if (status != ACTIVATED)
+         return;
+ 
+     eis->sendButton(button, pressed);
+ }
+ 
+-void CInputCapturePortal::Session::axis(bool axis, double value) {
++void CInputCapturePortal::SSession::axis(bool axis, double value) {
+     if (status != ACTIVATED)
+         return;
+ 
+     double x = 0;
+     double y = 0;
+ 
+-    if (axis) {
++    if (axis)
+         x = value;
+-    } else {
++    else
+         y = value;
+-    }
+ 
+     eis->sendScrollDelta(x, y);
+ }
+ 
+-void CInputCapturePortal::Session::axisValue120(bool axis, int32_t value) {
++void CInputCapturePortal::SSession::axisValue120(bool axis, int32_t value) {
+     if (status != ACTIVATED)
+         return;
+ 
+     int32_t x = 0;
+     int32_t y = 0;
+ 
+-    if (axis) {
++    if (axis)
+         x = value;
+-    } else {
++    else
+         y = value;
+-    }
+ 
+     eis->sendScrollDiscrete(x, y);
+ }
+ 
+-void CInputCapturePortal::Session::axisStop(bool axis) {
++void CInputCapturePortal::SSession::axisStop(bool axis) {
++    if (status != ACTIVATED)
++        return;
++
+     eis->sendScrollStop(axis, !axis);
+ }
+ 
+-void CInputCapturePortal::Session::frame() {
++void CInputCapturePortal::SSession::frame() {
++    if (status != ACTIVATED)
++        return;
++
+     eis->sendPointerFrame();
+ }
+diff --git a/src/portals/InputCapture.hpp b/src/portals/InputCapture.hpp
+index 5e7a880..31e5c80 100644
+--- a/src/portals/InputCapture.hpp
++++ b/src/portals/InputCapture.hpp
+@@ -5,13 +5,14 @@
+ #include "../shared/Session.hpp"
+ #include <sdbus-c++/Types.h>
+ 
+-typedef int        ClientStatus;
+-const ClientStatus CREATED   = 0; //Is ready to be activated
+-const ClientStatus ENABLED   = 1; //Is ready for receiving inputs
+-const ClientStatus ACTIVATED = 2; //Currently receiving inputs
+-const ClientStatus STOPPED   = 3; //Can no longer be activated
++enum ClientStatus {
++    CREATED,   //Is ready to be activated
++    ENABLED,   //Is ready for receiving inputs
++    ACTIVATED, //Currently receiving inputs
++    STOPPED    //Can no longer be activated
++};
+ 
+-struct Barrier {
++struct SBarrier {
+     uint id;
+     int  x1, y1, x2, y2;
+ };
+@@ -28,7 +29,7 @@ class CInputCapturePortal {
+     void onRelease(sdbus::MethodCall& methodCall);
+     void onConnectToEIS(sdbus::MethodCall& methodCall);
+ 
+-    void onAbsoluteMotion(double x, double y, double dx, double dy);
++    void onMotion(double x, double y, double dx, double dy);
+     void onKey(uint32_t key, bool pressed);
+     void onButton(uint32_t button, bool pressed);
+     void onAxis(bool axis, double value);
+@@ -38,19 +39,19 @@ class CInputCapturePortal {
+ 
+     void zonesChanged();
+ 
+-    struct Session {
+-        std::string                           appid;
+-        sdbus::ObjectPath                     requestHandle, sessionHandle;
+-        std::string                           sessionId;
+-        uint32_t                              capabilities;
++    struct SSession {
++        std::string                            appid;
++        sdbus::ObjectPath                      requestHandle, sessionHandle;
++        std::string                            sessionId;
++        uint32_t                               capabilities = 0;
+ 
+-        std::unique_ptr<SDBusRequest>         request;
+-        std::unique_ptr<SDBusSession>         session;
+-        std::unique_ptr<EmulatedInputServer>  eis;
++        std::unique_ptr<SDBusRequest>          request;
++        std::unique_ptr<SDBusSession>          session;
++        std::unique_ptr<EmulatedInputServer>   eis;
+ 
+-        std::unordered_map<uint32_t, Barrier> barriers;
+-        uint32_t                              activationId;
+-        ClientStatus                          status;
++        std::unordered_map<uint32_t, SBarrier> barriers;
++        uint32_t                               activationId = 0;
++        ClientStatus                           status = CREATED;
+ 
+         //
+         bool     activate(double x, double y, uint32_t borderId);
+@@ -74,11 +75,11 @@ class CInputCapturePortal {
+         SP<CCHyprlandInputCaptureManagerV1> manager;
+     } m_sState;
+ 
+-    std::unordered_map<std::string, const std::shared_ptr<Session>> sessions;
++    std::unordered_map<std::string, const std::shared_ptr<SSession>> sessions;
+     //
+     std::unique_ptr<sdbus::IObject> m_pObject;
+-    uint                            sessionCounter;
+-    uint                            lastZoneSet;
++    uint                            sessionCounter = 0;
++    uint                            lastZoneSet    = 0;
+ 
+     const std::string               INTERFACE_NAME = "org.freedesktop.impl.portal.InputCapture";
+     const std::string               OBJECT_PATH    = "/org/freedesktop/portal/desktop";
+diff --git a/src/shared/Eis.cpp b/src/shared/Eis.cpp
+index b950de9..46fbd93 100644
+--- a/src/shared/Eis.cpp
++++ b/src/shared/Eis.cpp
+@@ -2,11 +2,9 @@
+ #include "../core/PortalManager.hpp"
+ #include "src/helpers/Log.hpp"
+ #include <libeis.h>
+-#include <sys/poll.h>
+-#include <thread>
+ 
+ EmulatedInputServer::EmulatedInputServer(std::string socketName) {
+-    Debug::log(LOG, "[EIS] init socket: {}", socketName);
++    Debug::log(LOG, "[EIS] Init socket: {}", socketName);
+ 
+     const char* xdg = getenv("XDG_RUNTIME_DIR");
+     if (xdg)
+@@ -17,95 +15,80 @@ EmulatedInputServer::EmulatedInputServer(std::string socketName) {
+         return;
+     }
+ 
+-    client.handle   = NULL;
+-    client.seat     = NULL;
+-    client.pointer  = NULL;
+-    client.keyboard = NULL;
+-    eis             = eis_new(NULL);
++    eisCtx = eis_new(nullptr);
+ 
+-    if (eis_setup_backend_socket(eis, socketPath.c_str())) {
++    if (eis_setup_backend_socket(eisCtx, socketPath.c_str())) {
+         Debug::log(ERR, "[EIS] Cannot init eis socket on {}", socketPath);
+         return;
+     }
+     Debug::log(LOG, "[EIS] Listening on {}", socketPath);
+ 
+-    stop = false;
+-    std::thread thread(&EmulatedInputServer::listen, this);
+-    thread.detach();
++    g_pPortalManager->addFdToEventLoop(eis_get_fd(eisCtx), POLLIN, std::bind(&EmulatedInputServer::pollEvents, this));
+ }
+ 
+-void EmulatedInputServer::listen() {
+-    struct pollfd fds = {
+-        .fd      = eis_get_fd(eis),
+-        .events  = POLLIN,
+-        .revents = 0,
+-    };
+-    int nevents;
+-    //Pull foverer events
+-    while (!stop && (nevents = poll(&fds, 1, 1000)) > -1) {
+-        eis_dispatch(eis);
+-
+-        //Pull every availaible events
+-        while (true) {
+-            eis_event* e = eis_get_event(eis);
+-
+-            if (!e) {
+-                eis_event_unref(e);
+-                break;
+-            }
++void EmulatedInputServer::pollEvents() {
++    eis_dispatch(eisCtx);
++
++    //Pull every availaible events
++    while (true) {
++        eis_event* e = eis_get_event(eisCtx);
+ 
+-            int rc = onEvent(e);
++        if (!e) {
+             eis_event_unref(e);
+-            if (rc != 0)
+-                break;
++            break;
+         }
++
++        int rc = onEvent(e);
++        eis_event_unref(e);
++        if (rc != 0)
++            break;
+     }
+ }
+ 
+ int EmulatedInputServer::onEvent(eis_event* e) {
+-    eis_client* client;
+-    eis_seat*   seat;
+-    eis_device* device;
++    eis_client* eisClient = nullptr;
++    eis_seat*   seat      = nullptr;
++    eis_device* device    = nullptr;
+ 
+     switch (eis_event_get_type(e)) {
+         case EIS_EVENT_CLIENT_CONNECT:
+-            client = eis_event_get_client(e);
+-            Debug::log(LOG, "[EIS] {} client connected: {}", eis_client_is_sender(client) ? "sender" : "receiver", eis_client_get_name(client));
++            eisClient = eis_event_get_client(e);
++            Debug::log(LOG, "[EIS] {} client connected: {}", eis_client_is_sender(eisClient) ? "Sender" : "Receiver", eis_client_get_name(eisClient));
+ 
+-            if (eis_client_is_sender(client)) {
+-                Debug::log(WARN, "[EIS] Unexpected sender client {} connected to input capture session", eis_client_get_name(client));
+-                eis_client_disconnect(client);
++            if (eis_client_is_sender(eisClient)) {
++                Debug::log(WARN, "[EIS] Unexpected sender client {} connected to input capture session", eis_client_get_name(eisClient));
++                eis_client_disconnect(eisClient);
+                 return 0;
+             }
+ 
+-            if (this->client.handle != nullptr) {
+-                Debug::log(WARN, "[EIS] Unexpected additional client {} connected to input capture session", eis_client_get_name(client));
+-                eis_client_disconnect(client);
++            if (client.handle) {
++                Debug::log(WARN, "[EIS] Unexpected additional client {} connected to input capture session", eis_client_get_name(eisClient));
++                eis_client_disconnect(eisClient);
+                 return 0;
+             }
+ 
+-            this->client.handle = client;
++            client.handle = eisClient;
+ 
+-            eis_client_connect(client);
+-            Debug::log(LOG, "[EIS] creating new default seat");
+-            seat = eis_client_new_seat(client, "default");
++            eis_client_connect(eisClient);
++            Debug::log(LOG, "[EIS] Creating new default seat");
++            seat = eis_client_new_seat(eisClient, "default");
+ 
+             eis_seat_configure_capability(seat, EIS_DEVICE_CAP_POINTER);
+             eis_seat_configure_capability(seat, EIS_DEVICE_CAP_BUTTON);
+             eis_seat_configure_capability(seat, EIS_DEVICE_CAP_SCROLL);
+             eis_seat_configure_capability(seat, EIS_DEVICE_CAP_KEYBOARD);
+             eis_seat_add(seat);
+-            this->client.seat = seat;
++            client.seat = seat;
+             break;
+         case EIS_EVENT_CLIENT_DISCONNECT:
+-            client = eis_event_get_client(e);
+-            Debug::log(LOG, "[EIS] {} disconnected", eis_client_get_name(client));
+-            eis_client_disconnect(client);
++            eisClient = eis_event_get_client(e);
++            Debug::log(LOG, "[EIS] {} disconnected", eis_client_get_name(eisClient));
++            eis_client_disconnect(eisClient);
+ 
+-            eis_seat_unref(this->client.seat);
++            eis_seat_unref(client.seat);
+             clearPointer();
+             clearKeyboard();
+-            this->client.handle = NULL;
++            client.handle = nullptr;
+             break;
+         case EIS_EVENT_SEAT_BIND:
+             Debug::log(LOG, "[EIS] Binding seats...");
+@@ -123,45 +106,31 @@ int EmulatedInputServer::onEvent(eis_event* e) {
+             break;
+         case EIS_EVENT_DEVICE_CLOSED:
+             device = eis_event_get_device(e);
+-            if (device == this->client.pointer) {
++            if (device == client.pointer)
+                 clearPointer();
+-            } else if (device == this->client.keyboard) {
++            else if (device == client.keyboard) {
+                 Debug::log(LOG, "[EIS] Clearing keyboard");
+                 clearKeyboard();
+-            } else {
++            } else
+                 Debug::log(WARN, "[EIS] Unknown device to close");
+-            }
+             break;
+-        case EIS_EVENT_FRAME: Debug::log(LOG, "[EIS] Got event EIS_EVENT_FRAME"); break;
+-        case EIS_EVENT_DEVICE_START_EMULATING: Debug::log(LOG, "[EIS] Got event EIS_EVENT_DEVICE_START_EMULATING"); break;
+-        case EIS_EVENT_DEVICE_STOP_EMULATING: Debug::log(LOG, "[EIS] Got event EIS_EVENT_DEVICE_STOP_EMULATING"); break;
+-        case EIS_EVENT_POINTER_MOTION: Debug::log(LOG, "[EIS] Got event EIS_EVENT_POINTER_MOTION"); break;
+-        case EIS_EVENT_POINTER_MOTION_ABSOLUTE: Debug::log(LOG, "[EIS] Got event EIS_EVENT_POINTER_MOTION_ABSOLUTE"); break;
+-        case EIS_EVENT_BUTTON_BUTTON: Debug::log(LOG, "[EIS] Got event EIS_EVENT_BUTTON_BUTTON"); break;
+-        case EIS_EVENT_SCROLL_DELTA: Debug::log(LOG, "[EIS] Got event EIS_EVENT_SCROLL_DELTA"); break;
+-        case EIS_EVENT_SCROLL_STOP: Debug::log(LOG, "[EIS] Got event EIS_EVENT_SCROLL_STOP"); break;
+-        case EIS_EVENT_SCROLL_CANCEL: Debug::log(LOG, "[EIS] Got event EIS_EVENT_SCROLL_CANCEL"); break;
+-        case EIS_EVENT_SCROLL_DISCRETE: Debug::log(LOG, "[EIS] Got event EIS_EVENT_SCROLL_DISCRETE"); break;
+-        case EIS_EVENT_KEYBOARD_KEY: Debug::log(LOG, "[EIS] Got event EIS_EVENT_KEYBOARD_KEY"); break;
+-        case EIS_EVENT_TOUCH_DOWN: Debug::log(LOG, "[EIS] Got event EIS_EVENT_TOUCH_DOWN"); break;
+-        case EIS_EVENT_TOUCH_UP: Debug::log(LOG, "[EIS] Got event EIS_EVENT_TOUCH_UP"); break;
+-        case EIS_EVENT_TOUCH_MOTION: Debug::log(LOG, "[EIS] Got event EIS_EVENT_TOUCH_MOTION"); break;
++        default: return 0;
+     }
+     return 0;
+ }
+ 
+ void EmulatedInputServer::ensurePointer(eis_event* event) {
+-    if (client.pointer != nullptr)
++    if (client.pointer)
+         return;
+ 
+-    struct eis_device* pointer = eis_seat_new_device(client.seat);
++    eis_device* pointer = eis_seat_new_device(client.seat);
+     eis_device_configure_name(pointer, "captured relative pointer");
+     eis_device_configure_capability(pointer, EIS_DEVICE_CAP_POINTER);
+     eis_device_configure_capability(pointer, EIS_DEVICE_CAP_BUTTON);
+     eis_device_configure_capability(pointer, EIS_DEVICE_CAP_SCROLL);
+ 
+     for (auto& o : g_pPortalManager->getAllOutputs()) {
+-        struct eis_region* r = eis_device_new_region(pointer);
++        eis_region* r = eis_device_new_region(pointer);
+ 
+         eis_region_set_offset(r, o->x, o->y);
+         eis_region_set_size(r, o->width, o->height);
+@@ -177,10 +146,10 @@ void EmulatedInputServer::ensurePointer(eis_event* event) {
+ }
+ 
+ void EmulatedInputServer::ensureKeyboard(eis_event* event) {
+-    if (client.keyboard != nullptr)
++    if (client.keyboard)
+         return;
+ 
+-    struct eis_device* keyboard = eis_seat_new_device(client.seat);
++    eis_device* keyboard = eis_seat_new_device(client.seat);
+     eis_device_configure_name(keyboard, "captured keyboard");
+     eis_device_configure_capability(keyboard, EIS_DEVICE_CAP_KEYBOARD);
+     // TODO: layout
+@@ -193,7 +162,7 @@ void EmulatedInputServer::ensureKeyboard(eis_event* event) {
+ //TODO: remove and re-add devices when monitors change (see: mutter/meta-input-capture-session.c:1107)
+ 
+ void EmulatedInputServer::clearPointer() {
+-    if (client.pointer == nullptr)
++    if (!client.pointer)
+         return;
+     Debug::log(LOG, "[EIS] Clearing pointer");
+ 
+@@ -203,7 +172,7 @@ void EmulatedInputServer::clearPointer() {
+ }
+ 
+ void EmulatedInputServer::clearKeyboard() {
+-    if (client.keyboard == nullptr)
++    if (!client.keyboard)
+         return;
+     Debug::log(LOG, "[EIS] Clearing keyboard");
+ 
+@@ -213,74 +182,77 @@ void EmulatedInputServer::clearKeyboard() {
+ }
+ 
+ int EmulatedInputServer::getFileDescriptor() {
+-    return eis_backend_fd_add_client(eis);
++    return eis_backend_fd_add_client(eisCtx);
+ }
+ 
+ void EmulatedInputServer::startEmulating(int sequence) {
+     Debug::log(LOG, "[EIS] Start Emulating");
+ 
+-    if (client.pointer != nullptr)
++    if (client.pointer)
+         eis_device_start_emulating(client.pointer, sequence);
+ 
+-    if (client.keyboard != nullptr)
++    if (client.keyboard)
+         eis_device_start_emulating(client.keyboard, sequence);
+ }
+ 
+ void EmulatedInputServer::stopEmulating() {
+     Debug::log(LOG, "[EIS] Stop Emulating");
+ 
+-    if (client.pointer != nullptr)
++    if (client.pointer)
+         eis_device_stop_emulating(client.pointer);
+ 
+-    if (client.keyboard != nullptr)
++    if (client.keyboard)
+         eis_device_stop_emulating(client.keyboard);
+ }
+ 
+ void EmulatedInputServer::sendMotion(double x, double y) {
+-    if (client.pointer == nullptr)
++    if (!client.pointer)
+         return;
+     eis_device_pointer_motion(client.pointer, x, y);
+ }
+ 
+ void EmulatedInputServer::sendKey(uint32_t key, bool pressed) {
+-    if (client.keyboard == nullptr)
++    if (!client.keyboard)
+         return;
+-    uint64_t now = eis_now(eis);
++    uint64_t now = eis_now(eisCtx);
+     eis_device_keyboard_key(client.keyboard, key, pressed);
+     eis_device_frame(client.keyboard, now);
+ }
+ 
+ void EmulatedInputServer::sendButton(uint32_t button, bool pressed) {
+-    if (client.pointer == nullptr)
++    if (!client.pointer)
+         return;
+     eis_device_button_button(client.pointer, button, pressed);
+ }
+ 
+ void EmulatedInputServer::sendScrollDiscrete(int32_t x, int32_t y) {
+-    if (client.pointer == nullptr)
++    if (!client.pointer)
+         return;
+     eis_device_scroll_discrete(client.pointer, x, y);
+ }
+ 
+ void EmulatedInputServer::sendScrollDelta(double x, double y) {
+-    if (client.pointer == nullptr)
++    if (!client.pointer)
+         return;
+     eis_device_scroll_delta(client.pointer, x, y);
+ }
+ 
+ void EmulatedInputServer::sendScrollStop(bool x, bool y) {
+-    if (client.pointer == nullptr)
++    if (!client.pointer)
+         return;
+     eis_device_scroll_stop(client.pointer, x, y);
+ }
+ 
+ void EmulatedInputServer::sendPointerFrame() {
+-    if (client.pointer == nullptr)
++    if (!client.pointer)
+         return;
+-    uint64_t now = eis_now(eis);
++    uint64_t now = eis_now(eisCtx);
+     eis_device_frame(client.pointer, now);
+ }
+ 
+ void EmulatedInputServer::stopServer() {
+-    stop = true;
++    g_pPortalManager->removeFdFromEventLoop(eis_get_fd(eisCtx));
++    Debug::log(LOG, "[EIS] Server fd {} destroyed", eis_get_fd(eisCtx));
++    eis_unref(eisCtx);
++    eisCtx = nullptr;
+ }
+diff --git a/src/shared/Eis.hpp b/src/shared/Eis.hpp
+index 9c35bbd..2df8946 100644
+--- a/src/shared/Eis.hpp
++++ b/src/shared/Eis.hpp
+@@ -3,14 +3,6 @@
+ #include <libeis.h>
+ #include <string>
+ 
+-struct EisClient {
+-    struct eis_client* handle;
+-    struct eis_seat*   seat;
+-
+-    struct eis_device* pointer;
+-    struct eis_device* keyboard;
+-};
+-
+ /*
+  * Responsible to creating a socket for input communication
+  */
+@@ -35,14 +27,21 @@ class EmulatedInputServer {
+     void        stopServer();
+ 
+   private:
+-    bool        stop;
+-    struct eis* eis;
+-    EisClient   client;
+-
+-    int         onEvent(eis_event* e);
+-    void        listen();
+-    void        ensurePointer(eis_event* event);
+-    void        ensureKeyboard(eis_event* event);
+-    void        clearPointer();
+-    void        clearKeyboard();
++    bool stop   = false;
++    eis* eisCtx = nullptr;
++
++    struct Client {
++        eis_client* handle = nullptr;
++        eis_seat*   seat   = nullptr;
++
++        eis_device* pointer  = nullptr;
++        eis_device* keyboard = nullptr;
++    } client;
++
++    int  onEvent(eis_event* e);
++    void pollEvents();
++    void ensurePointer(eis_event* event);
++    void ensureKeyboard(eis_event* event);
++    void clearPointer();
++    void clearKeyboard();
+ };
+
+From ab40d7199a9c1ac12c1f24ea646b08385e5f76b4 Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Mon, 30 Sep 2024 18:05:23 +0200
+Subject: [PATCH 05/17] Free EIS server on disable
+
+---
+ src/portals/InputCapture.cpp | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/portals/InputCapture.cpp b/src/portals/InputCapture.cpp
+index c3030b2..3567e89 100644
+--- a/src/portals/InputCapture.cpp
++++ b/src/portals/InputCapture.cpp
+@@ -99,8 +99,6 @@ void CInputCapturePortal::onCreateSession(sdbus::MethodCall& call) {
+     session->session->onDestroy = [session, this]() {
+         disable(session->sessionHandle);
+ 
+-        session->eis->stopServer();
+-        session->eis = nullptr;
+         Debug::log(LOG, "[input-capture] Session {} destroyed", session->sessionHandle.c_str());
+ 
+         session->session.release();
+@@ -502,6 +500,9 @@ void CInputCapturePortal::disable(sdbus::ObjectPath sessionHandle) {
+     if (!session->disable())
+         return;
+ 
++    session->eis->stopServer();
++    session->eis.reset();
++
+     auto signal = m_pObject->createSignal(INTERFACE_NAME, "Disable");
+     signal << sessionHandle;
+ 
+
+From 3fab575e9771c3de3f497ed303ecf33396df2c6c Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Mon, 30 Sep 2024 18:09:26 +0200
+Subject: [PATCH 06/17] input-capture: various fixes
+
+---
+ src/portals/InputCapture.cpp | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/src/portals/InputCapture.cpp b/src/portals/InputCapture.cpp
+index 3567e89..ebfb507 100644
+--- a/src/portals/InputCapture.cpp
++++ b/src/portals/InputCapture.cpp
+@@ -42,7 +42,7 @@ CInputCapturePortal::CInputCapturePortal(SP<CCHyprlandInputCaptureManagerV1> mgr
+     m_pObject->registerMethod(INTERFACE_NAME, "Release", "osa{sv}", "ua{sv}", [&](sdbus::MethodCall c) { onRelease(c); });
+     m_pObject->registerMethod(INTERFACE_NAME, "ConnectToEIS", "osa{sv}", "h", [&](sdbus::MethodCall c) { onConnectToEIS(c); });
+ 
+-    m_pObject->registerProperty(INTERFACE_NAME, "SupportedCapabilities", "u", [](sdbus::PropertyGetReply& reply) { reply << (uint)(1 | 2); });
++    m_pObject->registerProperty(INTERFACE_NAME, "SupportedCapabilities", "u", [](sdbus::PropertyGetReply& reply) { reply << (uint32_t)(1 | 2); });
+     m_pObject->registerProperty(INTERFACE_NAME, "version", "u", [](sdbus::PropertyGetReply& reply) { reply << (uint32_t)1; });
+ 
+     m_pObject->finishRegistration();
+@@ -420,9 +420,8 @@ void CInputCapturePortal::activate(sdbus::ObjectPath sessionHandle, double x, do
+ }
+ 
+ bool CInputCapturePortal::SSession::activate(double x, double y, uint32_t borderId) {
+-    if (status != ENABLED) {
++    if (status != ENABLED)
+         return false;
+-    }
+ 
+     activationId += 5;
+     status = ACTIVATED;
+
+From 12361f81a0760e9b7ca729cd5f0e7241f9fa3e11 Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Mon, 7 Oct 2024 15:17:25 +0200
+Subject: [PATCH 07/17] input-capture: impl keymap
+
+---
+ src/helpers/MiscFunctions.cpp  | 85 ++++++++++++++++++++++++++++++++++
+ src/helpers/MiscFunctions.hpp  |  4 +-
+ src/meson.build                |  1 +
+ src/portals/InputCapture.cpp   | 20 +++++++-
+ src/portals/InputCapture.hpp   | 18 ++++---
+ src/shared/Eis.cpp             | 54 ++++++++++++++++++++-
+ src/shared/Eis.hpp             | 24 +++++++---
+ 8 files changed, 189 insertions(+), 19 deletions(-)
+
+diff --git a/src/helpers/MiscFunctions.cpp b/src/helpers/MiscFunctions.cpp
+index 7307ba3..9119b09 100644
+--- a/src/helpers/MiscFunctions.cpp
++++ b/src/helpers/MiscFunctions.cpp
+@@ -7,6 +7,10 @@
+ #include <vector>
+ #include <string>
+ #include <algorithm>
++#include <sys/mman.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <uuid/uuid.h>
+ 
+ #include <hyprutils/os/Process.hpp>
+ using namespace Hyprutils::OS;
+@@ -55,3 +59,84 @@ bool inShellPath(const std::string& exec) {
+ 
+     return std::ranges::any_of(paths, [&exec](std::string& path) { return access((path + "/" + exec).c_str(), X_OK) == 0; });
+ }
++
++std::string getRandomUUID() {
++    std::string uuid;
++    uuid_t      uuid_;
++    uuid_generate_random(uuid_);
++    return std::format("{:02x}{:02x}{:02x}{:02x}-{:02x}{:02x}-{:02x}{:02x}-{:02x}{:02x}-{:02x}{:02x}{:02x}{:02x}{:02x}{:02x}", (uint16_t)uuid_[0], (uint16_t)uuid_[1],
++                       (uint16_t)uuid_[2], (uint16_t)uuid_[3], (uint16_t)uuid_[4], (uint16_t)uuid_[5], (uint16_t)uuid_[6], (uint16_t)uuid_[7], (uint16_t)uuid_[8],
++                       (uint16_t)uuid_[9], (uint16_t)uuid_[10], (uint16_t)uuid_[11], (uint16_t)uuid_[12], (uint16_t)uuid_[13], (uint16_t)uuid_[14], (uint16_t)uuid_[15]);
++}
++
++std::pair<int, std::string> openExclusiveShm() {
++    // Only absolute paths can be shared across different shm_open() calls
++    std::string name = "/" + getRandomUUID();
++
++    for (size_t i = 0; i < 69; ++i) {
++        int fd = shm_open(name.c_str(), O_RDWR | O_CREAT | O_EXCL, 0600);
++        if (fd >= 0)
++            return {fd, name};
++    }
++
++    return {-1, ""};
++}
++
++int allocateSHMFile(size_t len) {
++    auto [fd, name] = openExclusiveShm();
++    if (fd < 0)
++        return -1;
++
++    shm_unlink(name.c_str());
++
++    int ret;
++    do {
++        ret = ftruncate(fd, len);
++    } while (ret < 0 && errno == EINTR);
++
++    if (ret < 0) {
++        close(fd);
++        return -1;
++    }
++
++    return fd;
++}
++
++bool allocateSHMFilePair(size_t size, int* rw_fd_ptr, int* ro_fd_ptr) {
++    auto [fd, name] = openExclusiveShm();
++    if (fd < 0) {
++        return false;
++    }
++
++    // CLOEXEC is guaranteed to be set by shm_open
++    int ro_fd = shm_open(name.c_str(), O_RDONLY, 0);
++    if (ro_fd < 0) {
++        shm_unlink(name.c_str());
++        close(fd);
++        return false;
++    }
++
++    shm_unlink(name.c_str());
++
++    // Make sure the file cannot be re-opened in read-write mode (e.g. via
++    // "/proc/self/fd/" on Linux)
++    if (fchmod(fd, 0) != 0) {
++        close(fd);
++        close(ro_fd);
++        return false;
++    }
++
++    int ret;
++    do {
++        ret = ftruncate(fd, size);
++    } while (ret < 0 && errno == EINTR);
++    if (ret < 0) {
++        close(fd);
++        close(ro_fd);
++        return false;
++    }
++
++    *rw_fd_ptr = fd;
++    *ro_fd_ptr = ro_fd;
++    return true;
++}
+diff --git a/src/helpers/MiscFunctions.hpp b/src/helpers/MiscFunctions.hpp
+index f335a83..194d248 100644
+--- a/src/helpers/MiscFunctions.hpp
++++ b/src/helpers/MiscFunctions.hpp
+@@ -5,4 +5,6 @@
+ std::string execAndGet(const char* cmd);
+ void        addHyprlandNotification(const std::string& icon, float timeMs, const std::string& color, const std::string& message);
+ bool        inShellPath(const std::string& exec);
+-void        sendEmptyDbusMethodReply(sdbus::MethodCall& call, u_int32_t responseCode);
+\ No newline at end of file
++void        sendEmptyDbusMethodReply(sdbus::MethodCall& call, u_int32_t responseCode);
++int         allocateSHMFile(size_t len);
++bool        allocateSHMFilePair(size_t size, int* rw_fd_ptr, int* ro_fd_ptr);
+diff --git a/src/meson.build b/src/meson.build
+index 2f8d1e6..ad66f5b 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -14,6 +14,7 @@ executable('xdg-desktop-portal-hyprland',
+     dependency('sdbus-c++'),
+     dependency('threads'),
+     dependency('wayland-client'),
++    dependency('uuid'),
+   ],
+   include_directories: inc,
+   install: true,
+diff --git a/src/portals/InputCapture.cpp b/src/portals/InputCapture.cpp
+index ebfb507..6009760 100644
+--- a/src/portals/InputCapture.cpp
++++ b/src/portals/InputCapture.cpp
+@@ -20,6 +20,10 @@ CInputCapturePortal::CInputCapturePortal(SP<CCHyprlandInputCaptureManagerV1> mgr
+         onMotion(wl_fixed_to_double(x), wl_fixed_to_double(y), wl_fixed_to_double(dx), wl_fixed_to_double(dy));
+     });
+ 
++    mgr->setKeymap([this](CCHyprlandInputCaptureManagerV1* r, hyprlandInputCaptureManagerV1KeymapFormat format, int32_t fd, uint32_t size) {
++        onKeymap(format == HYPRLAND_INPUT_CAPTURE_MANAGER_V1_KEYMAP_FORMAT_XKB_V1 ? fd : 0, size);
++    });
++
+     mgr->setKey([this](CCHyprlandInputCaptureManagerV1* r, uint32_t key, hyprlandInputCaptureManagerV1KeyState state) { onKey(key, state); });
+ 
+     mgr->setButton([this](CCHyprlandInputCaptureManagerV1* r, uint32_t button, hyprlandInputCaptureManagerV1ButtonState state) { onButton(button, state); });
+@@ -107,7 +111,7 @@ void CInputCapturePortal::onCreateSession(sdbus::MethodCall& call) {
+     session->request            = createDBusRequest(requestHandle);
+     session->request->onDestroy = [session]() { session->request.release(); };
+ 
+-    session->eis = std::make_unique<EmulatedInputServer>("eis-" + sessionId);
++    session->eis = std::make_unique<EmulatedInputServer>("eis-" + sessionId, keymap);
+ 
+     sessions.emplace(sessionHandle, session);
+ 
+@@ -370,6 +374,13 @@ void CInputCapturePortal::onKey(uint32_t id, bool pressed) {
+         value->key(id, pressed);
+ }
+ 
++void CInputCapturePortal::onKeymap(int32_t fd, uint32_t size) {
++    keymap.fd   = fd;
++    keymap.size = size;
++    for (const auto& [key, value] : sessions)
++        value->keymap(keymap);
++}
++
+ void CInputCapturePortal::onButton(uint32_t button, bool pressed) {
+     for (const auto& [key, session] : sessions)
+         session->button(button, pressed);
+@@ -525,6 +536,13 @@ void CInputCapturePortal::SSession::motion(double dx, double dy) {
+     eis->sendMotion(dx, dy);
+ }
+ 
++void CInputCapturePortal::SSession::keymap(Keymap keymap) {
++    if (status == STOPPED)
++        return;
++
++    eis->setKeymap(keymap);
++}
++
+ void CInputCapturePortal::SSession::key(uint32_t key, bool pressed) {
+     if (status != ACTIVATED)
+         return;
+diff --git a/src/portals/InputCapture.hpp b/src/portals/InputCapture.hpp
+index 31e5c80..75091f1 100644
+--- a/src/portals/InputCapture.hpp
++++ b/src/portals/InputCapture.hpp
+@@ -30,6 +30,7 @@ class CInputCapturePortal {
+     void onConnectToEIS(sdbus::MethodCall& methodCall);
+ 
+     void onMotion(double x, double y, double dx, double dy);
++    void onKeymap(int32_t fd, uint32_t size);
+     void onKey(uint32_t key, bool pressed);
+     void onButton(uint32_t button, bool pressed);
+     void onAxis(bool axis, double value);
+@@ -51,7 +52,7 @@ class CInputCapturePortal {
+ 
+         std::unordered_map<uint32_t, SBarrier> barriers;
+         uint32_t                               activationId = 0;
+-        ClientStatus                           status = CREATED;
++        ClientStatus                           status       = CREATED;
+ 
+         //
+         bool     activate(double x, double y, uint32_t borderId);
+@@ -61,6 +62,7 @@ class CInputCapturePortal {
+ 
+         void     motion(double dx, double dy);
+         void     key(uint32_t key, bool pressed);
++        void     keymap(Keymap keymap);
+         void     button(uint32_t button, bool pressed);
+         void     axis(bool axis, double value);
+         void     axisValue120(bool axis, int32_t value120);
+@@ -81,12 +83,14 @@ class CInputCapturePortal {
+     uint                            sessionCounter = 0;
+     uint                            lastZoneSet    = 0;
+ 
+-    const std::string               INTERFACE_NAME = "org.freedesktop.impl.portal.InputCapture";
+-    const std::string               OBJECT_PATH    = "/org/freedesktop/portal/desktop";
++    Keymap keymap; //We store the active keymap ready to be sent when creating EIS
+ 
+-    bool                            sessionValid(sdbus::ObjectPath sessionHandle);
++    const std::string INTERFACE_NAME = "org.freedesktop.impl.portal.InputCapture";
++    const std::string OBJECT_PATH    = "/org/freedesktop/portal/desktop";
+ 
+-    void                            activate(sdbus::ObjectPath sessionHandle, double x, double y, uint32_t borderId);
+-    void                            deactivate(sdbus::ObjectPath sessionHandle);
+-    void                            disable(sdbus::ObjectPath sessionHandle);
++    bool              sessionValid(sdbus::ObjectPath sessionHandle);
++
++    void              activate(sdbus::ObjectPath sessionHandle, double x, double y, uint32_t borderId);
++    void              deactivate(sdbus::ObjectPath sessionHandle);
++    void              disable(sdbus::ObjectPath sessionHandle);
+ };
+diff --git a/src/shared/Eis.cpp b/src/shared/Eis.cpp
+index 46fbd93..4c3a5a1 100644
+--- a/src/shared/Eis.cpp
++++ b/src/shared/Eis.cpp
+@@ -1,11 +1,17 @@
+ #include "Eis.hpp"
+ #include "../core/PortalManager.hpp"
++#include "../helpers/MiscFunctions.hpp"
+ #include "src/helpers/Log.hpp"
++#include <alloca.h>
+ #include <libeis.h>
++#include <sys/mman.h>
++#include <unistd.h>
+ 
+-EmulatedInputServer::EmulatedInputServer(std::string socketName) {
++EmulatedInputServer::EmulatedInputServer(std::string socketName, Keymap _keymap) {
+     Debug::log(LOG, "[EIS] Init socket: {}", socketName);
+ 
++    keymap = _keymap;
++
+     const char* xdg = getenv("XDG_RUNTIME_DIR");
+     if (xdg)
+         socketPath = std::string(xdg) + "/" + socketName;
+@@ -152,13 +158,53 @@ void EmulatedInputServer::ensureKeyboard(eis_event* event) {
+     eis_device* keyboard = eis_seat_new_device(client.seat);
+     eis_device_configure_name(keyboard, "captured keyboard");
+     eis_device_configure_capability(keyboard, EIS_DEVICE_CAP_KEYBOARD);
+-    // TODO: layout
++
++    if (keymap.fd != 0) {
++        Keymap _keymap = openKeymap();
++        Debug::log(LOG, "Using keymap {}", _keymap.fd);
++        eis_keymap* eis_keymap = eis_device_new_keymap(keyboard, EIS_KEYMAP_TYPE_XKB, _keymap.fd, _keymap.size);
++        eis_keymap_add(eis_keymap);
++        eis_keymap_unref(eis_keymap);
++    }
++
+     eis_device_add(keyboard);
+     eis_device_resume(keyboard);
+ 
+     client.keyboard = keyboard;
+ }
+ 
++Keymap EmulatedInputServer::openKeymap() {
++    Keymap _keymap;
++
++    void*  src = mmap(nullptr, keymap.size, PROT_READ, MAP_PRIVATE, keymap.fd, 0);
++    if (src == MAP_FAILED) {
++        Debug::log(ERR, "Failed to mmap the compositor keymap fd");
++        return _keymap;
++    }
++
++    int keymapFD = allocateSHMFile(keymap.size);
++    if (keymapFD < 0) {
++        Debug::log(ERR, "Failed to create a keymap file for keyboard grab");
++        return _keymap;
++    }
++
++    char* dst = (char*)mmap(nullptr, keymap.size, PROT_READ | PROT_WRITE, MAP_SHARED, keymapFD, 0);
++    if (dst == MAP_FAILED) {
++        Debug::log(ERR, "Failed to mmap a keymap file for keyboard grab");
++        close(keymapFD);
++        return _keymap;
++    }
++
++    memcpy(dst, src, keymap.size);
++    munmap(dst, keymap.size);
++    munmap(src, keymap.size);
++
++    _keymap.fd   = keymapFD;
++    _keymap.size = keymap.size;
++
++    return _keymap;
++}
++
+ //TODO: remove and re-add devices when monitors change (see: mutter/meta-input-capture-session.c:1107)
+ 
+ void EmulatedInputServer::clearPointer() {
+@@ -205,6 +251,10 @@ void EmulatedInputServer::stopEmulating() {
+         eis_device_stop_emulating(client.keyboard);
+ }
+ 
++void EmulatedInputServer::setKeymap(Keymap _keymap) {
++    keymap = _keymap;
++}
++
+ void EmulatedInputServer::sendMotion(double x, double y) {
+     if (!client.pointer)
+         return;
+diff --git a/src/shared/Eis.hpp b/src/shared/Eis.hpp
+index 2df8946..918dc71 100644
+--- a/src/shared/Eis.hpp
++++ b/src/shared/Eis.hpp
+@@ -3,17 +3,24 @@
+ #include <libeis.h>
+ #include <string>
+ 
++struct Keymap {
++    int32_t  fd   = 0;
++    uint32_t size = 0;
++};
++
+ /*
+  * Responsible to creating a socket for input communication
+  */
+ class EmulatedInputServer {
+   public:
+-    EmulatedInputServer(std::string socketPath);
++    EmulatedInputServer(std::string socketPath, Keymap keymap);
+     std::string socketPath;
+ 
+     void        startEmulating(int activationId);
+     void        stopEmulating();
+ 
++    void        setKeymap(Keymap _keymap);
++
+     void        sendMotion(double x, double y);
+     void        sendKey(uint32_t key, bool pressed);
+     void        sendButton(uint32_t button, bool pressed);
+@@ -38,10 +45,13 @@ class EmulatedInputServer {
+         eis_device* keyboard = nullptr;
+     } client;
+ 
+-    int  onEvent(eis_event* e);
+-    void pollEvents();
+-    void ensurePointer(eis_event* event);
+-    void ensureKeyboard(eis_event* event);
+-    void clearPointer();
+-    void clearKeyboard();
++    Keymap keymap;
++
++    int    onEvent(eis_event* e);
++    void   pollEvents();
++    void   ensurePointer(eis_event* event);
++    void   ensureKeyboard(eis_event* event);
++    Keymap openKeymap();
++    void   clearPointer();
++    void   clearKeyboard();
+ };
+
+From d664ed6d22b867bc0f4ab966bc5402bee3077f42 Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Mon, 21 Oct 2024 10:46:56 +0200
+Subject: [PATCH 08/17] input-capture: impl force release
+
+---
+ src/portals/InputCapture.cpp   | 24 +++++++++++++++++-------
+ src/portals/InputCapture.hpp   |  1 +
+ 3 files changed, 19 insertions(+), 8 deletions(-)
+
+diff --git a/src/portals/InputCapture.cpp b/src/portals/InputCapture.cpp
+index 6009760..249f9a4 100644
+--- a/src/portals/InputCapture.cpp
++++ b/src/portals/InputCapture.cpp
+@@ -16,6 +16,8 @@
+ CInputCapturePortal::CInputCapturePortal(SP<CCHyprlandInputCaptureManagerV1> mgr) : m_sState(mgr) {
+     Debug::log(LOG, "[input-capture] initializing input capture portal");
+ 
++    mgr->setForceRelease([this](CCHyprlandInputCaptureManagerV1* r) { onForceRelease(); });
++
+     mgr->setMotion([this](CCHyprlandInputCaptureManagerV1* r, wl_fixed_t x, wl_fixed_t y, wl_fixed_t dx, wl_fixed_t dy) {
+         onMotion(wl_fixed_to_double(x), wl_fixed_to_double(y), wl_fixed_to_double(dx), wl_fixed_to_double(dy));
+     });
+@@ -102,6 +104,9 @@ void CInputCapturePortal::onCreateSession(sdbus::MethodCall& call) {
+     session->session            = createDBusSession(sessionHandle);
+     session->session->onDestroy = [session, this]() {
+         disable(session->sessionHandle);
++        session->status = STOPPED;
++        session->eis->stopServer();
++        session->eis.reset();
+ 
+         Debug::log(LOG, "[input-capture] Session {} destroyed", session->sessionHandle.c_str());
+ 
+@@ -250,8 +255,10 @@ void CInputCapturePortal::onEnable(sdbus::MethodCall& call) {
+     Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
+     Debug::log(LOG, "[input-capture]  | appid: {}", appID);
+ 
+-    if (!sessionValid(sessionHandle))
++    if (!sessions.contains(sessionHandle)) {
++        Debug::log(WARN, "[input-capture] Unknown session handle: {}", sessionHandle.c_str());
+         return complete(call);
++    }
+ 
+     sessions[sessionHandle]->status = ENABLED;
+ 
+@@ -324,6 +331,12 @@ bool CInputCapturePortal::sessionValid(sdbus::ObjectPath sessionHandle) {
+     return sessions[sessionHandle]->status != STOPPED;
+ }
+ 
++void CInputCapturePortal::onForceRelease() {
++    Debug::log(LOG, "[input-capture] Released every captures");
++    for (auto [key, value] : sessions)
++        disable(key);
++}
++
+ bool get_line_intersection(double p0_x, double p0_y, double p1_x, double p1_y, double p2_x, double p2_y, double p3_x, double p3_y, double* i_x, double* i_y) {
+     float s1_x, s1_y, s2_x, s2_y;
+     s1_x = p1_x - p0_x;
+@@ -510,10 +523,7 @@ void CInputCapturePortal::disable(sdbus::ObjectPath sessionHandle) {
+     if (!session->disable())
+         return;
+ 
+-    session->eis->stopServer();
+-    session->eis.reset();
+-
+-    auto signal = m_pObject->createSignal(INTERFACE_NAME, "Disable");
++    auto signal = m_pObject->createSignal(INTERFACE_NAME, "Disabled");
+     signal << sessionHandle;
+ 
+     std::unordered_map<std::string, sdbus::Variant> options;
+@@ -523,8 +533,8 @@ void CInputCapturePortal::disable(sdbus::ObjectPath sessionHandle) {
+ }
+ 
+ bool CInputCapturePortal::SSession::disable() {
+-    status = STOPPED;
+-
++    status = CREATED;
++    barriers.clear();
+     Debug::log(LOG, "[input-capture] Session {} disabled", sessionHandle.c_str());
+     return true;
+ }
+diff --git a/src/portals/InputCapture.hpp b/src/portals/InputCapture.hpp
+index 75091f1..16095ee 100644
+--- a/src/portals/InputCapture.hpp
++++ b/src/portals/InputCapture.hpp
+@@ -29,6 +29,7 @@ class CInputCapturePortal {
+     void onRelease(sdbus::MethodCall& methodCall);
+     void onConnectToEIS(sdbus::MethodCall& methodCall);
+ 
++	void onForceRelease();
+     void onMotion(double x, double y, double dx, double dy);
+     void onKeymap(int32_t fd, uint32_t size);
+     void onKey(uint32_t key, bool pressed);
+
+From 4cd2e1ab77e56ccc61a75648032a210486b1b3e7 Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Sat, 26 Oct 2024 01:33:06 +0200
+Subject: [PATCH 09/17] input-capture: update to sdbus2.0
+
+---
+ src/core/PortalManager.cpp   |   2 +-
+ src/portals/InputCapture.cpp | 237 +++++++++++------------------------
+ src/portals/InputCapture.hpp |  55 ++++----
+ 3 files changed, 106 insertions(+), 188 deletions(-)
+
+diff --git a/src/core/PortalManager.cpp b/src/core/PortalManager.cpp
+index 365b97a..4e3dc42 100644
+--- a/src/core/PortalManager.cpp
++++ b/src/core/PortalManager.cpp
+@@ -364,7 +364,7 @@ void CPortalManager::startEventLoop() {
+         m_mEventLock.lock();
+ 
+         if (m_sEventLoopInternals.pollFds[0].revents & POLLIN /* dbus */) {
+-            while (m_pConnection->processPendingRequest()) {
++            while (m_pConnection->processPendingEvent()) {
+                 ;
+             }
+         }
+diff --git a/src/portals/InputCapture.cpp b/src/portals/InputCapture.cpp
+index 249f9a4..70376a1 100644
+--- a/src/portals/InputCapture.cpp
++++ b/src/portals/InputCapture.cpp
+@@ -7,6 +7,8 @@
+ #include <cstddef>
+ #include <cstdint>
+ #include <memory>
++#include <sdbus-c++/Types.h>
++#include <sdbus-c++/VTableItems.h>
+ #include <string>
+ #include <sys/socket.h>
+ #include <sys/un.h>
+@@ -40,18 +42,36 @@ CInputCapturePortal::CInputCapturePortal(SP<CCHyprlandInputCaptureManagerV1> mgr
+ 
+     m_pObject = sdbus::createObject(*g_pPortalManager->getConnection(), OBJECT_PATH);
+ 
+-    m_pObject->registerMethod(INTERFACE_NAME, "CreateSession", "oossa{sv}", "ua{sv}", [&](sdbus::MethodCall c) { onCreateSession(c); });
+-    m_pObject->registerMethod(INTERFACE_NAME, "GetZones", "oosa{sv}", "ua{sv}", [&](sdbus::MethodCall c) { onGetZones(c); });
+-    m_pObject->registerMethod(INTERFACE_NAME, "SetPointerBarriers", "oosa{sv}aa{sv}u", "ua{sv}", [&](sdbus::MethodCall c) { onSetPointerBarriers(c); });
+-    m_pObject->registerMethod(INTERFACE_NAME, "Enable", "osa{sv}", "ua{sv}", [&](sdbus::MethodCall c) { onEnable(c); });
+-    m_pObject->registerMethod(INTERFACE_NAME, "Disable", "osa{sv}", "ua{sv}", [&](sdbus::MethodCall c) { onDisable(c); });
+-    m_pObject->registerMethod(INTERFACE_NAME, "Release", "osa{sv}", "ua{sv}", [&](sdbus::MethodCall c) { onRelease(c); });
+-    m_pObject->registerMethod(INTERFACE_NAME, "ConnectToEIS", "osa{sv}", "h", [&](sdbus::MethodCall c) { onConnectToEIS(c); });
+-
+-    m_pObject->registerProperty(INTERFACE_NAME, "SupportedCapabilities", "u", [](sdbus::PropertyGetReply& reply) { reply << (uint32_t)(1 | 2); });
+-    m_pObject->registerProperty(INTERFACE_NAME, "version", "u", [](sdbus::PropertyGetReply& reply) { reply << (uint32_t)1; });
+-
+-    m_pObject->finishRegistration();
++    m_pObject
++        ->addVTable(
++            sdbus::registerMethod("CreateSession")
++                .implementedAs([this](sdbus::ObjectPath o1, sdbus::ObjectPath o2, std::string s1, std::string s2, std::unordered_map<std::string, sdbus::Variant> m) {
++                    return onCreateSession(o1, o2, s1, s2, m);
++                }),
++            sdbus::registerMethod("GetZones").implementedAs([this](sdbus::ObjectPath o1, sdbus::ObjectPath o2, std::string s, std::unordered_map<std::string, sdbus::Variant> m) {
++                return onGetZones(o1, o2, s, m);
++            }),
++            sdbus::registerMethod("SetPointerBarriers")
++                .implementedAs([this](sdbus::ObjectPath o1, sdbus::ObjectPath o2, std::string s, std::unordered_map<std::string, sdbus::Variant> m,
++                                      std::vector<std::unordered_map<std::string, sdbus::Variant>> v, uint32_t u) { return onSetPointerBarriers(o1, o2, s, m, v, u); }),
++            sdbus::registerMethod("Enable").implementedAs(
++                [this](sdbus::ObjectPath o, std::string s, std::unordered_map<std::string, sdbus::Variant> m) { return onEnable(o, s, m); }),
++
++            sdbus::registerMethod("Disable").implementedAs(
++                [this](sdbus::ObjectPath o, std::string s, std::unordered_map<std::string, sdbus::Variant> m) { return onDisable(o, s, m); }),
++
++            sdbus::registerMethod("Release").implementedAs(
++                [this](sdbus::ObjectPath o, std::string s, std::unordered_map<std::string, sdbus::Variant> m) { return onRelease(o, s, m); }),
++            sdbus::registerMethod("ConnectToEIS").implementedAs([this](sdbus::ObjectPath o, std::string s, std::unordered_map<std::string, sdbus::Variant> m) {
++                return onConnectToEIS(o, s, m);
++            }),
++            sdbus::registerProperty("SupportedCapabilities").withGetter([] { return (uint32_t)(1 | 2); }),
++            sdbus::registerProperty("version").withGetter([] { return (uint32_t)(1); }),
++            sdbus::registerSignal("Activated").withParameters<sdbus::ObjectPath, std::unordered_map<std::string, sdbus::Variant>>(),
++            sdbus::registerSignal("Disabled").withParameters<sdbus::ObjectPath, std::unordered_map<std::string, sdbus::Variant>>(),
++            sdbus::registerSignal("Deactivated").withParameters<sdbus::ObjectPath, std::unordered_map<std::string, sdbus::Variant>>(),
++            sdbus::registerSignal("ZonesChanged").withParameters<sdbus::ObjectPath, std::unordered_map<std::string, sdbus::Variant>>())
++        .forInterface(INTERFACE_NAME);
+ 
+     for (auto& o : g_pPortalManager->getAllOutputs())
+         Debug::log(LOG, "{} {}x{}", o->name, o->width, o->height);
+@@ -66,23 +86,11 @@ void complete(sdbus::MethodCall& call) {
+     reply.send();
+ }
+ 
+-void CInputCapturePortal::onCreateSession(sdbus::MethodCall& call) {
++dbUasv CInputCapturePortal::onCreateSession(sdbus::ObjectPath requestHandle, sdbus::ObjectPath sessionHandle, std::string appID, std::string parentWindow,
++                                            std::unordered_map<std::string, sdbus::Variant> options) {
+     Debug::log(LOG, "[input-capture] New session:");
+ 
+-    sdbus::ObjectPath requestHandle, sessionHandle;
+-
+-    call >> requestHandle;
+-    call >> sessionHandle;
+-
+-    std::string appID;
+-    call >> appID;
+-
+-    std::string parentWindow;
+-    call >> parentWindow;
+-
+-    std::unordered_map<std::string, sdbus::Variant> options;
+-    call >> options;
+-    uint32_t capabilities = options["capabilities"];
++    uint32_t capabilities = options["capabilities"].get<uint32_t>();
+ 
+     Debug::log(LOG, "[input-capture]  | {}", requestHandle.c_str());
+     Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
+@@ -121,32 +129,19 @@ void CInputCapturePortal::onCreateSession(sdbus::MethodCall& call) {
+     sessions.emplace(sessionHandle, session);
+ 
+     std::unordered_map<std::string, sdbus::Variant> results;
+-    results["capabilities"] = (uint)3;
+-    results["session_id"]   = sessionId;
+-
+-    auto reply = call.createReply();
+-    reply << (uint32_t)0;
+-    reply << results;
+-    reply.send();
++    results["capabilities"] = sdbus::Variant{(uint)3};
++    results["session_id"]   = sdbus::Variant{sessionId};
++    return {0, results};
+ }
+ 
+-void CInputCapturePortal::onGetZones(sdbus::MethodCall& call) {
++dbUasv CInputCapturePortal::onGetZones(sdbus::ObjectPath requestHandle, sdbus::ObjectPath sessionHandle, std::string appID, std::unordered_map<std::string, sdbus::Variant> opts) {
+     Debug::log(LOG, "[input-capture] New GetZones request:");
+-
+-    sdbus::ObjectPath requestHandle, sessionHandle;
+-
+-    call >> requestHandle;
+-    call >> sessionHandle;
+-
+-    std::string appID;
+-    call >> appID;
+-
+     Debug::log(LOG, "[input-capture]  | {}", requestHandle.c_str());
+     Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
+     Debug::log(LOG, "[input-capture]  | appid: {}", appID);
+ 
+     if (!sessionValid(sessionHandle))
+-        return;
++        return {1, {}};
+ 
+     std::vector<sdbus::Struct<uint32_t, uint32_t, int32_t, int32_t>> zones;
+     for (auto& o : g_pPortalManager->getAllOutputs()) {
+@@ -154,55 +149,36 @@ void CInputCapturePortal::onGetZones(sdbus::MethodCall& call) {
+     }
+ 
+     std::unordered_map<std::string, sdbus::Variant> results;
+-    results["zones"]    = zones;
+-    results["zone_set"] = ++lastZoneSet;
+-
+-    auto reply = call.createReply();
+-    reply << (uint32_t)0;
+-    reply << results;
+-    reply.send();
++    results["zones"]    = sdbus::Variant{zones};
++    results["zone_set"] = sdbus::Variant{++lastZoneSet};
++    return {0, results};
+ }
+ 
+-void CInputCapturePortal::onSetPointerBarriers(sdbus::MethodCall& call) {
++dbUasv CInputCapturePortal::onSetPointerBarriers(sdbus::ObjectPath requestHandle, sdbus::ObjectPath sessionHandle, std::string appID,
++                                                 std::unordered_map<std::string, sdbus::Variant> opts, std::vector<std::unordered_map<std::string, sdbus::Variant>> barriers,
++                                                 uint32_t zoneSet) {
+     Debug::log(LOG, "[input-capture] New SetPointerBarriers request:");
+ 
+-    sdbus::ObjectPath requestHandle, sessionHandle;
+-
+-    call >> requestHandle;
+-    call >> sessionHandle;
+-
+-    std::string appID;
+-    call >> appID;
+-
+     Debug::log(LOG, "[input-capture]  | {}", requestHandle.c_str());
+     Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
+     Debug::log(LOG, "[input-capture]  | appid: {}", appID);
+ 
+     if (!sessionValid(sessionHandle))
+-        return complete(call);
+-
+-    std::unordered_map<std::string, sdbus::Variant> options;
+-    call >> options;
+-
+-    std::vector<std::unordered_map<std::string, sdbus::Variant>> barriers;
+-    call >> barriers;
++        return {1, {}};
+ 
+-    uint32_t zoneSet;
+-    call >> zoneSet;
+     Debug::log(LOG, "[input-capture]  | zoneSet: {}", zoneSet);
+ 
+     if (zoneSet != lastZoneSet) {
+         Debug::log(WARN, "[input-capture] Invalid zone set discarding barriers");
+-        complete(call); //TODO: We should return failed_barries
+-        return;
++        return {1, {}}; //TODO: We should return failed_barries
+     }
+ 
+     sessions[sessionHandle]->barriers.clear();
+     for (const auto& b : barriers) {
+-        uint                              id = b.at("barrier_id");
++        uint                              id = b.at("barrier_id").get<uint>();
+         int                               x1, y1, x2, y2;
+ 
+-        sdbus::Struct<int, int, int, int> p = b.at("position");
++        sdbus::Struct<int, int, int, int> p = b.at("position").get<sdbus::Struct<int, int, int, int>>();
+         x1                                  = p.get<0>();
+         y1                                  = p.get<1>();
+         x2                                  = p.get<2>();
+@@ -215,111 +191,69 @@ void CInputCapturePortal::onSetPointerBarriers(sdbus::MethodCall& call) {
+     std::vector<uint>                               failedBarriers;
+ 
+     std::unordered_map<std::string, sdbus::Variant> results;
+-    results["failed_barriers"] = failedBarriers;
+-
+-    auto reply = call.createReply();
+-    reply << (uint32_t)0;
+-    reply << results;
+-    reply.send();
++    results["failed_barriers"] = sdbus::Variant{failedBarriers};
++    return {0, results};
+ }
+ 
+-void CInputCapturePortal::onDisable(sdbus::MethodCall& call) {
++dbUasv CInputCapturePortal::onDisable(sdbus::ObjectPath sessionHandle, std::string appID, std::unordered_map<std::string, sdbus::Variant> opts) {
+     Debug::log(LOG, "[input-capture] New Disable request:");
+-
+-    sdbus::ObjectPath sessionHandle;
+-    call >> sessionHandle;
+-
+-    std::string appID;
+-    call >> appID;
+-
+     Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
+     Debug::log(LOG, "[input-capture]  | appid: {}", appID);
+ 
+     if (!sessionValid(sessionHandle))
+-        return complete(call);
++        return {1, {}};
+ 
+     disable(sessionHandle);
+-
+-    complete(call);
++    return {0, {}};
+ }
+ 
+-void CInputCapturePortal::onEnable(sdbus::MethodCall& call) {
++dbUasv CInputCapturePortal::onEnable(sdbus::ObjectPath sessionHandle, std::string appID, std::unordered_map<std::string, sdbus::Variant> opts) {
+     Debug::log(LOG, "[input-capture] New Enable request:");
+-
+-    sdbus::ObjectPath sessionHandle;
+-    call >> sessionHandle;
+-
+-    std::string appID;
+-    call >> appID;
+-
+     Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
+     Debug::log(LOG, "[input-capture]  | appid: {}", appID);
+ 
+     if (!sessions.contains(sessionHandle)) {
+         Debug::log(WARN, "[input-capture] Unknown session handle: {}", sessionHandle.c_str());
+-        return complete(call);
++        return {1, {}};
+     }
+ 
+     sessions[sessionHandle]->status = ENABLED;
+-
+-    complete(call);
++    return {0, {}};
+ }
+ 
+-void CInputCapturePortal::onRelease(sdbus::MethodCall& call) {
++dbUasv CInputCapturePortal::onRelease(sdbus::ObjectPath sessionHandle, std::string appID, std::unordered_map<std::string, sdbus::Variant> opts) {
+     Debug::log(LOG, "[input-capture] New Release request:");
+-
+-    sdbus::ObjectPath sessionHandle;
+-    call >> sessionHandle;
+-
+-    std::string appID;
+-    call >> appID;
+-
+     Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
+     Debug::log(LOG, "[input-capture]  | appid: {}", appID);
+ 
+     if (!sessionValid(sessionHandle))
+-        return complete(call);
++        return {1, {}};
+ 
+-    std::unordered_map<std::string, sdbus::Variant> options;
+-    call >> options;
+-    uint32_t activationId = options["activation_id"];
++    uint32_t activationId = opts["activation_id"].get<uint32_t>();
+     if (activationId != sessions[sessionHandle]->activationId) {
+         Debug::log(WARN, "[input-capture] Invalid activation id {} expected {}", activationId, sessions[sessionHandle]->activationId);
+-        complete(call);
+-        return;
++        return {1, {}};
+     }
+ 
+     deactivate(sessionHandle);
+ 
+     //TODO: maybe warp pointer
+ 
+-    complete(call);
++    return {0, {}};
+ }
+ 
+-void CInputCapturePortal::onConnectToEIS(sdbus::MethodCall& call) {
++sdbus::UnixFd CInputCapturePortal::onConnectToEIS(sdbus::ObjectPath sessionHandle, std::string appID, std::unordered_map<std::string, sdbus::Variant> opts) {
+     Debug::log(LOG, "[input-capture] New ConnectToEIS request:");
+-
+-    sdbus::ObjectPath sessionHandle;
+-    call >> sessionHandle;
+-
+-    std::string appID;
+-    call >> appID;
+-
+-    std::unordered_map<std::string, sdbus::Variant> options;
+-    call >> options;
+-
+     Debug::log(LOG, "[input-capture]  | {}", sessionHandle.c_str());
+     Debug::log(LOG, "[input-capture]  | appid: {}", appID);
+ 
+     if (!sessionValid(sessionHandle))
+-        return complete(call);
++        return (sdbus::UnixFd)0;
+ 
+     int sockfd = sessions[sessionHandle]->eis->getFileDescriptor();
+ 
+     Debug::log(LOG, "[input-capture] Connected to the socket. File descriptor: {}", sockfd);
+-    auto reply = call.createReply();
+-    reply << (sdbus::UnixFd)sockfd;
+-    reply.send();
++    return (sdbus::UnixFd)sockfd;
+ }
+ 
+ bool CInputCapturePortal::sessionValid(sdbus::ObjectPath sessionHandle) {
+@@ -334,7 +268,7 @@ bool CInputCapturePortal::sessionValid(sdbus::ObjectPath sessionHandle) {
+ void CInputCapturePortal::onForceRelease() {
+     Debug::log(LOG, "[input-capture] Released every captures");
+     for (auto [key, value] : sessions)
+-        disable(key);
++        disable(value->sessionHandle);
+ }
+ 
+ bool get_line_intersection(double p0_x, double p0_y, double p1_x, double p1_y, double p2_x, double p2_y, double p3_x, double p3_y, double* i_x, double* i_y) {
+@@ -376,7 +310,7 @@ void CInputCapturePortal::onMotion(double x, double y, double dx, double dy) {
+     for (const auto& [key, session] : sessions) {
+         int matched = session->isColliding(x, y, x - dx, y - dy);
+         if (matched != 0)
+-            activate(key, x, y, matched);
++            activate(session->sessionHandle, x, y, matched);
+ 
+         session->motion(dx, dy);
+     }
+@@ -429,18 +363,12 @@ void CInputCapturePortal::activate(sdbus::ObjectPath sessionHandle, double x, do
+ 
+     m_sState.manager->sendCapture();
+ 
+-    auto signal = m_pObject->createSignal(INTERFACE_NAME, "Activated");
+-    signal << sessionHandle;
+-
+-    g_pPortalManager->m_sPortals.inputCapture->INTERFACE_NAME;
+-
+     std::unordered_map<std::string, sdbus::Variant> results;
+-    results["activation_id"]   = session->activationId;
+-    results["cursor_position"] = sdbus::Struct<double, double>(x, y);
+-    results["barrier_id"]      = borderId;
+-    signal << results;
++    results["activation_id"]   = sdbus::Variant{session->activationId};
++    results["cursor_position"] = sdbus::Variant{sdbus::Struct<double, double>(x, y)};
++    results["barrier_id"]      = sdbus::Variant{borderId};
+ 
+-    m_pObject->emitSignal(signal);
++    m_pObject->emitSignal("Activated").onInterface(INTERFACE_NAME).withArguments(sessionHandle, results);
+ }
+ 
+ bool CInputCapturePortal::SSession::activate(double x, double y, uint32_t borderId) {
+@@ -465,13 +393,10 @@ void CInputCapturePortal::deactivate(sdbus::ObjectPath sessionHandle) {
+ 
+     m_sState.manager->sendRelease();
+ 
+-    auto signal = m_pObject->createSignal(INTERFACE_NAME, "Deactivated");
+-    signal << sessionHandle;
+     std::unordered_map<std::string, sdbus::Variant> options;
+-    options["activation_id"] = session->activationId;
+-    signal << options;
++    options["activation_id"] = sdbus::Variant{session->activationId};
+ 
+-    m_pObject->emitSignal(signal);
++    m_pObject->emitSignal("Deactivated").onInterface(INTERFACE_NAME).withArguments(sessionHandle, options);
+ }
+ 
+ bool CInputCapturePortal::SSession::deactivate() {
+@@ -496,13 +421,8 @@ void CInputCapturePortal::zonesChanged() {
+         if (!value->zoneChanged())
+             continue;
+ 
+-        auto signal = m_pObject->createSignal(INTERFACE_NAME, "Deactivated");
+-        signal << key;
+-
+         std::unordered_map<std::string, sdbus::Variant> options;
+-        signal << options;
+-
+-        m_pObject->emitSignal(signal);
++        m_pObject->emitSignal("ZonesChanged").onInterface(INTERFACE_NAME).withArguments(key, options);
+     }
+ }
+ 
+@@ -523,13 +443,8 @@ void CInputCapturePortal::disable(sdbus::ObjectPath sessionHandle) {
+     if (!session->disable())
+         return;
+ 
+-    auto signal = m_pObject->createSignal(INTERFACE_NAME, "Disabled");
+-    signal << sessionHandle;
+-
+     std::unordered_map<std::string, sdbus::Variant> options;
+-    signal << options;
+-
+-    m_pObject->emitSignal(signal);
++    m_pObject->emitSignal("Disabled").onInterface(INTERFACE_NAME).withArguments(sessionHandle, options);
+ }
+ 
+ bool CInputCapturePortal::SSession::disable() {
+diff --git a/src/portals/InputCapture.hpp b/src/portals/InputCapture.hpp
+index 16095ee..9364a01 100644
+--- a/src/portals/InputCapture.hpp
++++ b/src/portals/InputCapture.hpp
+@@ -1,4 +1,5 @@
+ #pragma once
++#include "dbusDefines.hpp"
+ #include "hyprland-input-capture-v1.hpp"
+ #include "../shared/Eis.hpp"
+ #include "../includes.hpp"
+@@ -21,25 +22,27 @@ class CInputCapturePortal {
+   public:
+     CInputCapturePortal(SP<CCHyprlandInputCaptureManagerV1> mgr);
+ 
+-    void onCreateSession(sdbus::MethodCall& methodCall);
+-    void onGetZones(sdbus::MethodCall& methodCall);
+-    void onSetPointerBarriers(sdbus::MethodCall& methodCall);
+-    void onEnable(sdbus::MethodCall& methodCall);
+-    void onDisable(sdbus::MethodCall& methodCall);
+-    void onRelease(sdbus::MethodCall& methodCall);
+-    void onConnectToEIS(sdbus::MethodCall& methodCall);
+-
+-	void onForceRelease();
+-    void onMotion(double x, double y, double dx, double dy);
+-    void onKeymap(int32_t fd, uint32_t size);
+-    void onKey(uint32_t key, bool pressed);
+-    void onButton(uint32_t button, bool pressed);
+-    void onAxis(bool axis, double value);
+-    void onAxisValue120(bool axis, int32_t value120);
+-    void onAxisStop(bool axis);
+-    void onFrame();
+-
+-    void zonesChanged();
++    dbUasv        onCreateSession(sdbus::ObjectPath requestHandle, sdbus::ObjectPath sessionHandle, std::string appID, std::string parentWindow,
++                                  std::unordered_map<std::string, sdbus::Variant> options);
++    dbUasv        onGetZones(sdbus::ObjectPath requestHandle, sdbus::ObjectPath sessionHandle, std::string appID, std::unordered_map<std::string, sdbus::Variant> opts);
++    dbUasv        onSetPointerBarriers(sdbus::ObjectPath requestHandle, sdbus::ObjectPath sessionHandle, std::string appID, std::unordered_map<std::string, sdbus::Variant> opts,
++                                       std::vector<std::unordered_map<std::string, sdbus::Variant>> barriers, uint32_t zoneSet);
++    dbUasv        onEnable(sdbus::ObjectPath sessionHandle, std::string appID, std::unordered_map<std::string, sdbus::Variant> opts);
++    dbUasv        onDisable(sdbus::ObjectPath sessionHandle, std::string appID, std::unordered_map<std::string, sdbus::Variant> opts);
++    dbUasv        onRelease(sdbus::ObjectPath sessionHandle, std::string appID, std::unordered_map<std::string, sdbus::Variant> opts);
++    sdbus::UnixFd onConnectToEIS(sdbus::ObjectPath sessionHandle, std::string appID, std::unordered_map<std::string, sdbus::Variant> opts);
++
++    void          onForceRelease();
++    void          onMotion(double x, double y, double dx, double dy);
++    void          onKeymap(int32_t fd, uint32_t size);
++    void          onKey(uint32_t key, bool pressed);
++    void          onButton(uint32_t button, bool pressed);
++    void          onAxis(bool axis, double value);
++    void          onAxisValue120(bool axis, int32_t value120);
++    void          onAxisStop(bool axis);
++    void          onFrame();
++
++    void          zonesChanged();
+ 
+     struct SSession {
+         std::string                            appid;
+@@ -84,14 +87,14 @@ class CInputCapturePortal {
+     uint                            sessionCounter = 0;
+     uint                            lastZoneSet    = 0;
+ 
+-    Keymap keymap; //We store the active keymap ready to be sent when creating EIS
++    Keymap                          keymap; //We store the active keymap ready to be sent when creating EIS
+ 
+-    const std::string INTERFACE_NAME = "org.freedesktop.impl.portal.InputCapture";
+-    const std::string OBJECT_PATH    = "/org/freedesktop/portal/desktop";
++    const sdbus::InterfaceName      INTERFACE_NAME = sdbus::InterfaceName{"org.freedesktop.impl.portal.InputCapture"};
++    const sdbus::ObjectPath         OBJECT_PATH    = sdbus::ObjectPath{"/org/freedesktop/portal/desktop"};
+ 
+-    bool              sessionValid(sdbus::ObjectPath sessionHandle);
++    bool                            sessionValid(sdbus::ObjectPath sessionHandle);
+ 
+-    void              activate(sdbus::ObjectPath sessionHandle, double x, double y, uint32_t borderId);
+-    void              deactivate(sdbus::ObjectPath sessionHandle);
+-    void              disable(sdbus::ObjectPath sessionHandle);
++    void                            activate(sdbus::ObjectPath sessionHandle, double x, double y, uint32_t borderId);
++    void                            deactivate(sdbus::ObjectPath sessionHandle);
++    void                            disable(sdbus::ObjectPath sessionHandle);
+ };
+
+From df93f3ca76ea07b7fcdcc50b38362c434487ac3d Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Sat, 26 Oct 2024 15:53:56 +0200
+Subject: [PATCH 10/17] fix build
+
+---
+ src/portals/InputCapture.hpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/portals/InputCapture.hpp b/src/portals/InputCapture.hpp
+index 9364a01..0f5a108 100644
+--- a/src/portals/InputCapture.hpp
++++ b/src/portals/InputCapture.hpp
+@@ -1,5 +1,5 @@
+ #pragma once
+-#include "dbusDefines.hpp"
++#include "../dbusDefines.hpp"
+ #include "hyprland-input-capture-v1.hpp"
+ #include "../shared/Eis.hpp"
+ #include "../includes.hpp"
+
+From 52414bc1e5b08cde7e9f8c113d2e3a0614304a92 Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Tue, 17 Dec 2024 19:03:56 +0100
+Subject: [PATCH 11/17] input-capture: fix build
+
+---
+ hyprland-share-picker/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hyprland-share-picker/meson.build b/hyprland-share-picker/meson.build
+index ef29621..7a42657 100644
+--- a/hyprland-share-picker/meson.build
++++ b/hyprland-share-picker/meson.build
+@@ -18,6 +18,6 @@ executable('hyprland-share-picker',
+   sources,
+   ui_files,
+   moc,
+-  dependencies: qtdep,
++  dependencies: [qtdep, dependency('hyprutils')],
+   install: true
+ )
+
+From 763572a0c118fc07f320777abca28f9acf51954e Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Tue, 17 Dec 2024 19:21:42 +0100
+Subject: [PATCH 12/17] input-capture: send modifiers (highly experimental)
+
+---
+ src/core/PortalManager.cpp     |  1 +
+ src/portals/InputCapture.cpp   | 16 ++++++++++++++++
+ src/portals/InputCapture.hpp   |  2 ++
+ src/shared/Eis.cpp             |  8 ++++++++
+ src/shared/Eis.hpp             |  1 +
+ 6 files changed, 29 insertions(+), 1 deletion(-)
+
+diff --git a/src/core/PortalManager.cpp b/src/core/PortalManager.cpp
+index 4e3dc42..8e0d266 100644
+--- a/src/core/PortalManager.cpp
++++ b/src/core/PortalManager.cpp
+@@ -22,6 +22,7 @@ SOutput::SOutput(SP<CCWlOutput> output_) : output(output_) {
+         refreshRate = refresh;
+         width       = width_;
+         height      = height_;
++		Debug::log(LOG, "??? {} {}", flags, refresh);
+     });
+     output->setGeometry(
+         [this](CCWlOutput* r, int32_t x_, int32_t y_, int32_t physical_width, int32_t physical_height, int32_t subpixel, const char* make, const char* model, int32_t transform_) {
+diff --git a/src/portals/InputCapture.cpp b/src/portals/InputCapture.cpp
+index 70376a1..4372a36 100644
+--- a/src/portals/InputCapture.cpp
++++ b/src/portals/InputCapture.cpp
+@@ -28,6 +28,10 @@ CInputCapturePortal::CInputCapturePortal(SP<CCHyprlandInputCaptureManagerV1> mgr
+         onKeymap(format == HYPRLAND_INPUT_CAPTURE_MANAGER_V1_KEYMAP_FORMAT_XKB_V1 ? fd : 0, size);
+     });
+ 
++    mgr->setModifiers([this](CCHyprlandInputCaptureManagerV1* r, uint32_t mods_depressed, uint32_t mods_latched, uint32_t mods_locked, uint32_t group) {
++        onModifiers(mods_depressed, mods_latched, mods_locked, group);
++    });
++
+     mgr->setKey([this](CCHyprlandInputCaptureManagerV1* r, uint32_t key, hyprlandInputCaptureManagerV1KeyState state) { onKey(key, state); });
+ 
+     mgr->setButton([this](CCHyprlandInputCaptureManagerV1* r, uint32_t button, hyprlandInputCaptureManagerV1ButtonState state) { onButton(button, state); });
+@@ -321,6 +325,11 @@ void CInputCapturePortal::onKey(uint32_t id, bool pressed) {
+         value->key(id, pressed);
+ }
+ 
++void CInputCapturePortal::onModifiers(uint32_t modsDepressed, uint32_t modsLatched, uint32_t modsLocked, uint32_t group) {
++    for (const auto& [key, value] : sessions)
++        value->modifiers(modsDepressed, modsLatched, modsLocked, group);
++}
++
+ void CInputCapturePortal::onKeymap(int32_t fd, uint32_t size) {
+     keymap.fd   = fd;
+     keymap.size = size;
+@@ -475,6 +484,13 @@ void CInputCapturePortal::SSession::key(uint32_t key, bool pressed) {
+     eis->sendKey(key, pressed);
+ }
+ 
++void CInputCapturePortal::SSession::modifiers(uint32_t modsDepressed, uint32_t modsLatched, uint32_t modsLocked, uint32_t group) {
++    if (status != ACTIVATED)
++        return;
++
++    eis->sendModifiers(modsDepressed, modsLatched, modsLocked, group);
++}
++
+ void CInputCapturePortal::SSession::button(uint32_t button, bool pressed) {
+     if (status != ACTIVATED)
+         return;
+diff --git a/src/portals/InputCapture.hpp b/src/portals/InputCapture.hpp
+index 0f5a108..99dcd36 100644
+--- a/src/portals/InputCapture.hpp
++++ b/src/portals/InputCapture.hpp
+@@ -36,6 +36,7 @@ class CInputCapturePortal {
+     void          onMotion(double x, double y, double dx, double dy);
+     void          onKeymap(int32_t fd, uint32_t size);
+     void          onKey(uint32_t key, bool pressed);
++    void          onModifiers(uint32_t modsDepressed, uint32_t modsLatched, uint32_t modsLocked, uint32_t group);
+     void          onButton(uint32_t button, bool pressed);
+     void          onAxis(bool axis, double value);
+     void          onAxisValue120(bool axis, int32_t value120);
+@@ -66,6 +67,7 @@ class CInputCapturePortal {
+ 
+         void     motion(double dx, double dy);
+         void     key(uint32_t key, bool pressed);
++        void     modifiers(uint32_t modsDepressed, uint32_t modsLatched, uint32_t modsLocked, uint32_t group);
+         void     keymap(Keymap keymap);
+         void     button(uint32_t button, bool pressed);
+         void     axis(bool axis, double value);
+diff --git a/src/shared/Eis.cpp b/src/shared/Eis.cpp
+index 4c3a5a1..6032fba 100644
+--- a/src/shared/Eis.cpp
++++ b/src/shared/Eis.cpp
+@@ -269,6 +269,14 @@ void EmulatedInputServer::sendKey(uint32_t key, bool pressed) {
+     eis_device_frame(client.keyboard, now);
+ }
+ 
++void EmulatedInputServer::sendModifiers(uint32_t modsDepressed, uint32_t modsLatched, uint32_t modsLocked, uint32_t group) {
++    if (!client.keyboard)
++        return;
++    uint64_t now = eis_now(eisCtx);
++	eis_device_keyboard_send_xkb_modifiers(client.keyboard, modsDepressed, modsLatched, modsLocked, group);
++    eis_device_frame(client.keyboard, now);
++}
++
+ void EmulatedInputServer::sendButton(uint32_t button, bool pressed) {
+     if (!client.pointer)
+         return;
+diff --git a/src/shared/Eis.hpp b/src/shared/Eis.hpp
+index 918dc71..3af8181 100644
+--- a/src/shared/Eis.hpp
++++ b/src/shared/Eis.hpp
+@@ -23,6 +23,7 @@ class EmulatedInputServer {
+ 
+     void        sendMotion(double x, double y);
+     void        sendKey(uint32_t key, bool pressed);
++    void        sendModifiers(uint32_t modsDepressed, uint32_t modsLatched, uint32_t modsLocked, uint32_t group);
+     void        sendButton(uint32_t button, bool pressed);
+     void        sendScrollDelta(double x, double y);
+     void        sendScrollDiscrete(int32_t x, int32_t y);
+
+From e9bb66603bfcd8c71c6a61c6e6d31edf32d807bb Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Thu, 9 Jan 2025 13:25:33 +0100
+Subject: [PATCH 13/17] input-capture: upstream protocols
+
+---
+
+From 79417bd179e186cb731f118a335e507449aae6af Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Sun, 26 Jan 2025 14:50:29 +0100
+Subject: [PATCH 15/17] input-capture: close leaked keymap fd
+
+---
+ src/shared/Eis.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/shared/Eis.cpp b/src/shared/Eis.cpp
+index 6032fba..ed3d111 100644
+--- a/src/shared/Eis.cpp
++++ b/src/shared/Eis.cpp
+@@ -165,6 +165,7 @@ void EmulatedInputServer::ensureKeyboard(eis_event* event) {
+         eis_keymap* eis_keymap = eis_device_new_keymap(keyboard, EIS_KEYMAP_TYPE_XKB, _keymap.fd, _keymap.size);
+         eis_keymap_add(eis_keymap);
+         eis_keymap_unref(eis_keymap);
++        close(_keymap.fd);
+     }
+ 
+     eis_device_add(keyboard);
+@@ -273,7 +274,7 @@ void EmulatedInputServer::sendModifiers(uint32_t modsDepressed, uint32_t modsLat
+     if (!client.keyboard)
+         return;
+     uint64_t now = eis_now(eisCtx);
+-	eis_device_keyboard_send_xkb_modifiers(client.keyboard, modsDepressed, modsLatched, modsLocked, group);
++    eis_device_keyboard_send_xkb_modifiers(client.keyboard, modsDepressed, modsLatched, modsLocked, group);
+     eis_device_frame(client.keyboard, now);
+ }
+ 
+
+From 4701e990932e0598d4eeb589c5810c8313cfb630 Mon Sep 17 00:00:00 2001
+From: Gwilherm Folliot <gwilherm55fo@gmail.com>
+Date: Sun, 26 Jan 2025 22:37:24 +0100
+Subject: [PATCH 16/17] input-capture: properly send ZonesChanged signal &
+ reset eis pointer on zone change
+
+---
+ src/portals/InputCapture.cpp | 12 +++++++++---
+ src/shared/Eis.cpp           | 14 ++++++++++----
+ src/shared/Eis.hpp           |  5 +++--
+ 3 files changed, 22 insertions(+), 9 deletions(-)
+
+diff --git a/src/portals/InputCapture.cpp b/src/portals/InputCapture.cpp
+index 4372a36..9edd8c3 100644
+--- a/src/portals/InputCapture.cpp
++++ b/src/portals/InputCapture.cpp
+@@ -149,6 +149,7 @@ dbUasv CInputCapturePortal::onGetZones(sdbus::ObjectPath requestHandle, sdbus::O
+ 
+     std::vector<sdbus::Struct<uint32_t, uint32_t, int32_t, int32_t>> zones;
+     for (auto& o : g_pPortalManager->getAllOutputs()) {
++        Debug::log(LOG, "[input-capture]  | w: {} h: {} x: {} y: {}", o->width, o->height, o->x, o->y);
+         zones.push_back(sdbus::Struct(o->width, o->height, o->x, o->y));
+     }
+ 
+@@ -174,7 +175,7 @@ dbUasv CInputCapturePortal::onSetPointerBarriers(sdbus::ObjectPath requestHandle
+ 
+     if (zoneSet != lastZoneSet) {
+         Debug::log(WARN, "[input-capture] Invalid zone set discarding barriers");
+-        return {1, {}}; //TODO: We should return failed_barries
++        return {0, {}}; //TODO: We should return failed_barries
+     }
+ 
+     sessions[sessionHandle]->barriers.clear();
+@@ -425,18 +426,23 @@ void CInputCapturePortal::zonesChanged() {
+         return;
+ 
+     Debug::log(LOG, "[input-capture] Monitor layout has changed, notifing clients");
++    lastZoneSet++;
+ 
+     for (auto& [key, value] : sessions) {
++        if (!sessionValid(value->sessionHandle))
++            continue;
++        disable(value->sessionHandle);
+         if (!value->zoneChanged())
+             continue;
+ 
+         std::unordered_map<std::string, sdbus::Variant> options;
+-        m_pObject->emitSignal("ZonesChanged").onInterface(INTERFACE_NAME).withArguments(key, options);
++        options["zone_set"] = sdbus::Variant{lastZoneSet - 1};
++        m_pObject->emitSignal("ZonesChanged").onInterface(INTERFACE_NAME).withArguments(value->sessionHandle, options);
+     }
+ }
+ 
+ bool CInputCapturePortal::SSession::zoneChanged() {
+-    //TODO: notify EIS
++    eis->resetPointer();
+     return true;
+ }
+ 
+diff --git a/src/shared/Eis.cpp b/src/shared/Eis.cpp
+index ed3d111..c5f1163 100644
+--- a/src/shared/Eis.cpp
++++ b/src/shared/Eis.cpp
+@@ -101,12 +101,12 @@ int EmulatedInputServer::onEvent(eis_event* e) {
+ 
+             if (eis_event_seat_has_capability(e, EIS_DEVICE_CAP_POINTER) && eis_event_seat_has_capability(e, EIS_DEVICE_CAP_BUTTON) &&
+                 eis_event_seat_has_capability(e, EIS_DEVICE_CAP_SCROLL))
+-                ensurePointer(e);
++                ensurePointer();
+             else
+                 clearPointer();
+ 
+             if (eis_event_seat_has_capability(e, EIS_DEVICE_CAP_KEYBOARD))
+-                ensureKeyboard(e);
++                ensureKeyboard();
+             else
+                 clearKeyboard();
+             break;
+@@ -125,10 +125,11 @@ int EmulatedInputServer::onEvent(eis_event* e) {
+     return 0;
+ }
+ 
+-void EmulatedInputServer::ensurePointer(eis_event* event) {
++void EmulatedInputServer::ensurePointer() {
+     if (client.pointer)
+         return;
+ 
++    Debug::log(LOG, "[EIS] Creating pointer");
+     eis_device* pointer = eis_seat_new_device(client.seat);
+     eis_device_configure_name(pointer, "captured relative pointer");
+     eis_device_configure_capability(pointer, EIS_DEVICE_CAP_POINTER);
+@@ -151,7 +152,7 @@ void EmulatedInputServer::ensurePointer(eis_event* event) {
+     client.pointer = pointer;
+ }
+ 
+-void EmulatedInputServer::ensureKeyboard(eis_event* event) {
++void EmulatedInputServer::ensureKeyboard() {
+     if (client.keyboard)
+         return;
+ 
+@@ -256,6 +257,11 @@ void EmulatedInputServer::setKeymap(Keymap _keymap) {
+     keymap = _keymap;
+ }
+ 
++void EmulatedInputServer::resetPointer() {
++	clearPointer();
++	ensurePointer();
++}
++
+ void EmulatedInputServer::sendMotion(double x, double y) {
+     if (!client.pointer)
+         return;
+diff --git a/src/shared/Eis.hpp b/src/shared/Eis.hpp
+index 3af8181..5688ed2 100644
+--- a/src/shared/Eis.hpp
++++ b/src/shared/Eis.hpp
+@@ -20,6 +20,7 @@ class EmulatedInputServer {
+     void        stopEmulating();
+ 
+     void        setKeymap(Keymap _keymap);
++    void        resetPointer();
+ 
+     void        sendMotion(double x, double y);
+     void        sendKey(uint32_t key, bool pressed);
+@@ -50,8 +51,8 @@ class EmulatedInputServer {
+ 
+     int    onEvent(eis_event* e);
+     void   pollEvents();
+-    void   ensurePointer(eis_event* event);
+-    void   ensureKeyboard(eis_event* event);
++    void   ensurePointer();
++    void   ensureKeyboard();
+     Keymap openKeymap();
+     void   clearPointer();
+     void   clearKeyboard();
+
+From 331405afc284e2fb5c5e494f21d4cd8779c32fd1 Mon Sep 17 00:00:00 2001
+From: littleblack111 <littleblack11111@gmail.com>
+Date: Mon, 27 Jan 2025 15:19:10 +0800
+Subject: [PATCH 17/17] fix(cmake): UUID (#2)
+
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6486c7e..532fc02 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -63,6 +63,7 @@ pkg_check_modules(
+   libspa-0.2
+   libdrm
+   libeis-1.0
++  uuid
+   gbm
+   hyprlang>=0.2.0
+   hyprutils>=0.2.6

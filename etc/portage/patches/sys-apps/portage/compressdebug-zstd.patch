@@ -1,0 +1,11 @@
+--- a/bin/estrip
++++ b/bin/estrip
+@@ -295,7 +295,7 @@ save_elf_debug() {
+ 			mv "${splitdebug}" "${dst}"
+ 		else
+ 			local objcopy_flags="--only-keep-debug"
+-			${FEATURES_compressdebug} && objcopy_flags+=" --compress-debug-sections"
++			${FEATURES_compressdebug} && objcopy_flags+=" --compress-debug-sections=zstd"
+ 			${OBJCOPY} ${objcopy_flags} "${src}" "${dst}" &&
+ 			${OBJCOPY} --add-gnu-debuglink="${dst}" "${src}"
+ 		fi

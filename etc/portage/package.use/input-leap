@@ -1,0 +1,3 @@
+# required by x11-misc/input-leap-9999::guru[gui]
+# required by input-leap (argument)
+>=net-dns/avahi-0.9_rc2 mdnsresponder-compat

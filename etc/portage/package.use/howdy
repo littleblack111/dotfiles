@@ -1,0 +1,3 @@
+# required by sys-auth/howdy-9999::kcning
+# required by howdy (argument)
+>=media-libs/opencv-4.10.0 v4l -gtk3 qt6

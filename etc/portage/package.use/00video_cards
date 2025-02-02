@@ -1,0 +1,5 @@
+*/* VIDEO_CARDS: nvidia
+>=x11-libs/libdrm-2.4.124 video_cards_nouveau video_cards_radeon video_cards_amdgpu
+# required by dev-python/pycuda-2024.1::gentoo[-test]
+# required by pycuda (argument)
+>=dev-util/nvidia-cuda-toolkit-12.6.1 profiler

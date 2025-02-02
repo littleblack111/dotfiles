@@ -1,0 +1,2 @@
+sys-apps/systemd boot
+sys-kernel/installkernel systemd-boot
