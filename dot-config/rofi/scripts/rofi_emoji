@@ -6,5 +6,6 @@ RASI="$DIR/emoji.rasi"
 
 # Run
 rofi \
-    -show emoji \
-	-theme ${RASI}
+  -show emoji \
+	-theme ${RASI} \
+  -kb-secondary-copy "" -kb-custom-1 Ctrl+c
