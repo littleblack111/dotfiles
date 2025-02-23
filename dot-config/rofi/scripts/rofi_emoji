@@ -8,4 +8,4 @@ RASI="$DIR/emoji.rasi"
 rofi \
   -show emoji \
 	-theme ${RASI} \
-  -kb-secondary-copy "" -kb-custom-1 Ctrl+c
+  -kb-secondary-copy "" -kb-accept-entry "" -kb-custom-1 Return
