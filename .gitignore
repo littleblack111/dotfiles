@@ -9,3 +9,7 @@ dot-config/rofi/shared/colors.rasi
 dot-config/hypr/colors.conf
 dot-config/Kvantum/KvArcDark#/KvArcDark#.kvconfig
 dot-config/fcitx/dbus
+dot-config/hypr/bg.conf
+dot-local/share/fcitx5/pinyin/user.history
+dot-local/share/fcitx5/pinyin
+dot-config/fcitx5/conf/cached_layouts
