@@ -20,5 +20,7 @@ clipboard-paste-protection = false
 gtk-adwaita = false
 gtk-single-instance = true
 
+cursor-click-to-move = true
+
 config-file = binds.conf
 config-file = colors.conf
