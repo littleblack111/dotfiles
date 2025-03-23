@@ -152,10 +152,6 @@ tooltip * {
     padding-left: 17px;
 }
 
-#custom-dpms {
-    padding-right: 22px;
-}
-
 #custom-quit, #custom-lock, #custom-suspend, #custom-reboot, #custom-dpms {
     color: @YELLOW;
 }
@@ -171,19 +167,6 @@ tooltip * {
 /*     margin-bottom: 12px; */
 /* } */
 
-#privacy {
-    padding-left: 4px;
-    padding-right: 8px;
-}
-
 #privacy > *, #privacy-item > * {
     color: @YELLOW;
-}
-
-#custom-warp-vpn {
-    padding-left: 11px;
-}
-
-#custom-toggle-cam {
-    padding-left: 11px;
 }
