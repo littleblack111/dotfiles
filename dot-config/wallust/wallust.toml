@@ -37,11 +37,18 @@ pywal.target = "~/.cache/wal/colors.json"
 # xdpl.template = "xdpl.conf"
 # xdpl.target = "~/.config/xdg-desktop-portal-luminous/config.toml"
 
-ghostty.template = "ghostty.conf"
-ghostty.target = "~/.config/ghostty/colors.conf"
+# ghostty.template = "ghostty.conf"
+# ghostty.target = "~/.config/ghostty/colors.conf"
 
 discord.template = "discord.css"
 discord.target = "~/.config/Vencord/themes/wallust.css"
 
 # alacritty.template = "alacritty.toml"
 # alacritty.target = "~/.config/alacritty/colorschemes/wallust.toml"
+
+kitty.template = "colors-kitty.conf"
+kitty.target = "~/.config/kitty/colors.conf"
+
+# neopywal.template = "colors_neopywal.vim"
+# neopywal.target = "~/.cache/wallust/colors_neopywal.vim"
+# neopywal.target = "~/.cache/wal/colors-wal.vim"

@@ -6,6 +6,6 @@ RASI="$DIR/launcher.rasi"
 
 # Run
 rofi \
-    -drun-use-desktop-cache \
+    -drun-use-desktop-cache=no \
     -show drun \
 	-theme ${RASI}
