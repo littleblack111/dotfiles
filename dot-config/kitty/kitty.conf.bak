@@ -1,0 +1,21 @@
+background_opacity 0.5
+
+input_delay 0
+repaint_delay 2
+# sync_to_monitor no
+# wayland_enable_ime no
+
+font_family JetBrains Mono
+font_size 12
+
+disable_ligatures never
+
+cursor_shape beam
+cursor_beam_thickness 1.5
+cursor_trail 1
+cursor_trail_decay 0.1 0.4
+
+scrollback_lines -1
+scrollback_pager_history_size -1
+
+include colors.conf
