@@ -1,0 +1,30 @@
+# Maintainer: littleblack111 <littleblack111@littleblack111.com>
+
+pkgname=omen-light
+pkgver=2025.02.05
+pkgrel=1
+pkgdesc="controls your omen PC/laptop light"
+arch=('aarch64' 'x86_64')
+url="https://github.com/littleblack111/omen-light"
+license=('Apache-2.0')
+depends=('gcc' 'hidapi')
+source=("git+https://github.com/littleblack111/omen-light")
+sha256sums=('SKIP')
+
+pkgver() {
+	cd "${pkgname}"
+	git show -s --format=%cd --date=format:%Y.%m.%d $(git rev-parse HEAD)
+}
+
+build() {
+	cd "${pkgname}"
+	g++ -o omen_light omen_light.cc -lhidapi-libusb
+}
+
+package() {
+	cd "${pkgname}"
+	mkdir -p "${pkgdir}/usr/bin" "${pkgdir}/etc/systemd/system"
+	install omen_light "${pkgdir}/usr/bin/omen_light"
+	install omen_light_all "${pkgdir}/usr/bin/omen_light_all"
+	install omen_light.service "${pkgdir}/etc/systemd/system/omen_light.service"
+}
