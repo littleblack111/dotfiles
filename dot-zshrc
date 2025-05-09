@@ -1,4 +1,4 @@
-if [[ $TERM != "xterm-256color" ]] && [[ $TERM_PROGRAM != "vscode" ]]; then
+if [[ $TERM_PROGRAM != "vscode" ]]; then
     #neofetch | lolcat
     #archey | lolcat
     #paleofetch | lolcat # same as neofetch but faster

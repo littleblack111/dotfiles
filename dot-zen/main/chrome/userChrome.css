@@ -2,13 +2,17 @@
   background-color:rgba(0,0,0,0) !important;
 }
 #main-window{
-    background-color: rgba(41,47,52,0.2) !important;
+    background-color: rgba(41,47,52,0.05) !important;
     -moz-appearance: none !important;
     background-image: none !important;
     --zen-main-browser-background: rgba(0,0,0,0) !important;
 }
 
 /* Hides Top Toolbar (single toolbar) */
+:root {
+  --zen-themed-toolbar-bg-transparent: transparent !important;
+}
+
 :root[zen-single-toolbar="true"] #zen-appcontent-navbar-container {
   max-height: var(--zen-element-separation) !important;
   margin-top: 0px;

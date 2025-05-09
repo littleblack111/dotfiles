@@ -1,12 +1,19 @@
 [Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = opt/discord
+
+[Trigger]
 Type = Package
 Operation = Install
 Operation = Upgrade
 Target = discord
+Target = vencord-installer
 Target = vencord-installer-cli-bin
 
 [Action]
-Description = Patching discord via vencord...
+Description = Patching discord with vencord...
 When = PostTransaction
 Exec = /usr/bin/vencordinstallercli -install -branch auto
 NeedsTargets

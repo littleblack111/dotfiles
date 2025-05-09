@@ -1,4 +1,4 @@
 WebBrowser=custom-WebBrowser
-TerminalEmulator=custom-TerminalEmulator
+TerminalEmulator=kitty
 MailReader=custom-MailReader
 

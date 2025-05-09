@@ -43,23 +43,23 @@ run_rofi() {
 # Execute Command
 run_cmd() {
     if [[ "$1" == '--opt1' ]]; then
-        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e lvim $HOME/.zshrc"
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e nvim $HOME/.zshrc"
     elif [[ "$1" == '--opt2' ]]; then
-        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e lvim $HOME/.zshenv"
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e nvim $HOME/.zshenv"
     elif [[ "$1" == '--opt3' ]]; then
-        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e lvim $HOME/.config/hypr/hyprland.conf"
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e nvim $HOME/.config/hypr/hyprland.conf"
     elif [[ "$1" == '--opt4' ]]; then
-        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e lvim $HOME/.config/hypr/binds.conf"
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e nvim $HOME/.config/hypr/binds.conf"
     elif [[ "$1" == '--opt5' ]]; then
-        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e lvim $HOME/.config/hypr/rules.conf"
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e nvim $HOME/.config/hypr/rules.conf"
     elif [[ "$1" == '--opt6' ]]; then
-        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e lvim $HOME/.config/waybar/modules.jsonc"
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e nvim $HOME/.config/waybar/modules.jsonc"
     elif [[ "$1" == '--opt7' ]]; then
-        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e lvim $HOME/.config/waybar/style.css"
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e nvim $HOME/.config/waybar/style.css"
     elif [[ "$1" == '--opt8' ]]; then
-        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e lvim $HOME/.config/kitty/kitty.conf"
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e nvim $HOME/.config/kitty/kitty.conf"
     elif [[ "$1" == '--opt9' ]]; then
-        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e lvim $HOME/.config/lvim/config.lua"
+        hyprctl dispatch exec "[float; size 40% 40%; workspace +0] $TERM -e nvim $HOME/.config/lvim/config.lua"
     elif [[ "$1" == '--opt10' ]]; then
         rofi -show file-browser-extended -theme $HOME/.config/rofi/filebrowser.rasi -file-browser-dir $HOME/.config
     elif [[ "$1" == '--opt11' ]]; then
