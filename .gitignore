@@ -13,3 +13,4 @@ dot-config/hypr/bg.conf
 dot-local/share/fcitx5/pinyin/user.history
 dot-local/share/fcitx5/pinyin
 dot-config/fcitx5/conf/cached_layouts
+dot-hyperhdr/lut_lin_tables.3d
