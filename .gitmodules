@@ -16,3 +16,6 @@
 [submodule "dot-config/spicetify"]
 	path = dot-config/spicetify
 	url = https://github.com/littleblack111/spicetify.git
+[submodule "dot-zen/main/chrome/dot-zen/main/chrome/Zen-Nebula"]
+	path = dot-zen/main/chrome/dot-zen/main/chrome/Zen-Nebula
+	url = https://github.com/JustAdumbPrsn/Zen-Nebula.git
