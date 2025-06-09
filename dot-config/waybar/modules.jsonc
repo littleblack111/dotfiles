@@ -307,7 +307,7 @@
 		"modules": [
 			"group/misc-wrapper",
 			"privacy"
-		],
+		]
 	},
 	"group/misc-wrapper": {
 		"orientation": "horizontal",
@@ -353,6 +353,13 @@
 		"on-click": "notify-send -e 'Hyprland' 'Click again to Reboot'",
 		"on-double-click": "reboot"
 	},
+	"group/trail": {
+		"orientation": "inherit",
+		"modules": [
+			"group/power",
+			"privacy"
+		]
+	},
 	"group/power": {
 		"orientation": "inherit",
 		"drawer": {
@@ -364,7 +371,7 @@
 			"custom/dpms",
 			"custom/lock",
 			"custom/suspend",
-			"custom/reboot",
+			"custom/reboot"
 		]
 	},
 }
