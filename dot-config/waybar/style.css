@@ -62,7 +62,7 @@
 #temperature,
 #network {
 	border: 1px solid transparent;
-	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.15), rgba(241, 243, 247, 0.05)) border-box;
 }
 
 
@@ -75,14 +75,14 @@
 #tray {
 	border-radius: 32px;
 	border: 1px solid transparent;
-	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.15), rgba(241, 243, 247, 0.05)) border-box;
 }
 
 #window {
 	border-radius: 8px;
 	background-color: @color4;
 	border: 1px solid transparent;
-	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.15), rgba(241, 243, 247, 0.05)) border-box;
 }
 
 window#waybar {
@@ -129,7 +129,7 @@ tooltip * {
 #workspaces button.active {
 	background-color: @color1;
 	border: 1px solid transparent;
-	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.15), rgba(241, 243, 247, 0.05)) border-box;
 	margin-left: 1px;
 	margin-right: 1px;
 	padding-left: 14px;
@@ -162,7 +162,7 @@ tooltip * {
 
 #custom-minimized-counter {
 	border: 1px solid transparent;
-	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.15), rgba(241, 243, 247, 0.05)) border-box;
 	margin-top: 8px;
 	margin-bottom: 8px;
 	margin-left: 2px;
@@ -186,7 +186,7 @@ tooltip * {
 	color: @RED;
 	padding-left: 17px;
 	border: 1px solid transparent;
-	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.15), rgba(241, 243, 247, 0.05)) border-box;
 }
 
 #custom-quit,
@@ -196,13 +196,13 @@ tooltip * {
 #custom-dpms {
 	color: @YELLOW;
 	border: 1px solid transparent;
-	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.15), rgba(241, 243, 247, 0.05)) border-box;
 }
 
 #custom-reboot {
 	color: @RED;
 	border: 1px solid transparent;
-	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.15), rgba(241, 243, 247, 0.05)) border-box;
 }
 
 /* #privacy { */
