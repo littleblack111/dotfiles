@@ -3,75 +3,105 @@
 
 
 * {
-    border: none;
-    font-family: Symbols Nerd Font, Iosevka Nerd Font, Noto Sans CJK, JetBrains Mono, sans-serif;
-    font-size: 16px;
-    min-height: 0;
-    margin-bottom: 0;
-    /* color: @ACCENT */
-    color: @FOREGROUND;
+	border: none;
+	font-family: Symbols Nerd Font, Iosevka Nerd Font, Noto Sans CJK, JetBrains Mono, sans-serif;
+	font-size: 16px;
+	min-height: 0;
+	margin-bottom: 0;
+	/* color: @ACCENT */
+	color: @FOREGROUND;
 }
 
 .module {
-    background-color: @color3;
-    margin: 4px;
-    padding: 4px 4px 4px 4px;
-    /* border: 2px solid @color9; */
-    padding-right: 16px;
-    padding-left: 16px;
-    border-radius: 18px;
+	background-color: @color3;
+	margin: 4px;
+	padding: 4px 4px 4px 4px;
+	/* border: 2px solid @color9; */
+	padding-right: 16px;
+	padding-left: 16px;
+	border-radius: 18px;
 }
 
 .modules-right {
-    background-color: @BACKGROUND;
-    border-radius: 8px;
-    padding-left: 6px;
-    padding-right: 6px;
+	background-color: @BACKGROUND;
+	border-radius: 8px;
+	padding-left: 6px;
+	padding-right: 6px;
 }
 
 .modules-left {
-    background-color: @BACKGROUND;
-    border-radius: 10px;
+	background-color: @BACKGROUND;
+	border-radius: 10px;
 }
 
 #mpris {
-    margin-left: 6px;
-    border-radius: 10px;
-    background-color: @color4;
-    padding-right: 6px;
+	margin-left: 6px;
+	border-radius: 10px;
+	background-color: @color4;
+	padding-right: 6px;
 }
 
-#misc, #power {
-    border-radius: 32px;
-    margin: 2px;
+#misc,
+#power {
+	border-radius: 32px;
+	margin: 2px;
 }
 
-#cpu, #memory, #custom-gpu, #temperature, #network, #misc, #power {
-    background-color: @color4;
+#cpu,
+#memory,
+#custom-gpu,
+#temperature,
+#network,
+#misc {
+	background-color: @color4;
+}
+
+#cpu,
+#memory,
+#custom-gpu,
+#temperature,
+#network {
+	border: 1px solid transparent;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
+}
+
+
+#clock,
+#custom-gpu-screen-recorder,
+#custom-toggle-mic,
+#custom-toggle-cam,
+#custom-warp-vpn,
+#custom-disable-sound,
+#tray {
+	border-radius: 32px;
+	border: 1px solid transparent;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
 }
 
 #window {
-    border-radius: 8px;
-    background-color: @color4;
+	border-radius: 8px;
+	background-color: @color4;
+	border: 1px solid transparent;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
 }
 
 window#waybar {
-    font-family: Iosevka, FontAwesome, Noto Sans CJK, "JetBrains Mono NerdFont";
-    background-color: transparent;
-    font-size: 0.8rem;
+	font-family: Iosevka, FontAwesome, Noto Sans CJK, "JetBrains Mono NerdFont";
+	background-color: transparent;
+	font-size: 0.8rem;
 }
 
 window#waybar.empty #window {
-    background-color: transparent;
-    border: none;
+	background-color: transparent;
+	border: none;
 }
 
 tooltip * {
-    background-color: @BACKGROUND;
-    color: @ACCENT;
-    border-radius: 4px;
-    /* padding: 4px; */
-    /* font-size: 0.8rem; */
+	background-color: @BACKGROUND;
+	color: @ACCENT;
+	border-radius: 4px;
+	/* padding: 4px; */
+	/* font-size: 0.8rem; */
 }
 
 /* #workspaces { */
@@ -79,85 +109,100 @@ tooltip * {
 /* } */
 
 #workspaces {
-    background-color: transparent;
-    margin-right: -8px;
+	background-color: transparent;
+	margin-right: -8px;
 }
 
-#workspaces button, #custom-minimized-counter {
-    background-color: @color4;
-    opacity: 0.8;
-    border-radius: 12px; 
-    margin-top: 4px;
-    margin-bottom: 2px;
-    margin-left: 1px;
-    margin-right: 1px;
-    transition: all 0.2s;
-    transition-timing-function: linear;
+#workspaces button,
+#custom-minimized-counter {
+	background-color: @color4;
+	opacity: 0.8;
+	border-radius: 12px;
+	margin-top: 4px;
+	margin-bottom: 2px;
+	margin-left: 1px;
+	margin-right: 1px;
+	transition: all 0.2s;
+	transition-timing-function: linear;
 }
 
 #workspaces button.active {
-    background-color: @color1;
-    margin-left: 1px;
-    margin-right: 1px;
-    padding-left: 14px;
-    padding-right: 14px;
-    opacity: 1;
+	background-color: @color1;
+	border: 1px solid transparent;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
+	margin-left: 1px;
+	margin-right: 1px;
+	padding-left: 14px;
+	padding-right: 14px;
+	opacity: 1;
 }
 
 #workspaces button.empty {
-    background-color: @FOREGROUND;
-    opacity: 0.4;
-    border-radius: 12px;
+	background-color: @FOREGROUND;
+	opacity: 0.2;
+	border-radius: 12px;
 }
 
 
 #workspaces button.urgent {
-    /* background-color: @RED; */
-    background-color: #FF0000;
-    border-radius: 16px 16px 16px 16px; 
-    opacity: 1;
+	/* background-color: @RED; */
+	background-color: #FF0000;
+	border-radius: 16px 16px 16px 16px;
+	opacity: 1;
 }
 
 #custom-launcher {
-    color: @color14;
-    border-radius: 10px;
-    padding: 0px 16px 0px 16px;
-    padding-left: 11px;
-    font-size: 28px;
-    /* font-size: 2.5rem; */
+	color: @color14;
+	border-radius: 10px;
+	padding: 0px 16px 0px 16px;
+	padding-left: 11px;
+	font-size: 28px;
+	/* font-size: 2.5rem; */
 }
 
 #custom-minimized-counter {
-    margin-top: 8px;
-    margin-bottom: 8px;
-    margin-left: 2px;
-    margin-right: 2px;
+	border: 1px solid transparent;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	margin-left: 2px;
+	margin-right: 2px;
 }
 
 #temperature.critical {
-    color: @RED;
+	color: @RED;
 }
 
 .no {
-    background-color: transparent;
-    border: none;
+	background-color: transparent;
+	border: none;
 }
 
 #custom-indicator {
-    color: @YELLOW;
+	color: @YELLOW;
 }
 
 #custom-shutdown {
-    color: @RED;
-    padding-left: 17px;
+	color: @RED;
+	padding-left: 17px;
+	border: 1px solid transparent;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
 }
 
-#custom-quit, #custom-lock, #custom-suspend, #custom-reboot, #custom-dpms {
-    color: @YELLOW;
+#custom-quit,
+#custom-lock,
+#custom-suspend,
+#custom-reboot,
+#custom-dpms {
+	color: @YELLOW;
+	border: 1px solid transparent;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
 }
 
 #custom-reboot {
-    color: @RED;
+	color: @RED;
+	border: 1px solid transparent;
+	background: linear-gradient(@color4, @color4) padding-box, linear-gradient(to bottom, rgba(241, 243, 247, 0.2), rgba(241, 243, 247, 0.05)) border-box;
 }
 
 /* #privacy { */
@@ -167,6 +212,7 @@ tooltip * {
 /*     margin-bottom: 12px; */
 /* } */
 
-#privacy > *, #privacy-item > * {
-    color: @YELLOW;
+#privacy>*,
+#privacy-item>* {
+	color: @YELLOW;
 }
