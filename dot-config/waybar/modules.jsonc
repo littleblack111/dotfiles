@@ -237,6 +237,7 @@
 	// },
 	"group/small-utils": {
 		"modules": [
+			"custom/ac",
 			"custom/gpu-screen-recorder",
 			"custom/toggle-mic",
 			"custom/toggle-cam",
@@ -301,6 +302,16 @@
 		"on-click": "$HOME/scripts/rec.sh recorder",
 		"on-click-right": "$HOME/scripts/rec.sh pause",
 		"signal": 3
+	},
+	"custom/ac": {
+		"format": "{}",
+		"interval": "once",
+		"exec": "$HOME/scripts/flipper-ac.py status",
+		"tooltip": false,
+		"on-click": "$HOME/scripts/flipper-ac.py toggle",
+		"on-click-middle": "$HOME/scripts/flipper-ac.py on",
+		"on-click-right": "$HOME/scripts/flipper-ac.py off",
+		"signal": 6
 	},
 	"group/misc": {
 		"orientation": "horizontal",
