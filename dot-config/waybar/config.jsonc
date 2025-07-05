@@ -4,10 +4,10 @@
 	"position": "top",
 	"layer": "top",
 	"height": 30,
-	"margin-top": 10,
+	"margin-top": 7,
 	"margin-bottom": 0,
-	"margin-left": 25,
-	"margin-right": 25,
+	"margin-left": 15,
+	"margin-right": 15,
 	"modules-left": [
 		"group/musicworkspace",
 		"cava"
@@ -22,7 +22,8 @@
 		"temperature",
 		"network",
 		"group/misc-wrapper",
-		"group/trail"
+		"privacy",
+		"group/power"
 	],
 	"reload_style_on_change": true
 }
