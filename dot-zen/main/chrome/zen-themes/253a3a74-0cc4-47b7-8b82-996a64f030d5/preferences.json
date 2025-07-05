@@ -1,0 +1,18 @@
+[
+    {
+        "property": "mod.floating_history.position",
+        "label": "Position",
+        "type": "dropdown",
+        "defaultValue": "right",
+        "options": [
+            {
+                "label": "Left",
+                "value": "left"
+            },
+            {
+                "label": "Right",
+                "value": "right"
+            }
+        ]
+    }
+]
