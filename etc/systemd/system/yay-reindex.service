@@ -1,0 +1,6 @@
+[Unit]
+Description=Reindex the yay package database
+
+[Service]
+Type=oneshot
+ExecStart=yay -Pcc
