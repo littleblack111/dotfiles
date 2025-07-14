@@ -52,3 +52,6 @@ kitty.target = "~/.config/kitty/colors.conf"
 # neopywal.template = "colors_neopywal.vim"
 # neopywal.target = "~/.cache/wallust/colors_neopywal.vim"
 # neopywal.target = "~/.cache/wal/colors-wal.vim"
+
+quickshell.template = "quickshell.qml"
+quickshell.target = "~/.config/quickshell/config/WallustColors.qml"
