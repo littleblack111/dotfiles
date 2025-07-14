@@ -27,7 +27,7 @@
 		"on-scroll-down": "if [[ $(hyprctl activeworkspace -j | jq '.id') == 10 ]]; then hyprctl dispatch workspace 1; else hyprctl dispatch workspace +1; fi",
 		"on-click-middle": "hyprctl dispatch overview:toggle",
 		"format": "{icon}",
-		"on-click": "activate",
+		// "on-click": "activate",
 		"format-icons": {
 			"1": "",
 			"2": "",
@@ -71,7 +71,7 @@
 			"position",
 			"length"
 		],
-		"player": "spotify",
+		// "player": "spotify",
 		// "player-icons": {
 		// "default": "▶",
 		// },
@@ -80,7 +80,7 @@
 			"paused": "▶"
 		},
 		"dynamic-len": 75,
-		"interval": 1,
+		"interval": 0,
 	},
 	"group/musicworkspace": {
 		"orientation": "horizontal",
@@ -211,6 +211,12 @@
 				"tooltip-icon-size": 24
 			},
 		],
+		"ignore": [
+			{
+				"type": "screenshare",
+				"name": "hyperhdr"
+			}
+		],
 		"interval": 1
 	},
 	// "cava": {
@@ -309,7 +315,7 @@
 		"exec": "$HOME/scripts/flipper-ac.py status",
 		"tooltip": false,
 		"on-click": "$HOME/scripts/flipper-ac.py toggle",
-		"on-click-middle": "$HOME/scripts/flipper-ac.py on",
+		"on-click-middle": "$HOME/scripts/flipper-ac.py max",
 		"on-click-right": "$HOME/scripts/flipper-ac.py off",
 		"signal": 6
 	},
