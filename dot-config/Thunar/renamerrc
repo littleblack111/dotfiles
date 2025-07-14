@@ -10,7 +10,7 @@ Start=1
 
 [ThunarSbrReplaceRenamer]
 CaseSensitive=FALSE
-Replacement=zst
-Pattern=zip
+Replacement=jar.disabled
+Pattern=jar
 Regexp=FALSE
 
