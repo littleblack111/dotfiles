@@ -10,8 +10,8 @@ Singleton {
     property color color0: "{{color0}}"
     property color color1: "{{color1}}"
     property color color2: "{{color2}}"
-	property color color3: Qt.rgba({{color3 | rgb}},0.15)
-    property color color4: Qt.rgba({{color4 | rgb}},0.15)
+	property color color3: Qt.rgba({{color3 | red}}/255, {{color3 | green}}/255, {{color3 | blue}}/255, 0.15)
+	property color color4: Qt.rgba({{color4 | red}}/255, {{color4 | green}}/255, {{color4 | blue}}/255, 0.15)
     property color color5: "{{color5}}"
     property color color6: "{{color6}}"
     property color color7: "{{color7}}"
