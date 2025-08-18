@@ -142,3 +142,7 @@ precmd() {
 #   cd $@ && echo $@ > $HOME/.cache/prev.dir
 # }
 #
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+zstyle ':completion:*' menu select
