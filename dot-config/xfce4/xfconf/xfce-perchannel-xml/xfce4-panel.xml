@@ -1,0 +1,11 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<channel name="xfce4-panel" version="1.0">
+  <property name="plugins" type="empty">
+    <property name="notes" type="empty">
+      <property name="global" type="empty">
+        <property name="version" type="string" value="1.12.0"/>
+      </property>
+    </property>
+  </property>
+</channel>
