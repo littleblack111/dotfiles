@@ -29,3 +29,5 @@
 	gpgSign = true
 [rebase]
 	autosquash = true
+[core]
+	sshCommand = ssh -p 222
