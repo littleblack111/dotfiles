@@ -1,0 +1,303 @@
+[[sources]]
+name = "friendly-snippets"
+git = "https://github.com/rafamadriz/friendly-snippets.git"
+
+[[sources.paths]]
+scope = ["python"]
+path = "snippets/python/python.json"
+
+[[sources.paths]]
+scope = ["asciidoc"]
+path = "snippets/asciidoc.json"
+
+[[sources.paths]]
+scope = ["beancount"]
+path = "snippets/beancount.json"
+
+[[sources.paths]]
+scope = ["c"]
+path = "snippets/c"
+
+[[sources.paths]]
+scope = ["cmake"]
+path = "snippets/cmake.json"
+
+[[sources.paths]]
+scope = ["cobol"]
+path = "snippets/cobol"
+
+[[sources.paths]]
+scope = ["cpp", "c++", "cplusplus", "cc"]
+path = "snippets/cpp"
+
+[[sources.paths]]
+scope = ["csharp", "cs", "dotnet"]
+path = "snippets/csharp"
+
+[[sources.paths]]
+scope = ["css"]
+path = "snippets/css.json"
+
+[[sources.paths]]
+scope = ["dart"]
+path = "snippets/dart.json"
+
+[[sources.paths]]
+scope = ["docker", "dockerfile", "containerfile"]
+path = "snippets/docker"
+
+[[sources.paths]]
+scope = ["editorconfig"]
+path = "snippets/editorconfig.json"
+
+[[sources.paths]]
+scope = ["eelixir"]
+path = "snippets/eelixir.json"
+
+[[sources.paths]]
+scope = ["elixir"]
+path = "snippets/elixir.json"
+
+[[sources.paths]]
+scope = ["erb"]
+path = "snippets/erb.json"
+
+[[sources.paths]]
+scope = ["erlang"]
+path = "snippets/erlang.json"
+
+[[sources.paths]]
+scope = ["fennel"]
+path = "snippets/fennel.json"
+
+[[sources.paths]]
+scope = ["fortran"]
+path = "snippets/fortran.json"
+
+[[sources.paths]]
+scope = ["frameworks"]
+path = "snippets/frameworks"
+
+[[sources.paths]]
+scope = ["fsh"]
+path = "snippets/fsh.json"
+
+[[sources.paths]]
+scope = ["gdscript"]
+path = "snippets/gdscript.json"
+
+[[sources.paths]]
+scope = ["gitcommit"]
+path = "snippets/gitcommit.json"
+
+[[sources.paths]]
+scope = ["gleam"]
+path = "snippets/gleam.json"
+
+[[sources.paths]]
+scope = ["global"]
+path = "snippets/global.json"
+
+[[sources.paths]]
+scope = ["glsl"]
+path = "snippets/glsl.json"
+
+[[sources.paths]]
+scope = ["go", "golang"]
+path = "snippets/go.json"
+
+[[sources.paths]]
+scope = ["haskell"]
+path = "snippets/haskell.json"
+
+[[sources.paths]]
+scope = ["html"]
+path = "snippets/html.json"
+
+[[sources.paths]]
+scope = ["java"]
+path = "snippets/java"
+
+[[sources.paths]]
+scope = ["javascript", "js", "node"]
+path = "snippets/javascript"
+
+[[sources.paths]]
+scope = ["julia"]
+path = "snippets/julia.json"
+
+[[sources.paths]]
+scope = ["kivy"]
+path = "snippets/kivy.json"
+
+[[sources.paths]]
+scope = ["kotlin", "kt"]
+path = "snippets/kotlin"
+
+[[sources.paths]]
+scope = ["kubernetes", "k8s"]
+path = "snippets/kubernetes.json"
+
+[[sources.paths]]
+scope = ["latex"]
+path = "snippets/latex"
+
+[[sources.paths]]
+scope = ["latex"]
+path = "snippets/latex.json"
+
+[[sources.paths]]
+scope = ["license"]
+path = "snippets/license.json"
+
+[[sources.paths]]
+scope = ["liquid"]
+path = "snippets/liquid.json"
+
+[[sources.paths]]
+scope = ["loremipsum"]
+path = "snippets/loremipsum.json"
+
+[[sources.paths]]
+scope = ["lua"]
+path = "snippets/lua"
+
+[[sources.paths]]
+scope = ["make", "makefile"]
+path = "snippets/make.json"
+
+[[sources.paths]]
+scope = ["markdown", "md"]
+path = "snippets/markdown.json"
+
+[[sources.paths]]
+scope = ["mint"]
+path = "snippets/mint.json"
+
+[[sources.paths]]
+scope = ["nix"]
+path = "snippets/nix.json"
+
+[[sources.paths]]
+scope = ["norg"]
+path = "snippets/norg.json"
+
+[[sources.paths]]
+scope = ["nushell", "nu"]
+path = "snippets/nushell.json"
+
+[[sources.paths]]
+scope = ["objc", "objective-c"]
+path = "snippets/objc.json"
+
+[[sources.paths]]
+scope = ["ocaml"]
+path = "snippets/ocaml"
+
+[[sources.paths]]
+scope = ["org"]
+path = "snippets/org.json"
+
+[[sources.paths]]
+scope = ["perl"]
+path = "snippets/perl.json"
+
+[[sources.paths]]
+scope = ["php"]
+path = "snippets/php"
+
+[[sources.paths]]
+scope = ["plantuml"]
+path = "snippets/plantuml.json"
+
+[[sources.paths]]
+scope = ["powershell", "pwsh"]
+path = "snippets/PowerShell.json"
+
+[[sources.paths]]
+scope = ["purescript"]
+path = "snippets/purescript.json"
+
+[[sources.paths]]
+scope = ["python"]
+path = "snippets/python"
+
+[[sources.paths]]
+scope = ["quarto"]
+path = "snippets/quarto.json"
+
+[[sources.paths]]
+scope = ["reason"]
+path = "snippets/reason.json"
+
+[[sources.paths]]
+scope = ["rescript"]
+path = "snippets/rescript.json"
+
+[[sources.paths]]
+scope = ["r"]
+path = "snippets/r.json"
+
+[[sources.paths]]
+scope = ["rmarkdown", "rmd"]
+path = "snippets/rmarkdown.json"
+
+[[sources.paths]]
+scope = ["rst", "restructuredtext"]
+path = "snippets/rst.json"
+
+[[sources.paths]]
+scope = ["ruby"]
+path = "snippets/ruby"
+
+[[sources.paths]]
+scope = ["rust"]
+path = "snippets/rust"
+
+[[sources.paths]]
+scope = ["scala"]
+path = "snippets/scala.json"
+
+[[sources.paths]]
+scope = ["shell", "sh", "bash", "zsh", "fish"]
+path = "snippets/shell"
+
+[[sources.paths]]
+scope = ["solidity"]
+path = "snippets/solidity.json"
+
+[[sources.paths]]
+scope = ["sql"]
+path = "snippets/sql.json"
+
+[[sources.paths]]
+scope = ["svelte"]
+path = "snippets/svelte.json"
+
+[[sources.paths]]
+scope = ["swift"]
+path = "snippets/swift.json"
+
+[[sources.paths]]
+scope = ["systemverilog", "sv"]
+path = "snippets/systemverilog.json"
+
+[[sources.paths]]
+scope = ["tcl"]
+path = "snippets/tcl.json"
+
+[[sources.paths]]
+scope = ["terraform", "tf", "hcl"]
+path = "snippets/terraform.json"
+
+[[sources.paths]]
+scope = ["verilog"]
+path = "snippets/verilog.json"
+
+[[sources.paths]]
+scope = ["vhdl"]
+path = "snippets/vhdl.json"
+
+[[sources.paths]]
+scope = ["zig"]
+path = "snippets/zig.json"

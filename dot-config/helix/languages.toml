@@ -1,0 +1,40 @@
+[language-server.scls]
+command = "simple-completion-language-server"
+
+[language-server.scls.config]
+feature_words = false                # enable completion by word
+feature_snippets = true              # enable snippets
+snippets_first = true                # completions will return before snippets by default
+snippets_inline_by_word_tail = false # suggest snippets by WORD tail, for example text `xsq|` become `x^2|` when snippet `sq` has body `^2`
+feature_unicode_input = false        # enable "unicode input"
+feature_paths = false                # enable path completion
+feature_citations = false            # enable citation completion (only on `citation` feature enabled)
+
+
+# write logs to /tmp/completion.log
+[language-server.scls.environment]
+RUST_LOG = "info,simple-completion-language-server=info"
+LOG_FILE = "/tmp/completion.log"
+
+[[language]]
+name = "git-commit"
+language-servers = [ "scls" ]
+
+[[language]]
+name = "cpp"
+auto-format = true
+indent = { tab-width = 4, unit = "t" }
+language-servers = [ "scls", "clangd" ]
+
+[[language]]
+name = "rust"
+indent = { tab-width = 4, unit = "t" }
+language-servers = [ "scls", "rust-analyzer" ]
+
+# [[language]]
+# name = "markdown"
+# language-servers = [ "mdpls" ]
+
+# [language-server.mdpls]
+# command = "/usr/bin/mdpls"
+# config = { markdown.preview.auto = true }
