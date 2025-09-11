@@ -18,7 +18,7 @@ display-inlay-hints = true
 
 [editor.statusline]
 
-left = ["mode", "read-only-indicator", "version-control", "file-name", "spinner"]
+left = ["mode", "read-only-indicator", "version-control", "spinner"]
 right = ["diagnostics", "register", "position", "position-percentage", "file-encoding", "file-type"]
 
 separator = "│"

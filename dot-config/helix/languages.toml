@@ -16,24 +16,38 @@ feature_citations = false            # enable citation completion (only on `cita
 RUST_LOG = "info,simple-completion-language-server=info"
 LOG_FILE = "/tmp/completion.log"
 
+[language-server.gpt]
+command = "helix-gpt"
+args = ["--handler", "copilot"]
+
 [[language]]
 name = "git-commit"
-language-servers = [ "scls" ]
+language-servers = [ "scls", "gpt" ]
 
 [[language]]
 name = "cpp"
 auto-format = true
 indent = { tab-width = 4, unit = "t" }
-language-servers = [ "scls", "clangd" ]
+language-servers = [ "scls", "clangd", "gpt" ]
 
 [[language]]
 name = "rust"
+auto-format = true
 indent = { tab-width = 4, unit = "t" }
-language-servers = [ "scls", "rust-analyzer" ]
+language-servers = [  "scls", "rust-analyzer", "gpt" ]
 
-# [[language]]
-# name = "markdown"
-# language-servers = [ "mdpls" ]
+[[language]]
+name = "python"
+language-servers = ["ty", "ruff", "jedi-language-server", "pyright", "pylsp", "gpt"]
+
+[[language]]
+name = "toml"
+language-servers = [ "taplo", "tombi", "gpt" ]
+auto-format = true
+
+[[language]]
+name = "markdown"
+language-servers = [ "marksman", "markdown-oxide", "gpt" ]
 
 # [language-server.mdpls]
 # command = "/usr/bin/mdpls"
