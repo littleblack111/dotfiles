@@ -7,6 +7,7 @@ popup-border = "all"
 completion-trigger-len = 1
 bufferline = "always"
 auto-format = true
+color-modes = true
 
 [editor.cursor-shape]
 insert = "bar"
@@ -21,12 +22,9 @@ left = ["mode", "read-only-indicator", "version-control", "file-name", "spinner"
 right = ["diagnostics", "register", "position", "position-percentage", "file-encoding", "file-type"]
 
 separator = "│"
-# mode.normal = "NORMAL"
-# mode.insert = "INSERT"
-# mode.select = "SELECT"
-mode.normal = " "
-mode.insert = " "
-mode.select = " "
+mode.normal = "N"
+mode.insert = "I"
+mode.select = "V"
 
 diagnostics = ["warning", "error"]
 workspace-diagnostics = ["warning", "error"]
@@ -59,7 +57,15 @@ supersede-menu = true
 [keys.normal]
 tab = "move_parent_node_end"
 S-tab = "move_parent_node_start"
+d = "delete_selection_noyank"
+c = "change_selection_noyank"
 
+[keys.normal." "]
+q = ":quit"
+c = ":buffer-close"
+tab = "insert_tab"
+w = ":write"
+"," = "code_action"
 
 # [keys.insert]
 # S-tab = "move_parent_node_start"
@@ -72,19 +78,10 @@ S-tab = "extend_parent_node_start"
 # C-f = "jump_forward"
 # C-S-f = "jump_backward"
 
-# [keys.insert]
-# # Disable Tab as a jump so it doesn't override
-# tab = "no_op"
-# C-f = "jump_forward"
-# C-S-f = "jump_backward"
+[keys.insert]
+C-f = "goto_next_tabstop"
+C-S-f = "goto_prev_tabstop"
 
 # [keys.select]
 # C-f = "jump_forward"
 # C-S-f = "jump_backward"
-
-
-[keys.normal." "]
-q = ":quit"
-c = ":buffer-close"
-tab = "insert_tab"
-w = ":write"
