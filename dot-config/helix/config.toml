@@ -16,13 +16,18 @@ normal = "block"
 display-inlay-hints = true
 
 [editor.statusline]
-left = ["mode", "spinner"]
-center = ["file-name"]
-right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+
+left = ["mode", "read-only-indicator", "version-control", "file-name", "spinner"]
+right = ["diagnostics", "register", "position", "position-percentage", "file-encoding", "file-type"]
+
 separator = "│"
-mode.normal = "NORMAL"
-mode.insert = "INSERT"
-mode.select = "SELECT"
+# mode.normal = "NORMAL"
+# mode.insert = "INSERT"
+# mode.select = "SELECT"
+mode.normal = " "
+mode.insert = " "
+mode.select = " "
+
 diagnostics = ["warning", "error"]
 workspace-diagnostics = ["warning", "error"]
 
@@ -54,6 +59,7 @@ supersede-menu = true
 [keys.normal]
 tab = "move_parent_node_end"
 S-tab = "move_parent_node_start"
+
 
 # [keys.insert]
 # S-tab = "move_parent_node_start"
