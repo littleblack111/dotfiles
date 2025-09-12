@@ -17,8 +17,7 @@ normal = "block"
 display-inlay-hints = true
 
 [editor.statusline]
-
-left = ["mode", "read-only-indicator", "version-control", "spinner"]
+left = ["mode", "separator", "read-only-indicator", "version-control", "spinner"]
 right = ["diagnostics", "register", "position", "position-percentage", "file-encoding", "file-type"]
 
 separator = "│"
