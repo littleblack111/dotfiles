@@ -20,47 +20,50 @@ LOG_FILE = "/tmp/completion.log"
 command = "helix-gpt"
 args = ["--handler", "copilot"]
 
+[language-server.wakatime]
+command = "wakatime-ls"
+
 [[language]]
 name = "git-commit"
-language-servers = [ "scls", "gpt" ]
+language-servers = [ "scls", "gpt", "wakatime" ]
 
 [[language]]
 name = "cpp"
 auto-format = true
 indent = { tab-width = 4, unit = "t" }
-language-servers = [ "scls", "clangd", "gpt" ]
+language-servers = [ "scls", "clangd", "gpt", "wakatime" ]
 
 [[language]]
 name = "rust"
 auto-format = true
 indent = { tab-width = 4, unit = "t" }
-language-servers = [  "scls", "rust-analyzer", "gpt" ]
+language-servers = [ "scls", "rust-analyzer", "gpt", "wakatime" ]
 
 [language-server.rust-analyzer.config]
 check.command = "clippy"
 
 [[language]]
 name = "python"
-language-servers = ["ty", "ruff", "jedi-language-server", "pyright", "pylsp", "gpt"]
+language-servers = ["ty", "ruff", "jedi-language-server", "pyright", "pylsp", "gpt", "wakatime" ]
 
 [[language]]
 name = "toml"
-language-servers = [ "taplo", "tombi", "gpt" ]
+language-servers = [ "taplo", "tombi", "gpt", "wakatime" ]
 auto-format = true
 
 [[language]]
 name = "markdown"
-language-servers = [ "marksman", "markdown-oxide", "gpt" ]
+language-servers = [ "marksman", "markdown-oxide", "gpt", "wakatime" ]
 auto-format = true
 
 [[language]]
 name = "java"
-language-servers = [ "scls", "jdtls" ]
+language-servers = [ "scls", "jdtls", "wakatime" ]
 auto-format = true
 
 [[language]]
 name = "qml"
-language-servers = [ "scls", "qmlls" ]
+language-servers = [ "scls", "qmlls", "wakatime" ]
 auto-format = true
 
 # [language-server.mdpls]
