@@ -36,6 +36,9 @@ auto-format = true
 indent = { tab-width = 4, unit = "t" }
 language-servers = [  "scls", "rust-analyzer", "gpt" ]
 
+[language-server.rust-analyzer.config]
+check.command = "clippy"
+
 [[language]]
 name = "python"
 language-servers = ["ty", "ruff", "jedi-language-server", "pyright", "pylsp", "gpt"]
@@ -48,6 +51,17 @@ auto-format = true
 [[language]]
 name = "markdown"
 language-servers = [ "marksman", "markdown-oxide", "gpt" ]
+auto-format = true
+
+[[language]]
+name = "java"
+language-servers = [ "scls", "jdtls" ]
+auto-format = true
+
+[[language]]
+name = "qml"
+language-servers = [ "scls", "qmlls" ]
+auto-format = true
 
 # [language-server.mdpls]
 # command = "/usr/bin/mdpls"

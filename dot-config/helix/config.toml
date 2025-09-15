@@ -4,6 +4,7 @@ theme = "tokyonight-transparent"
 line-number = "relative"
 default-yank-register = "+"
 popup-border = "all"
+idle-timeout = 0
 completion-trigger-len = 1
 bufferline = "always"
 auto-format = true
@@ -65,22 +66,23 @@ c = ":buffer-close"
 tab = "insert_tab"
 w = ":write"
 "," = "code_action"
+1 = ":goto-buffer 1"
+2 = ":goto-buffer 2"
+3 = ":goto-buffer 3"
+4 = ":goto-buffer 4"
+5 = ":goto-buffer 5"
+6 = ":goto-buffer 6"
+7 = ":goto-buffer 7"
+8 = ":goto-buffer 8"
+9 = ":goto-buffer 9"
+0 = ":goto-buffer 0"
 
-# [keys.insert]
-# S-tab = "move_parent_node_start"
 
-[keys.select]
-tab = "extend_parent_node_end"
-S-tab = "extend_parent_node_start"
 
-# [keys.normal]
-# C-f = "jump_forward"
-# C-S-f = "jump_backward"
+[keys.normal." "."g"]
+g = "changed_file_picker"
+b = ":! git show --no-patch --format='%%h (%%an: %%ar): %%s' $(git blame -p %{buffer_name} -L%{cursor_line},+1 | head -1 | cut -d' ' -f1)"
 
 [keys.insert]
 C-f = "goto_next_tabstop"
 C-S-f = "goto_prev_tabstop"
-
-# [keys.select]
-# C-f = "jump_forward"
-# C-S-f = "jump_backward"
