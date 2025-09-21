@@ -23,47 +23,51 @@ args = ["--handler", "copilot"]
 [language-server.rustowl]
 command = "rustowl"
 
+[language-server.harper]
+command = "harper-ls"
+args = ["--stdio"]
+
 [[language]]
 name = "git-commit"
-language-servers = [ "scls", "gpt" ]
+language-servers = [ "scls", "gpt", "harper" ]
 
 [[language]]
 name = "cpp"
 auto-format = true
 indent = { tab-width = 4, unit = "t" }
-language-servers = [ "scls", "clangd", "gpt" ]
+language-servers = [ "scls", "clangd", "gpt", "harper" ]
 
 [[language]]
 name = "rust"
 auto-format = true
 indent = { tab-width = 4, unit = "t" }
-language-servers = [ "scls", "rust-analyzer", "gpt" ]
+language-servers = [ "scls", "rust-analyzer", "gpt", "harper" ]
 
 [language-server.rust-analyzer.config]
 check.command = "clippy"
 
 [[language]]
 name = "python"
-language-servers = ["ty", "ruff", "jedi-language-server", "pyright", "pylsp", "gpt" ]
+language-servers = ["ty", "ruff", "jedi-language-server", "pyright", "pylsp", "gpt", "harper" ]
 
 [[language]]
 name = "toml"
-language-servers = [ "taplo", "tombi", "gpt" ]
+language-servers = [ "taplo", "tombi", "gpt", "harper" ]
 auto-format = true
 
 [[language]]
 name = "markdown"
-language-servers = [ "marksman", "markdown-oxide", "gpt" ]
+language-servers = [ "marksman", "markdown-oxide", "scls", "gpt", "harper" ]
 auto-format = true
 
 [[language]]
 name = "java"
-language-servers = [ "scls", "jdtls" ]
+language-servers = [ "scls", "jdtls", "harper" ]
 auto-format = true
 
 [[language]]
 name = "qml"
-language-servers = [ "scls", "qmlls" ]
+language-servers = [ "scls", "qmlls", "harper" ]
 auto-format = true
 
 # [language-server.mdpls]

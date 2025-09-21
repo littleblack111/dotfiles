@@ -1,13 +1,13 @@
 max_width = 104400000000
-use_small_heuristics = "Max"
+# use_small_heuristics = "Max"
 
-chain_width = 72
-fn_call_width = 72
-attr_fn_like_width = 72
-array_width = 72
-struct_lit_width = 72
-struct_variant_width = 72
-single_line_if_else_max_width = 72
+# chain_width = 0
+# fn_call_width = 0
+# attr_fn_like_width = 0
+# array_width = 0
+# struct_lit_width = 0
+# struct_variant_width = 0
+# single_line_if_else_max_width = 0
 
 wrap_comments = true
 format_code_in_doc_comments = true

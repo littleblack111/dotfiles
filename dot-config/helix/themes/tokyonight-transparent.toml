@@ -1,2 +1,7 @@
 inherits = "tokyonight"
+
 "ui.background" = {}
+"ui.menu" = {}
+"ui.popup" = {}
+"ui.window" = {}
+"ui.statusline" = {}

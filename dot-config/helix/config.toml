@@ -9,6 +9,7 @@ completion-trigger-len = 1
 bufferline = "always"
 auto-format = true
 color-modes = true
+rainbow-brackets = true
 
 [editor.cursor-shape]
 insert = "bar"
@@ -59,6 +60,8 @@ tab = "move_parent_node_end"
 S-tab = "move_parent_node_start"
 d = "delete_selection_noyank"
 c = "change_selection_noyank"
+A-k = "select_prev_sibling"
+A-j = "select_next_sibling"
 
 [keys.normal." "]
 q = ":quit"
