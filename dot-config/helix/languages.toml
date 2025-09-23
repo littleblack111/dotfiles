@@ -57,7 +57,7 @@ auto-format = true
 
 [[language]]
 name = "markdown"
-language-servers = [ "marksman", "markdown-oxide", "scls", "gpt", "harper" ]
+language-servers = [ "marksman", "mdpls", "markdown-oxide", "scls", "gpt", "harper" ]
 auto-format = true
 
 [[language]]
@@ -70,6 +70,6 @@ name = "qml"
 language-servers = [ "scls", "qmlls", "harper" ]
 auto-format = true
 
-# [language-server.mdpls]
-# command = "/usr/bin/mdpls"
-# config = { markdown.preview.auto = true }
+[language-server.mdpls]
+command = "/usr/bin/mdpls"
+config = { markdown.preview.auto = true, markdown.preview.serveStatic = true }
