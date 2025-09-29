@@ -17,12 +17,12 @@ normal = "block"
 
 [editor.lsp]
 display-inlay-hints = true
+display-progress-messages = true
 
 [editor.statusline]
-left = ["mode", "separator", "read-only-indicator", "version-control", "spinner"]
+left = [ "mode", "read-only-indicator", "version-control", "spinner"]
 right = ["diagnostics", "register", "position", "position-percentage", "file-encoding", "file-type"]
 
-separator = "│"
 mode.normal = "N"
 mode.insert = "I"
 mode.select = "V"
@@ -89,3 +89,4 @@ b = ":! git show --no-patch --format='%%h (%%an: %%ar): %%s' $(git blame -p %{bu
 [keys.insert]
 C-f = "goto_next_tabstop"
 C-S-f = "goto_prev_tabstop"
+C-l = "signature_help"
