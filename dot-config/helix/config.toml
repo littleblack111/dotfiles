@@ -17,6 +17,7 @@ normal = "block"
 
 [editor.lsp]
 display-inlay-hints = true
+auto-signature-help = false
 display-progress-messages = true
 
 [editor.statusline]
