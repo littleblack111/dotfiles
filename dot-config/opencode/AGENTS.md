@@ -2,7 +2,7 @@
 ### Not
 - Do *NOT* add comments unless ABSOLUTELY necessary, no trivial comment or comments for every line.
 - Do *NOT* make trivial functions or variables that are not needed or is only used once or code bloat.
-- Do *NOT* touch existing comments.
+- Do *NOT* remove existing comments.
 - Do *NOT* hallucinate.
 - Do *NOT* add additionally unnecessary stuff.
 
@@ -20,7 +20,7 @@
 
 ## Formatting
 - Use tab for indentation.
-- Follow the Hungarian notation for appropriate language.
+- Follow the Hungarian notation for appropriate language(i.e. C++).
 
 ## Think like a programmer, not a writer, not looking for perfection.
 
