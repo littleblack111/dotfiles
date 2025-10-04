@@ -1,42 +1,44 @@
 inherits = "base16_transparent"
 
 "comment" = {{ "{ fg = \"color8\" }" }}
-"constant" = {{ "{ fg = \"color3\", modifiers = [\"bold\"] }" }}
-"constant.character.escape" = {{ "{ fg = \"color5\" }" }}
-"function" = {{ "{ fg = \"color1\", modifiers = [\"bold\"]  }" }}
-"keyword" = {{ "{ fg = \"color5\", modifiers = [\"bold\"]  }" }}
-"operator" = {{ "{ fg = \"color5\" }" }}
-"punctuation" = {{ "{ fg = \"color5\" }" }}
-"string" = {{ "{ fg = \"color2\", modifiers = [\"bold\"] }" }}
+"constant" = {{ "{ fg = \"color11\", modifiers = [\"bold\"] }" }}
+"constant.character.escape" = {{ "{ fg = \"color13\" }" }}
+"function" = {{ "{ fg = \"color9\", modifiers = [\"bold\"] }" }}
+"keyword" = {{ "{ fg = \"color14\", modifiers = [\"bold\"] }" }}
+"operator" = {{ "{ fg = \"color12\" }" }}
+"punctuation" = {{ "{ fg = \"color15\" }" }}
+"string" = {{ "{ fg = \"color10\", modifiers = [\"bold\"] }" }}
 "path" = {{ "{ fg = \"color2\" }" }}
-"string.regexp" = {{ "{ fg = \"color2\" }" }}
+"string.regexp" = {{ "{ fg = \"color6\" }" }}
 "tag" = {{ "{ fg = \"color3\", modifiers = [\"bold\"] }" }}
-"type" = {{ "{ fg = \"color3\", modifiers = [\"bold\"] }" }}
-"type.enum.variant" = {{ "{ fg = \"foreground\", modifiers = [\"italic\"] }" }}
+"type" = {{ "{ fg = \"color4\", modifiers = [\"bold\"] }" }}
+"type.enum.variant" = {{ "{ fg = \"color7\", modifiers = [\"italic\"] }" }}
 "variable" = {{ "{ fg = \"foreground\" }" }}
-"variable.builtin" = {{ "{ fg = \"color8\", modifiers = [\"italic\"] }" }}
-"variable.parameter" = {{ "{ fg =\"color1\", modifiers = [\"italic\"] }" }}
-"identifier" = {{ "{ fg =\"color1\", modifiers = [\"italic\"] }" }}
-"members" = {{ "{ fg = \"color3\", modifiers = [\"bold\"] }" }}
+"variable.builtin" = {{ "{ fg = \"color15\", modifiers = [\"italic\"] }" }}
+"variable.parameter" = {{ "{ fg = \"color5\", modifiers = [\"italic\"] }" }}
+"identifier" = {{ "{ fg = \"color1\", modifiers = [\"italic\"] }" }}
+"members" = {{ "{ fg = \"color7\", modifiers = [\"bold\"] }" }}
 
-"diff.plus" = {{ "{ fg = \"color2\" }" }}
+"diff.plus" = {{ "{ fg = \"color10\" }" }}
 # "diff.delta" = {{ "{ fg = \"color8\", bg = \"color17\" }" }}
-"diff.delta" = {{ "{ fg = \"color8\" }" }}
-"diff.minus" = {{ "{ fg = \"color1\" }" }}
+"diff.delta" = {{ "{ fg = \"color12\" }" }}
+"diff.minus" = {{ "{ fg = \"color9\" }" }}
 
 # "ui.background" = {{ "{ fg = \"color5\", bg = \"color0\" }" }}
-"ui.cursor" =  {{ "{ fg = \"color0\", bg = \"color1\", modifiers = [\"dim\"] }" }}
+"ui.cursor" =  {{ "{ fg = \"color0\", bg = \"color9\" }" }}
 "ui.cursor.match" = {{ "{ fg = \"color5\", modifiers = [\"underlined\"] }" }}
-"ui.cursor.primary" = {{ "{ bg = \"color7\", modifier = [\"dim\"] }" }}
+"ui.cursor.primary" = {{ "{ fg = \"color0\", bg = \"color15\" }" }}
 # "ui.help" = {{ "{ fg = \"foreground\", bg = \"color16\" }" }}
 "ui.help" = {{ "{ fg = \"foreground\" }" }}
-"ui.linenr" = {{ "{ fg = \"color1\" }" }}
-"ui.linenr.selected" = {{ "{ fg = \"color7\", bg = \"color1\" }" }}
+"ui.linenr" = {{ "{ fg = \"color8\" }" }}
+# "ui.linenr.selected" = {{ "{ fg = \"color15\", bg = \"color0\" }" }}
+"ui.linenr.selected" = {{ "{ fg = \"color15\" }" }}
 "ui.menu" = {{ "{ fg = \"foreground\" }" }}
 # "ui.menu" = {{ "{ fg = \"foreground\", bg = \"color17\" }" }}
-"ui.menu.selected" = {{ "{ fg = \"foreground\", bg = \"color1\" }" }}
-"ui.menu.highlighted" = {{ "{ fg = \"color6\"}" }}
-"ui.popup" = {{ "{ fg = \"color5\", bg = \"color17\" }" }}
+"ui.menu.selected" = {{ "{ fg = \"foreground\", bg = \"color4\" }" }}
+"ui.menu.highlighted" = {{ "{ fg = \"color6\" }" }}
+# "ui.popup" = {{ "{ fg = \"foreground\", bg = \"color0\" }" }}
+"ui.popup" = {{ "{ fg = \"foreground\" }" }}
 # "ui.selection" = {{ "{ bg = \"color17\" }" }}
 "ui.selection.primary" = {{ "{ bg = \"color4\", fg = \"color0\" }" }}
 # "ui.statusline" = {{ "{ fg = \"foreground\", bg = \"color16\" }" }}
@@ -44,24 +46,24 @@ inherits = "base16_transparent"
 # "ui.statusline.inactive" = {{ "{ fg = \"color8\", bg = \"color16\" }" }}
 "ui.statusline.inactive" = {{ "{ fg = \"color8\" }" }}
 "ui.text" = {{ "{ fg = \"foreground\" }" }}
-"ui.text.focus" = {{ "{ fg = \"color8\" }" }}
+"ui.text.focus" = {{ "{ fg = \"color15\" }" }}
 "ui.window" = {{ "{ fg = \"color5\" }" }}
 "ui.virtual" = {{ "{ fg = \"color8\" }" }}
 
-"error" = {{ "{ fg = \"color1\" }" }}
-"warning" = {{ "{ fg = \"color3\" }" }}
-"info" = {{ "{ fg = \"color4\" }" }}
-"hint" = {{ "{ fg = \"color8\" }" }}
+"error" = {{ "{ fg = \"color9\" }" }}
+"warning" = {{ "{ fg = \"color11\" }" }}
+"info" = {{ "{ fg = \"color12\" }" }}
+"hint" = {{ "{ fg = \"color15\" }" }}
 "diagnostic" = {{ "{ modifiers = [\"underlined\"] }" }}
 
-"markup.heading" = {{ "{ fg = \"color3\", modifiers = [\"bold\"] }" }}
-"markup.list" = "color8"
-"markup.bold" = {{ "{ fg = \"color1\", modifiers = [\"bold\"] }" }}
-"markup.italic" = {{ "{ fg = \"color8\", modifiers = [\"italic\"] }" }}
-"markup.link.url" = "color8"
-"markup.link.text" = "color5"
+"markup.heading" = {{ "{ fg = \"color11\", modifiers = [\"bold\"] }" }}
+"markup.list" = "color15"
+"markup.bold" = {{ "{ fg = \"color9\", modifiers = [\"bold\"] }" }}
+"markup.italic" = {{ "{ fg = \"color7\", modifiers = [\"italic\"] }" }}
+"markup.link.url" = "color12"
+"markup.link.text" = "color14"
 "markup.quote" = {{ "{ fg = \"color8\", modifiers = [\"italic\"] }" }}
-"markup.raw" = {{ "{ fg = \"color8\" }" }}
+"markup.raw" = {{ "{ fg = \"color10\" }" }}
 
 [palette]
 foreground = "{{color7}}"
