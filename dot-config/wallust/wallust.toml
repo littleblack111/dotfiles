@@ -55,3 +55,6 @@ kitty.target = "~/.config/kitty/colors.conf"
 
 quickshell.template = "quickshell.qml"
 quickshell.target = "~/.config/quickshell/config/WallustColors.qml"
+
+helix.template = "helix.toml"
+helix.target = "~/.config/helix/themes/wallust.toml"

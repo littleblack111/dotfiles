@@ -1,0 +1,85 @@
+inherits = "base16_transparent"
+
+"comment" = {{ "{ fg = \"color8\" }" }}
+"constant" = {{ "{ fg = \"color3\", modifiers = [\"bold\"] }" }}
+"constant.character.escape" = {{ "{ fg = \"color5\" }" }}
+"function" = {{ "{ fg = \"color1\", modifiers = [\"bold\"]  }" }}
+"keyword" = {{ "{ fg = \"color5\", modifiers = [\"bold\"]  }" }}
+"operator" = {{ "{ fg = \"color5\" }" }}
+"punctuation" = {{ "{ fg = \"color5\" }" }}
+"string" = {{ "{ fg = \"color2\", modifiers = [\"bold\"] }" }}
+"path" = {{ "{ fg = \"color2\" }" }}
+"string.regexp" = {{ "{ fg = \"color2\" }" }}
+"tag" = {{ "{ fg = \"color3\", modifiers = [\"bold\"] }" }}
+"type" = {{ "{ fg = \"color3\", modifiers = [\"bold\"] }" }}
+"type.enum.variant" = {{ "{ fg = \"foreground\", modifiers = [\"italic\"] }" }}
+"variable" = {{ "{ fg = \"foreground\" }" }}
+"variable.builtin" = {{ "{ fg = \"color8\", modifiers = [\"italic\"] }" }}
+"variable.parameter" = {{ "{ fg =\"color1\", modifiers = [\"italic\"] }" }}
+"identifier" = {{ "{ fg =\"color1\", modifiers = [\"italic\"] }" }}
+"members" = {{ "{ fg = \"color3\", modifiers = [\"bold\"] }" }}
+
+"diff.plus" = {{ "{ fg = \"color2\" }" }}
+# "diff.delta" = {{ "{ fg = \"color8\", bg = \"color17\" }" }}
+"diff.delta" = {{ "{ fg = \"color8\" }" }}
+"diff.minus" = {{ "{ fg = \"color1\" }" }}
+
+# "ui.background" = {{ "{ fg = \"color5\", bg = \"color0\" }" }}
+"ui.cursor" =  {{ "{ fg = \"color0\", bg = \"color1\", modifiers = [\"dim\"] }" }}
+"ui.cursor.match" = {{ "{ fg = \"color5\", modifiers = [\"underlined\"] }" }}
+"ui.cursor.primary" = {{ "{ bg = \"color7\", modifier = [\"dim\"] }" }}
+# "ui.help" = {{ "{ fg = \"foreground\", bg = \"color16\" }" }}
+"ui.help" = {{ "{ fg = \"foreground\" }" }}
+"ui.linenr" = {{ "{ fg = \"color1\" }" }}
+"ui.linenr.selected" = {{ "{ fg = \"color7\", bg = \"color1\" }" }}
+"ui.menu" = {{ "{ fg = \"foreground\" }" }}
+# "ui.menu" = {{ "{ fg = \"foreground\", bg = \"color17\" }" }}
+"ui.menu.selected" = {{ "{ fg = \"foreground\", bg = \"color1\" }" }}
+"ui.menu.highlighted" = {{ "{ fg = \"color6\"}" }}
+"ui.popup" = {{ "{ fg = \"color5\", bg = \"color17\" }" }}
+# "ui.selection" = {{ "{ bg = \"color17\" }" }}
+"ui.selection.primary" = {{ "{ bg = \"color4\", fg = \"color0\" }" }}
+# "ui.statusline" = {{ "{ fg = \"foreground\", bg = \"color16\" }" }}
+"ui.statusline" = {{ "{ fg = \"foreground\" }" }}
+# "ui.statusline.inactive" = {{ "{ fg = \"color8\", bg = \"color16\" }" }}
+"ui.statusline.inactive" = {{ "{ fg = \"color8\" }" }}
+"ui.text" = {{ "{ fg = \"foreground\" }" }}
+"ui.text.focus" = {{ "{ fg = \"color8\" }" }}
+"ui.window" = {{ "{ fg = \"color5\" }" }}
+"ui.virtual" = {{ "{ fg = \"color8\" }" }}
+
+"error" = {{ "{ fg = \"color1\" }" }}
+"warning" = {{ "{ fg = \"color3\" }" }}
+"info" = {{ "{ fg = \"color4\" }" }}
+"hint" = {{ "{ fg = \"color8\" }" }}
+"diagnostic" = {{ "{ modifiers = [\"underlined\"] }" }}
+
+"markup.heading" = {{ "{ fg = \"color3\", modifiers = [\"bold\"] }" }}
+"markup.list" = "color8"
+"markup.bold" = {{ "{ fg = \"color1\", modifiers = [\"bold\"] }" }}
+"markup.italic" = {{ "{ fg = \"color8\", modifiers = [\"italic\"] }" }}
+"markup.link.url" = "color8"
+"markup.link.text" = "color5"
+"markup.quote" = {{ "{ fg = \"color8\", modifiers = [\"italic\"] }" }}
+"markup.raw" = {{ "{ fg = \"color8\" }" }}
+
+[palette]
+foreground = "{{color7}}"
+color0 = "{{color0}}"
+color1 = "{{color1}}"
+color2 = "{{color2}}"
+color3 = "{{color3}}"
+color4 = "{{color4}}"
+color5 = "{{color5}}"
+color6 = "{{color6}}"
+color7 = "{{color7}}"
+color8 = "{{color8}}"
+color9 = "{{color9}}"
+color10 = "{{color10}}"
+color11 = "{{color11}}"
+color12 = "{{color12}}"
+color13 = "{{color13}}"
+color14 = "{{color14}}"
+color15 = "{{color15}}"
+# color16 = "{{background | darken(1)}}"
+# color17 = "{{background | lighten(10)}}"

@@ -1,4 +1,4 @@
-theme = "tokyonight-transparent"
+theme = "wallust"
 
 [editor]
 line-number = "relative"
@@ -6,10 +6,12 @@ default-yank-register = "+"
 popup-border = "all"
 idle-timeout = 0
 completion-trigger-len = 1
-bufferline = "always"
 auto-format = true
 color-modes = true
 rainbow-brackets = true
+welcome-screen = false
+undercurl = true
+mouse = true
 
 [editor.cursor-shape]
 insert = "bar"
@@ -18,11 +20,54 @@ normal = "block"
 [editor.lsp]
 display-inlay-hints = true
 auto-signature-help = false
-display-progress-messages = true
+# display-progress-messages = true
+
+[icons.vcs]
+enabled = true
+icon = ""
+
+[icons.mime]
+enabled = true
+directory = "🖿"
+rust = "🦀"
+python = "🐍"
+go = ""
+json = ""
+
+[icons.kind]
+enabled = true
+
+[editor.notifications]
+enable = true
+style = "popup"
+position = "top-right"
+default-timeout = 5000
+padding = 0
+
+[editor.notifications.border]
+enable = true
+
+[editor.notifications.emojis]
+info = "💡"
+warning = "⚠️"
+error = "❌"
+success = "✅"
+
+[editor.cmdline]
+style="bottom" # popup
+
+[editor.cmdline.icons]
+search = " "
+general = " "
+command= " "
+
+[editor.bufferline]
+render-mode = "always"
+separator = "|"
 
 [editor.statusline]
-left = [ "mode", "read-only-indicator", "version-control", "spinner"]
-right = ["diagnostics", "register", "position", "position-percentage", "file-encoding", "file-type"]
+left = [ "mode", "read-only-indicator", "version-control", "function-name", "spinner"]
+right = ["diagnostics", "register", "position", "position-percentage", "file-encoding"]
 
 mode.normal = "N"
 mode.insert = "I"
@@ -30,9 +75,6 @@ mode.select = "V"
 
 diagnostics = ["warning", "error"]
 workspace-diagnostics = ["warning", "error"]
-
-[editor.file-picker]
-hidden = false
 
 [editor.whitespace.render]
 space = "none"
@@ -55,6 +97,14 @@ render = true
 [editor.smart-tab]
 enable = false
 supersede-menu = true
+
+[editor.file-picker]
+hidden = false # enables ignoring hidden files
+parents = true # enables reading ignore files from parent directories
+ignore = true # enables reading .ignore files
+git-ignore = true # enables reading .gitignore files
+git-global = true
+git-exclude = true
 
 [keys.normal]
 tab = "move_parent_node_end"
@@ -81,8 +131,6 @@ w = ":write"
 9 = ":goto-buffer 9"
 0 = ":goto-buffer 0"
 
-
-
 [keys.normal." "."g"]
 g = "changed_file_picker"
 b = ":! git show --no-patch --format='%%h (%%an: %%ar): %%s' $(git blame -p %{buffer_name} -L%{cursor_line},+1 | head -1 | cut -d' ' -f1)"
@@ -91,3 +139,4 @@ b = ":! git show --no-patch --format='%%h (%%an: %%ar): %%s' $(git blame -p %{bu
 C-f = "goto_next_tabstop"
 C-S-f = "goto_prev_tabstop"
 C-l = "signature_help"
+
