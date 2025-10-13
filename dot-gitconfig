@@ -31,3 +31,5 @@
 	autosquash = true
 [core]
 	sshCommand = ssh -p 222
+[merge]
+	ff = false

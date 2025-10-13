@@ -13,7 +13,7 @@
   <property name="last-sort-order" type="string" value="GTK_SORT_DESCENDING"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
   <property name="last-details-view-visible-columns" type="string" value="THUNAR_COLUMN_DATE_MODIFIED,THUNAR_COLUMN_NAME,THUNAR_COLUMN_SIZE,THUNAR_COLUMN_TYPE"/>
-  <property name="last-details-view-column-widths" type="string" value="50,50,133,127,50,194,50,50,1863,50,50,82,50,92"/>
+  <property name="last-details-view-column-widths" type="string" value="50,50,138,127,50,94,50,50,514,50,50,90,50,552"/>
   <property name="misc-status-bar-active-info" type="uint" value="31"/>
   <property name="misc-text-beside-icons" type="bool" value="false"/>
   <property name="misc-folders-first" type="bool" value="false"/>
@@ -22,4 +22,5 @@
   <property name="misc-show-delete-action" type="bool" value="true"/>
   <property name="last-restore-tabs" type="bool" value="false"/>
   <property name="misc-full-path-in-tab-title" type="bool" value="true"/>
+  <property name="last-menubar-visible" type="bool" value="true"/>
 </channel>
