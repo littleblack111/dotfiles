@@ -14,29 +14,30 @@ function vim
 
     if not test -e $argv[1]
         printf "%s doesn't exist\ntouch File '%s'?(y/N)" $argv[1] $argv[1]
-        read -l choice
-        if test "$choice" = y -o "$choice" = Y
-            echo
-            if not test -w (dirname $argv[1])
-                printf "Opening vim with sudo...\n"
-                sudo -E $EDITOR $argv[1]
-                if not test -e $argv[1]
-                    printf "File \"%s\" is isn't saved, auto deleted...\n" $argv[1]
+        read -n 1 -P "" choice
+        echo
+        switch $choice
+            case y Y
+                if not test -w (dirname $argv[1])
+                    printf "Opening vim with sudo...\n"
+                    sudo -E $EDITOR $argv[1]
+                    if not test -e $argv[1]
+                        printf "File \"%s\" is isn't saved, auto deleted...\n" $argv[1]
+                        return
+                    end
+                    return
+                else
+                    printf "Opening vim...\n"
+                    $EDITOR $argv[1]
+                    if not test -e $argv[1]
+                        printf "File \"%s\" is isn't saved, auto deleted...\n" $argv[1]
+                        return
+                    end
                     return
                 end
+            case '*'
+                printf '\nExiting...\n'
                 return
-            else
-                printf "Opening vim...\n"
-                $EDITOR $argv[1]
-                if not test -e $argv[1]
-                    printf "File \"%s\" is isn't saved, auto deleted...\n" $argv[1]
-                    return
-                end
-                return
-            end
-        else
-            printf '\nExiting...\n'
-            return
         end
     end
 
@@ -103,5 +104,5 @@ function createrepo
 end
 
 function tempsend
-    bw send $argv ^/dev/null | jq -r '.accessUrl'
+    bw send $argv 2>/dev/null | jq -r '.accessUrl'
 end

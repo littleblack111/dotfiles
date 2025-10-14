@@ -19,7 +19,7 @@ abbr -a psg "ps aux | grep -v grep | grep -i -e VSZ -e"
 alias mkdir "mkdir -p"
 abbr -a fm ranger
 
-abbr -a cat "bat --plain --pager=never"
+alias cat "bat --plain --pager=never"
 # alias grep='grep --color=auto'
 alias grep "rg --no-heading --with-filename --smart-case -F"
 alias mv "mv -v"
