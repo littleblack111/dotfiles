@@ -1,13 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR ZO_CMD:zo
-SETUVAR Z_CMD:z
-SETUVAR Z_DATA:/home/system/\x2elocal/share/z/data
 SETUVAR Z_DATA_DIR:/home/system/\x2elocal/share/z
-SETUVAR Z_EXCLUDE:\x5e/home/system\x24
 SETUVAR __fish_initialized:3800
-SETUVAR _fisher__2F_mnt_2F_44_41_TA_2F_personal_2F_43_ode_2F_projects_2F_z_files:\x7e/\x2econfig/fish/functions/__z\x2efish\x1e\x7e/\x2econfig/fish/functions/__z_add\x2efish\x1e\x7e/\x2econfig/fish/functions/__z_clean\x2efish\x1e\x7e/\x2econfig/fish/functions/__z_complete\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/z\x2efish
-SETUVAR _fisher_plugins:/mnt/DATA/personal/Code/projects/z
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr

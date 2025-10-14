@@ -41,7 +41,6 @@ set -x XDG_DATA_HOME "$HOME/.local/share"
 set -x XDG_STATE_HOME "$HOME/.local/state"
 set -x XDG_CONFIG_DIRS /etc/xdg
 set -x XDG_DATA_DIRS "/usr/local/share:/usr/share:/var/lib/flatpak/exports/share:$XDG_DATA_HOME/flatpak/exports/share"
-set -x XDG_RUNTIME_DIR "/run/user/(id -u)"
 set -x XDG_DESKTOP_DIR "$HOME/Desktop"
 set -x XDG_DOWNLOAD_DIR "$HOME/Downloads"
 set -x XDG_TEMPLATES_DIR "$HOME/Templates"

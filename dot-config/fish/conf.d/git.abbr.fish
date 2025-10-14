@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 set -x LOG_HASH "%C(always,yellow)%h%C(always,reset)"
@@ -37,16 +36,16 @@ end
 
 function pretty_git_format
     sed -Ee 's/(^[^)]*) ago\)/\1)/' \
-    | sed -Ee 's/(^[^)]*), [[:digit:]]+ .*months?\)/\1)/' \
-    | sed -Ee 's/ seconds?\)/s\)/' \
-    | sed -Ee 's/ minutes?\)/m\)/' \
-    | sed -Ee 's/ hours?\)/h\)/' \
-    | sed -Ee 's/ days?\)/d\)/' \
-    | sed -Ee 's/ weeks?\)/w\)/' \
-    | sed -Ee 's/ months?\)/M\)/' \
-    | sed -Ee 's/<Andrew Burgess>/<me>/' \
-    | sed -Ee 's/<([^ >]+) [^>]*>/<\1>/' \
-    | column -s '}' -t
+        | sed -Ee 's/(^[^)]*), [[:digit:]]+ .*months?\)/\1)/' \
+        | sed -Ee 's/ seconds?\)/s\)/' \
+        | sed -Ee 's/ minutes?\)/m\)/' \
+        | sed -Ee 's/ hours?\)/h\)/' \
+        | sed -Ee 's/ days?\)/d\)/' \
+        | sed -Ee 's/ weeks?\)/w\)/' \
+        | sed -Ee 's/ months?\)/M\)/' \
+        | sed -Ee 's/<Andrew Burgess>/<me>/' \
+        | sed -Ee 's/<([^ >]+) [^>]*>/<\1>/' \
+        | column -s '}' -t
 end
 
 #alias tree='tree -a -I .git'
@@ -229,7 +228,7 @@ abbr -a gr "git remote"
 # alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
 # alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"'
 # alias gcl='git clone --recurse-submodules'
-abbr -a gl "git log --decorate --graph"
+alias gl "git log --decorate --graph"
 function gcl
     git clone --recurse-submodules $argv; or gh repo clone $argv -- --recurse-submodules
 end
@@ -237,15 +236,15 @@ end
 # alias gl='git log'
 #alias ga='git add'
 # alias gc='git commit -am'
-abbr -a gc "git commit --verbose -S -m"
-abbr -a gcnm 'git commit --verbose --allow-empty-message -S -m ""'
-abbr -a gca "git commit --verbose -S -am"
+alias gc "git commit --verbose -S -m"
+alias gcnm 'git commit --verbose --allow-empty-message -S -m ""'
+alias gca "git commit --verbose -S -am"
 # alias gp='git push origin main'
 # alias gp='git remote | xargs -L1 git push --all' # moved to funcs
-abbr -a gp 'git remote | xargs -L1 git push'
-abbr -a gpd 'git remote | xargs -L1 git push --delete'
+alias gp 'git remote | xargs -L1 git push'
+alias gpd 'git remote | xargs -L1 git push --delete'
 # alias gpf='git push --force-with-lease'
-abbr -a gitp 'git remote | xargs -L1 git pull'
+alias gitp 'git remote | xargs -L1 git pull'
 abbr -a gs "git status"
 abbr -a gitrm "git rm --cached -rf"
 # alias gsb='git switch'

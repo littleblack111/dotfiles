@@ -6,8 +6,8 @@ abbr -a nmap "sudo nmap"
 abbr -a update-grub "sudo update-grub"
 abbr -a mtar "tar -zcvf"
 abbr -a utar "tar -zxvf"
-abbr -a z "zip -r"
-abbr -a uz unzip
+# abbr -a z "zip -r"
+# abbr -a uz unzip
 # alias unzip='ouch d'
 # alias compress='ouch c'
 # alias zip='ouch c'
@@ -16,15 +16,15 @@ abbr -a compress zip
 abbr -a sr "source ~/.config/zsh/env.zsh"
 abbr -a .. "cd .."
 abbr -a psg "ps aux | grep -v grep | grep -i -e VSZ -e"
-abbr -a mkdir "mkdir -p"
+alias mkdir "mkdir -p"
 abbr -a fm ranger
 
 abbr -a cat "bat --plain --pager=never"
 # alias grep='grep --color=auto'
-abbr -a grep "rg --no-heading --with-filename --smart-case -F"
-abbr -a mv "mv -v"
-abbr -a cp "cp --reflink=auto -vr"
-abbr -a rm "trash -v"
+alias grep "rg --no-heading --with-filename --smart-case -F"
+alias mv "mv -v"
+alias cp "cp --reflink=auto -vr"
+alias rm "trash -v"
 
 abbr -a gpt sgpt
 abbr -a chat gpt
@@ -83,8 +83,8 @@ abbr -a web2app "nativefier --name "
 #alias vim='/home/system/scripts/vim'
 #alias vim='lvim'
 # copy/paste from terminal
-abbr -a copy wl-copy
-abbr -a paste wl-paste
+alias copy wl-copy
+alias paste wl-paste
 # port forwarding & webserver
 abbr -a cloudflarepf "cloudflared tunnel --url localhost:"
 abbr -a portforward "cloudflared tunnel --url localhost:"
@@ -242,11 +242,6 @@ abbr -a frep "grep -ir"
 # vim:ft=zsh
 # doesn't work in zshenv
 
-# idk Y but it will say no correct
-abbr -a j "nocorrect j"
-abbr -a killall "nocorrect killall"
-abbr -a mysql mysql
-
 # alias sys='nu -c sys'
 abbr -a usys "systemctl --user"
 abbr -a sysu "systemctl --user"
@@ -346,6 +341,6 @@ end
 
 abbr -a icat "kitten icat"
 
-abbr -a mkcd "nocorrect mkcd"
-
 abbr -a cd z
+
+abbr -a md mkdir
