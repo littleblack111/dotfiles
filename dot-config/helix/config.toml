@@ -5,6 +5,7 @@ line-number = "relative"
 default-yank-register = "+"
 popup-border = "all"
 idle-timeout = 0
+completion-timeout = 0
 completion-trigger-len = 1
 auto-format = true
 color-modes = true
