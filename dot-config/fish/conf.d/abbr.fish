@@ -21,7 +21,7 @@ abbr -a fm ranger
 
 alias cat "bat --plain --pager=never"
 # alias grep='grep --color=auto'
-alias grep "rg --no-heading --with-filename --smart-case -F"
+alias grep "rg --no-heading --with-filename --smart-case --hyperlink-format=kitty -F"
 alias mv "mv -v"
 alias cp "cp --reflink=auto -vr"
 alias rm "trash -v"
@@ -158,7 +158,6 @@ abbr -a map mapscii
 # disk analyser
 abbr -a diskana ncdu
 # must run as root commands
-abbr -a sudo "sudo       "
 abbr -a root "/usr/bin/sudo -i"
 abbr -a "*" sudo
 abbr -a visudo "sudo visudo"
