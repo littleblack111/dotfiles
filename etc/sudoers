@@ -45,25 +45,28 @@
 ## when running commands via sudo.
 ##
 ## Locale settings
-# Defaults env_keep += "LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET"
+Defaults env_keep += "LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET"
 ##
 ## Run X applications through sudo; HOME is used to find the
 ## .Xauthority file.  Note that other programs use HOME to find   
 ## configuration files and this may lead to privilege escalation!
-# Defaults env_keep += "HOME"
+Defaults env_keep += "HOME"
 ##
 ## X11 resource path settings
-# Defaults env_keep += "XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH"
+Defaults env_keep += "DISPLAY XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH"
+##
+## Wayland
+Defaults env_keep += "WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE"
 ##
 ## Desktop path settings
-# Defaults env_keep += "QTDIR KDEDIR"
+Defaults env_keep += "XDG_RUNTIME_DIR QTDIR KDEDIR EDITOR VISUAL"
 ##
 ## Allow sudo-run commands to inherit the callers' ConsoleKit session
-# Defaults env_keep += "XDG_SESSION_COOKIE"
+Defaults env_keep += "XDG_SESSION_COOKIE"
 ##
 ## Uncomment to enable special input methods.  Care should be taken as
 ## this may allow users to subvert the command being run via sudo.
-# Defaults env_keep += "XMODIFIERS GTK_IM_MODULE QT_IM_MODULE QT_IM_SWITCHER"
+Defaults env_keep += "XMODIFIERS GTK_IM_MODULE QT_IM_MODULE QT_IM_SWITCHER"
 ##
 ## Uncomment to use a hard-coded PATH instead of the user's to find commands
 # Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -95,7 +98,7 @@
 ## slower by these options and also can clutter up the logs.
 # Defaults!PKGMAN !intercept, !log_subcmds
 Defaults    pwfeedback
-Defaults    editor=/usr/bin/lvim
+Defaults    editor=/usr/bin/hx
 # Defaults    timestamp_timeout=-1
 Defaults    passwd_timeout=-1
 
@@ -109,11 +112,11 @@ Defaults    passwd_timeout=-1
 root ALL=(ALL:ALL) ALL
 system	ALL=(ALL:ALL) ALL
 system	ALL=(ALL:ALL) NOPASSWD: /usr/bin/btop
-system	ALL=(ALL:ALL) NOPASSWD: /usr/bin/nice
-system	ALL=(ALL:ALL) NOPASSWD: /sbin/touch
-system	ALL=(ALL:ALL) NOPASSWD: /sbin/tee
-system	ALL=(ALL:ALL) NOPASSWD: /sbin/rm
-system	ALL=(ALL:ALL) NOPASSWD: /sbin/mkdir
+# system	ALL=(ALL:ALL) NOPASSWD: /usr/bin/nice
+# system	ALL=(ALL:ALL) NOPASSWD: /sbin/touch
+# system	ALL=(ALL:ALL) NOPASSWD: /sbin/tee
+# system	ALL=(ALL:ALL) NOPASSWD: /sbin/rm
+# system	ALL=(ALL:ALL) NOPASSWD: /sbin/mkdir
 system  ALL=(ALL:ALL) NOPASSWD: /usr/bin/nice,/usr/bin/renice
 system  ALL=(ALL:ALL) NOPASSWD: /usr/bin/missioncenter
 # system  ALL=(ALL:ALL) NOPASSWD: /usr/bin/psd-overlay-helper
@@ -121,11 +124,11 @@ system  ALL=(ALL:ALL) NOPASSWD: /usr/bin/missioncenter
 ## Uncomment to allow members of group wheel to execute any command
 %wheel ALL=(ALL:ALL) ALL
 %wheel	ALL=(ALL:ALL) NOPASSWD: /usr/bin/btop
-%wheel	ALL=(ALL:ALL) NOPASSWD: /usr/bin/nice
-%wheel	ALL=(ALL:ALL) NOPASSWD: /sbin/touch
-%wheel	ALL=(ALL:ALL) NOPASSWD: /sbin/tee
-%wheel	ALL=(ALL:ALL) NOPASSWD: /sbin/rm
-%wheel	ALL=(ALL:ALL) NOPASSWD: /sbin/mkdir
+# %wheel	ALL=(ALL:ALL) NOPASSWD: /usr/bin/nice
+# %wheel	ALL=(ALL:ALL) NOPASSWD: /sbin/touch
+# %wheel	ALL=(ALL:ALL) NOPASSWD: /sbin/tee
+# %wheel	ALL=(ALL:ALL) NOPASSWD: /sbin/rm
+# %wheel	ALL=(ALL:ALL) NOPASSWD: /sbin/mkdir
 %wheel  ALL=(ALL:ALL) NOPASSWD: /usr/bin/nice,/usr/bin/renice
 # %wheel  ALL=(ALL:ALL) NOPASSWD: /usr/bin/psd-overlay-helper
 
