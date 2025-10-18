@@ -1,13 +1,13 @@
-# vim with auto sudo
-function vim
+# hx with auto sudo
+function hx
     if test (count $argv) -eq 0
         if not test -w (pwd)
-            printf "Opening vim with sudo...\n"
-            sudo -E $EDITOR
+            printf "Opening hx with sudo...\n"
+            command sudo -E $EDITOR
             return
         else
-            printf "Opening vim...\n"
-            $EDITOR
+            printf "Opening hx...\n"
+            command $EDITOR
             return
         end
     end
@@ -19,7 +19,7 @@ function vim
         switch $choice
             case y Y
                 if not test -w (dirname $argv[1])
-                    printf "Opening vim with sudo...\n"
+                    printf "Opening hx with sudo...\n"
                     sudo -E $EDITOR $argv[1]
                     if not test -e $argv[1]
                         printf "File \"%s\" is isn't saved, auto deleted...\n" $argv[1]
@@ -27,8 +27,8 @@ function vim
                     end
                     return
                 else
-                    printf "Opening vim...\n"
-                    $EDITOR $argv[1]
+                    printf "Opening hx...\n"
+                    command $EDITOR $argv[1]
                     if not test -e $argv[1]
                         printf "File \"%s\" is isn't saved, auto deleted...\n" $argv[1]
                         return
@@ -42,12 +42,12 @@ function vim
     end
 
     if not test -w $argv[1]
-        printf "Opening vim with sudo...\n"
+        printf "Opening hx with sudo...\n"
         sudo -E $EDITOR $argv[1]
         return
     else if test -e $argv[1]
-        printf "Opening vim...\n"
-        $EDITOR $argv[1]
+        printf "Opening hx...\n"
+        command $EDITOR $argv[1]
         return
     end
 end
@@ -60,7 +60,7 @@ function path
     echo (pwd)/$argv[1]
 end
 
-function vimake
+function vmake
     if test -e Makefile
         $EDITOR Makefile
     else
@@ -68,9 +68,9 @@ function vimake
     end
 end
 
-function vimpkg
+function vmpkg
     if test -e PKGBUILD
-        nvim PKGBUILD
+        $EDITOR PKGBUILD
     else
         printf "No PKGBUILD"
     end

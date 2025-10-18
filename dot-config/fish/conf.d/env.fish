@@ -52,6 +52,8 @@ set -x XDG_VIDEOS_DIR "$HOME/Videos"
 
 # Pager/editor helpers
 set -x MANPAGER 'nvim +Man! +"set nocul" +"set noshowcmd" +"set noruler" +"set noshowmode" +"set laststatus=0" +"set showtabline=0" +"set nonumber"'
+# set -x MANPAGER hx
+# set -x MANROFFOPT -c
 set -x DIFFPROG 'nvim -d'
 # set -x MANPAGER "lvim +Man"
 

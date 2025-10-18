@@ -144,7 +144,7 @@ abbr -a config-polybar "vim ~/.config/bspwm/themes/default/polybar/config.ini"
 abbr -a tarxz "tar -xvJf"
 abbr -a targz "tar -xvzf"
 # faster(vim)
-abbr -a v vim
+abbr -a v hx
 ## auto fuck
 # better finds
 #alias find='sudo find / | grep '
@@ -340,6 +340,6 @@ end
 
 abbr -a icat "kitten icat"
 
-abbr -a cd z
+# abbr -a cd z
 
 abbr -a md mkdir
