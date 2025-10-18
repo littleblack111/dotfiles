@@ -8,7 +8,7 @@ zoxide init fish --cmd cd | source
 #     if __fish_complete_directories "$tokens[2..-1]" '' | read -lz __out
 #         echo $__out
 #     else
-command zoxide query --exclude (__zoxide_pwd) -- $tokens[2..-1] 2>/dev/null | string replace -a -- (__zoxide_pwd)/ '' | string replace -a -- $HOME '~' | string split0 | string join /
+# command zoxide query --exclude (__zoxide_pwd) -- $tokens[2..-1] 2>/dev/null | string replace -a -- (__zoxide_pwd)/ '' | string replace -a -- $HOME '~' | string split0 | string join /
 #     end
 # end
 
