@@ -1,0 +1,21 @@
+colors:
+  body: none
+  date: black
+  tags: yellow
+  title: cyan
+default_hour: 9
+default_minute: 0
+editor: hx
+encrypt: true
+highlight: true
+indent_character: "|"
+journals:
+  default:
+    journal: /mnt/DATA/personal/jrnl/journal.txt
+  nix:
+    journal: /mnt/DATA/personal/jrnl/nix.txt
+linewrap: 79
+tagsymbols: "#@"
+template: false
+timeformat: "%F %r"
+version: v4.2.1
