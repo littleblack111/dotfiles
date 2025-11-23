@@ -844,31 +844,37 @@
 	{
 		"context": "!menu",
 		"bindings": {
-			"ctrl-l": "workspace::ActivatePaneRight"
+			"ctrl-shift-l": "workspace::ActivatePaneRight"
 		}
 	},
 	{
 		"context": "!menu",
 		"bindings": {
-			"ctrl-h": "workspace::ActivatePaneLeft"
+			"ctrl-shift-h": "workspace::ActivatePaneLeft"
 		}
 	},
 	{
 		"context": "!menu",
 		"bindings": {
-			"ctrl-k": "workspace::ActivatePaneUp"
+			"ctrl-shift-k": "workspace::ActivatePaneUp"
 		}
 	},
 	{
 		"context": "!menu",
 		"bindings": {
-			"ctrl-j": "workspace::ActivatePaneDown"
+			"ctrl-shift-j": "workspace::ActivatePaneDown"
 		}
 	},
- {
-  "context": "(VimControl && !menu)",
-   "bindings": {
-   "ctrl-i": "pane::GoForward"
-  }
- }
+	{
+		"context": "(VimControl && !menu)",
+		"bindings": {
+			"ctrl-i": "pane::GoForward"
+		}
+	},
+	{
+		"context": "Picker > Editor",
+		"bindings": {
+			"ctrl-n": null
+		}
+	}
 ]
