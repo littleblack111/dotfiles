@@ -1,0 +1,337 @@
+{
+	"$schema": "https://zed.dev/schema/themes/v0.1.0.json",
+	"name": "wal Theme",
+	"author": "Fuwn <contact@fuwn.me>",
+	"themes": [
+		{
+			"name": "wal2",
+			"appearance": "dark",
+			"style": {
+				"background.appearance": "blurred",
+				"border": "{{color8}}77",
+				"border.variant": "{{color8}}55",
+				"border.focused": "{{color1}}",
+				"border.selected": "{{color1}}77",
+				"border.transparent": "{{color8}}33",
+				"border.disabled": "{{color8}}55",
+				"elevated_surface.background": "{{color0}}",
+				"surface.background": "{{color0}}",
+				"background": "{{background}}b3",
+				"element.background": "{{color0}}",
+				"element.hover": "{{color8}}33",
+				"element.active": "{{color8}}55",
+				"element.selected": "{{color4}}77",
+				"element.disabled": "{{color8}}33",
+				"drop_target.background": "{{color1}}33",
+				"ghost_element.background": "{{background}}00",
+				"ghost_element.hover": "{{color8}}22",
+				"ghost_element.active": "{{color8}}44",
+				"ghost_element.selected": "{{color8}}66",
+				"ghost_element.disabled": "{{color8}}22",
+				"text": "{{foreground}}",
+				"text.muted": "{{color8}}",
+				"text.placeholder": "{{color8}}",
+				"text.disabled": "{{color8}}",
+				"text.accent": "{{color1}}",
+				"icon": "{{color8}}",
+				"icon.muted": "{{color8}}77",
+				"icon.disabled": "{{color8}}55",
+				"icon.placeholder": "{{color8}}66",
+				"icon.accent": "{{color1}}",
+				"status_bar.background": "{{background}}CC",
+				"title_bar.background": "{{background}}CC",
+				"toolbar.background": "{{background}}00",
+				"tab_bar.background": "{{background}}00",
+				"tab.inactive_background": "{{background}}00",
+				"tab.active_background": "{{background}}00",
+				"tab.active_foreground": "{{foreground}}",
+				"tab.inactive_foreground": "{{foreground}}99",
+				"tab.unfocused_active_foreground": "{{foreground}}99",
+				"tab.unfocused_inactive_foreground": "{{foreground}}77",
+				"search.match_background": "{{color1}}44",
+				"panel.background": "{{background}}00",
+				"panel.focused_border": "{{color1}}",
+				"pane.focused_border": "{{color1}}",
+				"pane_group.border": "{{color8}}33",
+				"scrollbar.thumb.background": "{{color7}}44",
+				"scrollbar.thumb.hover_background": "{{color7}}77",
+				"scrollbar.thumb.border": "transparent",
+				"scrollbar.track.background": "{{background}}00",
+				"scrollbar.track.border": "transparent",
+				"editor.foreground": "{{foreground}}",
+				"editor.background": "{{background}}00",
+				"editor.gutter.background": "{{background}}00",
+				"editor.subheader.background": "{{color0}}",
+				"editor.active_line.background": "{{color7}}22",
+				"editor.highlighted_line.background": "{{color8}}33",
+				"editor.line_number": "{{color8}}",
+				"editor.active_line_number": "{{color15}}",
+				"editor.invisible": "{{color8}}66",
+				"editor.wrap_guide": "{{color8}}44",
+				"editor.active_wrap_guide": "{{color8}}77",
+				"editor.document_highlight.read_background": "{{color8}}44",
+				"editor.document_highlight.write_background": "{{color2}}77",
+				"terminal.background": "{{background}}00",
+				"terminal.foreground": "{{foreground}}",
+				"terminal.bright_foreground": "{{color15}}",
+				"terminal.dim_foreground": "{{color8}}",
+				"terminal.ansi.black": "{{color0}}",
+				"terminal.ansi.bright_black": "{{color8}}",
+				"terminal.ansi.dim_black": "{{color8}}",
+				"terminal.ansi.red": "{{color1}}",
+				"terminal.ansi.bright_red": "{{color9}}",
+				"terminal.ansi.dim_red": "{{color9}}",
+				"terminal.ansi.green": "{{color2}}",
+				"terminal.ansi.bright_green": "{{color10}}",
+				"terminal.ansi.dim_green": "{{color10}}",
+				"terminal.ansi.yellow": "{{color3}}",
+				"terminal.ansi.bright_yellow": "{{color11}}",
+				"terminal.ansi.dim_yellow": "{{color11}}",
+				"terminal.ansi.blue": "{{color4}}",
+				"terminal.ansi.bright_blue": "{{color12}}",
+				"terminal.ansi.dim_blue": "{{color12}}",
+				"terminal.ansi.magenta": "{{color5}}",
+				"terminal.ansi.bright_magenta": "{{color13}}",
+				"terminal.ansi.dim_magenta": "{{color13}}",
+				"terminal.ansi.cyan": "{{color6}}",
+				"terminal.ansi.bright_cyan": "{{color14}}",
+				"terminal.ansi.dim_cyan": "{{color14}}",
+				"terminal.ansi.white": "{{color7}}",
+				"terminal.ansi.bright_white": "{{color15}}",
+				"terminal.ansi.dim_white": "{{color15}}",
+				"link_text.hover": "{{color14}}",
+				"conflict": "{{color12}}",
+				"conflict.background": "{{color12}}33",
+				"conflict.border": "{{color12}}",
+				"created": "{{color10}}",
+				"created.background": "{{color10}}33",
+				"created.border": "{{color10}}",
+				"deleted": "{{color9}}",
+				"deleted.background": "{{color9}}33",
+				"deleted.border": "{{color9}}",
+				"error": "{{color9}}",
+				"error.background": "{{color9}}22",
+				"error.border": "{{color9}}",
+				"hidden": "{{color8}}77",
+				"hidden.background": "{{color8}}22",
+				"hidden.border": "{{color8}}55",
+				"hint": "{{color15}}",
+				"hint.background": "{{color15}}22",
+				"hint.border": "{{color15}}55",
+				"ignored": "{{color8}}66",
+				"ignored.background": "{{color8}}22",
+				"ignored.border": "{{color8}}44",
+				"info": "{{color12}}",
+				"info.background": "{{color12}}22",
+				"info.border": "{{color12}}",
+				"modified": "{{color12}}",
+				"modified.background": "{{color12}}33",
+				"modified.border": "{{color12}}",
+				"predictive": "{{color5}}",
+				"predictive.background": "{{color5}}22",
+				"predictive.border": "{{color5}}",
+				"renamed": "{{color6}}",
+				"renamed.background": "{{color6}}33",
+				"renamed.border": "{{color6}}",
+				"success": "{{color10}}",
+				"success.background": "{{color10}}22",
+				"success.border": "{{color10}}",
+				"unreachable": "{{color8}}55",
+				"unreachable.background": "{{color8}}22",
+				"unreachable.border": "{{color8}}44",
+				"warning": "{{color11}}",
+				"warning.background": "{{color11}}22",
+				"warning.border": "{{color11}}",
+				"players": [
+					{
+						"cursor": "{{cursor}}",
+						"background": "{{color1}}33",
+						"selection": "{{color8}}77"
+					}
+				],
+				"syntax": {
+					"attribute": {
+						"color": "{{color11}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"comment": {
+						"color": "{{color8}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"comment.doc": {
+						"color": "{{color8}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"constant": {
+						"color": "{{color11}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"constant.builtin": {
+						"color": "{{color11}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"constant.language": {
+						"color": "{{color11}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"constructor": {
+						"color": "{{color1}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"embedded": {
+						"color": "{{foreground}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"function": {
+						"color": "{{color9}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"function.builtin": {
+						"color": "{{color9}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"function.call": {
+						"color": "{{color9}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.operator": {
+						"color": "{{color12}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"link_text": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"link_uri": {
+						"color": "{{color12}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"number": {
+						"color": "{{color11}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"operator": {
+						"color": "{{color12}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"property": {
+						"color": "{{color2}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"punctuation": {
+						"color": "{{foreground}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"punctuation.bracket": {
+						"color": "{{foreground}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"punctuation.delimiter": {
+						"color": "{{foreground}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"punctuation.list_marker": {
+						"color": "{{color15}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"punctuation.special": {
+						"color": "{{color15}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"string": {
+						"color": "{{color10}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"string.escape": {
+						"color": "{{color13}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"string.regex": {
+						"color": "{{color6}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"string.special": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"string.special.symbol": {
+						"color": "{{color10}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"tag": {
+						"color": "{{color3}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"text.literal": {
+						"color": "{{color10}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"type": {
+						"color": "{{color4}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"type.builtin": {
+						"color": "{{color7}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"variable": {
+						"color": "{{foreground}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"variable.member": {
+						"color": "{{color7}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"variable.parameter": {
+						"color": "{{color5}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"variable.special": {
+						"color": "{{color15}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					}
+				}
+			}
+		}
+	]
+}

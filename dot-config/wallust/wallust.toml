@@ -58,3 +58,9 @@ quickshell.target = "~/.config/quickshell/config/WallustColors.qml"
 
 helix.template = "helix.toml"
 helix.target = "~/.config/helix/themes/wallust.toml"
+
+# "hint": "{{color8}}CC",
+# https://github.com/zed-industries/zed/issues/12485
+# https://github.com/zed-industries/zed/issues/11220
+zed.template = "zed-contrast-from-helix.json"
+zed.target = "~/.config/zed/themes/wal.json"

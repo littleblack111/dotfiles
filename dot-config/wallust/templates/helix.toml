@@ -49,6 +49,8 @@ inherits = "base16_transparent"
 "ui.text.focus" = {{ "{ fg = \"color15\" }" }}
 "ui.window" = {{ "{ fg = \"color5\" }" }}
 "ui.virtual" = {{ "{ fg = \"color8\" }" }}
+"ui.virtual.inlay-hint.parameter" = {{ "{ fg = \"color8\" }" }}
+"ui.virtual.inlay-hint.type" = {{ "{ fg = \"color8\" }" }}
 
 "error" = {{ "{ fg = \"color9\" }" }}
 "warning" = {{ "{ fg = \"color11\" }" }}

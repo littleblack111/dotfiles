@@ -1,0 +1,874 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+	{
+		"context": "Workspace",
+		"bindings": {
+			// "shift shift": "file_finder::Toggle"
+		}
+	},
+	{
+		"context": "Editor && vim_mode == insert",
+		"bindings": {
+			// "j k": "vim::NormalBefore"
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space w": "workspace::Save"
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space c": "pane::CloseActiveItem"
+		}
+	},
+	{
+		"context": "Pane",
+		"bindings": {
+			"ctrl-1": ["pane::ActivateItem", 0]
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space 1": ["pane::ActivateItem", 0]
+		}
+	},
+	{
+		"context": "Pane",
+		"bindings": {
+			"ctrl-2": ["pane::ActivateItem", 1]
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space 2": ["pane::ActivateItem", 1]
+		}
+	},
+	{
+		"context": "Pane",
+		"bindings": {
+			"ctrl-3": ["pane::ActivateItem", 2]
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space 3": ["pane::ActivateItem", 2]
+		}
+	},
+	{
+		"context": "Pane",
+		"bindings": {
+			"ctrl-4": ["pane::ActivateItem", 3]
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space 4": ["pane::ActivateItem", 3]
+		}
+	},
+	{
+		"context": "Pane",
+		"bindings": {
+			"ctrl-5": ["pane::ActivateItem", 4]
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space 5": ["pane::ActivateItem", 4]
+		}
+	},
+	{
+		"context": "Pane",
+		"bindings": {
+			"ctrl-6": ["pane::ActivateItem", 5]
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space 6": ["pane::ActivateItem", 5]
+		}
+	},
+	{
+		"context": "Pane",
+		"bindings": {
+			"ctrl-7": ["pane::ActivateItem", 6]
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space 7": ["pane::ActivateItem", 6]
+		}
+	},
+	{
+		"context": "Pane",
+		"bindings": {
+			"ctrl-8": ["pane::ActivateItem", 7]
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space 8": ["pane::ActivateItem", 7]
+		}
+	},
+	{
+		"context": "Pane",
+		"bindings": {
+			"ctrl-9": ["pane::ActivateItem", 8]
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space 9": ["pane::ActivateItem", 8]
+		}
+	},
+	{
+		"context": "(VimControl && !menu)",
+		"bindings": {
+			"ctrl-w d": null
+		}
+	},
+	{
+		"context": "(VimControl && !menu)",
+		"bindings": {
+			"ctrl-w ]": null
+		}
+	},
+	{
+		"context": "(VimControl && !menu)",
+		"bindings": {
+			"ctrl-w g d": null
+		}
+	},
+	{
+		"context": "(VimControl && !menu)",
+		"bindings": {
+			"ctrl-w ctrl-]": null
+		}
+	},
+	{
+		"context": "(VimControl && !menu)",
+		"bindings": {
+			"ctrl-w g shift-d": null
+		}
+	},
+	{
+		"context": "(VimControl && !menu)",
+		"bindings": {
+			"ctrl-w g space": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-g shift-t": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-c": null
+		}
+	},
+	{
+		"context": "(VimControl && !menu)",
+		"bindings": {
+			"ctrl-w shift-d": null
+		}
+	},
+	{
+		"context": "(VimControl && !menu)",
+		"bindings": {
+			"ctrl-w space": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w g t": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-g t": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w g shift-t": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w shift-up": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w shift-down": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w shift-k": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w shift-l": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-k": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w up": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w l": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-l": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w right": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w h": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-h": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-j": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-w": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w left": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w k": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w p": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w shift-w": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-o": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w o": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w shift-right": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w shift-left": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-n": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w n": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w shift-j": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w shift-h": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-p": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-shift-w": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w j": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w down": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w w": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w +": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w >": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w <": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w =": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w _": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w -": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w v": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-v": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w s": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w shift-s": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-s": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w a": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-a": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w q": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w ctrl-q": null
+		}
+	},
+	{
+		"context": "((VimControl && !menu) || (!Editor && !Terminal))",
+		"bindings": {
+			"ctrl-w c": null
+		}
+	},
+	{
+		"context": "KeystrokeInput",
+		"bindings": {
+			"escape escape escape": null
+		}
+	},
+	{
+		"context": "Workspace",
+		"bindings": {
+			"ctrl-1": ["workspace::ActivatePane", 0]
+		}
+	},
+	{
+		"context": "(VimControl && !menu)",
+		"bindings": {
+			"ctrl-j": "vim::Down"
+		}
+	},
+	{
+		"context": "(Editor && (showing_code_actions || showing_completions))",
+		"bindings": {
+			"ctrl-j": "editor::ContextMenuNext"
+		}
+	},
+	{
+		"bindings": {
+			"ctrl-j": "menu::SelectNext"
+		}
+	},
+	{
+		"context": "(Picker || menu)",
+		"bindings": {
+			"ctrl-j": "menu::SelectNext"
+		}
+	},
+	{
+		"context": "(GitPanel && ChangesList)",
+		"bindings": {
+			"ctrl-j": "menu::SelectNext"
+		}
+	},
+	{
+		"context": "Picker > Editor",
+		"bindings": {
+			"ctrl-j": "menu::SelectNext"
+		}
+	},
+	{
+		"context": "KeybindEditorModal > Editor",
+		"bindings": {
+			"ctrl-j": "menu::SelectNext"
+		}
+	},
+	{
+		"context": "(Editor && (showing_code_actions || showing_completions))",
+		"bindings": {
+			"ctrl-k": "editor::ContextMenuPrevious"
+		}
+	},
+	{
+		"bindings": {
+			"ctrl-k": "menu::SelectPrevious"
+		}
+	},
+	{
+		"context": "(Picker || menu)",
+		"bindings": {
+			"ctrl-k": "menu::SelectPrevious"
+		}
+	},
+	{
+		"context": "(GitPanel && ChangesList)",
+		"bindings": {
+			"ctrl-k": "menu::SelectPrevious"
+		}
+	},
+	{
+		"context": "Picker > Editor",
+		"bindings": {
+			"ctrl-k": "menu::SelectPrevious"
+		}
+	},
+	{
+		"context": "KeybindEditorModal > Editor",
+		"bindings": {
+			"ctrl-k": "menu::SelectPrevious"
+		}
+	},
+	{
+		"context": "ContextStrip",
+		"bindings": {
+			"ctrl-j": "agent::FocusDown"
+		}
+	},
+	{
+		"context": "ContextStrip",
+		"bindings": {
+			"ctrl-k": "agent::FocusUp"
+		}
+	},
+	{
+		"context": "(Editor && showing_completions)",
+		"bindings": {
+			"ctrl-y": "editor::ConfirmCompletion"
+		}
+	},
+	{
+		"context": "(Editor && showing_completions)",
+		"bindings": {
+			"enter": "editor::Newline"
+		}
+	},
+	{
+		"context": "(Editor && edit_prediction)",
+		"bindings": {
+			"tab": "editor::Tab"
+		}
+	},
+	{
+		"context": "(((Editor && in_snippet) && has_next_tabstop) && !showing_completions)",
+		"bindings": {
+			"ctrl-f": "editor::NextSnippetTabstop"
+		}
+	},
+	{
+		"context": "Picker > Editor",
+		"bindings": {
+			"ctrl-y": "picker::ConfirmCompletion"
+		}
+	},
+	{
+		"context": "Picker > Editor",
+		"bindings": {
+			"tab": null
+		}
+	},
+	{
+		"context": "(((Editor && in_snippet) && has_next_tabstop) && !showing_completions)",
+		"bindings": {
+			"tab": null
+		}
+	},
+	{
+		"context": "(Editor && showing_completions)",
+		"bindings": {
+			"tab": "editor::Tab"
+		}
+	},
+	{
+		"context": "(Picker || menu)",
+		"bindings": {
+			"down": null
+		}
+	},
+	{
+		"context": "(GitPanel && ChangesList)",
+		"bindings": {
+			"down": null
+		}
+	},
+	{
+		"context": "Picker > Editor",
+		"bindings": {
+			"down": null
+		}
+	},
+	{
+		"context": "KeybindEditorModal > Editor",
+		"bindings": {
+			"down": null
+		}
+	},
+	{
+		"context": "((Editor && showing_signature_help) && !showing_completions)",
+		"bindings": {
+			"down": null
+		}
+	},
+	{
+		"context": "(((vim_mode == insert || vim_mode == normal) && showing_signature_help) && !showing_completions)",
+		"bindings": {
+			"ctrl-l": "editor::SignatureHelpNext"
+		}
+	},
+	{
+		"context": "(Editor && (showing_code_actions || showing_completions))",
+		"bindings": {
+			"down": "editor::MoveDown"
+		}
+	},
+	{
+		"context": "(ProjectPanel && not_editing)",
+		"bindings": {
+			"ctrl-j": "vim::MenuSelectNext"
+		}
+	},
+	{
+		"context": "(ProjectPanel && not_editing)",
+		"bindings": {
+			"down": null
+		}
+	},
+	{
+		"context": "(Picker || menu)",
+		"bindings": {
+			"up": null
+		}
+	},
+	{
+		"context": "(GitPanel && ChangesList)",
+		"bindings": {
+			"up": null
+		}
+	},
+	{
+		"context": "Picker > Editor",
+		"bindings": {
+			"up": null
+		}
+	},
+	{
+		"context": "KeybindEditorModal > Editor",
+		"bindings": {
+			"up": null
+		}
+	},
+	{
+		"context": "(ProjectPanel && not_editing)",
+		"bindings": {
+			"up": null
+		}
+	},
+	{
+		"context": "(ProjectPanel && not_editing)",
+		"bindings": {
+			"ctrl-k": "vim::MenuSelectPrevious"
+		}
+	},
+	{
+		"context": "(((vim_mode == insert || vim_mode == normal) && showing_signature_help) && !showing_completions)",
+		"bindings": {
+			"ctrl-h": "editor::SignatureHelpPrevious"
+		}
+	},
+	{
+		"context": "((Editor && showing_signature_help) && !showing_completions)",
+		"bindings": {
+			"up": null
+		}
+	},
+	{
+		"context": "(Editor && (showing_code_actions || showing_completions))",
+		"bindings": {
+			"up": "editor::MoveUp"
+		}
+	},
+	{
+		"context": "(((vim_mode == insert || vim_mode == normal) && showing_signature_help) && !showing_completions)",
+		"bindings": {
+			"ctrl-n": null
+		}
+	},
+	{
+		"context": "Editor",
+		"bindings": {
+			"ctrl-i": null
+		}
+	},
+	{
+		"context": "vim_mode == insert",
+		"bindings": {
+			"ctrl-i": "editor::ShowSignatureHelp"
+		}
+	},
+	{
+		"context": "(((vim_mode == insert || vim_mode == normal) && showing_signature_help) && !showing_completions)",
+		"bindings": {
+			"ctrl-p": null
+		}
+	},
+	{
+		"context": "Picker > Editor",
+		"bindings": {
+			"ctrl-p": null
+		}
+	},
+	{
+		"bindings": {
+			"ctrl-n": null
+		}
+	},
+	{
+		"bindings": {
+			"ctrl-p": null
+		}
+	},
+	{
+		"context": "Editor",
+		"bindings": {
+			"ctrl-l": null
+		}
+	},
+	{
+		"context": "vim_mode == insert",
+		"bindings": {
+			"ctrl-s": null
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space ,": "editor::ToggleCodeActions"
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space a": null
+		}
+	},
+	{
+		"bindings": {
+			"space g b": "editor::ToggleGitBlameInline"
+		}
+	},
+	{
+		"context": "!ContextEditor > (Editor && mode == full)",
+		"bindings": {
+			"shift-i": "assistant::InlineAssist"
+		}
+	},
+	{
+		"context": "Terminal",
+		"bindings": {
+			"shift-i": "assistant::InlineAssist"
+		}
+	},
+	{
+		"context": "Terminal",
+		"bindings": {
+			"ctrl-enter": null
+		}
+	},
+	{
+		"context": "!ContextEditor > (Editor && mode == full)",
+		"bindings": {
+			"ctrl-enter": null
+		}
+	},
+	{
+		"context": "!menu",
+		"bindings": {
+			"ctrl-l": "workspace::ActivatePaneRight"
+		}
+	},
+	{
+		"context": "!menu",
+		"bindings": {
+			"ctrl-h": "workspace::ActivatePaneLeft"
+		}
+	},
+	{
+		"context": "!menu",
+		"bindings": {
+			"ctrl-k": "workspace::ActivatePaneUp"
+		}
+	},
+	{
+		"context": "!menu",
+		"bindings": {
+			"ctrl-j": "workspace::ActivatePaneDown"
+		}
+	},
+ {
+  "context": "(VimControl && !menu)",
+   "bindings": {
+   "ctrl-i": "pane::GoForward"
+  }
+ }
+]
