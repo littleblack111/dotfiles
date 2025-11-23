@@ -74,43 +74,83 @@
         "defaultValue": false
     },
     {
-        "property": "mod.sameerasw.zen_notab_img_enabled",
-        "label": "\ud83d\uddbc\ufe0f Add no tab screen background image",
+        "property": "mod.sameerasw.zen_bg_img_enabled",
+        "label": "\ud83c\udf20 Enable custom background image in full screen",
         "type": "checkbox",
         "defaultValue": false
     },
     {
-        "property": "mod.sameerasw.zen_notab_img",
-        "label": "\ud83d\uddbc\ufe0f Image URL, format:   url('example.com/1.png')",
-        "type": "string",
-        "defaultValue": "url('https://github.com/sameerasw/my-internet/blob/main/wave-light.png?raw=true')",
-        "placeholder": "url('example.com/1.png')"
+        "property": "mod.sameerasw.zen_bg_img_not_fullscreen",
+        "label": "\ud83c\udf20 Always show custom background image",
+        "type": "checkbox",
+        "defaultValue": false
     },
     {
-        "property": "mod.sameerasw.zen_notab_img_size",
-        "label": "\ud83d\uddbc\ufe0f No tab screen image size with unit",
+        "property": "mod.sameerasw.zen_bg_img",
+        "label": "\ud83c\udf20 Custom bg image",
         "type": "string",
-        "defaultValue": "150px",
-        "placeholder": "50px (px, em, % ...)"
+        "defaultValue": "url('https://github.com/sameerasw/my-internet/blob/main/wallpapers/zen-coral-01.jpeg?raw=true')",
+        "placeholder": "url('https://example.com/1.png')"
     },
     {
-        "property": "mod.sameerasw.zen_notab_img_opacity",
-        "label": "\ud83d\uddbc\ufe0f No tab screen image opacity (0-1)",
+        "property": "mod.sameerasw.zen_bg_opacity",
+        "label": "\ud83c\udf20 Custom bg image opacity (0\u20131)",
         "type": "string",
-        "defaultValue": "1",
+        "defaultValue": "0.8",
         "placeholder": "0.75"
     },
     {
-        "property": "mod.sameerasw.zen_notab_img_saturate",
-        "label": "\ud83d\uddbc\ufe0f Grayscale the no tab screen image",
-        "type": "checkbox",
-        "defaultValue": false
+        "property": "mod.sameerasw.zen_bg_blur",
+        "label": "\ud83c\udf20 Custom bg image blur (px)",
+        "type": "string",
+        "defaultValue": "3px",
+        "placeholder": "3px"
     },
     {
-        "property": "mod.sameerasw.zen_notab_img_invert",
-        "label": "\ud83d\uddbc\ufe0f Invert above image in light theme (white \u2192 black)",
-        "type": "checkbox",
-        "defaultValue": false
+        "property": "mod.sameerasw_zen_empty_tab_logo",
+        "label": "\ud83d\uddbc\ufe0f Enable empty tab logo",
+        "type": "dropdown",
+        "placeholder": "Select an option",
+        "defaultValue": "0",
+        "options": [
+            {
+                "label": "Disabled",
+                "value": "0"
+            },
+            {
+                "label": "Enabled",
+                "value": "1"
+            },
+            {
+                "label": "Enabled - grayscale",
+                "value": "2"
+            },
+            {
+                "label": "Enabled - grayscale, inverted",
+                "value": "3"
+            }
+        ]
+    },
+    {
+        "property": "mod.sameerasw.zen_notab_img",
+        "label": "\ud83d\uddbc\ufe0f Empty tab logo URL",
+        "type": "string",
+        "defaultValue": "url('https://github.com/sameerasw/my-internet/blob/main/wave-light.png?raw=true')",
+        "placeholder": "url('https://example.com/1.png')"
+    },
+    {
+        "property": "mod.sameerasw.zen_notab_img_size",
+        "label": "\ud83d\uddbc\ufe0f Empty tab logo size",
+        "type": "string",
+        "defaultValue": "150px",
+        "placeholder": "50px"
+    },
+    {
+        "property": "mod.sameerasw.zen_notab_img_opacity",
+        "label": "\ud83d\uddbc\ufe0f Empty tab logo opacity (0-1)",
+        "type": "string",
+        "defaultValue": "1",
+        "placeholder": "0.75"
     },
     {
         "property": "mod.sameerasw_zen_compact_sidebar_type",
