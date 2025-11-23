@@ -103,14 +103,14 @@ function fish_prompt
     and _nim_prompt_wrapper $retc '' (path basename "$VIRTUAL_ENV")
 
     # git
-    # set -l prompt_git (fish_git_prompt '%s')
-    # test -n "$prompt_git"
-    # and _nim_prompt_wrapper $retc '' $prompt_git
+    set -l prompt_git (fish_git_prompt '%s')
+    test -n "$prompt_git"
+    and _nim_prompt_wrapper $retc '' $prompt_git
 
     # jj
-    set -l prompt_jj (fish_jj_prompt '%s')
-    test -n "$prompt_jj"
-    and _nim_prompt_wrapper $retc '' $prompt_jj
+    # set -l prompt_jj (fish_jj_prompt '%s')
+    # test -n "$prompt_jj"
+    # and _nim_prompt_wrapper $retc '' $prompt_jj
 
     test ! $prompt_status = 0; and _nim_prompt_wrapper $retc '' (fish_status_to_signal $prompt_status)
 

@@ -127,7 +127,7 @@ abbr -a pipreqsi installpipreqs
 # better discord
 #alias discord='discord-screenaudio'
 # better wget
-abbr -a wget "aria2c -x 16"
+alias wget="aria2c -x 16"
 # audios
 abbr -a audio pulsemixer
 abbr -a audiod pipewire-pulse
@@ -143,8 +143,6 @@ abbr -a config-polybar "vim ~/.config/bspwm/themes/default/polybar/config.ini"
 # tars
 abbr -a tarxz "tar -xvJf"
 abbr -a targz "tar -xvzf"
-# faster(vim)
-abbr -a v hx
 ## auto fuck
 # better finds
 #alias find='sudo find / | grep '
@@ -329,7 +327,8 @@ abbr -a cpuperf "sudo cpupower frequency-set -g performance"
 abbr -a cpups "sudo cpupower frequency-set -g powersave"
 
 # better time benchmark
-abbr -a time "hyperfine --warmup 3 -N"
+# abbr -a time "hyperfine --warmup 3 -N"
+# alias time="hyperfine --warmup 3 -N"
 
 function '??'
     set file (mktemp)
@@ -343,3 +342,7 @@ abbr -a icat "kitten icat"
 # abbr -a cd z
 
 abbr -a md mkdir
+
+function mkcd
+    mkdir $argv && cd $argv
+end

@@ -53,7 +53,14 @@ end
 # alias push="git push"
 abbr -a git-rm "git ls-files --deleted -z | xargs -0 git rm"
 # alias g=git
-#alias ga='git add'
+# alias ga='git add'
+function ga
+    if test (count $argv) -gt 0
+        git add -f $argv
+    else
+        git add -A
+    end
+end
 # alias gaa='git add --all'
 # alias gam='git am'
 # alias gama='git am --abort'
@@ -258,3 +265,7 @@ end
 # alias ghpr='gh pr'
 # alias ghis='gh issue'
 abbr -a bisectundo 'git bisect log | head -n -2 > /tmp/fixed_bisect.log ; git bisect replay /tmp/fixed_bisect.log'
+function gf
+    git commit --fixup=$argv
+    git rebase -i --autosquash $argv^
+end

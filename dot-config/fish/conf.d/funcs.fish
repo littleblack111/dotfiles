@@ -1,5 +1,5 @@
-# hx with auto sudo
-function hx
+# with auto sudo
+function v
     if test (count $argv) -eq 0
         if not test -w (pwd)
             printf "Opening hx with sudo...\n"
