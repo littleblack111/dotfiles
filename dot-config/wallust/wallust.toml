@@ -1,7 +1,9 @@
 backend = "full"
 palette = "dark"
 color_space = "lchmixed"
-# check_contrast = true
+threshold = 15
+check_contrast = true
+
 
 [templates]
 hypr.template = "hypr.conf"

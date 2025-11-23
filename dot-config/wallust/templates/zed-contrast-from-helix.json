@@ -4,7 +4,7 @@
 	"author": "Fuwn <contact@fuwn.me>",
 	"themes": [
 		{
-			"name": "wal2",
+			"name": "wal",
 			"appearance": "dark",
 			"style": {
 				"background.appearance": "blurred",

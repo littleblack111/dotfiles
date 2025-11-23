@@ -813,6 +813,7 @@
 		}
 	},
 	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
 		"bindings": {
 			"space g b": "editor::ToggleGitBlameInline"
 		}
@@ -876,5 +877,59 @@
 		"bindings": {
 			"ctrl-n": null
 		}
-	}
+	},
+	{
+		"context": "Workspace",
+		"bindings": {
+			"ctrl-alt-shift-j": "workspace::ToggleBottomDock"
+		}
+	},
+	{
+		"context": "Workspace",
+		"bindings": {
+			"ctrl-j": null
+		}
+	},
+	{
+		"context": "Workspace",
+		"bindings": {
+			"ctrl-alt-shift-h": "workspace::ToggleLeftDock"
+		}
+	},
+	{
+		"context": "Workspace",
+		"bindings": {
+			"ctrl-alt-shift-l": "workspace::ToggleRightDock"
+		}
+	},
+	{
+		"context": "Workspace",
+		"bindings": {
+			"ctrl-b": null
+		}
+	},
+	{
+		"context": "Workspace",
+		"bindings": {
+			"ctrl-alt-b": null
+		}
+	},
+	{
+		"context": "(VimControl && !menu)",
+		"bindings": {
+			"space g d": "editor::OpenExcerpts"
+		}
+	},
+	{
+		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+		"bindings": {
+			"space d": "diagnostics::Deploy"
+		}
+	},
+ {
+  "context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+  "bindings": {
+   "p": "editor::Paste"
+  }
+ }
 ]

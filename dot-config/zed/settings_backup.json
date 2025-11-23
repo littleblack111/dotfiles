@@ -7,29 +7,22 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-	"diagnostics": {
-		"inline": {
-			"enabled": true
-		}
-	},
 	"context_servers": {
-		"mcp-server-context7": {
-			"source": "extension",
-			"enabled": true,
-			"settings": {
-				"context7_api_key": "ctx7sk-8e011f3f-f864-4383-98ac-f1a2ec2b2d7f"
-			}
-		}
-	},
-	"when_closing_with_no_tabs": "platform_default",
-	"use_system_path_prompts": false,
-	"expand_excerpt_lines": 4,
-	"vim_mode": true,
-	"features": {
+  "mcp-server-context7": {
+   "enabled": true,
+   "settings": {
+    "context7_api_key": "ctx7sk-8e011f3f-f864-4383-98ac-f1a2ec2b2d7f"
+   }
+  }
+ },
+ "when_closing_with_no_tabs": "platform_default",
+ "use_system_path_prompts": false,
+ "expand_excerpt_lines": 4,
+ "vim_mode": true,
+ "features": {
 		"edit_prediction_provider": "copilot"
 	},
 	"edit_predictions": {
-		"disabled_globs": [],
 		"mode": "subtle"
 	},
 	"git": {
@@ -80,9 +73,8 @@
 	"cursor_shape": "bar",
 	"relative_line_numbers": "wrapped",
 	"agent": {
-		"default_profile": "write",
-  "always_allow_tool_actions": true,
-		"default_model": {
+		"always_allow_tool_actions": true,
+  "default_model": {
 			"provider": "copilot_chat",
 			"model": "gpt-5.1-codex"
 		},
