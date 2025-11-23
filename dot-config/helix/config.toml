@@ -118,7 +118,7 @@ A-j = "select_next_sibling"
 [keys.normal." "]
 q = ":quit"
 c = ":buffer-close"
-tab = "insert_tab"
+# tab = "insert_tab"
 w = ":write"
 "," = "code_action"
 1 = ":goto-buffer 1"

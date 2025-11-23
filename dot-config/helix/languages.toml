@@ -46,6 +46,14 @@ language-servers = [ "scls", "rust-analyzer", "harper", "gpt" ]
 [language-server.rust-analyzer.config]
 check.command = "clippy"
 
+[language.auto-pairs]
+'(' = ')'
+'{' = '}'
+'[' = ']'
+'"' = '"'
+'`' = '`'
+'<' = '>'
+
 [[language]]
 name = "python"
 language-servers = ["ty", "ruff", "jedi-language-server", "pyright", "pylsp", "harper", "gpt" ]
@@ -72,4 +80,3933 @@ auto-format = true
 
 [language-server.mdpls]
 command = "/usr/bin/mdpls"
-config = { markdown.preview.auto = true, markdown.preview.serveStatic = true }
+config = { markdown.preview.auto = false, markdown.preview.serveStatic = true }
+[[language]]
+name = "rust"
+scope = "source.rust"
+
+[[language.file-types]]
+glob = "*.rs"
+
+[[language]]
+name = "sway"
+scope = "source.sway"
+
+[[language.file-types]]
+glob = "*.sw"
+
+[[language]]
+name = "toml"
+scope = "source.toml"
+
+[[language.file-types]]
+glob = "*.toml"
+
+[[language.file-types]]
+glob = "pdm.lock"
+
+[[language.file-types]]
+glob = "poetry.lock"
+
+[[language.file-types]]
+glob = "Cargo.lock"
+
+[[language.file-types]]
+glob = "uv.lock"
+
+[[language.file-types]]
+glob = "containers.conf"
+
+[[language.file-types]]
+glob = "containers.conf.d/*.conf"
+
+[[language.file-types]]
+glob = "containers.conf.modules/*.conf"
+
+[[language.file-types]]
+glob = "mounts.conf"
+
+[[language.file-types]]
+glob = "policy.conf"
+
+[[language.file-types]]
+glob = "registries.conf"
+
+[[language.file-types]]
+glob = "storage.conf"
+
+[[language]]
+name = "awk"
+scope = "source.awk"
+
+[[language.file-types]]
+glob = "*.awk"
+
+[[language.file-types]]
+glob = "*.gawk"
+
+[[language.file-types]]
+glob = "*.nawk"
+
+[[language.file-types]]
+glob = "*.mawk"
+
+[[language]]
+name = "protobuf"
+scope = "source.proto"
+
+[[language.file-types]]
+glob = "*.proto"
+
+[[language]]
+name = "textproto"
+scope = "source.textproto"
+
+[[language.file-types]]
+glob = "*.txtpb"
+
+[[language.file-types]]
+glob = "*.textpb"
+
+[[language.file-types]]
+glob = "*.textproto"
+
+[[language]]
+name = "eiffel"
+scope = "source.eiffel"
+
+[[language.file-types]]
+glob = "*.e"
+
+[[language]]
+name = "elixir"
+scope = "source.elixir"
+
+[[language.file-types]]
+glob = "*.ex"
+
+[[language.file-types]]
+glob = "*.exs"
+
+[[language.file-types]]
+glob = "mix.lock"
+
+[[language]]
+name = "fennel"
+scope = "source.fennel"
+
+[[language.file-types]]
+glob = "*.fnl"
+
+[[language.file-types]]
+glob = "*.fnlm"
+
+[[language]]
+name = "fish"
+scope = "source.fish"
+
+[[language.file-types]]
+glob = "*.fish"
+
+[[language]]
+name = "flatbuffers"
+scope = "source.flatbuffers"
+
+[[language.file-types]]
+glob = "*.fbs"
+
+[[language]]
+name = "mint"
+scope = "source.mint"
+
+[[language.file-types]]
+glob = "*.mint"
+
+[[language]]
+name = "mojo"
+scope = "source.mojo"
+
+[[language.file-types]]
+glob = "*.mojo"
+
+[[language.file-types]]
+glob = "*.🔥"
+
+[[language]]
+name = "janet"
+scope = "source.janet"
+
+[[language.file-types]]
+glob = "*.cgen"
+
+[[language.file-types]]
+glob = "*.janet"
+
+[[language.file-types]]
+glob = "*.jdn"
+
+[[language]]
+name = "json"
+scope = "source.json"
+
+[[language.file-types]]
+glob = "*.json"
+
+[[language.file-types]]
+glob = "*.arb"
+
+[[language.file-types]]
+glob = "*.ipynb"
+
+[[language.file-types]]
+glob = "*.geojson"
+
+[[language.file-types]]
+glob = "*.gltf"
+
+[[language.file-types]]
+glob = "*.webmanifest"
+
+[[language.file-types]]
+glob = "flake.lock"
+
+[[language.file-types]]
+glob = ".babelrc"
+
+[[language.file-types]]
+glob = ".bowerrc"
+
+[[language.file-types]]
+glob = ".jscrc"
+
+[[language.file-types]]
+glob = "*.js.map"
+
+[[language.file-types]]
+glob = "*.ts.map"
+
+[[language.file-types]]
+glob = "*.css.map"
+
+[[language.file-types]]
+glob = ".jslintrc"
+
+[[language.file-types]]
+glob = "*.jsonl"
+
+[[language.file-types]]
+glob = ".vuerc"
+
+[[language.file-types]]
+glob = "composer.lock"
+
+[[language.file-types]]
+glob = ".watchmanconfig"
+
+[[language.file-types]]
+glob = "*.avsc"
+
+[[language.file-types]]
+glob = "*.ldtk"
+
+[[language.file-types]]
+glob = "*.ldtkl"
+
+[[language.file-types]]
+glob = ".swift-format"
+
+[[language.file-types]]
+glob = "*.sublime-build"
+
+[[language.file-types]]
+glob = "*.sublime-color-scheme"
+
+[[language.file-types]]
+glob = "*.sublime-commands"
+
+[[language.file-types]]
+glob = "*.sublime-completions"
+
+[[language.file-types]]
+glob = "*.sublime-keymap"
+
+[[language.file-types]]
+glob = "*.sublime-macro"
+
+[[language.file-types]]
+glob = "*.sublime-menu"
+
+[[language.file-types]]
+glob = "*.sublime-mousemap"
+
+[[language.file-types]]
+glob = "*.sublime-project"
+
+[[language.file-types]]
+glob = "*.sublime-settings"
+
+[[language.file-types]]
+glob = "*.sublime-theme"
+
+[[language.file-types]]
+glob = "*.sublime-workspace"
+
+[[language]]
+name = "jsonc"
+scope = "source.json"
+
+[[language.file-types]]
+glob = "*.jsonc"
+
+[[language.file-types]]
+glob = "{t,j}sconfig.json"
+
+[[language.file-types]]
+glob = "bun.lock"
+
+[[language]]
+name = "json-ld"
+scope = "source.json-ld"
+
+[[language.file-types]]
+glob = "*.jsonld"
+
+[[language]]
+name = "json5"
+scope = "source.json5"
+
+[[language.file-types]]
+glob = "*.json5"
+
+[[language]]
+name = "c"
+scope = "source.c"
+
+[[language.file-types]]
+glob = "*.c"
+
+[[language]]
+name = "cpp"
+scope = "source.cpp"
+
+[[language.file-types]]
+glob = "*.cc"
+
+[[language.file-types]]
+glob = "*.hh"
+
+[[language.file-types]]
+glob = "*.c++"
+
+[[language.file-types]]
+glob = "*.cpp"
+
+[[language.file-types]]
+glob = "*.hpp"
+
+[[language.file-types]]
+glob = "*.h"
+
+[[language.file-types]]
+glob = "*.ipp"
+
+[[language.file-types]]
+glob = "*.tpp"
+
+[[language.file-types]]
+glob = "*.cxx"
+
+[[language.file-types]]
+glob = "*.hxx"
+
+[[language.file-types]]
+glob = "*.ixx"
+
+[[language.file-types]]
+glob = "*.txx"
+
+[[language.file-types]]
+glob = "*.ino"
+
+[[language.file-types]]
+glob = "*.C"
+
+[[language.file-types]]
+glob = "*.H"
+
+[[language.file-types]]
+glob = "*.cu"
+
+[[language.file-types]]
+glob = "*.cuh"
+
+[[language.file-types]]
+glob = "*.cppm"
+
+[[language.file-types]]
+glob = "*.h++"
+
+[[language.file-types]]
+glob = "*.ii"
+
+[[language.file-types]]
+glob = "*.inl"
+
+[[language.file-types]]
+glob = ".hpp.in"
+
+[[language.file-types]]
+glob = ".h.in"
+
+[[language]]
+name = "crystal"
+scope = "source.cr"
+
+[[language.file-types]]
+glob = "*.cr"
+
+[[language]]
+name = "c-sharp"
+scope = "source.csharp"
+
+[[language.file-types]]
+glob = "*.cs"
+
+[[language.file-types]]
+glob = "*.csx"
+
+[[language.file-types]]
+glob = "*.cake"
+
+[[language]]
+name = "cel"
+scope = "source.cel"
+
+[[language.file-types]]
+glob = "*.cel"
+
+[[language]]
+name = "spicedb"
+scope = "source.zed"
+
+[[language.file-types]]
+glob = "*.zed"
+
+[[language]]
+name = "go"
+scope = "source.go"
+
+[[language.file-types]]
+glob = "*.go"
+
+[[language]]
+name = "gomod"
+scope = "source.gomod"
+
+[[language.file-types]]
+glob = "go.mod"
+
+[[language]]
+name = "gotmpl"
+scope = "source.gotmpl"
+
+[[language.file-types]]
+glob = "*.gotmpl"
+
+[[language]]
+name = "gowork"
+scope = "source.gowork"
+
+[[language.file-types]]
+glob = "go.work"
+
+[[language]]
+name = "go-format-string"
+scope = "source.go-format-string"
+file-types = []
+
+[[language]]
+name = "javascript"
+scope = "source.js"
+
+[[language.file-types]]
+glob = "*.js"
+
+[[language.file-types]]
+glob = "*.mjs"
+
+[[language.file-types]]
+glob = "*.cjs"
+
+[[language.file-types]]
+glob = "*.rules"
+
+[[language.file-types]]
+glob = "*.es6"
+
+[[language.file-types]]
+glob = "*.pac"
+
+[[language.file-types]]
+glob = ".node_repl_history"
+
+[[language.file-types]]
+glob = "jakefile"
+
+[[language]]
+name = "jsx"
+scope = "source.jsx"
+
+[[language.file-types]]
+glob = "*.jsx"
+
+[[language]]
+name = "typescript"
+scope = "source.ts"
+
+[[language.file-types]]
+glob = "*.ts"
+
+[[language.file-types]]
+glob = "*.mts"
+
+[[language.file-types]]
+glob = "*.cts"
+
+[[language]]
+name = "typespec"
+scope = "source.typespec"
+
+[[language.file-types]]
+glob = "*.tsp"
+
+[[language]]
+name = "tsx"
+scope = "source.tsx"
+
+[[language.file-types]]
+glob = "*.tsx"
+
+[[language]]
+name = "css"
+scope = "source.css"
+
+[[language.file-types]]
+glob = "*.css"
+
+[[language]]
+name = "scss"
+scope = "source.scss"
+
+[[language.file-types]]
+glob = "*.scss"
+
+[[language]]
+name = "html"
+scope = "text.html.basic"
+
+[[language.file-types]]
+glob = "*.html"
+
+[[language.file-types]]
+glob = "*.htm"
+
+[[language.file-types]]
+glob = "*.shtml"
+
+[[language.file-types]]
+glob = "*.xhtml"
+
+[[language.file-types]]
+glob = "*.xht"
+
+[[language.file-types]]
+glob = "*.jsp"
+
+[[language.file-types]]
+glob = "*.asp"
+
+[[language.file-types]]
+glob = "*.aspx"
+
+[[language.file-types]]
+glob = "*.jshtm"
+
+[[language.file-types]]
+glob = "*.volt"
+
+[[language.file-types]]
+glob = "*.rhtml"
+
+[[language.file-types]]
+glob = "*.cshtml"
+
+[[language]]
+name = "htmldjango"
+scope = "source.htmldjango"
+file-types = []
+
+[[language]]
+name = "python"
+scope = "source.python"
+
+[[language.file-types]]
+glob = "*.py"
+
+[[language.file-types]]
+glob = "*.pyi"
+
+[[language.file-types]]
+glob = "*.py3"
+
+[[language.file-types]]
+glob = "*.pyw"
+
+[[language.file-types]]
+glob = "*.ptl"
+
+[[language.file-types]]
+glob = "*.rpy"
+
+[[language.file-types]]
+glob = "*.cpy"
+
+[[language.file-types]]
+glob = "*.ipy"
+
+[[language.file-types]]
+glob = "*.pyt"
+
+[[language.file-types]]
+glob = ".python_history"
+
+[[language.file-types]]
+glob = ".pythonstartup"
+
+[[language.file-types]]
+glob = ".pythonrc"
+
+[[language.file-types]]
+glob = "*SConstruct"
+
+[[language.file-types]]
+glob = "*SConscript"
+
+[[language.file-types]]
+glob = "*sconstruct"
+
+[[language]]
+name = "nickel"
+scope = "source.nickel"
+
+[[language.file-types]]
+glob = "*.ncl"
+
+[[language]]
+name = "nix"
+scope = "source.nix"
+
+[[language.file-types]]
+glob = "*.nix"
+
+[[language]]
+name = "ruby"
+scope = "source.ruby"
+
+[[language.file-types]]
+glob = "*.rb"
+
+[[language.file-types]]
+glob = "*.rake"
+
+[[language.file-types]]
+glob = "*.irb"
+
+[[language.file-types]]
+glob = "*.gemspec"
+
+[[language.file-types]]
+glob = "*.rabl"
+
+[[language.file-types]]
+glob = "*.jbuilder"
+
+[[language.file-types]]
+glob = "*.jb"
+
+[[language.file-types]]
+glob = "*.podspec"
+
+[[language.file-types]]
+glob = "*.rjs"
+
+[[language.file-types]]
+glob = "*.rbi"
+
+[[language.file-types]]
+glob = "*.rbs"
+
+[[language.file-types]]
+glob = "rakefile"
+
+[[language.file-types]]
+glob = "gemfile"
+
+[[language.file-types]]
+glob = "Rakefile"
+
+[[language.file-types]]
+glob = "Gemfile"
+
+[[language.file-types]]
+glob = "Podfile"
+
+[[language.file-types]]
+glob = "Vagrantfile"
+
+[[language.file-types]]
+glob = "Brewfile"
+
+[[language.file-types]]
+glob = "Guardfile"
+
+[[language.file-types]]
+glob = "Capfile"
+
+[[language.file-types]]
+glob = "Cheffile"
+
+[[language.file-types]]
+glob = "Hobofile"
+
+[[language.file-types]]
+glob = "Appraisals"
+
+[[language.file-types]]
+glob = "Rantfile"
+
+[[language.file-types]]
+glob = "Berksfile"
+
+[[language.file-types]]
+glob = "Berksfile.lock"
+
+[[language.file-types]]
+glob = "Thorfile"
+
+[[language.file-types]]
+glob = "Puppetfile"
+
+[[language.file-types]]
+glob = "Fastfile"
+
+[[language.file-types]]
+glob = "Appfile"
+
+[[language.file-types]]
+glob = "Deliverfile"
+
+[[language.file-types]]
+glob = "Matchfile"
+
+[[language.file-types]]
+glob = "Scanfile"
+
+[[language.file-types]]
+glob = "Snapfile"
+
+[[language.file-types]]
+glob = "Gymfile"
+
+[[language.file-types]]
+glob = ".irbrc"
+
+[[language]]
+name = "rshtml"
+scope = "source.rshtml"
+
+[[language.file-types]]
+glob = "*.rs.html"
+
+[[language]]
+name = "bash"
+scope = "source.bash"
+
+[[language.file-types]]
+glob = "*.sh"
+
+[[language.file-types]]
+glob = "*.bash"
+
+[[language.file-types]]
+glob = "*.ash"
+
+[[language.file-types]]
+glob = "*.dash"
+
+[[language.file-types]]
+glob = "*.ksh"
+
+[[language.file-types]]
+glob = "*.mksh"
+
+[[language.file-types]]
+glob = "*.zsh"
+
+[[language.file-types]]
+glob = "*.zshenv"
+
+[[language.file-types]]
+glob = "*.zlogin"
+
+[[language.file-types]]
+glob = "*.zlogout"
+
+[[language.file-types]]
+glob = "*.zprofile"
+
+[[language.file-types]]
+glob = "*.zshrc"
+
+[[language.file-types]]
+glob = "*.eclass"
+
+[[language.file-types]]
+glob = "*.ebuild"
+
+[[language.file-types]]
+glob = "*.bazelrc"
+
+[[language.file-types]]
+glob = "*.Renviron"
+
+[[language.file-types]]
+glob = "*.zsh-theme"
+
+[[language.file-types]]
+glob = "*.cshrc"
+
+[[language.file-types]]
+glob = "*.tcshrc"
+
+[[language.file-types]]
+glob = "*.bashrc_Apple_Terminal"
+
+[[language.file-types]]
+glob = "*.zshrc_Apple_Terminal"
+
+[[language.file-types]]
+glob = "i3/config"
+
+[[language.file-types]]
+glob = "sway/config"
+
+[[language.file-types]]
+glob = ".tmux.conf"
+
+[[language.file-types]]
+glob = "tmux.conf"
+
+[[language.file-types]]
+glob = ".sh_history"
+
+[[language.file-types]]
+glob = ".bash_history"
+
+[[language.file-types]]
+glob = ".bash_login"
+
+[[language.file-types]]
+glob = ".bash_logout"
+
+[[language.file-types]]
+glob = ".bash_profile"
+
+[[language.file-types]]
+glob = ".bashrc"
+
+[[language.file-types]]
+glob = ".profile"
+
+[[language.file-types]]
+glob = ".zshenv"
+
+[[language.file-types]]
+glob = ".zlogin"
+
+[[language.file-types]]
+glob = ".zlogout"
+
+[[language.file-types]]
+glob = ".zprofile"
+
+[[language.file-types]]
+glob = ".zshrc"
+
+[[language.file-types]]
+glob = ".zimrc"
+
+[[language.file-types]]
+glob = "APKBUILD"
+
+[[language.file-types]]
+glob = ".bash_aliases"
+
+[[language.file-types]]
+glob = "bash_completion"
+
+[[language.file-types]]
+glob = "bash-completion/completions/*"
+
+[[language.file-types]]
+glob = "bash_completion.d/*"
+
+[[language.file-types]]
+glob = ".Renviron"
+
+[[language.file-types]]
+glob = ".xprofile"
+
+[[language.file-types]]
+glob = ".xsession"
+
+[[language.file-types]]
+glob = ".xsessionrc"
+
+[[language.file-types]]
+glob = ".yashrc"
+
+[[language.file-types]]
+glob = ".yash_profile"
+
+[[language.file-types]]
+glob = ".hushlogin"
+
+[[language.file-types]]
+glob = ".xinitrc"
+
+[[language.file-types]]
+glob = "xinitrc"
+
+[[language.file-types]]
+glob = ".xserverrc"
+
+[[language.file-types]]
+glob = "xserverrc"
+
+[[language]]
+name = "php"
+scope = "source.php"
+
+[[language.file-types]]
+glob = "*.php"
+
+[[language.file-types]]
+glob = "*.inc"
+
+[[language.file-types]]
+glob = "*.php4"
+
+[[language.file-types]]
+glob = "*.php5"
+
+[[language.file-types]]
+glob = "*.phtml"
+
+[[language.file-types]]
+glob = "*.ctp"
+
+[[language]]
+name = "php-only"
+scope = "source.php-only"
+file-types = []
+
+[[language]]
+name = "blade"
+scope = "source.blade.php"
+
+[[language.file-types]]
+glob = "*.blade.php"
+
+[[language.file-types]]
+glob = "*.blade"
+
+[[language]]
+name = "twig"
+scope = "source.twig"
+
+[[language.file-types]]
+glob = "*.twig"
+
+[[language]]
+name = "latex"
+scope = "source.tex"
+
+[[language.file-types]]
+glob = "*.tex"
+
+[[language.file-types]]
+glob = "*.sty"
+
+[[language.file-types]]
+glob = "*.cls"
+
+[[language.file-types]]
+glob = "*.Rd"
+
+[[language.file-types]]
+glob = "*.bbx"
+
+[[language.file-types]]
+glob = "*.cbx"
+
+[[language]]
+name = "bibtex"
+scope = "source.bib"
+
+[[language.file-types]]
+glob = "*.bib"
+
+[[language]]
+name = "lean"
+scope = "source.lean"
+
+[[language.file-types]]
+glob = "*.lean"
+
+[[language]]
+name = "lpf"
+scope = "source.lpf"
+
+[[language.file-types]]
+glob = "*.lpf"
+
+[[language]]
+name = "julia"
+scope = "source.julia"
+
+[[language.file-types]]
+glob = "*.jl"
+
+[[language]]
+name = "java"
+scope = "source.java"
+
+[[language.file-types]]
+glob = "*.java"
+
+[[language.file-types]]
+glob = "*.jav"
+
+[[language.file-types]]
+glob = "*.pde"
+
+[[language]]
+name = "smali"
+scope = "source.smali"
+
+[[language.file-types]]
+glob = "*.smali"
+
+[[language]]
+name = "ledger"
+scope = "source.ledger"
+
+[[language.file-types]]
+glob = "*.ldg"
+
+[[language.file-types]]
+glob = "*.ledger"
+
+[[language.file-types]]
+glob = "*.journal"
+
+[[language]]
+name = "beancount"
+scope = "source.beancount"
+
+[[language.file-types]]
+glob = "*.beancount"
+
+[[language.file-types]]
+glob = "*.bean"
+
+[[language]]
+name = "ocaml"
+scope = "source.ocaml"
+
+[[language.file-types]]
+glob = "*.ml"
+
+[[language]]
+name = "ocaml-interface"
+scope = "source.ocaml.interface"
+
+[[language.file-types]]
+glob = "*.mli"
+
+[[language]]
+name = "dune"
+scope = "source.dune"
+
+[[language.file-types]]
+glob = "dune-project"
+
+[[language.file-types]]
+glob = "dune"
+
+[[language]]
+name = "lua"
+scope = "source.lua"
+
+[[language.file-types]]
+glob = "*.lua"
+
+[[language.file-types]]
+glob = "*.rockspec"
+
+[[language]]
+name = "luap"
+scope = "source.luap"
+file-types = []
+
+[[language]]
+name = "teal"
+scope = "source.tl"
+
+[[language.file-types]]
+glob = "*.tl"
+
+[[language]]
+name = "svelte"
+scope = "source.svelte"
+
+[[language.file-types]]
+glob = "*.svelte"
+
+[[language]]
+name = "vue"
+scope = "source.vue"
+
+[[language.file-types]]
+glob = "*.vue"
+
+[[language]]
+name = "yaml"
+scope = "source.yaml"
+
+[[language.file-types]]
+glob = "*.yml"
+
+[[language.file-types]]
+glob = "*.yaml"
+
+[[language.file-types]]
+glob = ".prettierrc"
+
+[[language.file-types]]
+glob = ".clangd"
+
+[[language.file-types]]
+glob = ".clang-format"
+
+[[language.file-types]]
+glob = ".clang-tidy"
+
+[[language.file-types]]
+glob = ".gem/credentials"
+
+[[language.file-types]]
+glob = ".kube/config"
+
+[[language.file-types]]
+glob = ".kube/kuberc"
+
+[[language.file-types]]
+glob = "yarn.lock"
+
+[[language.file-types]]
+glob = "*.sublime-syntax"
+
+[[language]]
+name = "nestedtext"
+scope = "text.nested"
+
+[[language.file-types]]
+glob = "*.nt"
+
+[[language]]
+name = "haskell"
+scope = "source.haskell"
+
+[[language.file-types]]
+glob = "*.hs"
+
+[[language.file-types]]
+glob = "*.hs-boot"
+
+[[language.file-types]]
+glob = "*.hsc"
+
+[[language]]
+name = "haskell-persistent"
+scope = "source.persistentmodels"
+
+[[language.file-types]]
+glob = "*.persistentmodels"
+
+[[language]]
+name = "haskell-literate"
+scope = "source.haskell-literate"
+
+[[language.file-types]]
+glob = "*.lhs"
+
+[[language]]
+name = "purescript"
+scope = "source.purescript"
+
+[[language.file-types]]
+glob = "*.purs"
+
+[[language]]
+name = "zig"
+scope = "source.zig"
+
+[[language.file-types]]
+glob = "*.zig"
+
+[[language.file-types]]
+glob = "*.zon"
+
+[[language]]
+name = "prolog"
+scope = "source.prolog"
+
+[[language.file-types]]
+glob = "*.pl"
+
+[[language.file-types]]
+glob = "*.prolog"
+
+[[language]]
+name = "tsq"
+scope = "source.tsq"
+
+[[language.file-types]]
+glob = "queries/*.scm"
+
+[[language.file-types]]
+glob = "injections.scm"
+
+[[language.file-types]]
+glob = "highlights.scm"
+
+[[language.file-types]]
+glob = "indents.scm"
+
+[[language.file-types]]
+glob = "textobjects.scm"
+
+[[language.file-types]]
+glob = "locals.scm"
+
+[[language.file-types]]
+glob = "tags.scm"
+
+[[language]]
+name = "cmake"
+scope = "source.cmake"
+
+[[language.file-types]]
+glob = "*.cmake"
+
+[[language.file-types]]
+glob = "CMakeLists.txt"
+
+[[language]]
+name = "make"
+scope = "source.make"
+
+[[language.file-types]]
+glob = "Makefile"
+
+[[language.file-types]]
+glob = "makefile"
+
+[[language.file-types]]
+glob = "*.make"
+
+[[language.file-types]]
+glob = "*.mk"
+
+[[language.file-types]]
+glob = "*.mak"
+
+[[language.file-types]]
+glob = "GNUmakefile"
+
+[[language.file-types]]
+glob = "OCamlMakefile"
+
+[[language]]
+name = "glsl"
+scope = "source.glsl"
+
+[[language.file-types]]
+glob = "*.glsl"
+
+[[language.file-types]]
+glob = "*.vert"
+
+[[language.file-types]]
+glob = "*.tesc"
+
+[[language.file-types]]
+glob = "*.tese"
+
+[[language.file-types]]
+glob = "*.geom"
+
+[[language.file-types]]
+glob = "*.frag"
+
+[[language.file-types]]
+glob = "*.comp"
+
+[[language]]
+name = "perl"
+scope = "source.perl"
+
+[[language.file-types]]
+glob = "*.pl"
+
+[[language.file-types]]
+glob = "*.pm"
+
+[[language.file-types]]
+glob = "*.t"
+
+[[language.file-types]]
+glob = "*.psgi"
+
+[[language.file-types]]
+glob = "*.raku"
+
+[[language.file-types]]
+glob = "*.rakumod"
+
+[[language.file-types]]
+glob = "*.rakutest"
+
+[[language.file-types]]
+glob = "*.rakudoc"
+
+[[language.file-types]]
+glob = "*.nqp"
+
+[[language.file-types]]
+glob = "*.p6"
+
+[[language.file-types]]
+glob = "*.pl6"
+
+[[language.file-types]]
+glob = "*.pm6"
+
+[[language.file-types]]
+glob = "latexmkrc"
+
+[[language.file-types]]
+glob = ".latexmkrc"
+
+[[language]]
+name = "pod"
+scope = "source.pod"
+
+[[language.file-types]]
+glob = "*.pod"
+
+[[language]]
+name = "racket"
+scope = "source.racket"
+
+[[language.file-types]]
+glob = "*.rkt"
+
+[[language.file-types]]
+glob = "*.rktd"
+
+[[language.file-types]]
+glob = "*.rktl"
+
+[[language.file-types]]
+glob = "*.scrbl"
+
+[[language.file-types]]
+glob = "*.zuo"
+
+[[language]]
+name = "common-lisp"
+scope = "source.lisp"
+
+[[language.file-types]]
+glob = "*.lisp"
+
+[[language.file-types]]
+glob = "*.asd"
+
+[[language.file-types]]
+glob = "*.cl"
+
+[[language.file-types]]
+glob = "*.l"
+
+[[language.file-types]]
+glob = "*.lsp"
+
+[[language.file-types]]
+glob = "*.ny"
+
+[[language.file-types]]
+glob = "*.podsl"
+
+[[language.file-types]]
+glob = "*.ros"
+
+[[language.file-types]]
+glob = "*.sexp"
+
+[[language]]
+name = "comment"
+scope = "scope.comment"
+file-types = []
+
+[[language]]
+name = "wesl"
+scope = "source.wesl"
+
+[[language.file-types]]
+glob = "*.wesl"
+
+[[language]]
+name = "wgsl"
+scope = "source.wgsl"
+
+[[language.file-types]]
+glob = "*.wgsl"
+
+[[language]]
+name = "llvm"
+scope = "source.llvm"
+
+[[language.file-types]]
+glob = "*.ll"
+
+[[language]]
+name = "llvm-mir"
+scope = "source.llvm_mir"
+file-types = []
+
+[[language]]
+name = "llvm-mir-yaml"
+scope = "source.yaml"
+
+[[language.file-types]]
+glob = "*.mir"
+
+[[language]]
+name = "tablegen"
+scope = "source.tablegen"
+
+[[language.file-types]]
+glob = "*.td"
+
+[[language]]
+name = "mail"
+scope = "text.mail"
+
+[[language.file-types]]
+glob = "*.eml"
+
+[[language]]
+name = "markdown"
+scope = "source.md"
+
+[[language.file-types]]
+glob = "*.md"
+
+[[language.file-types]]
+glob = "*.livemd"
+
+[[language.file-types]]
+glob = "*.markdown"
+
+[[language.file-types]]
+glob = "*.mdx"
+
+[[language.file-types]]
+glob = "*.mkd"
+
+[[language.file-types]]
+glob = "*.mkdn"
+
+[[language.file-types]]
+glob = "*.mdwn"
+
+[[language.file-types]]
+glob = "*.mdown"
+
+[[language.file-types]]
+glob = "*.markdn"
+
+[[language.file-types]]
+glob = "*.mdtxt"
+
+[[language.file-types]]
+glob = "*.mdtext"
+
+[[language.file-types]]
+glob = "*.workbook"
+
+[[language.file-types]]
+glob = "PULLREQ_EDITMSG"
+
+[[language]]
+name = "markdown-rustdoc"
+scope = "source.markdown-rustdoc"
+file-types = []
+
+[[language]]
+name = "markdown.inline"
+scope = "source.markdown.inline"
+file-types = []
+
+[[language]]
+name = "djot"
+scope = "source.djot"
+
+[[language.file-types]]
+glob = "*.dj"
+
+[[language.file-types]]
+glob = "*.djot"
+
+[[language]]
+name = "dart"
+scope = "source.dart"
+
+[[language.file-types]]
+glob = "*.dart"
+
+[[language]]
+name = "scala"
+scope = "source.scala"
+
+[[language.file-types]]
+glob = "*.scala"
+
+[[language.file-types]]
+glob = "*.sbt"
+
+[[language.file-types]]
+glob = "*.sc"
+
+[[language]]
+name = "dockerfile"
+scope = "source.dockerfile"
+
+[[language.file-types]]
+glob = "*.Dockerfile"
+
+[[language.file-types]]
+glob = "Dockerfile"
+
+[[language.file-types]]
+glob = "Dockerfile.*"
+
+[[language.file-types]]
+glob = "*.dockerfile"
+
+[[language.file-types]]
+glob = "dockerfile"
+
+[[language.file-types]]
+glob = "dockerfile.*"
+
+[[language.file-types]]
+glob = "*.Containerfile"
+
+[[language.file-types]]
+glob = "Containerfile"
+
+[[language.file-types]]
+glob = "Containerfile.*"
+
+[[language.file-types]]
+glob = "*.containerfile"
+
+[[language.file-types]]
+glob = "containerfile"
+
+[[language.file-types]]
+glob = "containerfile.*"
+
+[[language]]
+name = "docker-compose"
+scope = "source.yaml.docker-compose"
+
+[[language.file-types]]
+glob = "docker-compose.yaml"
+
+[[language.file-types]]
+glob = "docker-compose.yml"
+
+[[language.file-types]]
+glob = "compose.yaml"
+
+[[language.file-types]]
+glob = "compose.yml"
+
+[[language]]
+name = "git-commit"
+scope = "git.commitmsg"
+
+[[language.file-types]]
+glob = "COMMIT_EDITMSG"
+
+[[language.file-types]]
+glob = "MERGE_MSG"
+
+[[language]]
+name = "git-notes"
+scope = "git.notesmsg"
+
+[[language.file-types]]
+glob = "NOTES_EDITMSG"
+
+[[language]]
+name = "diff"
+scope = "source.diff"
+
+[[language.file-types]]
+glob = "*.diff"
+
+[[language.file-types]]
+glob = "*.patch"
+
+[[language.file-types]]
+glob = "*.rej"
+
+[[language]]
+name = "git-rebase"
+scope = "source.gitrebase"
+
+[[language.file-types]]
+glob = "git-rebase-todo"
+
+[[language]]
+name = "regex"
+scope = "source.regex"
+
+[[language.file-types]]
+glob = "*.regex"
+
+[[language.file-types]]
+glob = ".Rbuildignore"
+
+[[language]]
+name = "git-config"
+scope = "source.gitconfig"
+
+[[language.file-types]]
+glob = "*.gitconfig"
+
+[[language.file-types]]
+glob = ".gitmodules"
+
+[[language.file-types]]
+glob = "gitconfig"
+
+[[language.file-types]]
+glob = ".gitconfig"
+
+[[language.file-types]]
+glob = ".git/config"
+
+[[language.file-types]]
+glob = ".config/git/config"
+
+[[language]]
+name = "git-attributes"
+scope = "source.gitattributes"
+
+[[language.file-types]]
+glob = ".gitattributes"
+
+[[language.file-types]]
+glob = ".config/git/attributes"
+
+[[language]]
+name = "git-ignore"
+scope = "source.gitignore"
+
+[[language.file-types]]
+glob = ".gitignore_global"
+
+[[language.file-types]]
+glob = "git/ignore"
+
+[[language.file-types]]
+glob = ".git/info/exclude"
+
+[[language.file-types]]
+glob = ".ignore"
+
+[[language.file-types]]
+glob = "CODEOWNERS"
+
+[[language.file-types]]
+glob = ".config/helix/ignore"
+
+[[language.file-types]]
+glob = ".helix/ignore"
+
+[[language.file-types]]
+glob = ".*ignore"
+
+[[language.file-types]]
+glob = ".git-blame-ignore-revs"
+
+[[language]]
+name = "graphql"
+scope = "source.graphql"
+
+[[language.file-types]]
+glob = "*.gql"
+
+[[language.file-types]]
+glob = "*.graphql"
+
+[[language.file-types]]
+glob = "*.graphqls"
+
+[[language]]
+name = "elm"
+scope = "source.elm"
+
+[[language.file-types]]
+glob = "*.elm"
+
+[[language]]
+name = "iex"
+scope = "source.iex"
+
+[[language.file-types]]
+glob = "*.iex"
+
+[[language]]
+name = "rescript"
+scope = "source.rescript"
+
+[[language.file-types]]
+glob = "*.res"
+
+[[language]]
+name = "erlang"
+scope = "source.erlang"
+
+[[language.file-types]]
+glob = "*.erl"
+
+[[language.file-types]]
+glob = "*.hrl"
+
+[[language.file-types]]
+glob = "*.app"
+
+[[language.file-types]]
+glob = "rebar.config"
+
+[[language.file-types]]
+glob = "rebar.lock"
+
+[[language.file-types]]
+glob = "*.app.src"
+
+[[language]]
+name = "kotlin"
+scope = "source.kotlin"
+
+[[language.file-types]]
+glob = "*.kt"
+
+[[language.file-types]]
+glob = "*.kts"
+
+[[language]]
+name = "hcl"
+scope = "source.hcl"
+
+[[language.file-types]]
+glob = "*.hcl"
+
+[[language.file-types]]
+glob = "*.tf"
+
+[[language.file-types]]
+glob = "*.nomad"
+
+[[language]]
+name = "tfvars"
+scope = "source.tfvars"
+
+[[language.file-types]]
+glob = "*.tfvars"
+
+[[language]]
+name = "org"
+scope = "source.org"
+
+[[language.file-types]]
+glob = "*.org"
+
+[[language]]
+name = "solidity"
+scope = "source.sol"
+
+[[language.file-types]]
+glob = "*.sol"
+
+[[language]]
+name = "gleam"
+scope = "source.gleam"
+
+[[language.file-types]]
+glob = "*.gleam"
+
+[[language]]
+name = "quarto"
+scope = "source.qmd"
+
+[[language.file-types]]
+glob = "*.qmd"
+
+[[language]]
+name = "ron"
+scope = "source.ron"
+
+[[language.file-types]]
+glob = "*.ron"
+
+[[language]]
+name = "robot"
+scope = "source.robot"
+
+[[language.file-types]]
+glob = "*.robot"
+
+[[language.file-types]]
+glob = "*.resource"
+
+[[language]]
+name = "r"
+scope = "source.r"
+
+[[language.file-types]]
+glob = "*.r"
+
+[[language.file-types]]
+glob = "*.R"
+
+[[language.file-types]]
+glob = ".Rprofile"
+
+[[language.file-types]]
+glob = "Rprofile.site"
+
+[[language.file-types]]
+glob = ".RHistory"
+
+[[language]]
+name = "rmarkdown"
+scope = "source.rmd"
+
+[[language.file-types]]
+glob = "*.rmd"
+
+[[language.file-types]]
+glob = "*.Rmd"
+
+[[language]]
+name = "swift"
+scope = "source.swift"
+
+[[language.file-types]]
+glob = "*.swift"
+
+[[language.file-types]]
+glob = "*.swiftinterface"
+
+[[language]]
+name = "erb"
+scope = "text.html.erb"
+
+[[language.file-types]]
+glob = "*.erb"
+
+[[language]]
+name = "ejs"
+scope = "text.html.ejs"
+
+[[language.file-types]]
+glob = "*.ejs"
+
+[[language]]
+name = "eex"
+scope = "source.eex"
+
+[[language.file-types]]
+glob = "*.eex"
+
+[[language]]
+name = "heex"
+scope = "source.heex"
+
+[[language.file-types]]
+glob = "*.heex"
+
+[[language]]
+name = "sql"
+scope = "source.sql"
+
+[[language.file-types]]
+glob = "*.sql"
+
+[[language.file-types]]
+glob = "*.dsql"
+
+[[language]]
+name = "gdscript"
+scope = "source.gdscript"
+
+[[language.file-types]]
+glob = "*.gd"
+
+[[language]]
+name = "godot-resource"
+scope = "source.tscn"
+
+[[language.file-types]]
+glob = "*.tscn"
+
+[[language.file-types]]
+glob = "*.tres"
+
+[[language.file-types]]
+glob = "*.godot"
+
+[[language.file-types]]
+glob = "*.gdextension"
+
+[[language]]
+name = "nu"
+scope = "source.nu"
+
+[[language.file-types]]
+glob = "*.nu"
+
+[[language.file-types]]
+glob = "*.nuon"
+
+[[language]]
+name = "vala"
+scope = "source.vala"
+
+[[language.file-types]]
+glob = "*.vala"
+
+[[language.file-types]]
+glob = "*.vapi"
+
+[[language]]
+name = "hare"
+scope = "source.hare"
+
+[[language.file-types]]
+glob = "*.ha"
+
+[[language]]
+name = "devicetree"
+scope = "source.devicetree"
+
+[[language.file-types]]
+glob = "*.dts"
+
+[[language.file-types]]
+glob = "*.dtsi"
+
+[[language]]
+name = "cairo"
+scope = "source.cairo"
+
+[[language.file-types]]
+glob = "*.cairo"
+
+[[language]]
+name = "cpon"
+scope = "scope.cpon"
+
+[[language.file-types]]
+glob = "*.cpon"
+
+[[language.file-types]]
+glob = "*.cp"
+
+[[language]]
+name = "odin"
+scope = "source.odin"
+
+[[language.file-types]]
+glob = "*.odin"
+
+[[language]]
+name = "meson"
+scope = "source.meson"
+
+[[language.file-types]]
+glob = "meson.build"
+
+[[language.file-types]]
+glob = "meson.options"
+
+[[language.file-types]]
+glob = "meson_options.txt"
+
+[[language]]
+name = "sshclientconfig"
+scope = "source.sshclientconfig"
+
+[[language.file-types]]
+glob = ".ssh/config"
+
+[[language.file-types]]
+glob = "/etc/ssh/ssh_config"
+
+[[language.file-types]]
+glob = "ssh_config.d/*.conf"
+
+[[language]]
+name = "scheme"
+scope = "source.scheme"
+
+[[language.file-types]]
+glob = "*.ss"
+
+[[language.file-types]]
+glob = "*.scm"
+
+[[language.file-types]]
+glob = "*.sld"
+
+[[language]]
+name = "v"
+scope = "source.v"
+
+[[language.file-types]]
+glob = "*.v"
+
+[[language.file-types]]
+glob = "*.vv"
+
+[[language.file-types]]
+glob = "*.vsh"
+
+[[language]]
+name = "verilog"
+scope = "source.verilog"
+
+[[language.file-types]]
+glob = "*.v"
+
+[[language.file-types]]
+glob = "*.vh"
+
+[[language]]
+name = "systemverilog"
+scope = "source.systemverilog"
+
+[[language.file-types]]
+glob = "*.sv"
+
+[[language.file-types]]
+glob = "*.svh"
+
+[[language]]
+name = "edoc"
+scope = "source.edoc"
+
+[[language.file-types]]
+glob = "*.edoc"
+
+[[language.file-types]]
+glob = "*.edoc.in"
+
+[[language]]
+name = "jsdoc"
+scope = "source.jsdoc"
+
+[[language.file-types]]
+glob = "*.jsdoc"
+
+[[language]]
+name = "openscad"
+scope = "source.openscad"
+
+[[language.file-types]]
+glob = "*.scad"
+
+[[language]]
+name = "prisma"
+scope = "source.prisma"
+
+[[language.file-types]]
+glob = "*.prisma"
+
+[[language]]
+name = "clojure"
+scope = "source.clojure"
+
+[[language.file-types]]
+glob = "*.clj"
+
+[[language.file-types]]
+glob = "*.cljs"
+
+[[language.file-types]]
+glob = "*.cljc"
+
+[[language.file-types]]
+glob = "*.clje"
+
+[[language.file-types]]
+glob = "*.cljr"
+
+[[language.file-types]]
+glob = "*.cljx"
+
+[[language.file-types]]
+glob = "*.edn"
+
+[[language.file-types]]
+glob = "*.boot"
+
+[[language]]
+name = "starlark"
+scope = "source.starlark"
+
+[[language.file-types]]
+glob = "*.bzl"
+
+[[language.file-types]]
+glob = "*.bazel"
+
+[[language.file-types]]
+glob = "*.star"
+
+[[language.file-types]]
+glob = "BUILD"
+
+[[language.file-types]]
+glob = "BUCK"
+
+[[language.file-types]]
+glob = "BUILD.*"
+
+[[language.file-types]]
+glob = "Tiltfile"
+
+[[language.file-types]]
+glob = "WORKSPACE"
+
+[[language.file-types]]
+glob = "WORKSPACE.bzlmod"
+
+[[language.file-types]]
+glob = "PACKAGE"
+
+[[language]]
+name = "elvish"
+scope = "source.elvish"
+
+[[language.file-types]]
+glob = "*.elv"
+
+[[language]]
+name = "idris"
+scope = "source.idr"
+
+[[language.file-types]]
+glob = "*.idr"
+
+[[language]]
+name = "fortran"
+scope = "source.fortran"
+
+[[language.file-types]]
+glob = "*.f"
+
+[[language.file-types]]
+glob = "*.for"
+
+[[language.file-types]]
+glob = "*.f90"
+
+[[language.file-types]]
+glob = "*.f95"
+
+[[language.file-types]]
+glob = "*.f03"
+
+[[language.file-types]]
+glob = "*.F"
+
+[[language.file-types]]
+glob = "*.F90"
+
+[[language.file-types]]
+glob = "*.F95"
+
+[[language.file-types]]
+glob = "*.F03"
+
+[[language]]
+name = "ungrammar"
+scope = "source.ungrammar"
+
+[[language.file-types]]
+glob = "*.ungram"
+
+[[language.file-types]]
+glob = "*.ungrammar"
+
+[[language]]
+name = "dot"
+scope = "source.dot"
+
+[[language.file-types]]
+glob = "*.dot"
+
+[[language]]
+name = "cue"
+scope = "source.cue"
+
+[[language.file-types]]
+glob = "*.cue"
+
+[[language]]
+name = "slang"
+scope = "source.lang"
+
+[[language.file-types]]
+glob = "*.slang"
+
+[[language]]
+name = "slint"
+scope = "source.slint"
+
+[[language.file-types]]
+glob = "*.slint"
+
+[[language]]
+name = "task"
+scope = "source.task"
+
+[[language.file-types]]
+glob = "*.task"
+
+[[language]]
+name = "xit"
+scope = "source.xit"
+
+[[language.file-types]]
+glob = "*.xit"
+
+[[language]]
+name = "esdl"
+scope = "source.esdl"
+
+[[language.file-types]]
+glob = "*.esdl"
+
+[[language]]
+name = "pascal"
+scope = "source.pascal"
+
+[[language.file-types]]
+glob = "*.pas"
+
+[[language.file-types]]
+glob = "*.pp"
+
+[[language.file-types]]
+glob = "*.inc"
+
+[[language.file-types]]
+glob = "*.lpr"
+
+[[language.file-types]]
+glob = "*.lfm"
+
+[[language]]
+name = "sml"
+scope = "source.sml"
+
+[[language.file-types]]
+glob = "*.sml"
+
+[[language]]
+name = "jsonnet"
+scope = "source.jsonnet"
+
+[[language.file-types]]
+glob = "*.libsonnet"
+
+[[language.file-types]]
+glob = "*.jsonnet"
+
+[[language]]
+name = "ada"
+scope = "source.ada"
+
+[[language.file-types]]
+glob = "*.adb"
+
+[[language.file-types]]
+glob = "*.ads"
+
+[[language]]
+name = "astro"
+scope = "source.astro"
+
+[[language.file-types]]
+glob = "*.astro"
+
+[[language]]
+name = "bass"
+scope = "source.bass"
+
+[[language.file-types]]
+glob = "*.bass"
+
+[[language]]
+name = "wat"
+scope = "source.wat"
+
+[[language.file-types]]
+glob = "*.wat"
+
+[[language]]
+name = "wast"
+scope = "source.wast"
+
+[[language.file-types]]
+glob = "*.wast"
+
+[[language]]
+name = "d"
+scope = "source.d"
+
+[[language.file-types]]
+glob = "*.d"
+
+[[language.file-types]]
+glob = "*.dd"
+
+[[language]]
+name = "vhs"
+scope = "source.vhs"
+
+[[language.file-types]]
+glob = "*.tape"
+
+[[language]]
+name = "kdl"
+scope = "source.kdl"
+
+[[language.file-types]]
+glob = "*.kdl"
+
+[[language]]
+name = "xml"
+scope = "source.xml"
+
+[[language.file-types]]
+glob = "*.ascx"
+
+[[language.file-types]]
+glob = "*.atom"
+
+[[language.file-types]]
+glob = "*.axaml"
+
+[[language.file-types]]
+glob = "*.axml"
+
+[[language.file-types]]
+glob = "*.bpmn"
+
+[[language.file-types]]
+glob = "*.checkstyle"
+
+[[language.file-types]]
+glob = "*.cpt"
+
+[[language.file-types]]
+glob = "*.csl"
+
+[[language.file-types]]
+glob = "*.csproj.user"
+
+[[language.file-types]]
+glob = "*.dita"
+
+[[language.file-types]]
+glob = "*.ditamap"
+
+[[language.file-types]]
+glob = "*.dtml"
+
+[[language.file-types]]
+glob = "*.fods"
+
+[[language.file-types]]
+glob = "*.fodt"
+
+[[language.file-types]]
+glob = "*.fxml"
+
+[[language.file-types]]
+glob = "*.gir"
+
+[[language.file-types]]
+glob = "*.glif"
+
+[[language.file-types]]
+glob = "*.gml"
+
+[[language.file-types]]
+glob = "*.gpx"
+
+[[language.file-types]]
+glob = "*.iml"
+
+[[language.file-types]]
+glob = "*.isml"
+
+[[language.file-types]]
+glob = "*.itermcolors"
+
+[[language.file-types]]
+glob = "*.jmx"
+
+[[language.file-types]]
+glob = "*.kml"
+
+[[language.file-types]]
+glob = "*.launch"
+
+[[language.file-types]]
+glob = "*.menu"
+
+[[language.file-types]]
+glob = "*.mobileconfig"
+
+[[language.file-types]]
+glob = "*.mpd"
+
+[[language.file-types]]
+glob = "*.musicxml"
+
+[[language.file-types]]
+glob = "*.mxml"
+
+[[language.file-types]]
+glob = "*.ncx"
+
+[[language.file-types]]
+glob = "*.nuspec"
+
+[[language.file-types]]
+glob = "*.opml"
+
+[[language.file-types]]
+glob = "*.osc"
+
+[[language.file-types]]
+glob = "*.osm"
+
+[[language.file-types]]
+glob = "*.plist"
+
+[[language.file-types]]
+glob = "*.policy"
+
+[[language.file-types]]
+glob = "*.pt"
+
+[[language.file-types]]
+glob = "*.publishsettings"
+
+[[language.file-types]]
+glob = "*.pubxml"
+
+[[language.file-types]]
+glob = "*.pubxml.user"
+
+[[language.file-types]]
+glob = "*.rbxlx"
+
+[[language.file-types]]
+glob = "*.rbxmx"
+
+[[language.file-types]]
+glob = "*.resx"
+
+[[language.file-types]]
+glob = "*.rng"
+
+[[language.file-types]]
+glob = "*.rss"
+
+[[language.file-types]]
+glob = "*.shproj"
+
+[[language.file-types]]
+glob = "*.smil"
+
+[[language.file-types]]
+glob = "*.storyboard"
+
+[[language.file-types]]
+glob = "*.sublime-snippet"
+
+[[language.file-types]]
+glob = "*.svg"
+
+[[language.file-types]]
+glob = "*.terminal"
+
+[[language.file-types]]
+glob = "*.tld"
+
+[[language.file-types]]
+glob = "*.tmx"
+
+[[language.file-types]]
+glob = "*.ui"
+
+[[language.file-types]]
+glob = "*.vbproj.user"
+
+[[language.file-types]]
+glob = "*.vcxproj"
+
+[[language.file-types]]
+glob = "*.vcxproj.filters"
+
+[[language.file-types]]
+glob = "*.wixproj"
+
+[[language.file-types]]
+glob = "*.wsdl"
+
+[[language.file-types]]
+glob = "*.wxi"
+
+[[language.file-types]]
+glob = "*.wxs"
+
+[[language.file-types]]
+glob = "*.xaml"
+
+[[language.file-types]]
+glob = "*.xbl"
+
+[[language.file-types]]
+glob = "*.xib"
+
+[[language.file-types]]
+glob = "*.xlf"
+
+[[language.file-types]]
+glob = "*.xliff"
+
+[[language.file-types]]
+glob = "*.xml"
+
+[[language.file-types]]
+glob = "*.xmp"
+
+[[language.file-types]]
+glob = "*.xoml"
+
+[[language.file-types]]
+glob = "*.xpdl"
+
+[[language.file-types]]
+glob = "*.xrc"
+
+[[language.file-types]]
+glob = "*.xsd"
+
+[[language.file-types]]
+glob = "*.xsl"
+
+[[language.file-types]]
+glob = "*.xul"
+
+[[language.file-types]]
+glob = "*.tm[Ll]anguage"
+
+[[language.file-types]]
+glob = "*.tm[Pp]references"
+
+[[language.file-types]]
+glob = "*.tm[Tt]heme"
+
+[[language]]
+name = "dtd"
+scope = "source.dtd"
+
+[[language.file-types]]
+glob = "*.dtd"
+
+[[language.file-types]]
+glob = "*.ent"
+
+[[language]]
+name = "wit"
+scope = "source.wit"
+
+[[language.file-types]]
+glob = "*.wit"
+
+[[language]]
+name = "env"
+scope = "source.env"
+
+[[language.file-types]]
+glob = ".env"
+
+[[language.file-types]]
+glob = ".env.*"
+
+[[language.file-types]]
+glob = ".envrc"
+
+[[language.file-types]]
+glob = ".envrc.*"
+
+[[language]]
+name = "systemd"
+scope = "source.ini"
+
+[[language.file-types]]
+glob = "*.service"
+
+[[language.file-types]]
+glob = "*.automount"
+
+[[language.file-types]]
+glob = "*.device"
+
+[[language.file-types]]
+glob = "*.mount"
+
+[[language.file-types]]
+glob = "*.nspawn"
+
+[[language.file-types]]
+glob = "*.path"
+
+[[language.file-types]]
+glob = "*.scope"
+
+[[language.file-types]]
+glob = "*.slice"
+
+[[language.file-types]]
+glob = "*.socket"
+
+[[language.file-types]]
+glob = "*.swap"
+
+[[language.file-types]]
+glob = "*.target"
+
+[[language.file-types]]
+glob = "*.timer"
+
+[[language.file-types]]
+glob = "systemd/**/*.conf"
+
+[[language]]
+name = "ini"
+scope = "source.ini"
+
+[[language.file-types]]
+glob = "*.ini"
+
+[[language.file-types]]
+glob = "*.desktop"
+
+[[language.file-types]]
+glob = "mimeapps.list"
+
+[[language.file-types]]
+glob = "*.container"
+
+[[language.file-types]]
+glob = "*.volume"
+
+[[language.file-types]]
+glob = "*.kube"
+
+[[language.file-types]]
+glob = "*.network"
+
+[[language.file-types]]
+glob = ".editorconfig"
+
+[[language.file-types]]
+glob = ".npmrc"
+
+[[language.file-types]]
+glob = "hgrc"
+
+[[language.file-types]]
+glob = "npmrc"
+
+[[language.file-types]]
+glob = "rclone.conf"
+
+[[language.file-types]]
+glob = ".aws/config"
+
+[[language.file-types]]
+glob = "*.properties"
+
+[[language.file-types]]
+glob = "*.cfg"
+
+[[language.file-types]]
+glob = "*.directory"
+
+[[language.file-types]]
+glob = ".wslconfig"
+
+[[language]]
+name = "inko"
+scope = "source.inko"
+
+[[language.file-types]]
+glob = "*.inko"
+
+[[language]]
+name = "bicep"
+scope = "source.bicep"
+
+[[language.file-types]]
+glob = "*.bicep"
+
+[[language.file-types]]
+glob = "*.bicepparam"
+
+[[language]]
+name = "qml"
+scope = "source.qml"
+
+[[language.file-types]]
+glob = "*.qml"
+
+[[language]]
+name = "mermaid"
+scope = "source.mermaid"
+
+[[language.file-types]]
+glob = "*.mermaid"
+
+[[language.file-types]]
+glob = "*.mmd"
+
+[[language]]
+name = "matlab"
+scope = "source.m"
+
+[[language.file-types]]
+glob = "*.m"
+
+[[language]]
+name = "ponylang"
+scope = "source.pony"
+
+[[language.file-types]]
+glob = "*.pony"
+
+[[language]]
+name = "dhall"
+scope = "source.dhall"
+
+[[language.file-types]]
+glob = "*.dhall"
+
+[[language]]
+name = "sage"
+scope = "source.sage"
+
+[[language.file-types]]
+glob = "*.sage"
+
+[[language]]
+name = "msbuild"
+scope = "source.msbuild"
+
+[[language.file-types]]
+glob = "*.proj"
+
+[[language.file-types]]
+glob = "*.vbproj"
+
+[[language.file-types]]
+glob = "*.csproj"
+
+[[language.file-types]]
+glob = "*.fsproj"
+
+[[language.file-types]]
+glob = "*.targets"
+
+[[language.file-types]]
+glob = "*.props"
+
+[[language]]
+name = "pem"
+scope = "source.pem"
+
+[[language.file-types]]
+glob = "*.pem"
+
+[[language.file-types]]
+glob = "*.cert"
+
+[[language.file-types]]
+glob = "*.crt"
+
+[[language]]
+name = "passwd"
+scope = "source.passwd"
+
+[[language.file-types]]
+glob = "passwd"
+
+[[language]]
+name = "hosts"
+scope = "source.hosts"
+
+[[language.file-types]]
+glob = "hosts"
+
+[[language]]
+name = "uxntal"
+scope = "source.tal"
+
+[[language.file-types]]
+glob = "*.tal"
+
+[[language]]
+name = "yuck"
+scope = "source.yuck"
+
+[[language.file-types]]
+glob = "*.yuck"
+
+[[language]]
+name = "prql"
+scope = "source.prql"
+
+[[language.file-types]]
+glob = "*.prql"
+
+[[language]]
+name = "po"
+scope = "source.po"
+
+[[language.file-types]]
+glob = "*.po"
+
+[[language.file-types]]
+glob = "*.pot"
+
+[[language]]
+name = "nasm"
+scope = "source.nasm"
+
+[[language.file-types]]
+glob = "*.asm"
+
+[[language.file-types]]
+glob = "*.S"
+
+[[language.file-types]]
+glob = "*.nasm"
+
+[[language]]
+name = "gas"
+scope = "source.gas"
+
+[[language.file-types]]
+glob = "*.s"
+
+[[language]]
+name = "rst"
+scope = "source.rst"
+
+[[language.file-types]]
+glob = "*.rst"
+
+[[language]]
+name = "capnp"
+scope = "source.capnp"
+
+[[language.file-types]]
+glob = "*.capnp"
+
+[[language]]
+name = "smithy"
+scope = "source.smithy"
+
+[[language.file-types]]
+glob = "*.smithy"
+
+[[language]]
+name = "hdl"
+scope = "source.hdl"
+
+[[language.file-types]]
+glob = "*.hdl"
+
+[[language]]
+name = "vhdl"
+scope = "source.vhdl"
+
+[[language.file-types]]
+glob = "*.vhd"
+
+[[language.file-types]]
+glob = "*.vhdl"
+
+[[language]]
+name = "rego"
+scope = "source.rego"
+
+[[language.file-types]]
+glob = "*.rego"
+
+[[language]]
+name = "nim"
+scope = "source.nim"
+
+[[language.file-types]]
+glob = "*.nim"
+
+[[language.file-types]]
+glob = "*.nims"
+
+[[language.file-types]]
+glob = "*.nimble"
+
+[[language]]
+name = "cabal"
+scope = "source.cabal"
+
+[[language.file-types]]
+glob = "*.cabal"
+
+[[language]]
+name = "hurl"
+scope = "source.hurl"
+
+[[language.file-types]]
+glob = "*.hurl"
+
+[[language]]
+name = "markdoc"
+scope = "text.markdoc"
+
+[[language.file-types]]
+glob = "*.mdoc"
+
+[[language]]
+name = "opencl"
+scope = "source.cl"
+
+[[language.file-types]]
+glob = "*.cl"
+
+[[language]]
+name = "just"
+scope = "source.just"
+
+[[language.file-types]]
+glob = "*.just"
+
+[[language.file-types]]
+glob = "justfile"
+
+[[language.file-types]]
+glob = "Justfile"
+
+[[language.file-types]]
+glob = ".justfile"
+
+[[language.file-types]]
+glob = ".Justfile"
+
+[[language]]
+name = "gn"
+scope = "source.gn"
+
+[[language.file-types]]
+glob = "*.gn"
+
+[[language.file-types]]
+glob = "*.gni"
+
+[[language]]
+name = "blueprint"
+scope = "source.blueprint"
+
+[[language.file-types]]
+glob = "*.blp"
+
+[[language]]
+name = "forth"
+scope = "source.forth"
+
+[[language.file-types]]
+glob = "*.fs"
+
+[[language.file-types]]
+glob = "*.forth"
+
+[[language.file-types]]
+glob = "*.fth"
+
+[[language.file-types]]
+glob = "*.4th"
+
+[[language]]
+name = "fsharp"
+scope = "source.fs"
+
+[[language.file-types]]
+glob = "*.fs"
+
+[[language.file-types]]
+glob = "*.fsx"
+
+[[language.file-types]]
+glob = "*.fsi"
+
+[[language.file-types]]
+glob = "*.fsscript"
+
+[[language]]
+name = "t32"
+scope = "source.t32"
+
+[[language.file-types]]
+glob = "*.cmm"
+
+[[language.file-types]]
+glob = "*.t32"
+
+[[language]]
+name = "webc"
+scope = "text.html.webc"
+
+[[language.file-types]]
+glob = "*.webc"
+
+[[language]]
+name = "typst"
+scope = "source.typst"
+
+[[language.file-types]]
+glob = "*.typst"
+
+[[language.file-types]]
+glob = "*.typ"
+
+[[language]]
+name = "nunjucks"
+scope = "text.html.nunjucks"
+
+[[language.file-types]]
+glob = "*.njk"
+
+[[language]]
+name = "jinja"
+scope = "text.html.jinja"
+
+[[language.file-types]]
+glob = "*.jinja"
+
+[[language.file-types]]
+glob = "*.jinja2"
+
+[[language.file-types]]
+glob = "*.j2"
+
+[[language]]
+name = "jjconfig"
+scope = "source.jjconfig"
+
+[[language.file-types]]
+glob = "jj/config.toml"
+
+[[language.file-types]]
+glob = "jj/conf.d/*.toml"
+
+[[language.file-types]]
+glob = ".jj/repo/*.toml"
+
+[[language]]
+name = "jjdescription"
+scope = "jj.description"
+
+[[language.file-types]]
+glob = "*.jjdescription"
+
+[[language]]
+name = "jjrevset"
+scope = "jj.revset"
+
+[[language.file-types]]
+glob = "*.jjrevset"
+
+[[language]]
+name = "jjtemplate"
+scope = "jj.template"
+
+[[language.file-types]]
+glob = "*.jjtemplate"
+
+[[language]]
+name = "miseconfig"
+scope = "source.miseconfig"
+
+[[language.file-types]]
+glob = "mise.toml"
+
+[[language.file-types]]
+glob = ".mise.toml"
+
+[[language.file-types]]
+glob = "mise.*.toml"
+
+[[language.file-types]]
+glob = ".mise.*.toml"
+
+[[language.file-types]]
+glob = "mise/config.toml"
+
+[[language.file-types]]
+glob = ".mise/config.toml"
+
+[[language.file-types]]
+glob = ".config/mise.toml"
+
+[[language.file-types]]
+glob = ".config/mise/conf.d/*.toml"
+
+[[language]]
+name = "jq"
+scope = "source.jq"
+
+[[language.file-types]]
+glob = "*.jq"
+
+[[language]]
+name = "wren"
+scope = "source.wren"
+
+[[language.file-types]]
+glob = "*.wren"
+
+[[language]]
+name = "unison"
+scope = "source.unison"
+
+[[language.file-types]]
+glob = "*.u"
+
+[[language]]
+name = "todotxt"
+scope = "text.todotxt"
+
+[[language.file-types]]
+glob = "*.todo.txt"
+
+[[language.file-types]]
+glob = "*.todotxt"
+
+[[language]]
+name = "strace"
+scope = "source.strace"
+
+[[language.file-types]]
+glob = "*.strace"
+
+[[language]]
+name = "gemini"
+scope = "source.gmi"
+
+[[language.file-types]]
+glob = "*.gmi"
+
+[[language]]
+name = "agda"
+scope = "source.agda"
+
+[[language.file-types]]
+glob = "*.agda"
+
+[[language]]
+name = "templ"
+scope = "source.templ"
+
+[[language.file-types]]
+glob = "*.templ"
+
+[[language]]
+name = "dbml"
+scope = "source.dbml"
+
+[[language.file-types]]
+glob = "*.dbml"
+
+[[language]]
+name = "bitbake"
+scope = "source.bitbake"
+
+[[language.file-types]]
+glob = "*.bb"
+
+[[language.file-types]]
+glob = "*.bbappend"
+
+[[language.file-types]]
+glob = "*.bbclass"
+
+[[language.file-types]]
+glob = "conf/*.conf"
+
+[[language.file-types]]
+glob = "conf/*/*.{inc,conf}"
+
+[[language.file-types]]
+glob = "recipe-*/*/*.inc"
+
+[[language]]
+name = "log"
+scope = "source.log"
+
+[[language.file-types]]
+glob = "*.log"
+
+[[language]]
+name = "hoon"
+scope = "source.hoon"
+
+[[language.file-types]]
+glob = "*.hoon"
+
+[[language]]
+name = "hocon"
+scope = "source.conf"
+
+[[language.file-types]]
+glob = "**/src/*/resources/**/*.conf"
+
+[[language.file-types]]
+glob = "*scalafmt*.conf"
+
+[[language.file-types]]
+glob = "*scalafix*.conf"
+
+[[language]]
+name = "koka"
+scope = "source.koka"
+
+[[language.file-types]]
+glob = "*.kk"
+
+[[language]]
+name = "tact"
+scope = "source.tact"
+
+[[language.file-types]]
+glob = "*.tact"
+
+[[language]]
+name = "pkl"
+scope = "source.pkl"
+
+[[language.file-types]]
+glob = "*.pkl"
+
+[[language.file-types]]
+glob = "*.pcf"
+
+[[language]]
+name = "groovy"
+scope = "source.groovy"
+
+[[language.file-types]]
+glob = "*.gradle"
+
+[[language.file-types]]
+glob = "*.groovy"
+
+[[language.file-types]]
+glob = "*.jenkinsfile"
+
+[[language.file-types]]
+glob = "Jenkinsfile"
+
+[[language.file-types]]
+glob = "Jenkinsfile.*"
+
+[[language]]
+name = "fidl"
+scope = "source.fidl"
+
+[[language.file-types]]
+glob = "*.fidl"
+
+[[language]]
+name = "powershell"
+scope = "source.powershell"
+
+[[language.file-types]]
+glob = "*.ps1"
+
+[[language.file-types]]
+glob = "*.psm1"
+
+[[language.file-types]]
+glob = "*.psd1"
+
+[[language.file-types]]
+glob = "*.pscc"
+
+[[language.file-types]]
+glob = "*.psrc"
+
+[[language]]
+name = "ld"
+scope = "source.ld"
+
+[[language.file-types]]
+glob = "*.ld"
+
+[[language]]
+name = "hyprlang"
+scope = "source.hyprlang"
+
+[[language.file-types]]
+glob = "hypr/*.conf"
+
+[[language]]
+name = "tcl"
+scope = "source.tcl"
+
+[[language.file-types]]
+glob = "*.tcl"
+
+[[language]]
+name = "supercollider"
+scope = "source.supercollider"
+
+[[language.file-types]]
+glob = "*.scd"
+
+[[language.file-types]]
+glob = "*.sc"
+
+[[language.file-types]]
+glob = "*.quark"
+
+[[language]]
+name = "pkgbuild"
+scope = "source.bash"
+
+[[language.file-types]]
+glob = "PKGBUILD"
+
+[[language]]
+name = "helm"
+scope = "source.helm"
+
+[[language.file-types]]
+glob = "templates/*.yaml"
+
+[[language.file-types]]
+glob = "templates/*.yml"
+
+[[language.file-types]]
+glob = "templates/_*.tpl"
+
+[[language.file-types]]
+glob = "templates/NOTES.txt"
+
+[[language]]
+name = "glimmer"
+scope = "source.glimmer"
+
+[[language.file-types]]
+glob = "{app,addon}/{components,templates}/*.hbs"
+
+[[language]]
+name = "ohm"
+scope = "source.ohm"
+
+[[language.file-types]]
+glob = "*.ohm"
+
+[[language]]
+name = "earthfile"
+scope = "source.earthfile"
+
+[[language.file-types]]
+glob = "Earthfile"
+
+[[language]]
+name = "adl"
+scope = "source.adl"
+
+[[language.file-types]]
+glob = "*.adl"
+
+[[language]]
+name = "ldif"
+scope = "source.ldif"
+
+[[language.file-types]]
+glob = "*.ldif"
+
+[[language]]
+name = "xtc"
+scope = "source.xtc"
+
+[[language.file-types]]
+glob = "*.xtc"
+
+[[language.file-types]]
+glob = "*.xpc"
+
+[[language.file-types]]
+glob = "*.xoa"
+
+[[language]]
+name = "move"
+scope = "source.move"
+
+[[language.file-types]]
+glob = "*.move"
+
+[[language]]
+name = "pest"
+scope = "source.pest"
+
+[[language.file-types]]
+glob = "*.pest"
+
+[[language]]
+name = "elisp"
+scope = "source.elisp"
+
+[[language.file-types]]
+glob = "*.el"
+
+[[language]]
+name = "gjs"
+scope = "source.gjs"
+
+[[language.file-types]]
+glob = "*.gjs"
+
+[[language]]
+name = "gts"
+scope = "source.gts"
+
+[[language.file-types]]
+glob = "*.gts"
+
+[[language]]
+name = "gherkin"
+scope = "source.feature"
+
+[[language.file-types]]
+glob = "*.feature"
+
+[[language]]
+name = "thrift"
+scope = "source.thrift"
+
+[[language.file-types]]
+glob = "*.thrift"
+
+[[language]]
+name = "circom"
+scope = "source.circom"
+
+[[language.file-types]]
+glob = "*.circom"
+
+[[language]]
+name = "snakemake"
+scope = "source.snakemake"
+
+[[language.file-types]]
+glob = "*.smk"
+
+[[language.file-types]]
+glob = "Snakefile"
+
+[[language]]
+name = "cylc"
+scope = "source.cylc"
+
+[[language.file-types]]
+glob = "*.cylc"
+
+[[language.file-types]]
+glob = "suite.rc"
+
+[[language]]
+name = "quint"
+scope = "source.quint"
+
+[[language.file-types]]
+glob = "*.qnt"
+
+[[language]]
+name = "spade"
+scope = "source.spade"
+
+[[language.file-types]]
+glob = "*.spade"
+
+[[language]]
+name = "amber"
+scope = "source.ab"
+
+[[language.file-types]]
+glob = "*.ab"
+
+[[language]]
+name = "koto"
+scope = "source.koto"
+
+[[language.file-types]]
+glob = "*.koto"
+
+[[language]]
+name = "gpr"
+scope = "source.gpr"
+
+[[language.file-types]]
+glob = "*.gpr"
+
+[[language]]
+name = "vento"
+scope = "text.html.vto"
+
+[[language.file-types]]
+glob = "*.vto"
+
+[[language]]
+name = "nginx"
+scope = "source.nginx"
+
+[[language.file-types]]
+glob = "sites-available/*.conf"
+
+[[language.file-types]]
+glob = "sites-enabled/*.conf"
+
+[[language.file-types]]
+glob = "nginx.conf"
+
+[[language.file-types]]
+glob = "conf.d/*.conf"
+
+[[language]]
+name = "codeql"
+scope = "source.ql"
+
+[[language.file-types]]
+glob = "*.ql"
+
+[[language.file-types]]
+glob = "*.qll"
+
+[[language]]
+name = "gren"
+scope = "source.gren"
+
+[[language.file-types]]
+glob = "*.gren"
+
+[[language]]
+name = "ghostty"
+scope = "source.ghostty"
+
+[[language.file-types]]
+glob = "ghostty/config"
+
+[[language]]
+name = "tera"
+scope = "source.tera"
+
+[[language.file-types]]
+glob = "*.tera"
+
+[[language]]
+name = "fga"
+scope = "source.fga"
+
+[[language.file-types]]
+glob = "*.fga"
+
+[[language]]
+name = "csv"
+scope = "source.csv"
+
+[[language.file-types]]
+glob = "*.csv"
+
+[[language]]
+name = "yara"
+scope = "source.yara"
+
+[[language.file-types]]
+glob = "*.yara"
+
+[[language.file-types]]
+glob = "*.yar"
+
+[[language]]
+name = "ink"
+scope = "source.ink"
+
+[[language.file-types]]
+glob = "*.ink"
+
+[[language]]
+name = "sourcepawn"
+scope = "source.sourcepawn"
+
+[[language.file-types]]
+glob = "*.sp"
+
+[[language.file-types]]
+glob = "*.inc"
+
+[[language]]
+name = "vim"
+scope = "source.vim"
+
+[[language.file-types]]
+glob = "*.vim"
+
+[[language.file-types]]
+glob = ".vimrc"
+
+[[language.file-types]]
+glob = ".nvimrc"
+
+[[language.file-types]]
+glob = ".exrc"
+
+[[language]]
+name = "tlaplus"
+scope = "scope.tlaplus"
+
+[[language.file-types]]
+glob = "*.tla"
+
+[[language]]
+name = "werk"
+scope = "source.werk"
+
+[[language.file-types]]
+glob = "*.werk"
+
+[[language.file-types]]
+glob = "Werkfile"
+
+[[language]]
+name = "debian"
+scope = "text.debian"
+
+[[language.file-types]]
+glob = "*.dsc"
+
+[[language.file-types]]
+glob = "*.changes"
+
+[[language.file-types]]
+glob = "debian/**/control"
+
+[[language.file-types]]
+glob = "etc/apt/sources.list.d/*.sources"
+
+[[language]]
+name = "pug"
+scope = "source.pug"
+
+[[language.file-types]]
+glob = "*.pug"
+
+[[language]]
+name = "dunstrc"
+scope = "source.dunstrc"
+
+[[language.file-types]]
+glob = "dunst/dunstrc"
+
+[[language]]
+name = "rust-format-args"
+scope = "source.rust-format-args"
+file-types = []
+
+[[language]]
+name = "rust-format-args-macro"
+scope = "source.rust-format-args-macro"
+file-types = []
+
+[[language]]
+name = "clarity"
+scope = "source.clar"
+
+[[language.file-types]]
+glob = "*.clar"
+
+[[language]]
+name = "alloy"
+scope = "source.alloy"
+
+[[language.file-types]]
+glob = "*.alloy"
+
+[[language]]
+name = "luau"
+scope = "source.luau"
+
+[[language.file-types]]
+glob = "*.luau"
+
+[[language]]
+name = "caddyfile"
+scope = "source.caddyfile"
+
+[[language.file-types]]
+glob = "Caddyfile"
+
+[[language]]
+name = "properties"
+scope = "source.properties"
+
+[[language.file-types]]
+glob = "*.properties"
+
+[[language.file-types]]
+glob = "*.prefs"
+
+[[language]]
+name = "robots.txt"
+scope = "source.robots.txt"
+
+[[language.file-types]]
+glob = "robots.txt"
+
+[[language]]
+name = "pip-requirements"
+scope = "source.pip-requirements"
+
+[[language.file-types]]
+glob = "requirements.txt"
+
+[[language.file-types]]
+glob = "constraints.txt"
+
+[[language]]
+name = "kconfig"
+scope = "source.kconfig"
+
+[[language.file-types]]
+glob = "*.kconfig"
+
+[[language.file-types]]
+glob = "kconfig.*"
+
+[[language]]
+name = "doxyfile"
+scope = "source.doxyfile"
+
+[[language.file-types]]
+glob = "Doxyfile"
+
+[[language]]
+name = "cross-config"
+scope = "source.cross-config"
+
+[[language.file-types]]
+glob = "Cross.toml"
+
+[[language]]
+name = "git-cliff-config"
+scope = "source.git-cliff-config"
+
+[[language.file-types]]
+glob = "cliff.toml"
+
+[[language]]
+name = "cython"
+scope = "source.cython"
+
+[[language.file-types]]
+glob = "*.pxd"
+
+[[language.file-types]]
+glob = "*.pxi"
+
+[[language.file-types]]
+glob = "*.pyx"
+
+[[language]]
+name = "shellcheckrc"
+scope = "source.shellcheckrc"
+
+[[language.file-types]]
+glob = "shellcheckrc"
+
+[[language.file-types]]
+glob = ".shellcheckrc"
+
+[[language]]
+name = "strictdoc"
+scope = "source.strictdoc"
+
+[[language.file-types]]
+glob = "*.sdoc"
+
+[[language.file-types]]
+glob = "*.sgra"
+
+[[language]]
+name = "docker-bake"
+scope = "source.docker-bake"
+
+[[language.file-types]]
+glob = "docker-bake.hcl"
+
+[[language.file-types]]
+glob = "docker-bake.override.hcl"
+
+[[language]]
+name = "gitlab-ci"
+scope = "source.gitlab-ci"
+
+[[language.file-types]]
+glob = ".gitlab-ci.yml"
+
+[[language]]
+name = "wikitext"
+scope = "source.wikitext"
+
+[[language.file-types]]
+glob = "*.wikimedia"
+
+[[language.file-types]]
+glob = "*.mediawiki"
+
+[[language.file-types]]
+glob = "*.wikitext"
+
+[[language]]
+name = "slisp"
+scope = "source.sl"
+
+[[language.file-types]]
+glob = "*.sl"
+
+[[language]]
+name = "nearley"
+scope = "source.nearley"
+
+[[language.file-types]]
+glob = "*.ne"
+
+[[language]]
+name = "kcl"
+scope = "source.kcl"
+
+[[language.file-types]]
+glob = "*.kcl"
+
+[[language]]
+name = "bovex"
+scope = "source.bovex"
+
+[[language.file-types]]
+glob = "*.bovex"
+
+[[language.file-types]]
+glob = "*.bibvex"
+
+[[language]]
+name = "haxe"
+scope = "source.haxe"
+
+[[language.file-types]]
+glob = "*.hx"
+
+[[language]]
+name = "basic"
+scope = "source.basic"
+
+[[language.file-types]]
+glob = "*.bas"
+
+[[language]]
+name = "freebasic"
+scope = "source.freebasic"
+
+[[language.file-types]]
+glob = "*.bas"
+
+[[language.file-types]]
+glob = "*.bi"
+
+[[language]]
+name = "fallback"
+scope = ""
+file-types = [{glob = "*"}]
+# e.g. set a different comment-token
+comment-tokens = ["#"]
+language-servers = [ "scls", "harper", "gpt" ]
