@@ -7,7 +7,10 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-	"diagnostics": {
+	"collaboration_panel": {
+  "dock": "left"
+ },
+ "diagnostics": {
 		"inline": {
 			"enabled": true
 		}
@@ -25,6 +28,9 @@
 	"use_system_path_prompts": false,
 	"expand_excerpt_lines": 4,
 	"vim_mode": true,
+	"vim": {
+		"use_system_clipboard": "on_yank"
+	},
 	"features": {
 		"edit_prediction_provider": "copilot"
 	},
@@ -81,7 +87,7 @@
 	"relative_line_numbers": "wrapped",
 	"agent": {
 		"default_profile": "write",
-  "always_allow_tool_actions": true,
+		"always_allow_tool_actions": true,
 		"default_model": {
 			"provider": "copilot_chat",
 			"model": "gpt-5.1-codex"
@@ -108,12 +114,7 @@
 		"show": "never"
 	},
 	"cursor_blink": true,
-	"buffer_font_fallbacks": [
-		"Menlo",
-		"Monaco",
-		"Courier New",
-		"monospace"
-	],
+	"buffer_font_fallbacks": ["Menlo", "Monaco", "Courier New", "monospace"],
 	"buffer_font_family": "JetBrainsMono Nerd Font",
 	"hard_tabs": true,
 	"tab_size": 4,

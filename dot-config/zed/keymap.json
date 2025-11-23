@@ -920,16 +920,22 @@
 			"space g d": "editor::OpenExcerpts"
 		}
 	},
+	// {
+	// 	"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+	// 	"bindings": {
+	// 		"space d": "diagnostics::Deploy"
+	// 	}
+	// },
 	{
 		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
 		"bindings": {
-			"space d": "diagnostics::Deploy"
+			"p": "editor::Paste"
 		}
 	},
  {
-  "context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
+  "context": "(Editor && mode == full)",
   "bindings": {
-   "p": "editor::Paste"
+   "ctrl-h": null
   }
  }
 ]

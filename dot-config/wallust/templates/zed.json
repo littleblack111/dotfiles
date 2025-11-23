@@ -16,7 +16,7 @@
 				"border.disabled": "{{color8}}66",
 				"elevated_surface.background": "{{color0}}CC",
 				"surface.background": "{{color0}}CC",
-				"background": "{{background}}b3",
+				"background": "{{background}}CC",
 				"element.background": "{{color0}}CC",
 				"element.hover": "{{color1}}33",
 				"element.active": "{{color2}}55",

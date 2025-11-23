@@ -22,5 +22,4 @@
 - Use tab for indentation.
 - Follow the Hungarian notation for appropriate language(i.e. C++).
 
-## Think like a programmer, not a writer, not looking for perfection.
 
