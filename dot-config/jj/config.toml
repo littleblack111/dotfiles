@@ -2,3 +2,16 @@
 [user]
 name = "littleblack111"
 email = "littleblack11111@gmail.com"
+
+[ui]
+default-command = "log"
+diff-editor = ":builtin"
+merge-editor = ":builtin"
+
+[signing]
+behavior = "own"
+backend = "gpg"
+key = "2D388601F247172CBDAA9A2545AE0FF5962FA6EF"
+
+[snapshot]
+max-new-file-size = 9934184
