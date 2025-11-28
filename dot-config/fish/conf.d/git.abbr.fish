@@ -267,5 +267,5 @@ end
 abbr -a bisectundo 'git bisect log | head -n -2 > /tmp/fixed_bisect.log ; git bisect replay /tmp/fixed_bisect.log'
 function gf
     git commit --fixup=$argv
-    git rebase -i --autosquash $argv^
+    git rebase -i --autosquash $argv^^
 end
