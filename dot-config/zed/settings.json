@@ -8,9 +8,9 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
 	"collaboration_panel": {
-  "dock": "left"
- },
- "diagnostics": {
+		"dock": "left"
+	},
+	"diagnostics": {
 		"inline": {
 			"enabled": true
 		}
@@ -25,7 +25,7 @@
 		}
 	},
 	"when_closing_with_no_tabs": "platform_default",
-	"use_system_path_prompts": false,
+	"use_system_path_prompts": true,
 	"expand_excerpt_lines": 4,
 	"vim_mode": true,
 	"vim": {
@@ -53,7 +53,8 @@
 		"mute_on_join": true
 	},
 	"project_panel": {
-		"git_status": true,
+		"hide_root": false,
+  "git_status": true,
 		"button": true,
 		"indent_size": 20.0
 	},
@@ -69,7 +70,7 @@
 	"tabs": {
 		"show_diagnostics": "all",
 		"file_icons": true,
-		"git_status": true
+		"git_status": false
 	},
 	"tab_bar": {
 		"show": true
@@ -90,7 +91,7 @@
 		"always_allow_tool_actions": true,
 		"default_model": {
 			"provider": "copilot_chat",
-			"model": "gpt-5.1-codex"
+			"model": "claude-opus-4.5"
 		},
 		"play_sound_when_agent_done": true,
 		"model_parameters": []

@@ -819,7 +819,7 @@
 		}
 	},
 	{
-		"context": "!ContextEditor > (Editor && mode == full)",
+		"context": "!ContextEditor > (Editor && (vim_mode == helix_normal || vim_mode == helix_select))",
 		"bindings": {
 			"shift-i": "assistant::InlineAssist"
 		}
@@ -932,10 +932,10 @@
 			"p": "editor::Paste"
 		}
 	},
- {
-  "context": "(Editor && mode == full)",
-  "bindings": {
-   "ctrl-h": null
-  }
- }
+	{
+		"context": "(Editor && mode == full)",
+		"bindings": {
+			"ctrl-h": null
+		}
+	}
 ]
