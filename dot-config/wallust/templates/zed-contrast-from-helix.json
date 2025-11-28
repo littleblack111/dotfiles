@@ -7,6 +7,24 @@
 			"name": "wal",
 			"appearance": "dark",
 			"style": {
+				"accents": [
+					"{{color1}}66",
+					"{{color4}}66",
+					"{{color2}}66",
+					"{{color3}}66",
+					"{{color5}}66",
+					"{{color6}}66",
+					"{{color9}}66"
+				],
+				"vim.mode.text": "{{foreground}}",
+				"vim.normal.background": "{{color1}}",
+				"vim.helix_normal.background": "{{color1}}",
+				"vim.visual.background": "{{color4}}",
+				"vim.helix_select.background": "{{color4}}",
+				"vim.insert.background": "{{color2}}",
+				"vim.visual_line.background": "{{color4}}",
+				"vim.visual_block.background": "{{color5}}",
+				"vim.replace.background": "{{color9}}",
 				"background.appearance": "blurred",
 				"border": "{{color8}}77",
 				"border.variant": "{{color8}}55",
@@ -40,6 +58,7 @@
 				"icon.accent": "{{color1}}",
 				"status_bar.background": "{{background}}CC",
 				"title_bar.background": "{{background}}CC",
+				"title_bar.inactive_background": "{{background}}CC",
 				"toolbar.background": "{{background}}00",
 				"tab_bar.background": "{{background}}00",
 				"tab.inactive_background": "{{background}}00",
@@ -51,13 +70,22 @@
 				"search.match_background": "{{color1}}44",
 				"panel.background": "{{background}}00",
 				"panel.focused_border": "{{color1}}",
+				"panel.indent_guide": "{{color8}}44",
+				"panel.indent_guide_active": "{{color8}}88",
+				"panel.indent_guide_hover": "{{color1}}",
+				"panel.overlay_background": "{{background}}AA",
 				"pane.focused_border": "{{color1}}",
 				"pane_group.border": "{{color8}}33",
 				"scrollbar.thumb.background": "{{color7}}44",
 				"scrollbar.thumb.hover_background": "{{color7}}77",
+				"scrollbar.thumb.active_background": "{{color7}}AA",
 				"scrollbar.thumb.border": "transparent",
 				"scrollbar.track.background": "{{background}}00",
 				"scrollbar.track.border": "transparent",
+				"minimap.thumb.background": "{{color4}}33",
+				"minimap.thumb.hover_background": "{{color4}}66",
+				"minimap.thumb.active_background": "{{color4}}99",
+				"minimap.thumb.border": "transparent",
 				"editor.foreground": "{{foreground}}",
 				"editor.background": "{{background}}00",
 				"editor.gutter.background": "{{background}}00",
@@ -69,9 +97,14 @@
 				"editor.invisible": "{{color8}}66",
 				"editor.wrap_guide": "{{color8}}44",
 				"editor.active_wrap_guide": "{{color8}}77",
+				"editor.document_highlight.bracket_background": "{{color1}}33",
 				"editor.document_highlight.read_background": "{{color8}}44",
 				"editor.document_highlight.write_background": "{{color2}}77",
+				"editor.indent_guide": "{{color8}}33",
+				"editor.indent_guide_active": "{{color8}}77",
+				"editor.debugger_active_line.background": "{{color3}}22",
 				"terminal.background": "{{background}}00",
+				"terminal.ansi.background": "{{background}}00",
 				"terminal.foreground": "{{foreground}}",
 				"terminal.bright_foreground": "{{color15}}",
 				"terminal.dim_foreground": "{{color8}}",
@@ -142,6 +175,15 @@
 				"warning": "{{color11}}",
 				"warning.background": "{{color11}}22",
 				"warning.border": "{{color11}}",
+				"version_control.added": "{{color10}}",
+				"version_control.deleted": "{{color9}}",
+				"version_control.modified": "{{color12}}",
+				"version_control.renamed": "{{color6}}",
+				"version_control.conflict": "{{color12}}",
+				"version_control.conflict_marker.ours": "{{color10}}33",
+				"version_control.conflict_marker.theirs": "{{color4}}33",
+				"version_control.ignored": "{{color8}}",
+				"debugger.accent": "{{color9}}",
 				"players": [
 					{
 						"cursor": "{{cursor}}",
@@ -165,6 +207,36 @@
 						"font_style": "italic",
 						"font_weight": "normal"
 					},
+					"comment.documentation": {
+						"color": "{{color8}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"comment.error": {
+						"color": "{{color9}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"comment.warning": {
+						"color": "{{color11}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"comment.hint": {
+						"color": "{{color4}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"comment.todo": {
+						"color": "{{color5}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"comment.note": {
+						"color": "{{color1}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
 					"constant": {
 						"color": "{{color11}}",
 						"font_style": "normal",
@@ -176,6 +248,26 @@
 						"font_weight": "700"
 					},
 					"constant.language": {
+						"color": "{{color11}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"constant.macro": {
+						"color": "{{color11}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"boolean": {
+						"color": "{{color11}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"number": {
+						"color": "{{color11}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"number.float": {
 						"color": "{{color11}}",
 						"font_style": "normal",
 						"font_weight": "700"
@@ -205,12 +297,102 @@
 						"font_style": "normal",
 						"font_weight": "700"
 					},
+					"function.macro": {
+						"color": "{{color5}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"function.method": {
+						"color": "{{color9}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"function.method.call": {
+						"color": "{{color9}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"function.decorator": {
+						"color": "{{color5}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
 					"keyword": {
 						"color": "{{color14}}",
 						"font_style": "normal",
 						"font_weight": "700"
 					},
 					"keyword.operator": {
+						"color": "{{color12}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"keyword.modifier": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.type": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.coroutine": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.function": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.import": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.repeat": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.return": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.debug": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.exception": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.conditional": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.conditional.ternary": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"keyword.directive": {
+						"color": "{{color13}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"keyword.directive.define": {
+						"color": "{{color13}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"keyword.export": {
 						"color": "{{color12}}",
 						"font_style": "normal",
 						"font_weight": "normal"
@@ -265,6 +447,11 @@
 						"font_style": "normal",
 						"font_weight": "normal"
 					},
+					"punctuation.special.symbol": {
+						"color": "{{color15}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
 					"string": {
 						"color": "{{color10}}",
 						"font_style": "normal",
@@ -280,6 +467,11 @@
 						"font_style": "normal",
 						"font_weight": "normal"
 					},
+					"string.regexp": {
+						"color": "{{color6}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
 					"string.special": {
 						"color": "{{color14}}",
 						"font_style": "normal",
@@ -290,15 +482,60 @@
 						"font_style": "normal",
 						"font_weight": "normal"
 					},
+					"string.documentation": {
+						"color": "{{color10}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"string.doc": {
+						"color": "{{color10}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"character": {
+						"color": "{{color10}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"character.special": {
+						"color": "{{color13}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
 					"tag": {
 						"color": "{{color3}}",
 						"font_style": "normal",
 						"font_weight": "700"
 					},
+					"tag.attribute": {
+						"color": "{{color11}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"tag.delimiter": {
+						"color": "{{color2}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"text": {
+						"color": "{{foreground}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
 					"text.literal": {
 						"color": "{{color10}}",
 						"font_style": "normal",
 						"font_weight": "normal"
+					},
+					"emphasis": {
+						"color": "{{color1}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"emphasis.strong": {
+						"color": "{{color1}}",
+						"font_style": "normal",
+						"font_weight": "700"
 					},
 					"type": {
 						"color": "{{color4}}",
@@ -310,9 +547,39 @@
 						"font_style": "italic",
 						"font_weight": "normal"
 					},
+					"type.definition": {
+						"color": "{{color4}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"type.interface": {
+						"color": "{{color4}}",
+						"font_style": "italic",
+						"font_weight": "700"
+					},
+					"type.super": {
+						"color": "{{color4}}",
+						"font_style": "italic",
+						"font_weight": "700"
+					},
+					"type.class.definition": {
+						"color": "{{color4}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"type.enum.variant": {
+						"color": "{{color7}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
 					"variable": {
 						"color": "{{foreground}}",
 						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"variable.builtin": {
+						"color": "{{color15}}",
+						"font_style": "italic",
 						"font_weight": "normal"
 					},
 					"variable.member": {
@@ -328,6 +595,106 @@
 					"variable.special": {
 						"color": "{{color15}}",
 						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"module": {
+						"color": "{{color3}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"label": {
+						"color": "{{color2}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"path": {
+						"color": "{{color2}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"diff.plus": {
+						"color": "{{color10}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"diff.minus": {
+						"color": "{{color9}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"concept": {
+						"color": "{{color6}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"enum": {
+						"color": "{{color7}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"field": {
+						"color": "{{color7}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"namespace": {
+						"color": "{{color3}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"float": {
+						"color": "{{color11}}",
+						"font_style": "normal",
+						"font_weight": "700"
+					},
+					"symbol": {
+						"color": "{{color13}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"hint": {
+						"color": "{{color8}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"link_text": {
+						"color": "{{color14}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"link_uri": {
+						"color": "{{color12}}",
+						"font_style": "italic",
+						"font_weight": "normal"
+					},
+					"parent": {
+						"color": "{{color11}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"predictive": {
+						"color": "{{color8}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"predoc": {
+						"color": "{{color9}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"primary": {
+						"color": "{{color1}}",
+						"font_style": "normal",
+						"font_weight": "normal"
+					},
+					"title": {
+						"color": "{{foreground}}",
+						"font_style": "normal",
+						"font_weight": "800"
+					},
+					"variant": {
+						"color": "{{color7}}",
+						"font_style": "normal",
 						"font_weight": "normal"
 					}
 				}
