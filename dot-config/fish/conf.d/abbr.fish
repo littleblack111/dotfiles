@@ -346,3 +346,6 @@ abbr -a md mkdir
 function mkcd
     mkdir $argv && cd $argv
 end
+
+abbr -a cloc tokei
+abbr -a strace lurk
