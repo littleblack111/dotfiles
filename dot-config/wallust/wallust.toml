@@ -66,3 +66,6 @@ helix.target = "~/.config/helix/themes/wallust.toml"
 # https://github.com/zed-industries/zed/issues/11220
 zed.template = "zed-contrast-from-helix.json"
 zed.target = "~/.config/zed/themes/wal.json"
+
+hyprtoolkit.template = "hyprtoolkit.conf"
+hyprtoolkit.target = "~/.config/hypr/hyprtoolkit.conf"
