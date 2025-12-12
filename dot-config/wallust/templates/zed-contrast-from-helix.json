@@ -137,10 +137,10 @@
 				"conflict.background": "{{color12}}33",
 				"conflict.border": "{{color12}}",
 				"created": "{{color10}}",
-				"created.background": "{{color10}}33",
+				"created.background": "{{color10}}44",
 				"created.border": "{{color10}}",
 				"deleted": "{{color9}}",
-				"deleted.background": "{{color9}}33",
+				"deleted.background": "{{color9}}44",
 				"deleted.border": "{{color9}}",
 				"error": "{{color9}}",
 				"error.background": "{{color9}}22",
@@ -615,12 +615,12 @@
 					"diff.plus": {
 						"color": "{{color10}}",
 						"font_style": "normal",
-						"font_weight": "normal"
+						"font_weight": "800"
 					},
 					"diff.minus": {
 						"color": "{{color9}}",
 						"font_style": "normal",
-						"font_weight": "normal"
+						"font_weight": "800"
 					},
 					"concept": {
 						"color": "{{color6}}",
