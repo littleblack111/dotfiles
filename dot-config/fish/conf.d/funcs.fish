@@ -56,9 +56,9 @@ function unzip
     ouch d --dir (string replace -r '\.[^./]+$' '' -- $argv[1]) $argv
 end
 
-function path
-    echo (pwd)/$argv[1]
-end
+# function path
+#     echo (pwd)/$argv[1]
+# end
 
 function vmake
     if test -e Makefile
