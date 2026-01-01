@@ -7,13 +7,13 @@
   <property name="last-window-height" type="int" value="143"/>
   <property name="last-window-maximized" type="bool" value="true"/>
   <property name="last-separator-position" type="int" value="172"/>
-  <property name="last-show-hidden" type="bool" value="true"/>
+  <property name="last-show-hidden" type="bool" value="false"/>
   <property name="misc-single-click" type="bool" value="false"/>
   <property name="last-sort-column" type="string" value="THUNAR_COLUMN_DATE_MODIFIED"/>
   <property name="last-sort-order" type="string" value="GTK_SORT_DESCENDING"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
   <property name="last-details-view-visible-columns" type="string" value="THUNAR_COLUMN_DATE_MODIFIED,THUNAR_COLUMN_NAME,THUNAR_COLUMN_SIZE,THUNAR_COLUMN_TYPE"/>
-  <property name="last-details-view-column-widths" type="string" value="50,50,138,127,50,94,50,50,514,50,50,90,50,552"/>
+  <property name="last-details-view-column-widths" type="string" value="50,50,138,127,50,1877,50,50,514,50,50,89,50,286"/>
   <property name="misc-status-bar-active-info" type="uint" value="31"/>
   <property name="misc-text-beside-icons" type="bool" value="false"/>
   <property name="misc-folders-first" type="bool" value="false"/>

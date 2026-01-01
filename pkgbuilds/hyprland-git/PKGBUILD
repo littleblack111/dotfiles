@@ -5,7 +5,7 @@
 
 _pkgname="hyprland"
 pkgname="$_pkgname-git"
-pkgver=0.51.0.r78.g2a88726
+pkgver=0.51.0.r91.g07bae27
 pkgrel=1
 pkgdesc="Hyprland is an independent, highly customizable, dynamic tiling Wayland compositor that doesn't sacrifice on its looks"
 arch=('x86_64' 'aarch64')
@@ -97,7 +97,7 @@ prepare() {
   git remote add fork https://github.com/3l0w/Hyprland.git
   git pull fork feat/input-capture-impl
   git submodule init
-  git revert 5a2086 --no-edit --no-gpg-sign
+  # git revert 5a2086 --no-edit --no-gpg-sign
   git config submodule.subprojects/udis86.url "${srcdir}/udis86"
   git config submodule.subprojects/tracy.update none
   git -c protocol.file.allow=always submodule update
