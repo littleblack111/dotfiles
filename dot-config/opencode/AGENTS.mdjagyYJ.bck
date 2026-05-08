@@ -18,9 +18,9 @@
 - Do reflect and revert/remove any code you've changed that is not necessary.
 - Do run the formatter such as cargo fmt, or check Makefile etc. after you finished your changes
 - Do use `trash` instead of `rm`
-- Do use language's package manager to install latest version of package instead of adding manually to `package.json` or `Cargo.toml` etc.
-- Do use `bun` or whatever lock is in use for javascript based project
 
 ## Formatting
 - Use tab for indentation.
 - Follow the Hungarian notation for appropriate language(i.e. C++).
+
+

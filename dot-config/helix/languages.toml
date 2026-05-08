@@ -67,6 +67,7 @@ auto-format = true
 name = "markdown"
 language-servers = [ "marksman", "mdpls", "markdown-oxide", "scls", "harper", "gpt" ]
 auto-format = true
+soft-wrap.enable = true
 
 [[language]]
 name = "java"

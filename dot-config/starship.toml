@@ -10,8 +10,7 @@ add_newline = false
 # $character
 # """
 format = """
-╭─$os[](fg:white bg:black)$username[@](fg:yellow bg:black)$hostname[](fg:black) $directory$git_branch$git_state$git_status$fill$all─╮
-╰─$character
+╭─$os[](fg:white bg:black)$username[@](fg:yellow bg:black)$hostname[](fg:black) $directory$git_branch$git_state$git_status$fill$all─╮$line_break╰─$character
 """
 
 right_format = """─╯"""

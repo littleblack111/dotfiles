@@ -1,5 +1,5 @@
 function fish_command_not_found --description "Fish: suggest/install AUR pkg when command not found"
-    set -l cmd $argv
+    set -l cmd $argv[1]
     set -l pkgs
 
     printf '\033[0;31m\033[1m==> ERROR: Command not found:\033[0m %s\n' "$cmd"

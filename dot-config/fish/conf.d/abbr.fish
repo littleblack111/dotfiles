@@ -21,7 +21,7 @@ abbr -a fm ranger
 
 alias cat "bat --plain --pager=never"
 # alias grep='grep --color=auto'
-alias grep "rg --no-heading --with-filename --smart-case --hyperlink-format=kitty -F"
+alias grep "rg --no-heading --with-filename --smart-case --hyperlink-format=kitty -F --hidden"
 alias mv "mv -v"
 alias cp "cp --reflink=auto -vr"
 alias rm "trash -v"
@@ -294,13 +294,13 @@ abbr -a svn 'svn --config-dir $XDG_CONFIG_HOME/subversion'
 
 # server stuff
 function getfs
-    scp -P 2002 -R ssh.littleblack111.com:$argv .
+    scp -P 2002 -r ssh.littleblack111.com:$argv .
 end
 function putfile
-    scp -P 2002 -R $argv ssh.littleblack111.com:~
+    scp -P 2002 -r $argv ssh.littleblack111.com:~
 end
 function putfs
-    scp -P 2002 -R $argv ssh.littleblack111.com:~/server/public-fs
+    scp -P 2002 -r $argv ssh.littleblack111.com:~/server/public-fs
 end
 
 # colors
@@ -337,7 +337,7 @@ function '??'
     rm $file
 end
 
-abbr -a icat "kitten icat"
+abbr -a icat "kitten icat --scale-up"
 
 # abbr -a cd z
 
@@ -349,3 +349,5 @@ end
 
 abbr -a cloc tokei
 abbr -a strace lurk
+abbr -a fd "fd -HI"
+alias ssh "kitty +kitten ssh"

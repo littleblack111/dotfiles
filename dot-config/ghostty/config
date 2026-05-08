@@ -17,7 +17,6 @@ confirm-close-surface = false
 #gtk-titlebar = false
 term = xterm-256color
 clipboard-paste-protection = false
-gtk-adwaita = false
 gtk-single-instance = true
 
 cursor-click-to-move = true

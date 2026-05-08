@@ -6,8 +6,10 @@ check_contrast = true
 
 
 [templates]
-hypr.template = "hypr.conf"
-hypr.target = "~/.config/hypr/colors.conf"
+hypr.template = "hypr.lua"
+hypr.target = "~/.config/hypr/colors.lua"
+# hypr.template = "hypr.conf"
+# hypr.target = "~/.config/hypr/colors.conf"
 
 rofi.template = "rofi.rasi"
 rofi.target = "~/.config/rofi/shared/colors.rasi"

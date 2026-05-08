@@ -1,4 +1,4 @@
-max_width = 104400000000
+# max_width = 104400000000
 use_small_heuristics = "Max"
 
 chain_width = 0
