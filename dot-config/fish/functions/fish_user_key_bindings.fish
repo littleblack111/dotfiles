@@ -47,4 +47,7 @@ function fish_user_key_bindings
         bind --preset --erase -M $m ctrl-l
         bind -M $m ctrl-l forward-char
     end
+    # typeahead
+    bind \cj execute
+    bind -M insert \cj execute
 end
