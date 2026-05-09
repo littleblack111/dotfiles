@@ -89,6 +89,13 @@ require("binds")
 
 require("rules")
 
+---------------
+--- PLUGINS ---
+---------------
+
+require("plugins")
+
+
 
 -- hl.config({
 -- 	debug = {

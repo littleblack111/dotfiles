@@ -201,7 +201,8 @@ hl.bind("CTRL + " .. mod .. " + J", hl.dsp.focus({ window = "tiled" }))
 -- Move focus with mainMod + arrow keys / vim binds
 local focus_dirs = { h = "l", l = "r", k = "u", j = "d" }
 for k, v in pairs(focus_dirs) do
-	hl.bind(mod .. " + " .. string.upper(k), hl.dsp.focus({ direction = v }), { repeating = true })
+	-- hl.bind(mod .. " + " .. string.upper(k), hl.dsp.focus({ direction = v }), { repeating = true })
+	hl.bind(mod .. " + " .. string.upper(k), hl.dsp.layout("focus " .. v), { repeating = true })
 end
 
 hl.bind("CTRL + " .. mod .. " + K", hl.dsp.focus({ window = "floating" }))

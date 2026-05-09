@@ -70,10 +70,9 @@ hl.config({
 -- -- hl.curve("outsideIn", { type = "bezier", points = { {0.5, 1.1}, {0, 0.9} } })
 -- hl.curve("slow-fast", { type = "bezier", points = { {1, 0.33}, {0.3, 1} } })
 hl.curve("fast-slow", { type = "bezier", points = { { 0.33, 0.8 }, { 0, 1 } } })
--- hl.curve("linear", { type = "bezier", points = { {0, 0}, {1, 1} } })
--- -- hl.curve("linear", { type = "bezier", points = { {0, 0}, {1, 1} } })
+hl.curve("linear", { type = "bezier", points = { { 0, 0 }, { 1, 1 } } })
 -- -- hl.curve("md3_standard", { type = "bezier", points = { {0.2, 0}, {0, 1} } })
-hl.curve("md3_decel", { type = "bezier", points = { { 0.05, 0.7 }, { 0.1, 1 } } })
+-- hl.curve("md3_decel", { type = "bezier", points = { { 0.05, 0.7 }, { 0.1, 1 } } })
 -- -- hl.curve("md3_accel", { type = "bezier", points = { {0.3, 0}, {0.8, 0.15} } })
 -- -- hl.curve("overshot", { type = "bezier", points = { {0.05, 0.9}, {0.1, 1.1} } })
 -- -- hl.curve("crazyshot", { type = "bezier", points = { {0.1, 1.5}, {0.76, 0.92} } })
@@ -94,7 +93,7 @@ hl.animation({ leaf = "fade", enabled = true, speed = 4, bezier = "md3_decel" })
 -- -- hl.animation({ leaf = "windowsMove", enabled = true, speed = 2, bezier = "md3_accel" }) -- when new window appears, it will block it for a while since its slower then windowIn animation
 -- hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "fast-slow", style = "slide" })
 -- hl.animation({ leaf = "workspacesIn", enabled = true, speed = 5, bezier = "fast-slow", style = "slidefade" })
--- hl.animation({ leaf = "borderangle", enabled = true, speed = 100, bezier = "linear", style = "loop" })
+hl.animation({ leaf = "borderangle", enabled = true, speed = 100, bezier = "linear", style = "loop" })
 
 -- hl.animation({ leaf = "layers", enabled = true, speed = 3, bezier = "sovershot", style = "popin 15%" })
 
@@ -102,7 +101,9 @@ hl.animation({ leaf = "zoomFactor", enabled = true, speed = 3, bezier = "fast-sl
 
 hl.curve("spring", { type = "spring", mass = 3, stiffness = 200, dampening = 35 })
 
-hl.curve("open", { type = "spring", mass = 4, stiffness = 325, dampening = 46 })
+hl.curve("layer", { type = "spring", mass = 4, stiffness = 450, dampening = 50 })
+
+hl.curve("open", { type = "spring", mass = 4, stiffness = 300, dampening = 46 })
 hl.curve("move", { type = "spring", mass = 4, stiffness = 375, dampening = 48 })
 
 hl.curve("workspace", { type = "spring", mass = 4, stiffness = 325, dampening = 50 })
@@ -111,6 +112,8 @@ hl.curve("workspaceIn", { type = "spring", mass = 4, stiffness = 375, dampening 
 -- hl.curve("zoom", { type = "spring", mass = 3, stiffness = 225, dampening = 38 })
 
 hl.animation({ leaf = "global", enabled = true, speed = 3, spring = "spring" })
+
+hl.animation({ leaf = "layers", enabled = true, speed = 3, spring = "layer" })
 
 hl.animation({ leaf = "windowsIn", enabled = true, speed = 3, spring = "open" })
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 3, spring = "move" })

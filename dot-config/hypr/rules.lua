@@ -19,6 +19,42 @@
 --     rounding    = 0,
 -- })
 
+-- Dynamically fetch exact gaps and monitor reserved space (Waybar)
+local function get_env_offsets()
+	-- 1. Rip gaps directly from the active config
+	local gaps_cfg = hl.get_config("general.gaps_out")
+	local gt, gb, gl, gr = 0, 0, 0, 0
+	if type(gaps_cfg) == "table" then
+		gt = gaps_cfg.top or gaps_cfg[1] or 0
+		gb = gaps_cfg.bottom or gaps_cfg[3] or 0
+		gl = gaps_cfg.left or gaps_cfg[4] or 0
+		gr = gaps_cfg.right or gaps_cfg[2] or 0
+	elseif type(gaps_cfg) == "number" then
+		gt, gb, gl, gr = gaps_cfg, gaps_cfg, gaps_cfg, gaps_cfg
+	end
+
+	-- 2. Interrogate the active monitor for reserved space (your bar)
+	local bt, bb, bl, br = 0, 0, 0, 0
+	local m = hl.get_active_monitor()
+	if m and m.reserved then
+		if type(m.reserved) == "table" then
+			bt = m.reserved.top or m.reserved[1] or 0
+			bb = m.reserved.bottom or m.reserved[2] or 0
+			bl = m.reserved.left or m.reserved[3] or 0
+			br = m.reserved.right or m.reserved[4] or 0
+		end
+	end
+
+	return {
+		top = gt + bt,
+		bottom = gb + bb,
+		left = gl + bl,
+		right = gr + br
+	}
+end
+
+local offsets = get_env_offsets()
+
 -- workspaces
 local tag_workspaces = {
 	terminal = 1,
@@ -46,7 +82,7 @@ hl.window_rule({
 	opacity = "0.85 0.75",
 	pin = true,
 	size = { "(monitor_w*0.53)", "(monitor_h*0.6)" },
-	move = { "(monitor_w*0.465)", "(monitor_h*0.048)" },
+	move = { "(monitor_w-window_w-" .. offsets.right .. ")", tostring(offsets.top) },
 	animation = "slide right top"
 })
 
@@ -64,10 +100,10 @@ hl.window_rule({
 
 -- positions
 local positions = {
-	["top-left"] = { "0", "0" },
-	["top-right"] = { "(monitor_w-window_w)", "0" },
-	["bottom-left"] = { "0", "(monitor_h-window_h)" },
-	["bottom-right"] = { "(monitor_w-window_w)", "(monitor_h-window_h)" }
+	["top-left"] = { tostring(offsets.left), tostring(offsets.top) },
+	["top-right"] = { "(monitor_w-window_w-" .. offsets.right .. ")", tostring(offsets.top) },
+	["bottom-left"] = { tostring(offsets.left), "(monitor_h-window_h-" .. offsets.bottom .. ")" },
+	["bottom-right"] = { "(monitor_w-window_w-" .. offsets.right .. ")", "(monitor_h-window_h-" .. offsets.bottom .. ")" }
 }
 
 for tag, pos in pairs(positions) do
