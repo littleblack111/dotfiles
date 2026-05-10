@@ -25,4 +25,10 @@ hl.config({
 		-- swallow_regex = ^(Alacritty)$,
 		-- new_window_takes_over_fullscreen = 2,
 	},
+
+	ecosystem = {
+    no_donation_nag = true,
+    no_update_news = true,
+	enforce_permissions = 1
+	}
 })
