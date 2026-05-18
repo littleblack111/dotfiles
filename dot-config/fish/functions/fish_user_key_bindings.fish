@@ -50,4 +50,8 @@ function fish_user_key_bindings
     # typeahead
     bind \cj execute
     bind -M insert \cj execute
+
+    # bind \ck up-line
+    # bind \cj down-line
+    # bind \cm execute
 end
