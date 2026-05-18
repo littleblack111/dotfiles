@@ -21,3 +21,7 @@ pkgbuilds/hyprland-git/hyprland
 pkgbuilds/hyprland-git/pkg/hyprland-git
 pkgbuilds/hyprland-git/src
 pkgbuilds/hyprland-git/udis86
+dot-config/zed/themes/wal.json
+/dot-config/fish/conf.d/env.local.fish
+/dot-config/hypr/bg.conf
+/dot-config/hypr/hyprtoolkit.conf
