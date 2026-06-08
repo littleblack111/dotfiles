@@ -37,6 +37,8 @@ kvantum.target = "~/.config/Kvantum/KvArcDark#/KvArcDark#.kvconfig"
 
 pywal.template = "pywal.json"
 pywal.target = "~/.cache/wal/colors.json"
+pywal_plain.template = "pywal"
+pywal_plain.target = "~/.cache/wal/colors"
 
 # xdpl.template = "xdpl.conf"
 # xdpl.target = "~/.config/xdg-desktop-portal-luminous/config.toml"
@@ -71,3 +73,12 @@ zed.target = "~/.config/zed/themes/wal.json"
 
 hyprtoolkit.template = "hyprtoolkit.conf"
 hyprtoolkit.target = "~/.config/hypr/hyprtoolkit.conf"
+
+fcitx5.template = "fcitx5.conf"
+fcitx5.target = "~/.local/share/fcitx5/themes/wallust/theme.conf"
+
+fcitx5highlight.template = "fcitx5highlight.svg"
+fcitx5highlight.target = "~/.local/share/fcitx5/themes/wallust/highlight.svg"
+
+fcitx5panel.template = "fcitx5panel.svg"
+fcitx5panel.target = "~/.local/share/fcitx5/themes/wallust/panel.svg"

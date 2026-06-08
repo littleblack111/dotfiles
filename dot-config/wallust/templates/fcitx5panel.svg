@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48" height="48" opacity="0.42" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter5" x="-0.22165625" y="-0.22165625" width="1.4433125" height="1.4433125" color-interpolation-filters="sRGB">
+      <feFlood result="flood" in="SourceGraphic" flood-opacity="1" flood-color="rgb(0,0,0)" />
+      <feGaussianBlur result="blur" in="SourceGraphic" stdDeviation="2" />
+      <feOffset result="offset" in="blur" dx="0" dy="0" />
+      <feComposite result="comp1" operator="in" in="flood" in2="offset" />
+      <feComposite result="fbSourceGraphic" operator="over" in="SourceGraphic" in2="comp1" />
+      <feColorMatrix result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0" />
+      <feFlood result="flood2" in="fbSourceGraphic" flood-opacity="1" flood-color="rgb(0,0,0)" />
+      <feGaussianBlur result="blur2" in="fbSourceGraphic" stdDeviation="1.5" />
+      <feOffset result="offset2" in="blur2" dx="0" dy="0" />
+      <feComposite result="comp2" operator="in" in="flood2" in2="offset2" />
+      <feComposite result="comp3" operator="over" in="fbSourceGraphic" in2="comp2" />
+    </filter>
+  </defs>
+  <path fill="{{background}}" stroke="{{foreground}}" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#filter5)" d="m 16.487805,4.4878049 h 15.024391 c 8.461953,0 12,3.3636279 12,12.0000001 v 15.024391 c 0,8.392186 -3.398512,12 -12,12 H 16.487805 c -8.3921861,0 -12.0000001,-3.538047 -12.0000001,-12 V 16.487805 c 0,-8.6363722 3.4682791,-12.0000001 12.0000001,-12.0000001 z" />
+</svg>
