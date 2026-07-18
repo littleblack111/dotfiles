@@ -78,12 +78,13 @@ hl.window_rule({ match = { tag = "games" }, content = "game" })
 
 -- GUI Utils
 hl.window_rule({
-	match = { tag = "gui-utils" },
-	opacity = "0.85 0.75",
-	pin = true,
-	size = { "(monitor_w*0.53)", "(monitor_h*0.6)" },
-	move = { "(monitor_w-window_w-" .. offsets.right .. ")", tostring(offsets.top) },
-	animation = "slide right top"
+    match = { tag = "gui-utils" },
+    float = true,
+    opacity = "0.85 0.75",
+    pin = true,
+    size = { "(monitor_w*0.53)", "(monitor_h*0.6)" },
+    move = { "(monitor_w*0.47-" .. offsets.right .. ")", tostring(offsets.top) },
+    animation = "slide right top"
 })
 
 -- media contents
@@ -114,10 +115,10 @@ end
 hl.window_rule({ match = { tag = "fakefullscreen" }, fullscreen_state = "0 2" })
 
 -- Games
-hl.window_rule({ match = { tag = "games" }, fullscreen = true, immediate = true })
+-- hl.window_rule({ match = { tag = "games" }, fullscreen = true, immediate = true })
 
 -- fh5 & game focus suppression
-hl.window_rule({ match = { title = "^(Forza Horizon 5)$" }, suppress_event = "activatefocus" })
+hl.window_rule({ match = { title = "^(Forza Horizon [56])$" }, suppress_event = "activatefocus" })
 hl.window_rule({ match = { class = "^(steam_app_1551360)$" }, suppress_event = "activatefocus" })
 hl.window_rule({ match = { tag = "games" }, suppress_event = "activatefocus" })
 
@@ -154,7 +155,7 @@ hl.window_rule({ match = { tag = "hidden" }, workspace = "special:minimized sile
 local app_tags = {
 	{ class = "^(Alacritty|Xfce4-terminal|Kitty|" .. (vars.term or "$term") .. "|com.mitchellh.ghostty)$",                                                                                                                                                                                                                                                                                                                                                                                   tag = "+terminal" },
 	{ class = "^(" .. (vars.browser or "$browser") .. "|Brave-browser|chromium|firefox|thorium|zen)$",                                                                                                                                                                                                                                                                                                                                                                                       tag = "+web" },
-	{ class = "^(" .. (vars.fileManager or "$fileManager") .. "|Pcmanfm|thunar|qBittorrent|Caja)$",                                                                                                                                                                                                                                                                                                                                                                                          tag = "+file" },
+	{ class = "^(" .. (vars.fileManager or "$fileManager") .. "|Pcmanfm|thunar|org.qbittorrent.qBittorrent|Caja)$",                                                                                                                                                                                                                                                                                                                                                                                          tag = "+file" },
 	{ class = "^(code|code-url-handler|cursor-url-handler|code-oss|Code - OSS|install4j-burp-StartBurp|burp-StartBurp|Unity|jetbrains-pycharm-ce|Postman|jetbrains-clion|.*\\.zed\\.Zed-.*)$",                                                                                                                                                                                                                                                                                               tag = "+code" },
 	{ class = "^(LibreOffice.*|libreoffice.*|Typora|obsidian|figma-linux|anytype|craft-nativefier-e0958b|evince|org.gnome.Evince|ClickUp)$",                                                                                                                                                                                                                                                                                                                                                 tag = "+office" },
 	{ class = "^(discord|vesktop|VencordDesktop|Chat-gpt|Whatsapp-for-linux|Chatbox)$",                                                                                                                                                                                                                                                                                                                                                                                                      tag = "+communication" },
@@ -165,7 +166,7 @@ local app_tags = {
 	{ title = ".*\\.exe",                                                                                                                                                                                                                                                                                                                                                                                                                                                                    tag = "+games" },
 	{ title = "^(War Thunder.*)$",                                                                                                                                                                                                                                                                                                                                                                                                                                                           tag = "+games" },
 	{ content = "3",                                                                                                                                                                                                                                                                                                                                                                                                                                                                         tag = "+games" },
-	{ class = "^(thorium-app.shortwave.com__-Default|thorium-mdpkiolbdkhdjpekfbkbmhigcaggjagi-Profile_1|thorium-lnachpgegbbmnnlgpokibfjlmppeciah-Default|BeeperTexts)$",                                                                                                                                                                                                                                                                                                                     tag = "+gui-utils" },
+	{ class = "^(thorium-app.shortwave.com__-Default|thorium-mdpkiolbdkhdjpekfbkbmhigcaggjagi-Profile_1|thorium-lnachpgegbbmnnlgpokibfjlmppeciah-Default|BeeperTexts|Beeper)$",                                                                                                                                                                                                                                                                                                                     tag = "+gui-utils" },
 	{ class = "^(blobdrop|dragon|dragon-drop)$",                                                                                                                                                                                                                                                                                                                                                                                                                                             tag = "+media-contents" },
 	{ class = "^(blobdrop|dragon|dragon-drop)$",                                                                                                                                                                                                                                                                                                                                                                                                                                             tag = "+bottom-right" },
 	{ title = "^(Picture-in-Picture)$",                                                                                                                                                                                                                                                                                                                                                                                                                                                      tag = "+media-contents" },
@@ -189,7 +190,7 @@ for _, rule in ipairs(app_tags) do
 end
 
 -- Floating applications
-hl.window_rule({ match = { class = "^(zoom|sxiv|Sxiv|[Vv]iewnior|feh|nm-connection-editor|install4j-burp-StartBurp|thorium-app.shortwave.com__-Default|thorium-mdpkiolbdkhdjpekfbkbmhigcaggjagi-Profile_1|thorium-lnachpgegbbmnnlgpokibfjlmppeciah-Default|BeeperTexts|electron|com.github.rafostar.Clapper|io.github.celluloid_player.Celluloid|qimgv)$" }, float = true })
+hl.window_rule({ match = { class = "^(zoom|sxiv|Sxiv|[Vv]iewnior|feh|nm-connection-editor|install4j-burp-StartBurp|thorium-app.shortwave.com__-Default|thorium-mdpkiolbdkhdjpekfbkbmhigcaggjagi-Profile_1|thorium-lnachpgegbbmnnlgpokibfjlmppeciah-Default|BeeperTexts|Beeper|electron|com.github.rafostar.Clapper|io.github.celluloid_player.Celluloid|qimgv)$" }, float = true })
 hl.window_rule({ match = { title = "^(Steam Settings|Sign in – Google accounts)$" }, float = true })
 
 -- Specific window pin/stay_focused rules
@@ -245,6 +246,11 @@ end
 -- Full screen no idle
 hl.window_rule({ match = { class = ".*" }, idle_inhibit = "fullscreen" })
 
+hl.window_rule({
+    match = { class = "steam_app_2483190" },
+    render_unfocused = true,
+})
+
 -- no blurs
 hl.window_rule({ match = { title = "^(Annotation - Zoom)$" }, no_blur = true })
 
@@ -293,6 +299,7 @@ hl.window_rule({ match = { class = "^(org.vinegarhq.Sober)$", title = "^(Join Fr
 
 -- suppressevent
 hl.window_rule({ match = { class = "^spotify$" }, suppress_event = "activatefocus activate" })
+hl.window_rule({ match = { class = "^org.gnome.Evince$" }, suppress_event = "activate" })
 
 -- Fix some dragging issues with XWayland
 hl.window_rule({

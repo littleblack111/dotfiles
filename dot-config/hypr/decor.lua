@@ -52,6 +52,11 @@ hl.config({
 			input_methods = true,
 			special = true,
 		},
+
+		motion_blur ={
+			enabled = true,
+			-- samples = 64,
+		},
 	},
 
 	animations = {
@@ -101,23 +106,23 @@ hl.animation({ leaf = "borderangle", enabled = true, speed = 100, bezier = "line
 
 hl.animation({ leaf = "zoomFactor", enabled = true, speed = 3, bezier = "fast-slow" })
 
-hl.curve("spring", { type = "spring", mass = 3, stiffness = 200, dampening = 35 })
+hl.curve("spring", { type = "spring", mass = 1, stiffness = 600, dampening = 35 })
 
-hl.curve("layer", { type = "spring", mass = 4, stiffness = 450, dampening = 50 })
+hl.curve("layer", { type = "spring", mass = 1, stiffness = 1800, dampening = 50 })
 
-hl.curve("open", { type = "spring", mass = 4, stiffness = 300, dampening = 46 })
-hl.curve("move", { type = "spring", mass = 4, stiffness = 375, dampening = 48 })
+hl.curve("open", { type = "spring", mass = 1, stiffness = 1200, dampening = 46 })
+hl.curve("move", { type = "spring", mass = 1, stiffness = 1500, dampening = 48 })
 
-hl.curve("workspace", { type = "spring", mass = 4, stiffness = 325, dampening = 50 })
-hl.curve("workspaceIn", { type = "spring", mass = 4, stiffness = 375, dampening = 51 })
+hl.curve("workspace", { type = "spring", mass = 1, stiffness = 1300, dampening = 50 })
+hl.curve("workspaceIn", { type = "spring", mass = 1, stiffness = 1500, dampening = 51 })
 
--- hl.curve("zoom", { type = "spring", mass = 3, stiffness = 225, dampening = 38 })
+-- hl.curve("zoom", { type = "spring", mass = 1, stiffness = 675, dampening = 38 })
 
 hl.animation({ leaf = "global", enabled = true, speed = 3, spring = "spring" })
 
 hl.animation({ leaf = "layers", enabled = true, speed = 3, spring = "layer" })
 
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 3, spring = "open" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 30, spring = "open" })
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 3, spring = "move" })
 
 hl.animation({ leaf = "workspaces", enabled = true, speed = 3, spring = "workspace" })

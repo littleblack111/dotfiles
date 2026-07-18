@@ -20,3 +20,16 @@ window decoration {
 	margin: 0;
 	border: 0;
 }
+
+@binding-set NoEmoji {
+	unbind "<Control>semicolon";
+	unbind "<Control>period";
+}
+
+entry {
+	-gtk-key-bindings: NoEmoji;
+}
+
+textview {
+	-gtk-key-bindings: NoEmoji;
+}

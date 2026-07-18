@@ -19,7 +19,7 @@ abbr -a psg "ps aux | grep -v grep | grep -i -e VSZ -e"
 alias mkdir "mkdir -p"
 abbr -a fm ranger
 
-alias cat "bat --plain --pager=never"
+# alias cat "bat --plain --pager=never"
 # alias grep='grep --color=auto'
 alias grep "rg --no-heading --with-filename --smart-case --hyperlink-format=kitty -F --hidden"
 alias mv "mv -v"
@@ -41,7 +41,7 @@ abbr -a chatgpt chat
 
 # better ls
 if set -q DISPLAY
-    alias ls "eza --color=auto --icons=always --hyperlink"
+    alias ls "eza --color=auto --icons=always --hyperlink=always"
 else
     alias ls "eza --color=auto"
 end
@@ -137,7 +137,7 @@ abbr -a config-keybind "vim ~/.config/bspwm/sxhkdrc"
 abbr -a config-polybar "vim ~/.config/bspwm/themes/default/polybar/config.ini"
 # better less/cat
 # alias less='bat --pager=always --color always --plain' # moved into utility for auto sudo # nah, the one wont work with pipe
-# alias cat='bat --pager=never' # moved into utility for auto sudo # nah, wont work with pipe
+alias cat='bat --pager=never' # moved into utility for auto sudo # nah, wont work with pipe
 # better diff
 #alias diff='bat -d'
 # tars

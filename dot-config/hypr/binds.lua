@@ -109,7 +109,8 @@ hl.bind(mod .. " + D", hl.dsp.window.move({ workspace = "special:minimized", fol
 hl.bind(mod .. " + I", hl.dsp.workspace.toggle_special("minimized"))
 hl.bind(mod .. " + I", hl.dsp.window.move({ workspace = "+0" }))
 hl.bind(mod .. " + Q", hl.dsp.window.close(), { repeating = true })
-hl.bind(mod .. " + SHIFT + Q", hl.dsp.window.close({ force = true }))
+-- hl.bind(mod .. " + SHIFT + Q", hl.dsp.window.close({ force = true }))
+hl.bind(mod .. " + SHIFT + Q", hl.dsp.window.kill())
 hl.bind("CTRL + ALT + Escape", hl.dsp.exec_cmd("hyprctl kill"))
 hl.bind("CTRL + " .. mod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 
@@ -174,8 +175,8 @@ local function reset_zoom()
 	})
 end
 
-hl.bind("SUPER + mouse_down", function() update_zoom(1.1) end)
-hl.bind("SUPER + mouse_up", function() update_zoom(0.9) end)
+hl.bind("SUPER + mouse_up", function() update_zoom(1.1) end)
+hl.bind("SUPER + mouse_down", function() update_zoom(0.9) end)
 
 hl.bind("SUPER + equal", function() update_zoom(1.1) end, { repeating = true })
 hl.bind("SUPER + minus", function() update_zoom(0.9) end, { repeating = true })
@@ -233,3 +234,5 @@ for _, ac in ipairs(autoclickers) do
 	hl.bind(ac.bind, hl.dsp.exec_cmd("kill $(pgrep -f autoclicker-" .. ac.name .. ")"),
 		{ ignore_mods = true, release = true })
 end
+
+hl.bind(mod .. " + SHIFT + Escape", hl.dsp.release_input_capture())

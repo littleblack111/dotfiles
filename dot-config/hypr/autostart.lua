@@ -70,7 +70,7 @@ hl.on("hyprland.start", function()
 	-- misc
 	-- sys hud
 	-- hl.exec_cmd('syshud -M audio_in,audio_out,brightness -b /sys/bus/ddcci/devices/ddcci13/backlight/ddcci13/')
-	hl.exec_cmd('syshud')
+	hl.exec_cmd('while true; do syshud; done')
 	-- night light
 	-- hl.exec_cmd('gammastep -l geoclue2')
 	hl.exec_cmd('$HOME/scripts/hyprsunset.sh')
@@ -81,6 +81,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd('bitwarden-desktop')
 	-- hl.exec_cmd('kdeconnectd')
 	-- hl.exec_cmd('killall input-leap input-leaps; input-leap -- works with https://github.com/3l0w/Hyprland/tree/feat/input-capture-impl')
+	hl.exec_cmd('deskflow-core server -s ~/.config/Deskflow/deskflow-server.conf')
 	hl.exec_cmd('nextcloud --background')
 	-- hl.exec_cmd(['noinitialfocus; workspace, special] localsend --hidden')
 	-- hl.exec_cmd(['workspace 6 silent; noinitialfocus] discord --start-minimized')

@@ -97,17 +97,24 @@ require("plugins")
 
 
 
--- hl.config({
--- 	debug = {
+hl.config({
+	experimental = {
+		wp_cm_1_2 = true,
+	},
+
+	input_capture = {
+		capture_modifiers = true
+	},
+
+	debug = {
 -- 		-- disable_scale_checks = true,
 -- 		disable_logs = false,
 -- 		-- overlay = true, -- show fps
--- 		suppress_errors = true,
+		-- suppress_errors = true,
 -- 		-- pass = true,
 -- 		error_position = 1,
 -- 		-- log_damage = true,
 -- 		-- damage_blink = true,
 -- 		full_cm_proto = true,
--- 	}
-
--- })
+	}
+})

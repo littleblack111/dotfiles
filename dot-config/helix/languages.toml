@@ -16,9 +16,9 @@ feature_citations = false            # enable citation completion (only on `cita
 RUST_LOG = "info,simple-completion-language-server=info"
 LOG_FILE = "/tmp/completion.log"
 
-[language-server.gpt]
-command = "helix-gpt"
-args = ["--handler", "copilot"]
+# [language-server.gpt]
+# command = "helix-gpt"
+# args = ["--handler", "copilot"]
 
 [language-server.rustowl]
 command = "rustowl"

@@ -17,7 +17,7 @@ set -xg PATH $HOME/.cargo/bin $PATH
 set -xg PATH $PATH /snap/bin
 set -xg PATH $PATH $HOME/.cache/.bun/bin
 set -xg PATH $PATH $HOME/go/bin
-set -xg PATH $PATH /home/system/.spicetify
+set -xg PATH $PATH $HOME/.local/share/solana/install/active_release/bin
 
 # GPG_TTY and SUDO_PROMPT
 # Fish: tty is a builtin; emulate ${TTY:-$(tty)}
@@ -51,7 +51,9 @@ set -x XDG_PICTURES_DIR "$HOME/Pictures"
 set -x XDG_VIDEOS_DIR "$HOME/Videos"
 
 # Pager/editor helpers
-set -x MANPAGER 'nvim +Man! +"set nocul" +"set noshowcmd" +"set noruler" +"set noshowmode" +"set laststatus=0" +"set showtabline=0" +"set nonumber"'
+# set -x MANPAGER 'nvim +Man! +"set nocul" +"set noshowcmd" +"set noruler" +"set noshowmode" +"set laststatus=0" +"set showtabline=0" +"set nonumber"'
+set -x MANPAGER delta
+set -x PAGER delta
 # set -x MANPAGER hx
 # set -x MANROFFOPT -c
 set -x DIFFPROG 'nvim -d'
