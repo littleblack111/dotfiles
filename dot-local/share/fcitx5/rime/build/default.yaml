@@ -1,11 +1,11 @@
 __build_info:
-  rime_version: 1.11.2
+  rime_version: 1.17.0
   timestamps:
-    default: 1720897484
-    default.custom: 1726650883
-    key_bindings: 1720897484
+    default: 1774018450
+    default.custom: 1781712456
+    key_bindings: 1774018450
     key_bindings.custom: 0
-    punctuation: 1720897484
+    punctuation: 1774018450
     punctuation.custom: 0
 ascii_composer:
   good_old_caps_lock: true
@@ -16,7 +16,7 @@ ascii_composer:
     Eisu_toggle: clear
     Shift_L: inline_ascii
     Shift_R: commit_text
-config_version: 0.40
+config_version: 0.50
 key_binder:
   bindings:
     - {accept: "Control+p", send: Up, when: composing}
@@ -33,9 +33,6 @@ key_binder:
     - {accept: "Control+y", send: Page_Up, when: composing}
     - {accept: "Alt+v", send: Page_Up, when: composing}
     - {accept: "Control+v", send: Page_Down, when: composing}
-    - {accept: ISO_Left_Tab, send: "Shift+Left", when: composing}
-    - {accept: "Shift+Tab", send: "Shift+Left", when: composing}
-    - {accept: Tab, send: "Shift+Right", when: composing}
     - {accept: minus, send: Page_Up, when: has_menu}
     - {accept: equal, send: Page_Down, when: has_menu}
     - {accept: comma, send: Page_Up, when: paging}
@@ -126,7 +123,12 @@ recognizer:
     uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
     url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
 schema_list:
-  - schema: terra_pinyin
+  - schema: jyut6ping3
+selector:
+  bindings:
+    ISO_Left_Tab: previous_candidate
+    "Shift+Tab": previous_candidate
+    Tab: next_candidate
 switcher:
   abbreviate_options: true
   caption: "〔方案選單〕"

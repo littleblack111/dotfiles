@@ -1,0 +1,51 @@
+# Rime user dictionary
+#@/db_name	jyut6ping3
+#@/db_type	userdb
+#@/rime_version	1.17.0
+#@/tick	44
+#@/user_id	55354f48-4773-4a5d-877f-cd0b880659d6
+bat1 	不	c=1 d=0.99005 t=44
+ceon1 	春	c=2 d=1.96531 t=44
+cyun4 bou6 	全部	c=1 d=0.951229 t=44
+dak1 	得	c=1 d=0.960789 t=44
+dim2 gaai2 	點解	c=1 d=0.970446 t=44
+faan2 	反	c=1 d=1 t=44
+fu1 jin2 	敷演	c=1 d=1 t=44
+gei3 	既	c=1 d=0.995012 t=44
+giu1 	嬌	c=1 d=0.99005 t=44
+gyun2 	卷	c=1 d=0.995012 t=44
+hou2 	好	c=1 d=0.995012 t=44
+jan4 man4 	人文	c=0 d=0.099005 t=44
+jat1 ding6 	一定	c=1 d=0.97531 t=44
+ji1 jyun2 	醫院	c=0 d=0.197516 t=44
+jiu3 	要	c=1 d=0.980199 t=44
+jung6 	用	c=2 d=1.9316 t=44
+jyu5 	與	c=1 d=0.995012 t=44
+jyu5 jin4 	語言	c=1 d=0.980199 t=44
+keoi5 	佢	c=1 d=0.99005 t=44
+laa1 	啦	c=1 d=0.965605 t=44
+lan2 	撚	c=0 d=0.099005 t=44
+li1 	唎	c=0 d=0.099005 t=44
+luk6 	六	c=1 d=0.99005 t=44
+m4 	唔	c=2 d=1.89137 t=44
+m4 hai2 ge3 waa2 	唔喺嘅話	c=1 d=0.927743 t=44
+maa3 	嘛	c=0 d=0.099005 t=44
+maa3 li1 ji1 jyun2 	嘛唎醫院	c=1 d=0.995012 t=44
+maa4 lei6 	麻利	c=0 d=0.0985112 t=44
+maa4 lei6 ji1 jyun2 	麻利醫院	c=2 d=1.99005 t=44
+man6 	問	c=1 d=1 t=44
+mou4 waa6 ho2 syut3 	無話可說	c=1 d=0.985112 t=44
+mou5 	冇	c=0 d=0.099005 t=44
+mou5 lan2 jan4 man4 	冇撚人文	c=1 d=0.995012 t=44
+nei5 le1 	您呢	c=1 d=1 t=44
+ngo5 	我	c=1 d=0.932394 t=44
+noi6 gyun3 	內眷	c=1 d=0.99005 t=44
+sei2 mong4 	死亡	c=1 d=0.995012 t=44
+seoi2 	水	c=1 d=1 t=44
+siu1 duk6 	消毒	c=1 d=0.995012 t=44
+taa1 	她	c=2 d=1.84163 t=44
+zau6 	就	c=2 d=1.89307 t=44
+zeoi3 	醉	c=1 d=1 t=44
+zi1 	之	c=1 d=1 t=44
+zi3 ming4 	志明	c=1 d=1 t=44
+zik6 zip3 	直接	c=1 d=0.941765 t=44

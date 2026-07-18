@@ -1,5 +1,8 @@
 var:
-  last_build_time: 1726651094
-  previously_selected_schema: terra_pinyin
+  last_build_time: 1784364248
+  option:
+    simplification: true
+  previously_selected_schema: jyut6ping3
   schema_access_time:
+    jyut6ping3: 1782313956
     terra_pinyin: 1726651097

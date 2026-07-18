@@ -5,4 +5,4 @@
 #@/tick	2
 #@/user_id	55354f48-4773-4a5d-877f-cd0b880659d6
 ting hao de 	挺好的	c=1 d=1 t=2
-zhe ge 	這個	c=1 d=1 t=1
+zhe ge 	這個	c=1 d=0.995012 t=2

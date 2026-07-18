@@ -2,5 +2,6 @@
 #@/db_name	terra_pinyin
 #@/db_type	userdb
 #@/rime_version	1.11.2
-#@/tick	0
+#@/tick	1
 #@/user_id	55354f48-4773-4a5d-877f-cd0b880659d6
+wo3 huai2 yi2 	我懷疑	c=1 d=1 t=1

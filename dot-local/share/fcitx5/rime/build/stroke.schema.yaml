@@ -1,14 +1,14 @@
 __build_info:
-  rime_version: 1.11.2
+  rime_version: 1.17.0
   timestamps:
-    default: 1720897484
-    default.custom: 1726650883
-    key_bindings: 1720897484
+    default: 1774018450
+    default.custom: 1781712456
+    key_bindings: 1774018450
     key_bindings.custom: 0
-    punctuation: 1720897484
+    punctuation: 1774018450
     punctuation.custom: 0
     stroke.custom: 0
-    stroke.schema: 1704798398
+    stroke.schema: 1760467193
 abc_segmentor:
   extra_tags:
     - reverse_lookup
@@ -48,9 +48,6 @@ key_binder:
     - {accept: "Control+y", send: Page_Up, when: composing}
     - {accept: "Alt+v", send: Page_Up, when: composing}
     - {accept: "Control+v", send: Page_Down, when: composing}
-    - {accept: ISO_Left_Tab, send: "Shift+Left", when: composing}
-    - {accept: "Shift+Tab", send: "Shift+Left", when: composing}
-    - {accept: Tab, send: "Shift+Right", when: composing}
     - {accept: minus, send: Page_Up, when: has_menu}
     - {accept: equal, send: Page_Down, when: has_menu}
     - {accept: comma, send: Page_Up, when: paging}
@@ -177,6 +174,7 @@ schema:
     - "四季的風"
     - "雪齋"
     - "Kunki Chou"
+    - "宋天"
   dependencies:
     - luna_pinyin
   description: |
@@ -185,7 +183,12 @@ schema:
 
   name: "五筆畫"
   schema_id: stroke
-  version: 0.5
+  version: 0.6
+selector:
+  bindings:
+    ISO_Left_Tab: previous_candidate
+    "Shift+Tab": previous_candidate
+    Tab: next_candidate
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyz
   delimiter: " '"
