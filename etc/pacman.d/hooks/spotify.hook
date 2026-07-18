@@ -1,0 +1,19 @@
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = opt/spotify
+
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = spotify
+Target = spotify-adblock
+Target = spicetify-cli
+
+[Action]
+Description = Patching spotify with spicetify...
+When = PostTransaction
+Exec = /usr/bin/sh -c "/usr/bin/spicetify apply || /usr/bin/spicetify backup apply"
+NeedsTargets
