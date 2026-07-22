@@ -22,8 +22,6 @@ hl.permission("/var/cache/hyprpm/system/hyprscroller/hyprscroller.so", "plugin",
 hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "input-capture", "allow")
 
 -- Keyboards
-hl.permission(".*", "keyboard", "ask")
-
 hl.permission("^yubico-yubikey-otp\\+fido\\+ccid$", "keyboard", "allow")
 hl.permission("^wooting-wooting-two-he-\\(arm\\)$", "keyboard", "allow")
 hl.permission("^wooting-wooting-two-he-\\(arm\\)-system-control$", "keyboard", "allow")
@@ -41,3 +39,5 @@ hl.permission("^hl-virtual-keyboard-fcitx5$", "keyboard", "allow")
 hl.permission("^company--usb-device--keyboard-1$", "keyboard", "allow")
 hl.permission("^company--usb-device--1$", "keyboard", "allow")
 hl.permission("^wooting-wooting-two-he-\\(arm\\)-consumer-control-1$", "keyboard", "allow")
+
+hl.permission(".*", "keyboard", "ask")

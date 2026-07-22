@@ -115,7 +115,7 @@ hl.bind("CTRL + ALT + Escape", hl.dsp.exec_cmd("hyprctl kill"))
 hl.bind("CTRL + " .. mod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 
 -- restart bar
-hl.bind("CTRL + " .. mod .. " + Escape", hl.dsp.exec_cmd("qs ipc call qs reload false || qs &"))
+hl.bind("CTRL + " .. mod .. " + Escape", hl.dsp.exec_cmd("qs ipc call qs reload false || qs"))
 
 -- reload wall
 hl.bind(mod .. " + ALT + B",
@@ -175,16 +175,16 @@ local function reset_zoom()
 	})
 end
 
-hl.bind("SUPER + mouse_up", function() update_zoom(1.1) end)
-hl.bind("SUPER + mouse_down", function() update_zoom(0.9) end)
+hl.bind(mod .. " + mouse_up", function() update_zoom(1.1) end)
+hl.bind(mod .. " + mouse_down", function() update_zoom(0.9) end)
 
-hl.bind("SUPER + equal", function() update_zoom(1.1) end, { repeating = true })
-hl.bind("SUPER + minus", function() update_zoom(0.9) end, { repeating = true })
+hl.bind(mod .. " + equal", function() update_zoom(1.1) end, { repeating = true })
+hl.bind(mod .. " + minus", function() update_zoom(0.9) end, { repeating = true })
 
-hl.bind("SUPER + SHIFT + minus", reset_zoom)
-hl.bind("SUPER + SHIFT + equal", reset_zoom)
-hl.bind("SUPER + SHIFT + mouse_down", reset_zoom)
-hl.bind("SUPER + SHIFT + mouse_up", reset_zoom)
+hl.bind(mod .. " + SHIFT + minus", reset_zoom)
+hl.bind(mod .. " + SHIFT + equal", reset_zoom)
+hl.bind(mod .. " + SHIFT + mouse_down", reset_zoom)
+hl.bind(mod .. " + SHIFT + mouse_up", reset_zoom)
 -- spotify lyrics ig
 -- bind = mod shift, u, execr, $SCRIPTSDIR/togglespot.sh
 
@@ -235,4 +235,5 @@ for _, ac in ipairs(autoclickers) do
 		{ ignore_mods = true, release = true })
 end
 
-hl.bind(mod .. " + SHIFT + Escape", hl.dsp.release_input_capture())
+hl.bind(mod .. " + SHIFT + Escape", hl.dsp.release_input_capture(), { allow_input_capture = true })
+hl.bind(mod .. " + CTRL + SHIFT + Escape", hl.dsp.exec_cmd("killall deskflow-core; deskflow-core server -s ~/.config/Deskflow/deskflow-server.conf"), { allow_input_capture = true })

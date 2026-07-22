@@ -110,7 +110,7 @@ hl.config({
 -- 		-- disable_scale_checks = true,
 -- 		disable_logs = false,
 -- 		-- overlay = true, -- show fps
-		-- suppress_errors = true,
+		suppress_errors = true,
 -- 		-- pass = true,
 -- 		error_position = 1,
 -- 		-- log_damage = true,
