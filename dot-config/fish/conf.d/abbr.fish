@@ -179,7 +179,7 @@ abbr -a powertop "sudo powertop"
 abbr -a upgrade-grub "grub-mkconfig -o /boot/grub/grub.cfg"
 #alias update-grub='sudo update-grub'
 abbr -a grub-mkconfig "sudo grub-mkconfig"
-abbr -a update-initramfs "mkinitcpio -P"
+alias update-initramfs="mkinitcpio -P"
 abbr -a kgupdate "update-initramfs && grub-mkconfig -o /boot/grub/grub.cfg"
 abbr -a locale-gen "sudo locale-gen"
 abbr -a ufw "sudo ufw"
@@ -348,6 +348,7 @@ function mkcd
 end
 
 abbr -a cloc tokei
+alias cloc tokei
 abbr -a strace lurk
 abbr -a fd "fd -HI"
 alias ssh "kitty +kitten ssh"

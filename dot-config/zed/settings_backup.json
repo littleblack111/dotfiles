@@ -7,12 +7,14 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+	"format_on_save": "on",
+	"languages": {},
 	"agent_servers": {
-  "opencode": {
-   "type": "registry"
-  }
- },
- "cli_default_open_behavior": "new_window",
+		"opencode": {
+			"type": "registry",
+		},
+	},
+	"cli_default_open_behavior": "new_window",
 	"outline_panel": {
 		"dock": "left",
 	},
@@ -48,6 +50,10 @@
 		"use_system_clipboard": "on_yank",
 	},
 	"edit_predictions": {
+		"codestral": {
+			"model": "codestral-latest",
+			"api_url": "https://codestral.mistral.ai",
+		},
 		"allow_data_collection": "no",
 		"provider": "copilot",
 		"disabled_globs": [],
@@ -134,7 +140,7 @@
 	"node": {
 		"npm_path": "bun",
 	},
-	"base_keymap": "VSCode",
+	"base_keymap": "Zed",
 	"status_bar": {
 		"experimental.show": true,
 	},
@@ -149,4 +155,21 @@
 	"ui_font_size": 18.0,
 	"buffer_font_size": 15.0,
 	"theme": "wal",
+	"completions": {
+		"lsp_insert_mode": "insert",
+	},
+	"lsp": {
+		"rust-analyzer": {
+			"initialization_options": {
+				"check": {
+					"command": "clippy",
+				},
+			},
+		},
+		"qmljs": {
+			"binary": {
+				"path": "/usr/bin/qmlls",
+			},
+		},
+	},
 }

@@ -1,0 +1,27 @@
+.theme-dark,
+.theme-light {
+    /* Background Depths */
+    /* --background-primary: {{background}} !important;
+    --background-secondary: {{color0}} !important;
+    --background-secondary-alt: {{color0}} !important;
+    --background-modifier-border: {{color8}} !important;
+    --background-modifier-form-field: {{color0}} !important; */
+
+    /* Text Contrast Scale */
+    --text-faint: {{color8}} !important;
+    --text-muted: {{color7}} !important;
+    --text-normal: {{foreground}} !important;
+    --text-on-accent: {{background}} !important;
+
+    /* Accents & Interactive (Using $cursor as primary override) */
+    --color-accent: {{cursor}} !important;
+    --color-accent-1: {{color9}} !important;
+    --color-accent-2: {{color1}} !important;
+    --interactive-accent: {{cursor}} !important;
+    --interactive-accent-hover: {{color11}} !important;
+
+    /* Selections & Highlights */
+    --text-selection: {{color8}}80 !important;
+    --fl-bg-color: {{color0}}80 !important;
+}
+

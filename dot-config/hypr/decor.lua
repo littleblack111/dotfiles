@@ -31,7 +31,7 @@ hl.config({
 			-- color = rgba(1a1a1aee),
 		},
 
-    screen_shader = "/usr/share/hyprshade/shaders/vibrance.glsl",
+    -- screen_shader = "/usr/share/hyprshade/shaders/vibrance.glsl",
 
 		blur                  = {
 			enabled = true,

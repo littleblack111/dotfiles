@@ -1,5 +1,5 @@
 /* variables */
-:root {
+.zen-browser-generic-background {
   @media -moz-pref( "mod.sameerasw.zen_bg_color_enabled") {
     --zen-main-browser-background: var(
       --mod-sameerasw-zen_transparency_color,
@@ -42,7 +42,7 @@
 /* tab tint */
 :root:has([mod-sameerasw_zen_light_tint="1"]) {
   .browserStack {
-    browser {
+    & > browser {
       background-color: light-dark(
         rgba(255, 255, 255, 0.1),
         rgba(0, 0, 0, 0.1)
@@ -53,7 +53,7 @@
 
 :root:has([mod-sameerasw_zen_light_tint="2"]) {
   .browserStack {
-    browser {
+    & > browser {
       background-color: transparent !important;
     }
   }

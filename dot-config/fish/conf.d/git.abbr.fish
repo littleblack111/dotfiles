@@ -113,7 +113,18 @@ end
 # alias gcsm='git commit -s -m'
 # alias gcss='git commit -S -s'
 # alias gcssm='git commit -S -s -m'
-abbr -a gd "git diff"
+# abbr -a gd "git diff"
+function gd
+    if test (count $argv) -eq 1
+        if test -e $argv[1]
+            git diff $argv
+        else
+            git diff $argv[1]~1 $argv[1]
+        end
+    else
+        git diff $argv
+    end
+end
 # alias gdca='git diff --cached'
 # alias gdct='git describe --tags $(git rev-list --tags --max-count=1)'
 # alias gdcw='git diff --cached --word-diff'

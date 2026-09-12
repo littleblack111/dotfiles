@@ -125,7 +125,7 @@ hl.window_rule({ match = { tag = "games" }, suppress_event = "activatefocus" })
 -- time-sensitive app rules
 hl.window_rule({
 	match = { tag = "time-sensitive" },
-	stay_focused = true,
+	-- stay_focused = true,
 	pin = true,
 	dim_around = true,
 	center = true,
@@ -156,10 +156,10 @@ local app_tags = {
 	{ class = "^(Alacritty|Xfce4-terminal|Kitty|" .. (vars.term or "$term") .. "|com.mitchellh.ghostty)$",                                                                                                                                                                                                                                                                                                                                                                                   tag = "+terminal" },
 	{ class = "^(" .. (vars.browser or "$browser") .. "|Brave-browser|chromium|firefox|thorium|zen)$",                                                                                                                                                                                                                                                                                                                                                                                       tag = "+web" },
 	{ class = "^(" .. (vars.fileManager or "$fileManager") .. "|Pcmanfm|thunar|org.qbittorrent.qBittorrent|Caja)$",                                                                                                                                                                                                                                                                                                                                                                                          tag = "+file" },
-	{ class = "^(code|code-url-handler|cursor-url-handler|code-oss|Code - OSS|install4j-burp-StartBurp|burp-StartBurp|Unity|jetbrains-pycharm-ce|Postman|jetbrains-clion|.*\\.zed\\.Zed-.*)$",                                                                                                                                                                                                                                                                                               tag = "+code" },
+	{ class = "^(code|code-url-handler|cursor-url-handler|code-oss|Code - OSS|install4j-burp-StartBurp|burp-StartBurp|Unity|jetbrains-pycharm-ce|Postman|jetbrains-clion|.*\\.zed\\.Zed-.*|dev.zed.Zed-Preview)$",                                                                                                                                                                                                                                                                                               tag = "+code" },
 	{ class = "^(LibreOffice.*|libreoffice.*|Typora|obsidian|figma-linux|anytype|craft-nativefier-e0958b|evince|org.gnome.Evince|ClickUp)$",                                                                                                                                                                                                                                                                                                                                                 tag = "+office" },
 	{ class = "^(discord|vesktop|VencordDesktop|Chat-gpt|Whatsapp-for-linux|Chatbox)$",                                                                                                                                                                                                                                                                                                                                                                                                      tag = "+communication" },
-	{ class = "^(Audacity|Music|MPlayer|Lxmusic|Inkscape|Gimp|Blender|obs|zoom|Zoom|Pitivi|kdenlive|openshot|vlc|cider|Cider|shotwell|Shotwell|fr.handbrake.ghb|spotify|spotify)$",                                                                                                                                                                                                                                                                                                          tag = "+media" },
+	{ class = "^(Audacity|Music|MPlayer|Lxmusic|Inkscape|Gimp|Blender|obs|zoom|Zoom|Pitivi|kdenlive|openshot|vlc|cider|Cider|shotwell|Shotwell|fr.handbrake.ghb|spotify|Spotify)$",                                                                                                                                                                                                                                                                                                          tag = "+media" },
 	{ class = "^(Minecraft|Badlion|War|steam_proton|steam|csgo_linux64|cs2|minecraft-launcher|lutris|genshinimpact\\.exe|moe\\.launcher\\.an-anime-game-launcher|lunarclient|Lunar Client.*|zenlesszonezero\\.exe|moe\\.launcher\\.sleepy-launcher|org\\.vinegarhq\\.Sober|War Thunder.*|steam_app_.*)$",                                                                                                                                                                                    tag = "+games" },
 	{ class = "^(virt-manager|blueman-adapters|blueman-manager|GParted|Xdm-app|timeshift-gtk|com\\.nextcloud\\.desktopclient\\.nextcloud|gearlever|Lxappearance|Lxtask|Lxrandr|Arandr|System-config-printer\\.py|Pavucontrol|Exo-helper-1|Protonvpn|Xfce4-power-manager-settings|Mysql-workbench-bin|Grub-customizer|Nitrogen|archlinux-tweak-tool\\.py|pamac-manager|helvum|Vmware|btrfs-assistant|Bitwarden|wootility-lekker|nwg-look|com\\.github\\.wwmm\\.easyeffects|kvantummanager)$", tag = "+system" },
 	{ class = "^(os_server|Os_server)$",                                                                                                                                                                                                                                                                                                                                                                                                                                                     tag = "+misc" },
@@ -233,7 +233,7 @@ local opacity_rules = {
 	{ class = "^Caja$",                                active = "0.90", inactive = "0.80" },
 	{ class = "^polkit-gnome-authentication-agent-1$", active = "0.80", inactive = "0.70" },
 	{ title = "^Open$",                                active = "0.80", inactive = "0.70" },
-	{ title = "^New Tab - Thorium$",                   active = "0.8",  inactive = "0.5" }
+	{ class = "^obsidian$",					           active = "0.99", inactive = "0.99" },
 }
 
 for _, rule in ipairs(opacity_rules) do
@@ -258,12 +258,12 @@ hl.window_rule({ match = { title = "^(Annotation - Zoom)$" }, no_blur = true })
 local layer_rules = {
 	{ namespace = ".*",                           blur_popups = true },
 	{ namespace = "^rofi$",                       blur = true,           ignore_alpha = 0, dim_around = true,        animation = "popin 45%" },
-	{ namespace = "^quickshell::launcher.*$",     blur = true,           ignore_alpha = 0, dim_around = true,        animation = "popin 45%" },
 	{ namespace = "^notifications$",              blur = true,           ignore_alpha = 0 },
 	{ namespace = "^swaync-notification-window$", blur = true,           ignore_alpha = 0, animation = "slide right" },
 	{ namespace = "^swaync-control-center$",      blur = true,           ignore_alpha = 0, animation = "slide right" },
 	{ namespace = "^logout_dialog$",              blur = true },
 	{ namespace = "^waybar$",                     blur = true,           ignore_alpha = 0 },
+	{ namespace = "^quickshell::launcher.*$",     blur = true,           ignore_alpha = 0, dim_around = true,        animation = "popin 45%" },
 	{ namespace = "^quickshell::bar$",            blur = true,           ignore_alpha = 0 },
 	{ namespace = "^quickshell::CC$",             blur = true,           ignore_alpha = 0, dim_around = true },
 	{ namespace = "^syshud$",                     blur = true,           ignore_alpha = 0 },

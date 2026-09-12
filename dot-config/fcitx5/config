@@ -42,7 +42,7 @@ ModifierOnlyKeyTimeout=250
 0=Control+Alt+P
 
 [Behavior]
-# Active By Default
+# Activate input method by default
 ActiveByDefault=False
 # Reset state on Focus In
 resetStateWhenFocusIn=No
@@ -58,7 +58,7 @@ showInputMethodInformationWhenFocusIn=False
 CompactInputMethodInformation=True
 # Show first input method information
 ShowFirstInputMethodInformation=True
-# Default page size
+# Default Candidates per page
 DefaultPageSize=10
 # Override XKB Option
 OverrideXkbOption=False

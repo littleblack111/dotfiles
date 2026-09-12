@@ -595,12 +595,6 @@
 	{
 		"context": "(Editor && showing_completions)",
 		"bindings": {
-			"ctrl-y": "editor::ConfirmCompletion",
-		},
-	},
-	{
-		"context": "(Editor && showing_completions)",
-		"bindings": {
 			"enter": "editor::Newline",
 		},
 	},
@@ -614,12 +608,6 @@
 		"context": "(((Editor && in_snippet) && has_next_tabstop) && !showing_completions)",
 		"bindings": {
 			"ctrl-f": "editor::NextSnippetTabstop",
-		},
-	},
-	{
-		"context": "Picker > Editor",
-		"bindings": {
-			"ctrl-y": "picker::ConfirmCompletion",
 		},
 	},
 	{
@@ -813,12 +801,6 @@
 		},
 	},
 	{
-		"context": "((vim_mode == helix_normal || vim_mode == helix_select) && !menu)",
-		"bindings": {
-			"space g b": "editor::ToggleGitBlameInline",
-		},
-	},
-	{
 		"context": "!ContextEditor > (Editor && (vim_mode == helix_normal || vim_mode == helix_select))",
 		"bindings": {
 			"shift-i": "assistant::InlineAssist",
@@ -968,4 +950,76 @@
 			"ctrl-f": "search::FocusSearch",
 		},
 	},
+ {
+  "context": "Pane",
+  "bindings": {
+   "ctrl-w": "pane::CloseActiveItem"
+  }
+ },
+ {
+  "context": "ProjectPanel",
+  "bindings": {
+   "ctrl-shift-v": "project_panel::Paste"
+  }
+ },
+ {
+  "context": "ProjectPanel",
+  "unbind": {
+   "ctrl-v": "project_panel::Paste"
+  }
+ },
+ {
+  "context": "Editor",
+  "bindings": {
+   "ctrl-shift-v": "editor::Paste"
+  }
+ },
+ {
+  "context": "Editor",
+  "unbind": {
+   "ctrl-v": "editor::Paste"
+  }
+ },
+ {
+  "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+  "bindings": {
+   "space g b": "git::Blame"
+  }
+ },
+ {
+  "context": "Editor",
+  "unbind": {
+   "alt-g b": "git::Blame"
+  }
+ },
+ {
+  "context": "Editor && showing_completions",
+   "bindings": {
+   "ctrl-y": "editor::ConfirmCompletionInsert"
+  }
+ },
+ {
+  "context": "Editor && showing_completions",
+  "unbind": {
+   "tab": "editor::ComposeCompletion"
+  }
+ },
+ {
+  "context": "Picker > Editor",
+  "bindings": {
+   "ctrl-y": "picker::ConfirmCompletion"
+  }
+ },
+ {
+  "context": "Picker > Editor",
+  "unbind": {
+   "tab": "picker::ConfirmCompletion"
+  }
+ },
+ {
+  "context": "!Terminal",
+  "unbind": {
+   "ctrl-shift-c": "collab_panel::ToggleFocus"
+  }
+ }
 ]

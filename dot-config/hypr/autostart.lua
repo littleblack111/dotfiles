@@ -18,7 +18,7 @@ hl.on("hyprland.start", function()
 	-- Waybar
 	-- hl.exec_cmd('waybar')
 	-- Quickshell
-	hl.exec_cmd('qs -d')
+	hl.exec_cmd('just -f ~/.config/quickshell/qml_plugin/justfile run release')
 	-- Hypr-Eco
 	-- hl.exec_cmd('hyprpaper')
 	-- hl.exec_cmd($'SCRIPTSDIR/hyprpaper.sh')
@@ -49,7 +49,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd('wl-paste --type text --watch cliphist store')
 	hl.exec_cmd('wl-paste --type image --watch cliphist store')
 	-- hl.exec_cmd('clipsync')
-	-- hl.exec_cmd('wl-clip-persist --clipboard regular')
+	hl.exec_cmd('wl-clip-persist --clipboard both')
 
 	-- Notification agent
 	hl.exec_cmd('while true; do swaync; done')

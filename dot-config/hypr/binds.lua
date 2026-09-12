@@ -37,7 +37,7 @@ hl.bind(mod .. " + SHIFT + F", hl.dsp.exec_cmd(vars.fileManager))
 -- bind = mod shift, w, execr, $browser --restore-last-session
 hl.bind(mod .. " + SHIFT + W", hl.dsp.exec_cmd(vars.browser .. " -new-tab about:sessionrestore"))
 hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("zeditor"))
-hl.bind(mod .. " + SHIFT + D", hl.dsp.exec_cmd("discord " .. vars.waylandarg))
+hl.bind(mod .. " + SHIFT + D", hl.dsp.exec_cmd("vesktop " .. vars.waylandarg))
 hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("beeper " .. vars.waylandarg))
 -- CLI
 hl.bind("CTRL + ALT + A", hl.dsp.exec_cmd(vars.termfloat .. " --title=pulsemixer -e pulsemixer"))
@@ -226,14 +226,16 @@ local autoclickers = {
 	{ bind = "mouse:275", name = "right", args = " right" }
 }
 
-for _, ac in ipairs(autoclickers) do
-	hl.bind(ac.bind,
-		hl.dsp.exec_cmd("exec -a autoclicker-" ..
-			ac.name .. " zsh -c 'while true; do wlrctl pointer click" .. ac.args .. "; sleep $((0.$RANDOM/10)); done'"),
-		{ ignore_mods = true })
-	hl.bind(ac.bind, hl.dsp.exec_cmd("kill $(pgrep -f autoclicker-" .. ac.name .. ")"),
-		{ ignore_mods = true, release = true })
-end
+-- for _, ac in ipairs(autoclickers) do
+-- 	hl.bind(ac.bind,
+-- 		hl.dsp.exec_cmd("exec -a autoclicker-" ..
+-- 			ac.name .. " zsh -c 'while true; do wlrctl pointer click" .. ac.args .. "; sleep $((0.$RANDOM/10)); done'"),
+-- 		{ ignore_mods = true })
+-- 	hl.bind(ac.bind, hl.dsp.exec_cmd("kill $(pgrep -f autoclicker-" .. ac.name .. ")"),
+-- 		{ ignore_mods = true, release = true })
+-- 	-- hl.bind(ac.bind, hl.dsp.exec_cmd("notify-send a"),
+-- 	-- 	{  release = true })
+-- end
 
 hl.bind(mod .. " + SHIFT + Escape", hl.dsp.release_input_capture(), { allow_input_capture = true })
 hl.bind(mod .. " + CTRL + SHIFT + Escape", hl.dsp.exec_cmd("killall deskflow-core; deskflow-core server -s ~/.config/Deskflow/deskflow-server.conf"), { allow_input_capture = true })

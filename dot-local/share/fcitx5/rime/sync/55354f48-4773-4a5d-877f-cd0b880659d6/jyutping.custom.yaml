@@ -1,0 +1,23 @@
+patch:
+  "speller/algebra/+":
+    # 1. Vowel length blindness (tai = taai, sam = saam)
+    - derive/a/aa/
+    - derive/aa/a/
+
+    # 2. Initials 懶音 (n -> l, ng -> m, gw -> g, kw -> k)
+    - derive/^n/l/ # nei -> lei
+    - derive/^ng/m/ # ngau -> mau
+    - derive/^gw/g/ # gwok -> gok
+    - derive/^kw/k/ # kwong -> kong
+
+    # 3. Optional ng- initial (nga = a, ngo = o)
+    - derive/^ng([aeiou])/$1/
+    - derive/^([aeiou])/ng$1/
+
+    # 4. Finals 懶音 (n/ng, t/k, m/ng, p/k bleeding together)
+    - derive/n$/ng/ # san -> sang
+    - derive/ng$/n/ # sang -> san
+    - derive/t$/k/ # sat -> sak
+    - derive/k$/t/ # sak -> sat
+    - derive/m$/ng/ # sam -> sang
+    - derive/p$/k/ # sap -> sak

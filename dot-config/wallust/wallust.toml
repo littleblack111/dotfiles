@@ -82,3 +82,6 @@ fcitx5highlight.target = "~/.local/share/fcitx5/themes/wallust/highlight.svg"
 
 fcitx5panel.template = "fcitx5panel.svg"
 fcitx5panel.target = "~/.local/share/fcitx5/themes/wallust/panel.svg"
+
+obsidian.template = "obsidian.css"
+obsidian.target = "~/Documents/Obsidian Vault/.obsidian/snippets/wallust.css"
