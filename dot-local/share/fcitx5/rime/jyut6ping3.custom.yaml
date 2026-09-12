@@ -1,0 +1,14 @@
+patch:
+  "speller/algebra/+":
+    - derive/^n(?!g)/l/
+    - derive/^ng([aeiou])/$1/
+    - derive/^([aeiou])/ng$1/
+    - derive/^(g|k)wo/$1o/
+    - derive/a/aa/
+    - derive/aa/a/
+    - derive/n$/ng/
+    - derive/ng$/n/
+    - derive/t$/k/
+    - derive/k$/t/
+    - derive/m$/ng/
+    - derive/p$/k/
