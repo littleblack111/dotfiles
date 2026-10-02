@@ -106,3 +106,12 @@ end
 function tempsend
     bw send $argv 2>/dev/null | jq -r '.accessUrl'
 end
+
+function sudo --description "Run sudo with fish functions and aliases" --wraps sudo
+    if set -q argv[1]; and functions -q -- $argv[1]
+        set -l func_def (string join "\n" (functions $argv[1]))
+        command sudo __sudo_func_def="$func_def" fish -c 'eval $__sudo_func_def; $argv' -- $argv
+    else
+        command sudo $argv
+    end
+end
