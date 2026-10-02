@@ -2,13 +2,13 @@
 # Group Name
 Name=Default
 # Layout
-Default Layout=us
+Default Layout=us-altgr-intl
 # Default Input Method
 DefaultIM=rime
 
 [Groups/0/Items/0]
 # Name
-Name=keyboard-us
+Name=keyboard-us-altgr-intl
 # Layout
 # Layout=
 
