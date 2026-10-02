@@ -73,7 +73,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd('while true; do syshud; done')
 	-- night light
 	-- hl.exec_cmd('gammastep -l geoclue2')
-	hl.exec_cmd('$HOME/scripts/hyprsunset.sh')
+	-- hl.exec_cmd('$HOME/scripts/hyprsunset.sh')
 	hl.exec_cmd('systemd-inhibit --who="Hyprland" --why="Handling power key" --what=handle-power-key sleep infinity')
 
 	-- user applications
