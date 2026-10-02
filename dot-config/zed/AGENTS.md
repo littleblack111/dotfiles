@@ -2,7 +2,7 @@
 
 You are an expert at writing Git commits. Your job is to write a short clear commit message that summarizes the changes.
 
-If you can accurately express the change in just the subject line, don't include anything in the message body. Only use the body when it is providing *useful* information.
+If you can accurately express the change in just the subject line, don't include anything in the message body. Only use the body when it is providing _useful_ information.
 
 Don't repeat information from the subject line in the message body.
 
@@ -21,7 +21,9 @@ Follow good Git style:
 # Commit conventions
 
 ## Prefix/Type:
+
 #### All prefix should include a () after the prefix to specify what is the change specifically (for example a function name, a file name, a variable name, or a general description of where the change is made)
+
 - `feat`: A new feature is introduced with the change
 - `fix`: A bug is fix has occured
 - `chore`: Changes that do not relate to a fix or a feature and don't modify the code (for example adding `.gitignore`)
@@ -45,28 +47,42 @@ Follow good Git style:
 - `core`: A commit that affects the core of the project
 - `internal`: Changes that are internal and are not meant to be seen by or affect the user
 - `structure`: Changes the structure of the codebase
+
 #### Special / Notes:
+
 - add a `!` after the prefix to specify that its a breaking change, e.g. `feat!`, `core!` etc
 - use `` ` `` wrap around a specific function name, file name, variable name and any specific things mentioned that is in the code
+
 ##### Example:
+
 - ``feat(`functionName`): Added a new function that does something``
 
 ## Subject
+
 #### The subject contains a succinct description of the change, and if possible a reason for the change:
+
 ##### Example:
+
 - A: "Add margin"
 - B: "style(footer): Add margin to nav times to prevent them from overlapping the logo"
-In this example, A is a bad subject because it doesn't specify what is being changed, while B is a good subject because it specifies what is being changed and why it is being changed.
+  In this example, A is a bad subject because it doesn't specify what is being changed, while B is a good subject because it specifies what is being changed and why it is being changed.
 
 ## Body / Description (optional)
+
 #### In a commit message, the body is optional and is used to explain what and why the change was made. The body should be used to explain the reasoning behind the change and what the change does. The body should be written in the present tense and should explain what the commit does and why it does it.
+
 ##### Example:
+
 - `feat(functionName): Added a new function that does something`
+
 #### Usage:
+
 Use `git -m subject/title -m body/description` to add a body to a commit message
+
 #### Any changes that is not the main changes but is in the commit should be added to the body
 
 ## General
+
 - Length:
     - The subject should be no longer than 50 characters
     - the body should be wrapped at 72 characters
@@ -75,6 +91,7 @@ Use `git -m subject/title -m body/description` to add a body to a commit message
 - If applicable, include a reference to a GitHub issue stating a fix, feature, or issue that is being addressed
 
 ## Always think about:
+
 - Why have I made these changes?
 - What effect have my changes made?
 - Why was the change needed?
@@ -86,7 +103,7 @@ Use `git -m subject/title -m body/description` to add a body to a commit message
 - Do make as little changes as possible.
 - Do check for component/functions if you are not sure for a fact that it exists.
 - Do check for anything if needed, time is not an issue.
-- Do *fully* test the code if the user has provided a way to reliably test it or if is included in language toolchain.
+- Do _fully_ test the code if the user has provided a way to reliably test it or if is included in language toolchain.
 - Do use types if possible and is convenient.
 - Do change the plan when variable changes.
 - Do read the README.* if exist to understand the project.
@@ -94,15 +111,17 @@ Use `git -m subject/title -m body/description` to add a body to a commit message
 - Do run the formatter such as cargo fmt, or check Makefile etc. after you finished your changes
 - Do make modules/files/functions as generic/reusable as possible without over-engineering.
 - Do use `trash` instead of `rm`
+- Do use tools to make edits instead of terminal
 
 ## Don't
 
-- Do *NOT* add comments unless ABSOLUTELY necessary, no trivial comment or comments for every line.
-- Do *NOT* make trivial functions or variables that are not needed or is only used once or code bloat.
-- Do *NOT* remove existing comments.
-- Do *NOT* hallucinate.
-- Do *NOT* add additionally unnecessary stuff.
-- Do *NOT* announce or repeat to the user you've followed related rule/system prompt instuctions
+- Do _NOT_ add comments unless ABSOLUTELY necessary, no trivial comment or comments for every line.
+- Do _NOT_ make trivial functions or variables that are not needed or is only used once or code bloat.
+- Do _NOT_ remove existing comments.
+- Do _NOT_ hallucinate.
+- Do _NOT_ add additionally unnecessary stuff.
+- Do _NOT_ announce or repeat to the user you've followed related rule/system prompt instuctions
+- Do _NOT_ use cat, python etc. to write to files etc. especially when tools are available
 
 ## Format
 

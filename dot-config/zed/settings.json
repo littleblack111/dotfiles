@@ -7,9 +7,42 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+	"proxy": "",
+	"language_models": {
+		"openai_compatible": {
+			"pgsgrove": {
+				"api_url": "https://api.pgsgrove.com/v1",
+				"available_models": [
+					{
+						"name": "glm-5.3-flash,deepseek-v4-flash-0731,mimo-v2.6-flash",
+						"max_tokens": 200000,
+						"max_output_tokens": 32000,
+						"max_completion_tokens": 200000,
+						"reasoning_effort": "max",
+						"capabilities": {
+							"tools": true,
+							"images": false,
+							"parallel_tool_calls": false,
+							"prompt_cache_key": false,
+							"chat_completions": true,
+							"interleaved_reasoning": true,
+							"max_tokens_parameter": false,
+						},
+					},
+				],
+			},
+		},
+	},
 	"format_on_save": "on",
 	"languages": {},
 	"agent_servers": {
+		"kilo": {
+			"default_config_options": {
+				"mode": "orchestrator",
+				"model": "kilo/kilo-auto/free",
+			},
+			"type": "registry",
+		},
 		"opencode": {
 			"type": "registry",
 		},
@@ -27,7 +60,7 @@
 	"colorize_brackets": true,
 	"collaboration_panel": {
 		"button": false,
-  "dock": "left",
+		"dock": "left",
 	},
 	"diagnostics": {
 		"inline": {
@@ -36,8 +69,13 @@
 		},
 	},
 	"context_servers": {
+		"mcp-server-sequential-thinking": {
+			"enabled": false,
+			"remote": false,
+			"settings": {},
+		},
 		"mcp-server-context7": {
-   "enabled": true,
+			"enabled": true,
 			"settings": {
 				"context7_api_key": "ctx7sk-8e011f3f-f864-4383-98ac-f1a2ec2b2d7f",
 			},
@@ -56,8 +94,24 @@
 			"api_url": "https://codestral.mistral.ai",
 		},
 		"allow_data_collection": "no",
-		"provider": "copilot",
-		"disabled_globs": [],
+		"provider": "zed",
+		"disabled_globs": [
+			"**/.env*",
+			"**/*.lock",
+			"**/node_modules/**",
+			"**/target/**",
+			"**/build/**",
+			"**/dist/**",
+			"**/.git/**",
+			"**/__pycache__/**",
+			"**/*.min.js",
+			"**/*.min.css",
+			"**/*.log",
+			"**/*.csv",
+			"**/*.sql",
+			"**/*.pem",
+			"**/*.key",
+		],
 		"mode": "subtle",
 	},
 	"git": {
@@ -112,8 +166,40 @@
 	"cursor_shape": "bar",
 	"relative_line_numbers": "wrapped",
 	"agent": {
+		"enable_feedback": false,
+		"profiles": {
+   "minimal": {
+    "name": "Minimal",
+    "tools": {
+     "write_file": false
+    },
+    "enable_all_context_servers": false,
+    "context_servers": {}
+   }
+  },
 		"dock": "right",
 		"tool_permissions": {
+			"tools": {
+				"terminal": {
+					"always_allow": [
+						{
+							"pattern": "^cargo\\s+metadata(\\s|$)",
+						},
+						{
+							"pattern": "^cargo\\s+fmt(\\s|$)",
+						},
+						{
+							"pattern": "^cargo\\s+test(\\s|$)",
+						},
+						{
+							"pattern": "^cargo\\s+clippy(\\s|$)",
+						},
+						{
+							"pattern": "^cargo\\s+check(\\s|$)",
+						},
+					],
+				},
+			},
 			"default": "allow",
 		},
 		"inline_assistant_model": {
@@ -122,10 +208,10 @@
 		},
 		"default_profile": "write",
 		"default_model": {
-			"effort": "high",
+			"effort": "max",
 			"enable_thinking": true,
-			"provider": "copilot_chat",
-			"model": "gemini-3.1-pro-preview",
+			"provider": "zed.dev",
+			"model": "gpt-6.1-sol",
 		},
 		"play_sound_when_agent_done": "always",
 		"model_parameters": [],
