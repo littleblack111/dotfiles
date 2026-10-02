@@ -157,7 +157,7 @@ local app_tags = {
 	{ class = "^(" .. (vars.browser or "$browser") .. "|Brave-browser|chromium|firefox|thorium|zen)$",                                                                                                                                                                                                                                                                                                                                                                                       tag = "+web" },
 	{ class = "^(" .. (vars.fileManager or "$fileManager") .. "|Pcmanfm|thunar|org.qbittorrent.qBittorrent|Caja)$",                                                                                                                                                                                                                                                                                                                                                                                          tag = "+file" },
 	{ class = "^(code|code-url-handler|cursor-url-handler|code-oss|Code - OSS|install4j-burp-StartBurp|burp-StartBurp|Unity|jetbrains-pycharm-ce|Postman|jetbrains-clion|.*\\.zed\\.Zed-.*|dev.zed.Zed-Preview)$",                                                                                                                                                                                                                                                                                               tag = "+code" },
-	{ class = "^(LibreOffice.*|libreoffice.*|Typora|obsidian|figma-linux|anytype|craft-nativefier-e0958b|evince|org.gnome.Evince|ClickUp)$",                                                                                                                                                                                                                                                                                                                                                 tag = "+office" },
+	{ class = "^(LibreOffice.*|libreoffice.*|Typora|.*obsidian.*|figma-linux|anytype|craft-nativefier-e0958b|evince|org.gnome.Evince|ClickUp)$",                                                                                                                                                                                                                                                                                                                                                 tag = "+office" },
 	{ class = "^(discord|vesktop|VencordDesktop|Chat-gpt|Whatsapp-for-linux|Chatbox)$",                                                                                                                                                                                                                                                                                                                                                                                                      tag = "+communication" },
 	{ class = "^(Audacity|Music|MPlayer|Lxmusic|Inkscape|Gimp|Blender|obs|zoom|Zoom|Pitivi|kdenlive|openshot|vlc|cider|Cider|shotwell|Shotwell|fr.handbrake.ghb|spotify|Spotify)$",                                                                                                                                                                                                                                                                                                          tag = "+media" },
 	{ class = "^(Minecraft|Badlion|War|steam_proton|steam|csgo_linux64|cs2|minecraft-launcher|lutris|genshinimpact\\.exe|moe\\.launcher\\.an-anime-game-launcher|lunarclient|Lunar Client.*|zenlesszonezero\\.exe|moe\\.launcher\\.sleepy-launcher|org\\.vinegarhq\\.Sober|War Thunder.*|steam_app_.*)$",                                                                                                                                                                                    tag = "+games" },
@@ -233,7 +233,7 @@ local opacity_rules = {
 	{ class = "^Caja$",                                active = "0.90", inactive = "0.80" },
 	{ class = "^polkit-gnome-authentication-agent-1$", active = "0.80", inactive = "0.70" },
 	{ title = "^Open$",                                active = "0.80", inactive = "0.70" },
-	{ class = "^obsidian$",					           active = "0.99", inactive = "0.99" },
+	{ class = "^.*obsidian.*$",					           active = "0.99", inactive = "" },
 }
 
 for _, rule in ipairs(opacity_rules) do
@@ -263,9 +263,9 @@ local layer_rules = {
 	{ namespace = "^swaync-control-center$",      blur = true,           ignore_alpha = 0, animation = "slide right" },
 	{ namespace = "^logout_dialog$",              blur = true },
 	{ namespace = "^waybar$",                     blur = true,           ignore_alpha = 0 },
-	{ namespace = "^quickshell::launcher.*$",     blur = true,           ignore_alpha = 0, dim_around = true,        animation = "popin 45%" },
-	{ namespace = "^quickshell::bar$",            blur = true,           ignore_alpha = 0 },
-	{ namespace = "^quickshell::CC$",             blur = true,           ignore_alpha = 0, dim_around = true },
+	{ namespace = "^quickshell::launcher.*$",     blur = true,           ignore_alpha = 0, dim_around = true,        animation = "popin 45%", blur_popups = true },
+	{ namespace = "^quickshell::bar$",            blur = true,           ignore_alpha = 0, blur_popups = true },
+	{ namespace = "^quickshell::CC$",             blur = true,           ignore_alpha = 0, dim_around = true, blur_popups = true },
 	{ namespace = "^syshud$",                     blur = true,           ignore_alpha = 0 },
 	{ namespace = "^selection$",                  animation = "none" },
 	{ namespace = "^mpvpaper$",                   animation = "gnome 0%" }
@@ -283,12 +283,17 @@ end
 
 -- xwaylandvideobridge
 hl.window_rule({
-	match = { class = "^(xwaylandvideobridge)$" },
-	opacity = "0.0 override",
-	no_anim = true,
-	no_initial_focus = true,
-	max_size = { "1", "1" },
-	no_blur = true
+    name = "xwayland-video-bridge-fixes",
+    match = {
+        class = "xwaylandvideobridge"
+    },
+
+    no_initial_focus = true,
+    no_focus = true,
+    no_anim = true,
+    no_blur = true,
+    max_size = {1,1},
+    opacity = 0.0
 })
 
 -- Roblox join private server
@@ -300,6 +305,7 @@ hl.window_rule({ match = { class = "^(org.vinegarhq.Sober)$", title = "^(Join Fr
 -- suppressevent
 hl.window_rule({ match = { class = "^spotify$" }, suppress_event = "activatefocus activate" })
 hl.window_rule({ match = { class = "^org.gnome.Evince$" }, suppress_event = "activate" })
+hl.window_rule({ match = { class = "^Bitwarden$" }, suppress_event = "activate" })
 
 -- Fix some dragging issues with XWayland
 hl.window_rule({

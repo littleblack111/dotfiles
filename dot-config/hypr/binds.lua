@@ -35,7 +35,7 @@ hl.bind(mod .. " + V", hl.dsp.exec_cmd("qs ipc call launcher standalone Clip"))
 -- GUI
 hl.bind(mod .. " + SHIFT + F", hl.dsp.exec_cmd(vars.fileManager))
 -- bind = mod shift, w, execr, $browser --restore-last-session
-hl.bind(mod .. " + SHIFT + W", hl.dsp.exec_cmd(vars.browser .. " -new-tab about:sessionrestore"))
+hl.bind(mod .. " + SHIFT + W", hl.dsp.exec_cmd(vars.browser .. " -new-window"))
 hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("zeditor"))
 hl.bind(mod .. " + SHIFT + D", hl.dsp.exec_cmd("vesktop " .. vars.waylandarg))
 hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("beeper " .. vars.waylandarg))

@@ -5,7 +5,7 @@ hl.config({
 
 	dwindle = {
 		preserve_split = true, -- You probably want this
-		force_split = 3,
+		-- force_split = 3,
 		precise_mouse_move = true
 	},
 

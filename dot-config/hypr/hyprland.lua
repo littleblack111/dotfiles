@@ -19,18 +19,18 @@ hl.monitor({
 vars = require("vars")
 colors = require("colors")
 
+-------------------------------
+---- ENVIRONMENT VARIABLES ----
+-------------------------------
+
+require("env")
+
 -------------------
 ---- AUTOSTART ----
 -------------------
 
 require("autostart")
 
-
--------------------------------
----- ENVIRONMENT VARIABLES ----
--------------------------------
-
-require("env")
 
 -----------------------
 ----- PERMISSIONS -----
