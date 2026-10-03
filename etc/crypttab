@@ -11,6 +11,7 @@
 # swap         /dev/sdx4                                    /dev/urandom            swap,cipher=aes-cbc-essiv:sha256,size=256
 # vol          /dev/sdb7                                    none
 # arch-root      UUID=71ce78be-ecf4-4696-abd3-cdc17881e5c8    -                       tpm2-device=auto
-arch-root      UUID=71ce78be-ecf4-4696-abd3-cdc17881e5c8    -                       fido2-device=auto
+arch-root      UUID=71ce78be-ecf4-4696-abd3-cdc17881e5c8    -                       tpm2-device=auto,fido2-device=auto,tries=3,discard
 # arch-swap	   UUID=5361445b-d32a-41ea-94fe-05aacfc7217a	-					   tpm2-device=auto
 # cryptdata      UUID=8d8ffbd2-5876-481b-b7e7-8ce2fb5346eb    none    luks,keyscript=decrypt_keyctl
+DATA      UUID=3d8fbfea-33e0-4802-bc54-3ef62a542ebe    /etc/cryptsetup-keys.d/DATA.key    nofail
