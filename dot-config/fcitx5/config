@@ -1,6 +1,10 @@
 [Hotkey]
+# Toggle Input Method
+TriggerKeys=
 # Enumerate when holding modifier of Toggle key
 # EnumerateWithTriggerKeys=True
+# Consume redundant Activate/Deactivate key
+# ConsumeRedundantActivateKeys=False
 # Temporarily Toggle Input Method
 AltTriggerKeys=
 # Enumerate Input Method Forward
@@ -15,9 +19,6 @@ EnumerateGroupForwardKeys=
 EnumerateGroupBackwardKeys=
 # Time limit in milliseconds for triggering modifier key shortcuts
 # ModifierOnlyKeyTimeout=250
-
-[Hotkey/TriggerKeys]
-0=Control+space
 
 # [Hotkey/ActivateKeys]
 # 0=Hangul_Hanja

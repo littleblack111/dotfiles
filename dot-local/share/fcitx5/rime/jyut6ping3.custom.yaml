@@ -12,8 +12,15 @@ patch:
     - derive/k$/t/
     - derive/m$/ng/
     - derive/p$/k/
+    - derive/ing$/eng/
+    - derive/eng$/ing/
+    - derive/im$/em/
+    - derive/em$/im/
   "key_binder/bindings/+":
     - { when: has_menu, accept: Control+h, send: Up }
     - { when: has_menu, accept: Control+l, send: Down }
     - { when: has_menu, accept: Control+k, send: Page_Up }
     - { when: has_menu, accept: Control+j, send: Page_Down }
+  switches/+/0:
+    name: ascii_mode
+    reset: 1
